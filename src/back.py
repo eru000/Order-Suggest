@@ -1,6 +1,7 @@
 import os, sys, json
 from typing import Dict, List, Optional
-from fastapi import FastAPI, HTTPException
+import base64
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -47,6 +48,8 @@ try:
 except ImportError as e:
     print(f"[警告] 無法匯入 crawl_menu: {e}")
     CRAWLER_AVAILABLE = False
+
+from restaurant_reviews import load_review_cache, refresh_restaurant_reviews
 
 # 專案路徑設定（PROJECT_ROOT 已在上方第16行定義）
 WEB_DIR = os.path.join(PROJECT_ROOT, "web")
@@ -333,6 +336,9 @@ class UpdateMenuResp(BaseModel):
     restaurant_name: Optional[str] = None
     menu_items_count: Optional[int] = None
 
+class RestaurantReviewRefreshReq(BaseModel):
+    restaurant_name: str
+
 @app.get("/health")
 def health():
     return {"ok": True}
@@ -540,6 +546,59 @@ async def api_crawl_foodpanda(req: FoodpandaReq):
             message=f" 系統錯誤：{error_msg}\n\n請檢查後端日誌"
         )
 
+@app.post("/api/upload-menu-photo")
+async def upload_menu_photo(
+    file: UploadFile = File(...),
+    restaurantName: str = Form("照片菜單"),
+):
+    global menu, RESTAURANT_MENUS, ACTIVE_RESTAURANT
+    try:
+        image_bytes = await file.read()
+        content_type = file.content_type or "image/jpeg"
+        data_url = f"data:{content_type};base64,{base64.b64encode(image_bytes).decode()}"
+
+        from ollama_fuc import extract_menu_from_image
+        data = extract_menu_from_image(data_url, restaurantName)
+
+        items = data.get("menu_items", [])
+        if not items:
+            return {"success": False, "message": "VLM 無法從圖片辨識出菜品，請確認照片清晰度"}
+
+        # VLM 辨識到餐廳名稱就用它，否則保留時間戳名稱
+        finalName = data.get("restaurant_name") or restaurantName
+
+        crawled_menu: Menu = {
+            "restaurants": {
+                finalName: {
+                    "name": finalName,
+                    "categories": {
+                        "全部菜色": {
+                            "items": [
+                                {"name": item.get("name", ""), "price": item.get("price")}
+                                for item in items
+                                if item.get("name")
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+        RESTAURANT_MENUS[finalName] = crawled_menu
+        ACTIVE_RESTAURANT = finalName
+        menu = crawled_menu
+
+        return {
+            "success": True,
+            "message": f"成功從照片辨識 {len(items)} 道菜",
+            "restaurantName": finalName,
+            "itemCount": len(items),
+        }
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return {"success": False, "message": f"辨識失敗：{str(e)}"}
+
+
 @app.post("/api/chat", response_model=ChatResp)
 def api_chat(req: ChatReq):
     s = SESSIONS.setdefault(req.sessionId, {"prefs": {}, "history": []})
@@ -551,6 +610,47 @@ def api_chat(req: ChatReq):
     _log_chat(req.sessionId, req.text, reply, prefs)
 
     return {"reply": reply}
+
+@app.get("/api/restaurant-review")
+def get_restaurant_review(restaurant_name: Optional[str] = None):
+    """讀取餐廳評價快取；不觸發網路搜尋。"""
+    target = restaurant_name or ACTIVE_RESTAURANT
+    if not target:
+        return {
+            "success": False,
+            "message": "尚未選擇餐廳",
+            "restaurantName": None,
+            "updatedAt": None,
+            "overallScore": 0,
+            "sentiment": "unknown",
+            "summary": "",
+            "pros": [],
+            "cons": [],
+            "recommendedFor": [],
+            "riskLevel": "low",
+            "riskReasons": [],
+            "sources": [],
+        }
+    return load_review_cache(PROJECT_ROOT, target)
+
+@app.post("/api/restaurant-review/refresh")
+async def refresh_restaurant_review(req: RestaurantReviewRefreshReq):
+    """手動更新餐廳評價情報，完成後寫入本機 JSON 快取。"""
+    restaurant_name = (req.restaurant_name or "").strip()
+    if not restaurant_name:
+        raise HTTPException(400, "restaurant_name 不可為空")
+    if RESTAURANT_MENUS and restaurant_name not in RESTAURANT_MENUS:
+        raise HTTPException(404, f"餐廳 '{restaurant_name}' 不存在")
+
+    loop = asyncio.get_event_loop()
+    try:
+        return await loop.run_in_executor(
+            None,
+            lambda: refresh_restaurant_reviews(PROJECT_ROOT, restaurant_name),
+        )
+    except Exception as e:
+        print(f"[評價] 更新失敗: {e}")
+        raise HTTPException(500, f"更新評價失敗: {str(e)}")
 
 # 多餐廳管理 API
 @app.get("/api/restaurants")
