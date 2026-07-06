@@ -597,6 +597,9 @@ def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str
 - 服務費估算：NT${service:.0f}
 - 合計估算：NT${total:.0f}
 
+注意事項：
+- 清單中部分項目可能是「加料」（價格明顯低於其他主餐），請優先推薦主餐，加料視情況補充建議。
+
 回答要求：
 - 不要用固定模板、表格、制式標題或「以下是推薦」這種 AI 感開場。
 - 用 1 到 3 段自然中文回答，像真的在幫朋友點餐。

@@ -190,6 +190,38 @@ def vision_chat(
     ]
     return _api_chat(messages, mdl, timeout=timeout)  # type: ignore[arg-type]
 
+_MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文紙本菜單、木牌、黑板或螢幕截圖）。
+請仔細辨識所有菜品名稱與價格，只回傳以下 JSON 格式，不要其他文字：
+{
+  "restaurant_name": "餐廳名稱或null",
+  "menu_items": [
+    {"name": "菜名", "price": "價格數字"},
+    {"name": "菜名2", "price": null}
+  ]
+}
+規則：
+- restaurant_name：如果圖片中能看出餐廳名稱請填入，否則填 null
+- price 只填數字字串（例如 "150"），看不到價格填 null
+- 無法辨識的項目請略過，不要猜測
+- 只回傳 JSON，不要說明文字"""
+
+
+def extract_menu_from_image(
+    image_data: str,
+    restaurant_name: str = "照片菜單",
+    model: Optional[str] = None,
+) -> Dict[str, Any]:
+    """從菜單圖片（base64 data URL 或網址）提取菜品列表。"""
+    raw = vision_chat(_MENU_EXTRACT_PROMPT, image_data, model=model, timeout=120.0)
+    result = _extract_json(raw)
+    if isinstance(result, dict) and "menu_items" in result:
+        result.setdefault("name", restaurant_name)
+        return result
+    if isinstance(result, list):
+        return {"menu_items": result, "name": restaurant_name}
+    return {"menu_items": [], "name": restaurant_name, "error": "無法解析 VLM 回應"}
+
+
 def _extract_json(text: str) -> Any:
     try:
         return json.loads(text)
@@ -308,7 +340,7 @@ def recommend(menu: Dict[str, Any], prefs: Optional[Dict[str, Any]] = None, top_
             }
         }
 
-    # 4) 價格提取函數
+    # 4) 價格提取函數（需先定義，後面的加料偵測會用到）
     def get_price(item: Dict[str, Any]) -> float:
         price = item.get("price")
         if price is None:
@@ -327,6 +359,17 @@ def recommend(menu: Dict[str, Any], prefs: Optional[Dict[str, Any]] = None, top_
             return float(price)
         except:
             return 999999.0
+
+    # 方案B：價格比例自動標記加料（get_price 已定義，可安全呼叫）
+    import statistics
+    prices = [get_price(i) for i in filtered_items if get_price(i) < 999999.0]
+    if len(prices) >= 3:
+        median_price = statistics.median(prices)
+        for item in filtered_items:
+            p = get_price(item)
+            if p < 999999.0 and median_price > 0 and p < median_price * 0.4:
+                item["is_addon"] = True
+                print(f" [加料偵測] {item['name']} (${p:.0f}) 標記為加料")
 
     # 5) 智能分類：將菜品分為主食、飲料、甜點、配菜、其他
     def classify_items_batch_with_llm(items: List[Dict[str, Any]]) -> Dict[str, str]:
@@ -458,6 +501,11 @@ side
         
         return True
 
+    # 方案B：加料直接強制歸為 side，跳過 LLM 分類
+    addon_names = {item.get("name", "") for item in filtered_items if item.get("is_addon")}
+    if addon_names:
+        print(f" [加料] 強制歸類為 side：{addon_names}")
+
     # 使用批次 LLM 分類所有菜品（更高效）
     print(f" [分類] 開始智能分類 {len(filtered_items)} 個菜品...")
     
@@ -482,7 +530,11 @@ side
     
     for item in filtered_items:
         item_name = item.get("name", "")
-        item_type = classification_map.get(item_name, "other")
+        # 加料強制為 side，不讓 LLM 誤判為主餐
+        if item_name in addon_names:
+            item_type = "side"
+        else:
+            item_type = classification_map.get(item_name, "other")
         
         if item_type == "main":
             if matches_preference(item):
