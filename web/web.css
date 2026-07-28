@@ -151,13 +151,15 @@ body {
   background: var(--surface);
   color: var(--fg);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
   font-weight: 500;
 }
 
-.restaurant-select:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+@media (hover: hover) and (pointer: fine) {
+  .restaurant-select:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
 }
 
 .restaurant-select:focus {
@@ -215,13 +217,15 @@ body {
   background: var(--surface);
   color: var(--fg);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
   font-weight: 500;
 }
 
-.restaurant-selector select:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+@media (hover: hover) and (pointer: fine) {
+  .restaurant-selector select:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
 }
 
 .restaurant-selector select:focus {
@@ -426,7 +430,7 @@ body {
   cursor: pointer;
   font-weight: 600;
   color: var(--fg);
-  transition: all 0.2s;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, opacity 200ms ease;
 }
 
 .action-btn.primary {
@@ -435,8 +439,15 @@ body {
   border: none;
 }
 
-.action-btn:hover {
-  opacity: 0.9;
+/* 按下的瞬間就要有反應。等到放開才回饋，介面會像沒在聽 */
+.action-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action-btn:hover {
+    opacity: 0.9;
+  }
 }
 
 /* ============================================
@@ -472,11 +483,17 @@ body {
   cursor: pointer;
   font-weight: 700;
   color: var(--fg);
-  transition: all 0.2s;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
 }
 
-.ghost-btn:hover {
-  background: var(--surface-strong);
+.ghost-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ghost-btn:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .chat-list {
@@ -517,8 +534,18 @@ body {
   color: var(--fg);
 }
 
-.chat-list-item:hover {
-  background: var(--surface-strong);
+.chat-list-item {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.chat-list-item:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-list-item:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .chat-list-title {
@@ -564,8 +591,18 @@ body {
   color: var(--fg);
 }
 
-.chat-list-more:hover {
-  background: var(--surface-strong);
+.chat-list-more {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.chat-list-more:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-list-more:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .sidebar-meta {
@@ -658,7 +695,9 @@ body {
 
 .lc-home-title {
   font-size: 2rem;
-  letter-spacing: 0.5px;
+  /* 字級越大字距要越收，正值 tracking 會讓大標讀起來鬆散 */
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 0 0 14px;
 }
 
@@ -803,11 +842,26 @@ body {
   color: #fff;
   cursor: pointer;
   font-weight: 700;
+  transition: transform 160ms var(--ease-out), opacity 200ms ease;
+}
+
+/* 全站最常被按的元素，原本連 hover 都沒有 */
+.send-btn:active:not(:disabled),
+#send-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .send-btn:hover:not(:disabled),
+  #send-btn:hover:not(:disabled) {
+    opacity: 0.92;
+  }
 }
 
 .send-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* ============================================
@@ -835,8 +889,18 @@ body {
   color: var(--fg);
 }
 
-.chat-menu-item:hover {
-  background: var(--surface-strong);
+.chat-menu-item {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.chat-menu-item:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-menu-item:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .chat-menu-item.danger {
@@ -872,6 +936,28 @@ body {
   border: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
+  /* 位移量抽成變數，降低動態時只要把它歸零就好 */
+  --toast-offset: 12px;
+  opacity: 1;
+  transform: translateY(0);
+  /* 用 transition 不用 keyframes：toast 會連續冒出來，
+     keyframes 被打斷會從頭重播，transition 會從當前值接續 */
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+/* toast 停在左下角，就從下方進場 */
+@starting-style {
+  .toast {
+    opacity: 0;
+    transform: translateY(var(--toast-offset));
+  }
+}
+
+/* 沿同一條路徑退場，而且比進場快 */
+.toast.is-leaving {
+  opacity: 0;
+  transform: translateY(var(--toast-offset));
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
 }
 
 .toast-msg {
@@ -888,8 +974,18 @@ body {
   font-weight: 600;
 }
 
-.toast-action:hover {
-  opacity: 0.9;
+.toast-action {
+  transition: transform 160ms var(--ease-out), opacity 200ms ease;
+}
+
+.toast-action:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toast-action:hover {
+    opacity: 0.9;
+  }
 }
 
 .toast-close {
@@ -902,8 +998,18 @@ body {
   color: var(--fg);
 }
 
-.toast-close:hover {
-  background: var(--surface-strong);
+.toast-close {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.toast-close:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toast-close:hover {
+    background: var(--surface-strong);
+  }
 }
 
 /* ============================================
@@ -974,12 +1080,7 @@ body {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .restaurant-select-mobile:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary-soft);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
   }
   
   .restaurant-select-mobile:focus {
@@ -1402,7 +1503,7 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn 200ms var(--ease-out);
 }
 
 [data-theme="dark"] .menu-modal-overlay {
@@ -1419,8 +1520,18 @@ body {
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  animation: slideUp 0.3s ease;
+  animation: slideUp 280ms var(--ease-out);
   border: 1px solid var(--border);
+}
+
+/* 退場沿進場的同一條路徑倒回去，而且更快。
+   原本是直接 display:none 硬切，東西憑空消失會讀起來像壞掉 */
+.menu-modal.is-leaving .menu-modal-overlay {
+  animation: fadeIn 160ms var(--ease-out) reverse forwards;
+}
+
+.menu-modal.is-leaving .menu-modal-content {
+  animation: slideUp 160ms var(--ease-out) reverse forwards;
 }
 
 .menu-modal-header {
@@ -1452,12 +1563,18 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
 }
 
-.menu-modal-close:hover {
-  background: var(--surface-strong);
-  color: var(--fg);
+.menu-modal-close:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-modal-close:hover {
+    background: var(--surface-strong);
+    color: var(--fg);
+  }
 }
 
 .menu-modal-body {
@@ -1502,14 +1619,17 @@ body {
   padding: 12px 16px;
   background: var(--surface-strong);
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: transform 200ms var(--ease-out), background-color 200ms ease, border-color 200ms ease;
   border: 1px solid transparent;
 }
 
-.menu-item:hover {
-  background: var(--primary-soft);
-  border-color: var(--primary);
-  transform: translateX(4px);
+/* 位移一定要 gate：觸控裝置點一下 hover 會黏住，項目會停在偏移 4px 的位置 */
+@media (hover: hover) and (pointer: fine) {
+  .menu-item:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    transform: translateX(4px);
+  }
 }
 
 .menu-item-name {
@@ -1599,6 +1719,49 @@ body {
   .menu-item-name,
   .menu-item-price {
     font-size: 14px;
+  }
+}
+
+/* ============================================
+   降低動態偏好 — 既有介面
+   不是關掉所有回饋，是換成不會引起前庭不適的版本：
+   保留不透明度與顏色變化，移除位移與縮放。
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .action-btn:active,
+  .ghost-btn:active,
+  .send-btn:active,
+  #send-btn:active,
+  .send-btn:active:not(:disabled),
+  #send-btn:active:not(:disabled),
+  .chat-list-item:active,
+  .chat-list-more:active,
+  .chat-menu-item:active,
+  .toast-action:active,
+  .toast-close:active,
+  .menu-modal-close:active,
+  .menu-item:hover {
+    transform: none;
+  }
+
+  .toast {
+    --toast-offset: 0px;
+  }
+
+  .menu-modal-overlay,
+  .menu-modal-content,
+  .menu-modal.is-leaving .menu-modal-overlay,
+  .menu-modal.is-leaving .menu-modal-content {
+    animation: fadeIn 160ms ease;
+  }
+
+  /* 切換深淺色時不要整片背景慢慢漸變 */
+  body,
+  [data-theme="dark"] body,
+  .sidebar,
+  .chat-header,
+  .chat-footer {
+    transition: none;
   }
 }
 
