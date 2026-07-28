@@ -4,37 +4,159 @@
    CSS Variables - Light Mode (Default)
    ============================================ */
 :root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --surface-strong: #f3f4f6;
-  --primary: #2563eb;
-  --primary-2: #4f46e5;
-  --primary-soft: rgba(37, 99, 235, 0.12);
-  --fg: #0f172a;
-  --fg-muted: #64748b;
-  --border: rgba(15, 23, 42, 0.10);
-  --shadow-soft: 0 12px 28px rgba(15, 23, 42, 0.10);
-  --radius: 14px;
+  /* ---- 字體 ----
+     -apple-system 要排最前面：Mac 上才會拿到 SF Pro，中文自動落到蘋方。
+     Windows 沒有蘋方，會落到 Noto Sans TC（HTML 有載）。 */
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC",
+             "Noto Sans TC", "Segoe UI", sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang TC",
+                  "Noto Sans TC", "Segoe UI", sans-serif;
+
+  /* ---- 底層與表面 ---- */
+  --bg-canvas: #F2F2F7;   /* Apple systemGroupedBackground：白卡浮在灰底上 */
+  --bg-surface: #FFFFFF;
+  --bg-raised: #F5F5F7;
+  --bg-sunken: #E9E9EE;
+
+  /* ---- 邊界（Apple systemGray 系列，去掉藍調）---- */
+  --border-subtle: #E5E5EA;
+  --border-default: #D1D1D6;
+  --border-strong: #C6C6C8;
+
+  /* ---- 文字四階 ---- */
+  --text-primary: #1D1D1F;
+  --text-secondary: #57575C;
+  --text-tertiary: #6E6E73;
+  --text-disabled: #A1A1A6;
+
+  /* ---- 強調色：tint 與 solid 分工 ----
+     tint 是 iOS 系統藍，用在不承載白字的地方（icon、focus、選取）
+     solid 是 apple.com 按鈕實際用的填色，配白字 4.69:1 過 AA */
+  --accent-tint: #007AFF;
+  --accent-solid: #0071E3;
+  --accent-hover: #0062C4;
+  --accent-pressed: #0055AB;
+  --accent-text: #0062C4;
+  --accent-subtle: #E8F1FE;
+  --accent-border: #A8D0FF;
+
+  /* ---- 語意色：Apple 系統色，不降飽和 ---- */
+  --success: #34C759;
+  --success-text: #248A3D;
+  --warning: #FF9500;
+  --warning-text: #B25000;
+  --danger: #FF3B30;
+  --danger-text: #C7362B;
+  --danger-subtle: #FFF1F0;
+
+  /* ---- 材質 ---- */
+  --material-chrome: rgba(255, 255, 255, 0.72);
+  --material-thick: rgba(255, 255, 255, 0.86);
+  --material-thin: rgba(255, 255, 255, 0.66);
+  --material-scrim: rgba(0, 0, 0, 0.32);
+  --material-edge-top: rgba(255, 255, 255, 0.60);
+  --material-edge-hairline: rgba(0, 0, 0, 0.08);
+  --material-blur: blur(20px) saturate(180%);
+  --material-blur-thick: blur(30px) saturate(180%);
+
+  /* ---- 圓角 ---- */
+  --radius-sm: 6px;
+  --radius-control: 10px;
+  --radius-card: 16px;
+  --radius-modal: 20px;
+  --radius-full: 9999px;
+
+  /* ---- 陰影：每階兩層，貼近的定義邊緣、擴散的給高度 ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08), 0 20px 48px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.10), 0 32px 80px rgba(0, 0, 0, 0.16);
+
+  /* ---- 間距 ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- 版面 ---- */
+  --content-max: 720px;
+  --sidebar-w: 280px;
+  --header-h: 56px;
+  --gutter: 28px;
+  /* 輸入區高度會隨 textarea 變動，由 JS 量測後寫回 */
+  --footer-h: 88px;
 
   /* 內建的 CSS easing 太軟，UI 動畫一律用這兩條 */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* ---- 舊變數名對應到新 token ----
+     既有規則不必逐條改寫就能吃到新色盤 */
+  --bg: var(--bg-canvas);
+  --surface: var(--bg-surface);
+  --surface-strong: var(--bg-raised);
+  --primary: var(--accent-solid);
+  --primary-2: var(--accent-solid);
+  --primary-soft: var(--accent-subtle);
+  --fg: var(--text-primary);
+  --fg-muted: var(--text-tertiary);
+  --border: var(--border-default);
+  --shadow-soft: var(--shadow-sm);
+  --radius: var(--radius-card);
 }
 
 /* ============================================
    Dark Mode Variables
    ============================================ */
 [data-theme="dark"] {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface-strong: #334155;
-  --primary: #3b82f6;
-  --primary-2: #6366f1;
-  --primary-soft: rgba(59, 130, 246, 0.15);
-  --fg: #f1f5f9;
-  --fg-muted: #94a3b8;
-  --border: rgba(241, 245, 249, 0.1);
-  --shadow-soft: 0 12px 28px rgba(0, 0, 0, 0.5);
+  /* 接近純黑：OLED 上是 Apple 的標準做法，也讓 #1C1C1E 的面板浮得更明顯 */
+  --bg-canvas: #000000;
+  --bg-surface: #1C1C1E;
+  --bg-raised: #2C2C2E;
+  --bg-sunken: #000000;
+
+  --border-subtle: #2C2C2E;
+  --border-default: #38383A;
+  --border-strong: #48484A;
+
+  --text-primary: #F5F5F7;
+  --text-secondary: #A1A1A6;
+  --text-tertiary: #8E8E93;
+  --text-disabled: #565C6A;
+
+  --accent-tint: #0A84FF;
+  --accent-solid: #0A84FF;
+  --accent-hover: #3395FF;
+  --accent-pressed: #0071E3;
+  --accent-text: #409CFF;
+  --accent-subtle: #0A2540;
+  --accent-border: rgba(10, 132, 255, 0.4);
+
+  --success: #30D158;
+  --success-text: #30D158;
+  --warning: #FF9F0A;
+  --warning-text: #FF9F0A;
+  --danger: #FF453A;
+  --danger-text: #FF453A;
+  --danger-subtle: #2A1917;
+
+  --material-chrome: rgba(28, 28, 30, 0.72);
+  --material-thick: rgba(28, 28, 30, 0.88);
+  --material-thin: rgba(38, 38, 40, 0.70);
+  --material-scrim: rgba(0, 0, 0, 0.52);
+  --material-edge-top: rgba(255, 255, 255, 0.10);
+  --material-edge-hairline: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.7), 0 20px 48px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.75), 0 32px 80px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================
@@ -52,18 +174,26 @@ html, body {
 }
 
 body {
-  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--fg);
-  background: radial-gradient(1200px 900px at 20% 0%, rgba(37, 99, 235, 0.08), transparent 60%),
-              radial-gradient(1000px 800px at 80% 20%, rgba(99, 102, 241, 0.08), transparent 55%),
-              var(--bg);
-  transition: background 0.3s ease, color 0.3s ease;
+  /* 原本 'Noto Sans TC' 排在最前面，等於 Mac 上永遠拿不到 SF Pro 與蘋方 */
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: 0.003em;
+  color: var(--text-primary);
+  background: var(--bg-canvas);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-[data-theme="dark"] body {
-  background: radial-gradient(1200px 900px at 20% 0%, rgba(59, 130, 246, 0.15), transparent 60%),
-              radial-gradient(1000px 800px at 80% 20%, rgba(99, 102, 241, 0.15), transparent 55%),
-              var(--bg);
+/* 20px 以上換 SF Pro Display：Apple 的光學字級分界，字腔與字距都不同 */
+h1, h2, h3,
+.chat-title,
+.menu-modal-title,
+.vision-title,
+.lc-home-title {
+  font-family: var(--font-display);
 }
 
 .hidden {
@@ -77,7 +207,7 @@ body {
   height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: var(--sidebar-w) 1fr;
 }
 
 @media (max-width: 900px) {
@@ -92,15 +222,17 @@ body {
 /* ============================================
    Sidebar
    ============================================ */
+/* 側邊欄底下沒有內容會經過，做半透明模糊等於沒做。
+   靠實色白 + 髮絲右邊框跟灰色 canvas 分層就夠了。 */
 .sidebar {
-  background: rgba(255, 255, 255, 0.92);
-  border-right: 1px solid var(--border);
-  padding: 16px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
   min-height: 0;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 [data-theme="dark"] .sidebar {
@@ -112,27 +244,28 @@ body {
   padding: 2px;
 }
 
+/* 原本是藍紫漸層藥丸，跟「刪掉漸層、主色只給單一動作」兩條都衝突 */
 .logo-chip {
-  font-weight: 800;
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(99, 102, 241, 0.08));
-  border: 1px solid var(--border);
+  padding: var(--space-2) var(--space-1);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--text-primary);
 }
 
 .brand-subtitle {
-  color: var(--fg-muted);
-  font-size: 12px;
-  margin-top: 6px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  margin-top: var(--space-1);
 }
 
 /* 餐廳選擇器樣式 */
 .restaurant-selector {
-  padding: 12px;
-  margin: 8px 0;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.03));
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  padding: var(--space-3);
+  margin: 0;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
 }
 
 .restaurant-label {
@@ -175,17 +308,18 @@ body {
 }
 
 .restaurant-info {
-  font-size: 11px;
-  color: var(--fg-muted);
-  margin-top: 4px;
-  padding: 4px 8px;
-  background: var(--surface-strong);
-  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+  padding: 0;
+  background: none;
 }
 
 /* 深色模式下的餐廳選擇器 */
 [data-theme="dark"] .restaurant-selector {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.08));
+  background: var(--bg-raised);
 }
 
 [data-theme="dark"] .restaurant-select {
@@ -422,21 +556,26 @@ body {
   gap: 10px;
 }
 
+/* Secondary 層級 */
 .action-btn {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 10px 12px;
-  border-radius: 12px;
+  width: 100%;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
   cursor: pointer;
-  font-weight: 600;
-  color: var(--fg);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
   transition: transform 160ms var(--ease-out), background-color 200ms ease, opacity 200ms ease;
 }
 
+/* 「新對話」原本是漸層實心藍。主色一個畫面只留給一個主要動作，
+   那個位置是送出鈕，所以這裡降成 Secondary。 */
 .action-btn.primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  color: #fff;
-  border: none;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
 }
 
 /* 按下的瞬間就要有反應。等到放開才回饋，介面會像沒在聽 */
@@ -475,15 +614,19 @@ body {
   gap: 8px;
 }
 
+/* Ghost 層級：透明無邊框、次要文字色。
+   六顆同等份量的有框按鈕會一起搶注意力，退成 ghost 之後才排得出主次。 */
 .ghost-btn {
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  border: none;
+  background: transparent;
   cursor: pointer;
-  font-weight: 700;
-  color: var(--fg);
-  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.003em;
+  color: var(--text-secondary);
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
 }
 
 .ghost-btn:active {
@@ -492,8 +635,13 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
   .ghost-btn:hover {
-    background: var(--surface-strong);
+    background: var(--bg-raised);
+    color: var(--text-primary);
   }
+}
+
+[data-theme="dark"] .ghost-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .chat-list {
@@ -615,26 +763,34 @@ body {
 /* ============================================
    Chat Panel
    ============================================ */
+/* 從 grid 三列改成定位容器：頂部 bar 與輸入區浮在上層，
+   聊天內容從它們底下捲過去 —— 材質要有東西經過才看得出模糊。 */
 .chat-panel {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  position: relative;
+  height: 100vh;
   min-height: 0;
+  overflow: hidden;
 }
 
 .chat-header {
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  min-height: var(--header-h);
+  padding: var(--space-2) var(--gutter);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  transition: background 0.3s ease;
-}
-
-[data-theme="dark"] .chat-header {
-  background: rgba(30, 41, 59, 0.75);
+  gap: var(--space-3);
+  background: var(--material-chrome);
+  backdrop-filter: var(--material-blur);
+  -webkit-backdrop-filter: var(--material-blur);
+  border-bottom: 1px solid var(--material-edge-hairline);
+  /* 上緣亮邊：光打在玻璃邊緣，沒有它就只是一塊半透明色塊 */
+  box-shadow: inset 0 1px 0 var(--material-edge-top);
+  transition: background-color 0.3s ease;
 }
 
 .header-left {
@@ -645,13 +801,18 @@ body {
 
 .chat-title {
   margin: 0;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 .chat-subtitle {
-  margin: 4px 0 0 0;
-  color: var(--fg-muted);
-  font-size: 12px;
+  margin: 2px 0 0 0;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  letter-spacing: 0.006em;
 }
 
 /* 手機版餐廳選擇器 - 預設隱藏 */
@@ -675,15 +836,18 @@ body {
    Chat Body
    ============================================ */
 .chat-body {
-  min-height: 0;
-  overflow: auto;
-  padding: 18px;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* 上下留出 bar 的高度，內容才會從材質底下經過而不是被切掉。
+     兩個高度由 JS 實測後寫回，因為輸入框會隨字數長高。 */
+  padding: calc(var(--header-h) + var(--space-6)) var(--gutter)
+           calc(var(--footer-h) + var(--space-6));
 }
 
+/* 裝飾性漸層線，跟新的層次系統重複了 */
 .chat-bar {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin-bottom: 16px;
+  display: none;
 }
 
 /* Home */
@@ -711,11 +875,11 @@ body {
    Conversation
    ============================================ */
 .conversation {
-  max-width: 920px;
+  max-width: var(--content-max);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
 .message {
@@ -741,16 +905,19 @@ body {
 }
 
 .bubble {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 12px 14px;
-  box-shadow: var(--shadow-soft);
-  line-height: 1.6;
-  max-width: 78ch;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-4);
+  /* 柔和擴散陰影 + 髮絲邊框並用：白卡浮在灰底上的層次 */
+  box-shadow: var(--shadow-sm);
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  max-width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  color: var(--fg);
+  color: var(--text-primary);
 }
 
 .message.user .bubble {
@@ -793,31 +960,34 @@ body {
    Chat Footer (Input Area)
    ============================================ */
 .chat-footer {
-  padding: 14px 18px;
-  border-top: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(8px);
-  transition: background 0.3s ease;
-}
-
-[data-theme="dark"] .chat-footer {
-  background: rgba(30, 41, 59, 0.82);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: var(--space-3) var(--gutter) var(--space-4);
+  background: var(--material-chrome);
+  backdrop-filter: var(--material-blur);
+  -webkit-backdrop-filter: var(--material-blur);
+  border-top: 1px solid var(--material-edge-hairline);
+  box-shadow: inset 0 1px 0 var(--material-edge-top);
+  transition: background-color 0.3s ease;
 }
 
 .input-area {
-  max-width: 920px;
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
 .input-wrapper {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 10px;
-  padding: 10px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 .chat-input,
@@ -1719,6 +1889,21 @@ body {
   .menu-item-name,
   .menu-item-price {
     font-size: 14px;
+  }
+}
+
+/* ============================================
+   降低透明度偏好
+   材質全部換成實色，模糊拿掉。這是必要退路，不是加分項。
+   ============================================ */
+@media (prefers-reduced-transparency: reduce) {
+  .chat-header,
+  .chat-footer {
+    background: var(--bg-surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-color: var(--border-default);
   }
 }
 
