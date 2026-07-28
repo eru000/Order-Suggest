@@ -1,5 +1,5 @@
-import os, sys, json
-from typing import Dict, List, Optional
+import os, sys, json, re, threading, time, uuid
+from typing import Any, Dict, List, Optional
 import base64
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -50,6 +50,14 @@ except ImportError as e:
     CRAWLER_AVAILABLE = False
 
 from restaurant_reviews import load_review_cache, refresh_restaurant_reviews
+
+# VLM 菜單辨識（分塊辨識 + 交叉校對 + 人工確認）
+from menu_vision import (
+    MAX_IMAGE_BYTES,
+    analyze_menu_image,
+    apply_manual_correction,
+    to_persisted_document,
+)
 
 # 專案路徑設定（PROJECT_ROOT 已在上方第16行定義）
 WEB_DIR = os.path.join(PROJECT_ROOT, "web")
@@ -246,6 +254,129 @@ else:
 # 簡單 session 記憶
 SESSIONS: Dict[str, Dict[str, object]] = {}
 
+# 待確認的 VLM 辨識結果。辨識完不直接落地，等使用者確認過才寫入菜單，
+# 所以需要一個有時效的暫存區。
+PENDING_ANALYSES: Dict[str, Dict[str, object]] = {}
+PENDING_ANALYSIS_LOCK = threading.Lock()
+PENDING_ANALYSIS_TTL_SECONDS = 15 * 60
+
+
+def _safe_menu_path(restaurant_name: str) -> str:
+    safe_name = re.sub(r'[<>:"/\\|?*\x00-\x1f]+', "_", restaurant_name).strip(" ._")
+    safe_name = re.sub(r"\s+", "_", safe_name)[:100]
+    if not safe_name:
+        raise ValueError("餐廳名稱無法作為檔名")
+    return os.path.join(PROJECT_ROOT, f"menu_{safe_name}.json")
+
+
+def _prune_pending_analyses(now: Optional[float] = None) -> None:
+    current = now if now is not None else time.time()
+    expired = [
+        analysis_id for analysis_id, entry in PENDING_ANALYSES.items()
+        if float(entry.get("expires_at") or 0) <= current
+    ]
+    for analysis_id in expired:
+        PENDING_ANALYSES.pop(analysis_id, None)
+
+
+def _store_pending_analysis(result: Dict[str, Any]) -> str:
+    analysis_id = uuid.uuid4().hex
+    now = time.time()
+    with PENDING_ANALYSIS_LOCK:
+        _prune_pending_analyses(now)
+        PENDING_ANALYSES[analysis_id] = {
+            "result": result,
+            "created_at": now,
+            "expires_at": now + PENDING_ANALYSIS_TTL_SECONDS,
+        }
+    return analysis_id
+
+
+def _take_pending_analysis(analysis_id: str) -> Dict[str, Any]:
+    with PENDING_ANALYSIS_LOCK:
+        _prune_pending_analyses()
+        entry = PENDING_ANALYSES.pop(analysis_id, None)
+    if not entry or not isinstance(entry.get("result"), dict):
+        raise ValueError("辨識結果不存在或已超過 15 分鐘，請重新上傳照片")
+    return entry["result"]  # type: ignore[return-value]
+
+
+def _correct_pending_analysis(analysis_id: str, instruction: str) -> Dict[str, Any]:
+    with PENDING_ANALYSIS_LOCK:
+        _prune_pending_analyses()
+        entry = PENDING_ANALYSES.get(analysis_id)
+        if not entry or not isinstance(entry.get("result"), dict):
+            raise ValueError("辨識結果不存在或已超過 15 分鐘，請重新上傳照片")
+        correction = apply_manual_correction(entry["result"], instruction)  # type: ignore[arg-type]
+        entry["expires_at"] = time.time() + PENDING_ANALYSIS_TTL_SECONDS
+        return correction
+
+
+def _analysis_response(result: Dict[str, Any], analysis_id: str) -> Dict[str, Any]:
+    quality = result.get("quality") if isinstance(result.get("quality"), dict) else {}
+    item_count = int(quality.get("itemCount") or sum(
+        len(category.get("items", [])) for category in result.get("categories", []) if isinstance(category, dict)
+    ))
+    return {
+        "success": True,
+        "analysisId": analysis_id,
+        "expiresInSeconds": PENDING_ANALYSIS_TTL_SECONDS,
+        "restaurantNameCandidate": result.get("detected_restaurant_name") or result.get("restaurant_name") or "",
+        "requestedRestaurantName": (result.get("identity") or {}).get("userHint", "")
+        if isinstance(result.get("identity"), dict) else "",
+        "itemCount": item_count,
+        "categories": result.get("categories", []),
+        "sourceType": result.get("source_type"),
+        "quality": quality,
+        "priceCoverage": quality.get("priceCoverage", 0),
+        "conflicts": result.get("conflicts", []),
+        "identity": result.get("identity", {}),
+        "identityConflict": bool(result.get("identityConflict")),
+        "needsAcceptance": bool(
+            result.get("identityConflict")
+            or result.get("conflicts")
+            or float(quality.get("score") or 0) < 0.75
+        ),
+        "warnings": result.get("warnings", []),
+    }
+
+
+def _register_vision_menu(result: Dict[str, Any]) -> Dict[str, Any]:
+    """把一份已確認的 VLM 辨識結果寫成菜單檔並設為當前餐廳。"""
+    global ACTIVE_RESTAURANT, menu
+    restaurant_name = str(result.get("restaurant_name") or "").strip()
+    if not restaurant_name:
+        raise ValueError("無法確認餐廳名稱，請先輸入餐廳名稱")
+
+    category_map = {
+        str(category.get("name") or "其他"): {"items": list(category.get("items") or [])}
+        for category in result.get("categories", [])
+        if isinstance(category, dict) and category.get("items")
+    }
+    item_count = sum(len(value["items"]) for value in category_map.values())
+    if not item_count:
+        raise ValueError("沒有可新增的菜單項目")
+
+    runtime_menu: Menu = {
+        "restaurants": {
+            restaurant_name: {
+                "name": restaurant_name,
+                "categories": category_map,
+            }
+        }
+    }
+    # 先寫暫存檔再 replace，避免中途失敗留下半份菜單
+    output_path = _safe_menu_path(restaurant_name)
+    temporary_path = f"{output_path}.tmp"
+    with open(temporary_path, "w", encoding="utf-8") as file:
+        json.dump(to_persisted_document(result), file, ensure_ascii=False, indent=2)
+    os.replace(temporary_path, output_path)
+
+    RESTAURANT_MENUS[restaurant_name] = runtime_menu
+    ACTIVE_RESTAURANT = restaurant_name
+    menu = runtime_menu
+    return {"restaurantName": restaurant_name, "itemCount": item_count, "categories": list(category_map)}
+
 
 def _crawler_error_message(restaurant) -> Optional[str]:
     if not restaurant:
@@ -338,6 +469,13 @@ class UpdateMenuResp(BaseModel):
 
 class RestaurantReviewRefreshReq(BaseModel):
     restaurant_name: str
+
+class VisionConfirmReq(BaseModel):
+    restaurant_name: str = ""
+    accept_conflicts: bool = False
+
+class VisionCorrectionReq(BaseModel):
+    instruction: str
 
 @app.get("/health")
 def health():
@@ -597,6 +735,79 @@ async def upload_menu_photo(
         import traceback
         traceback.print_exc()
         return {"success": False, "message": f"辨識失敗：{str(e)}"}
+
+
+@app.post("/api/menu/vision")
+async def create_menu_from_photo(
+    restaurant_name: str = Form(default=""),
+    image: UploadFile = File(...),
+):
+    """辨識照片，結果先進待確認區，不直接寫入菜單。"""
+    image_bytes = await image.read(MAX_IMAGE_BYTES + 1)
+    if len(image_bytes) > MAX_IMAGE_BYTES:
+        raise HTTPException(413, "圖片不可超過 10 MB")
+    try:
+        # 辨識是同步且會打好幾次 VLM，丟到執行緒避免卡住事件迴圈
+        loop = asyncio.get_running_loop()
+        result = await loop.run_in_executor(
+            None,
+            lambda: analyze_menu_image(image_bytes, image.content_type or "", restaurant_name),
+        )
+        analysis_id = _store_pending_analysis(result)
+        return _analysis_response(result, analysis_id)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(502, f"VLM 服務錯誤：{exc}") from exc
+
+
+@app.post("/api/menu/vision/{analysis_id}/confirm")
+def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
+    """使用者確認後才把待確認結果寫成菜單。"""
+    try:
+        result = _take_pending_analysis(analysis_id)
+        restaurant_name = (req.restaurant_name or str(result.get("restaurant_name") or "")).strip()
+        if not restaurant_name:
+            restaurant_name = str(result.get("detected_restaurant_name") or "").strip()
+        if not restaurant_name:
+            raise ValueError("請提供餐廳名稱後再確認")
+        quality = result.get("quality") if isinstance(result.get("quality"), dict) else {}
+        needs_acceptance = bool(
+            result.get("identityConflict")
+            or result.get("conflicts")
+            or float(quality.get("score") or 0) < 0.75
+        )
+        if needs_acceptance and not req.accept_conflicts:
+            # 放回待確認區，讓使用者看過摘要後可以再送一次
+            with PENDING_ANALYSIS_LOCK:
+                PENDING_ANALYSES[analysis_id] = {
+                    "result": result,
+                    "created_at": time.time(),
+                    "expires_at": time.time() + PENDING_ANALYSIS_TTL_SECONDS,
+                }
+            raise HTTPException(409, "店名、辨識衝突或品質需要人工檢查，請確認摘要後明確接受再送出")
+        result["restaurant_name"] = restaurant_name
+        summary = _register_vision_menu(result)
+        return {"success": True, **summary, "quality": result.get("quality", {}), "warnings": result.get("warnings", [])}
+    except HTTPException:
+        raise
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/menu/vision/{analysis_id}/correct")
+def correct_menu_from_photo(analysis_id: str, req: VisionCorrectionReq):
+    """修正待確認結果，不動到已存檔的菜單。"""
+    try:
+        correction = _correct_pending_analysis(analysis_id, req.instruction)
+        result = correction["result"]
+        return {
+            **_analysis_response(result, analysis_id),
+            "correctionMessage": correction["message"],
+            "manualCorrections": result.get("manualCorrections", []),
+        }
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
 
 
 @app.post("/api/chat", response_model=ChatResp)
