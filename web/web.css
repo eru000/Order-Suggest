@@ -15,6 +15,10 @@
   --border: rgba(15, 23, 42, 0.10);
   --shadow-soft: 0 12px 28px rgba(15, 23, 42, 0.10);
   --radius: 14px;
+
+  /* 內建的 CSS easing 太軟，UI 動畫一律用這兩條 */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 /* ============================================
@@ -1595,6 +1599,623 @@ body {
   .menu-item-name,
   .menu-item-price {
     font-size: 14px;
+  }
+}
+
+/* ============================================
+   照片辨識菜單（VLM）— 辨識 → 確認 → 修正
+   ============================================ */
+
+/* 進退場用 transition 而非 keyframes：使用者可能連續開關，
+   transition 會從當前值重新導向，keyframes 會從頭重播。
+   退場刻意比進場快（系統回應要俐落，使用者決策時才需要慢）。 */
+.vision-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 160ms var(--ease-out), visibility 160ms;
+}
+
+.vision-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 220ms var(--ease-out), visibility 220ms;
+}
+
+.vision-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(3px);
+}
+
+[data-theme="dark"] .vision-modal-overlay {
+  background: rgba(0, 0, 0, 0.62);
+}
+
+/* modal 保持 transform-origin: center —— 它不錨定在某個觸發元件上 */
+.vision-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  max-height: 86vh;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+  /* 縮放、位移、模糊一起動，讀起來像一塊實體浮上來，而不是憑空淡入 */
+  transform: scale(0.96) translateY(10px);
+  filter: blur(6px);
+  transition: transform 180ms var(--ease-out), filter 180ms var(--ease-out);
+}
+
+.vision-modal.is-open .vision-sheet {
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+  transition: transform 280ms var(--ease-out), filter 280ms var(--ease-out);
+}
+
+[data-theme="dark"] .vision-sheet {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* --- 標頭 --- */
+.vision-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.vision-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em; /* 大字收緊，小字不動 */
+  color: var(--fg);
+}
+
+.vision-step {
+  margin: 4px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+
+.vision-close {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
+}
+
+.vision-close:active {
+  transform: scale(0.94);
+}
+
+.vision-close:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- 內容區 --- */
+.vision-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 20px;
+}
+
+/* 還沒捲到底時底緣淡出，讓「下面還有」看得出來，比一條硬分隔線清楚。
+   只有真的有東西可捲才加上，內容不長時不該無故淡化。 */
+.vision-body.has-more {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+}
+
+/* hidden 屬性只是 UA 樣式的 display:none，會被任何作者端 display 規則蓋掉。
+   這個元件用 hidden 切換好幾個區塊，所以統一擋回來，避免下次新增區塊又踩到。 */
+.vision-sheet [hidden] {
+  display: none;
+}
+
+/* --- 步驟 1：選檔 --- */
+.vision-drop {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  padding: 32px 20px;
+  border: 1.5px dashed var(--border);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 200ms ease, background-color 200ms ease, transform 160ms var(--ease-out);
+}
+
+.vision-drop:active {
+  transform: scale(0.99);
+}
+
+.vision-drop.is-dragging {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.vision-drop-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.vision-drop-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.vision-drop-hint {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.vision-field {
+  margin-top: 16px;
+}
+
+.vision-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.vision-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.vision-input:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+/* --- 步驟 2：辨識中 --- */
+.vision-busy {
+  display: grid;
+  gap: 14px;
+  padding: 24px 4px;
+  text-align: center;
+}
+
+.vision-busy-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.vision-busy-note {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+
+.vision-busy-elapsed {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+/* 不確定型進度：刻意不假裝知道進度，只表示「還在動」 */
+.vision-track {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  overflow: hidden;
+}
+
+.vision-track::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  animation: vision-sweep 1.4s linear infinite;
+}
+
+@keyframes vision-sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(350%); }
+}
+
+/* --- 步驟 3：確認 --- */
+.vision-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.vision-chip {
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.vision-chip.good {
+  background: #dcfce7;
+  border-color: transparent;
+  color: #166534;
+}
+
+.vision-chip.warn {
+  background: #fef3c7;
+  border-color: transparent;
+  color: #92400e;
+}
+
+.vision-chip.bad {
+  background: #fee2e2;
+  border-color: transparent;
+  color: #991b1b;
+}
+
+[data-theme="dark"] .vision-chip.good {
+  background: rgba(34, 197, 94, 0.16);
+  color: #86efac;
+}
+
+[data-theme="dark"] .vision-chip.warn {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fcd34d;
+}
+
+[data-theme="dark"] .vision-chip.bad {
+  background: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+}
+
+.vision-notice {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+[data-theme="dark"] .vision-notice {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fcd34d;
+}
+
+.vision-notice-title {
+  font-weight: 700;
+}
+
+.vision-notice ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.vision-section-title {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-muted);
+}
+
+.vision-items {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.vision-cat {
+  margin: 10px 0 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-muted);
+}
+
+.vision-cat:first-child {
+  margin-top: 0;
+}
+
+.vision-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: var(--surface-strong);
+  font-size: 0.875rem;
+}
+
+/* 編號必須跟後端修正指令的編號一致，所以跨分類連續編號 */
+.vision-item-no {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  text-align: right;
+}
+
+.vision-item-name {
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.vision-item-price {
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.vision-item-price.missing {
+  color: var(--fg-muted);
+  font-weight: 500;
+}
+
+/* 只有第一次進入確認步驟才做依序浮現；改完一項重播整串會很吵。
+   延遲索引由 JS 寫在 --i：品項之間夾著分類標題，用 nth-child 會數錯。
+   索引在 JS 端就封頂，長菜單不會讓最後幾項等太久。 */
+.vision-items.is-first-reveal .vision-item {
+  opacity: 0;
+  animation: vision-rise 260ms var(--ease-out) calc(var(--i, 0) * 40ms) forwards;
+}
+
+@keyframes vision-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 修正列 --- */
+.vision-correct {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.vision-correct-hint {
+  grid-column: 1 / -1;
+  margin-top: -2px;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.vision-correct-msg {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--primary);
+}
+
+/* --- 頁尾按鈕 --- */
+.vision-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.vision-accept {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.vision-accept input {
+  margin-top: 2px;
+  flex: 0 0 auto;
+  accent-color: var(--primary);
+}
+
+.vision-foot-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.vision-btn {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, opacity 200ms ease;
+}
+
+.vision-btn:active {
+  transform: scale(0.97);
+}
+
+.vision-btn.primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+}
+
+.vision-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.vision-error {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+[data-theme="dark"] .vision-error {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+}
+
+/* hover 只給真正有指標裝置的環境，觸控點一下不該留著 hover 狀態 */
+@media (hover: hover) and (pointer: fine) {
+  .vision-close:hover {
+    background: var(--surface-strong);
+    color: var(--fg);
+  }
+
+  .vision-drop:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+
+  .vision-btn:hover:not(:disabled) {
+    background: var(--surface-strong);
+  }
+
+  .vision-btn.primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    opacity: 0.92;
+  }
+}
+
+@media (max-width: 640px) {
+  .vision-modal {
+    padding: 12px;
+  }
+
+  .vision-sheet {
+    max-height: 92vh;
+    border-radius: 14px;
+  }
+
+  .vision-head {
+    padding: 14px 16px 12px;
+  }
+
+  .vision-body {
+    padding: 14px 16px;
+  }
+
+  .vision-foot {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+  }
+
+  .vision-foot-actions {
+    margin-left: 0;
+  }
+
+  .vision-foot-actions .vision-btn {
+    flex: 1;
+  }
+
+  .vision-correct {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 降低動態：保留不透明度變化（有助於理解狀態），移除位移、縮放與循環動畫 */
+@media (prefers-reduced-motion: reduce) {
+  .vision-sheet,
+  .vision-modal.is-open .vision-sheet {
+    transform: none;
+    filter: none;
+    transition: opacity 160ms ease;
+  }
+
+  .vision-btn:active,
+  .vision-close:active,
+  .vision-drop:active {
+    transform: none;
+  }
+
+  .vision-items.is-first-reveal .vision-item {
+    opacity: 1;
+    animation: none;
+  }
+
+  .vision-track::after {
+    animation: none;
+    width: 100%;
+    background: var(--primary-soft);
+  }
+}
+
+/* 降低透明度：實心背景、拿掉模糊 */
+@media (prefers-reduced-transparency: reduce) {
+  .vision-modal-overlay {
+    background: rgba(15, 23, 42, 0.86);
+    backdrop-filter: none;
+  }
+
+  [data-theme="dark"] .vision-modal-overlay {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .vision-sheet {
+    filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .vision-sheet {
+    border-color: var(--fg);
+  }
+
+  .vision-chip,
+  .vision-btn {
+    border-color: var(--fg);
   }
 }
 

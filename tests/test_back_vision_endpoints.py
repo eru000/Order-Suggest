@@ -162,7 +162,11 @@ class VisionEndpointTests(unittest.TestCase):
             back._take_pending_analysis(analysis_id)
 
     def test_legacy_upload_menu_photo_endpoint_still_exists(self):
-        """前端目前還在打這個端點，接新流程之前不能先斷掉。"""
+        """前端已改走 /api/menu/vision，舊端點暫時留著當退路。
+
+        兩條路徑並存是刻意的過渡狀態：舊端點辨識完直接覆寫菜單、沒有確認步驟，
+        等新流程實際用過確認沒問題再移除。
+        """
         paths = {route.path for route in back.app.routes if hasattr(route, "path")}
         self.assertIn("/api/upload-menu-photo", paths)
         self.assertIn("/api/menu/vision", paths)
