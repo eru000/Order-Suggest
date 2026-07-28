@@ -1,6 +1,11 @@
 fastapi>=0.110
 uvicorn[standard]>=0.27
 pydantic>=2.5
+python-multipart>=0.0.9
+
+# VLM 菜單辨識（menu_vision）
+Pillow>=10.2
+pillow-heif>=0.18      # iPhone HEIC 照片
 
 # MySQL
 mysql-connector-python>=9.0
