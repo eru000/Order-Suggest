@@ -1,7 +1,7 @@
 
 import os, json, re, shutil, subprocess, random, time
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple
 from urllib import request, error
 
 # 修正導入路徑（src 目錄下要用 db.db_client）
@@ -180,6 +180,79 @@ def chat(messages: List[Dict[str, str]], model: Optional[str] = None, timeout: f
         return _api_chat(messages, api_model, timeout=timeout)
     prompt = _build_prompt_from_messages(messages)
     return _cli_run(["run", mdl], input_text=prompt, timeout=timeout)
+
+
+def _api_chat_stream(
+    messages: List[Dict[str, Any]],
+    model: str,
+    timeout: float = 180.0,
+    temperature: Optional[float] = None,
+) -> Iterator[str]:
+    """OpenAI 相容的 SSE 串流，逐段 yield 文字。
+
+    總耗時跟非串流版差不多，差別在第一個字什麼時候出現：
+    實測整段要 11-28 秒，但第一個字約 4-5 秒就到，等待感完全不同。
+    """
+    url = API_BASE_URL
+    if not url.endswith("/chat/completions"):
+        url = f"{url}/chat/completions"
+
+    payload = {
+        "model": model,
+        "messages": messages,
+        "temperature": _float_env("API_TEMPERATURE", 0.7) if temperature is None else temperature,
+        "stream": True,
+    }
+    req = request.Request(
+        url,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+
+    try:
+        resp = request.urlopen(req, timeout=timeout)
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"model API stream failed: HTTP {exc.code} {detail}") from exc
+
+    with resp:
+        for raw in resp:
+            line = raw.decode("utf-8", errors="replace").strip()
+            if not line.startswith("data:"):
+                continue
+            body = line[5:].strip()
+            if body == "[DONE]":
+                return
+            try:
+                obj = json.loads(body)
+            except json.JSONDecodeError:
+                # 心跳或被切斷的片段，跳過就好，不該讓整條串流掛掉
+                continue
+            choices = obj.get("choices") or [{}]
+            piece = (choices[0].get("delta") or {}).get("content")
+            if piece:
+                yield piece
+
+
+def chat_stream(
+    messages: List[Dict[str, str]],
+    model: Optional[str] = None,
+    timeout: float = 180.0,
+) -> Iterator[str]:
+    """串流版 chat()。沒有設定遠端 API 時，退回一次性回應並整段 yield。"""
+    mdl = model or DEFAULT_MODEL
+    if API_BASE_URL and API_KEY:
+        api_model = (os.environ.get("API_MODEL") or os.environ.get("AI_MODEL")
+                     or os.environ.get("MODEL") or mdl)
+        yield from _api_chat_stream(messages, api_model, timeout=timeout)
+        return
+    # 本機 Ollama CLI 沒有串流介面，只能等它跑完再一次吐出來
+    prompt = _build_prompt_from_messages(messages)
+    yield _cli_run(["run", mdl], input_text=prompt, timeout=timeout)
 
 
 def vision_chat(
