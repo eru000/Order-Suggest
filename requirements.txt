@@ -6,14 +6,3 @@ python-multipart>=0.0.9
 # VLM 菜單辨識（menu_vision）
 Pillow>=10.2
 pillow-heif>=0.18      # iPhone HEIC 照片
-
-# MySQL
-mysql-connector-python>=9.0
-
-# Optional: log analysis script
-matplotlib>=3.8
-
-# Crawler (Google Maps scraping)
-playwright>=1.41
-playwright-stealth>=1.0.0  # 反檢測
-fake-useragent>=1.4.0      # 隨機 User-Agent

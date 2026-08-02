@@ -19,8 +19,5 @@ reviews_*.json
 # Local secrets
 .env
 
-# Playwright downloads
-playwright/.local-browsers/
-
-# Local Chrome profile used by crawler CDP session
-.chrome_debug_profile/
+# Debug screenshots
+src/debug_*.png
