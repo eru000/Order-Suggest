@@ -24,3 +24,8 @@ playwright/.local-browsers/
 
 # Local Chrome profile used by crawler CDP session
 .chrome_debug_profile/
+
+# Course documents and debug artifacts (keep local, this repo is public)
+*.pdf
+*.docx
+src/debug_*.png
