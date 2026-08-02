@@ -185,6 +185,130 @@ def normalize_menu(menu: Menu) -> Dict[str, int]:
 # 偏好抽取
 _SPICE_WORDS = ["不辣", "微辣", "小辣", "中辣", "大辣", "很辣"]
 
+# 辣度關鍵字。順序有意義：「不吃辣」也包含「吃辣」，先比對正面線索會判成相反的意思，
+# 所以一律「先否定、後肯定」，明確等級再排在模糊線索前面。
+_SPICE_MILD = [
+    "不要太辣", "不會太辣", "不能太辣", "別太辣", "不要很辣", "不要超辣", "不要大辣",
+    "微微辣", "小小辣", "微辣", "小辣", "一點點辣", "一點辣", "辣度普通", "普通辣",
+]
+_SPICE_NONE = [
+    "不吃辣", "不能吃辣", "不敢吃辣", "不會吃辣", "受不了辣", "怕辣",
+    "不要辣", "不加辣", "免辣", "去辣", "無辣", "不辣",
+]
+_SPICE_STRONG = [("中辣", "中辣"), ("大辣", "大辣"), ("很辣", "大辣"),
+                 ("超辣", "大辣"), ("特辣", "大辣"), ("重辣", "大辣")]
+_SPICE_YES = ["要辣", "吃辣", "辣一點", "重口味", "嗜辣", "愛吃辣"]
+
+# 出現在忌口欄位時要丟掉的辣度詞：辣度由 spiceLevel 表達，
+# 留在 excludes 只會變成比對不到任何菜名的無效關鍵字（例如「太辣」）。
+_SPICE_NOISE = {"辣", "太辣", "很辣", "超辣", "大辣", "中辣", "小辣", "微辣", "重辣"}
+
+_NEGATORS = ("不", "別", "免", "去", "沒", "勿", "無", "怕", "少")
+
+# 忌口片語的斷句字元。中文輸入法常打出全形空白與全形標點，漏掉它們會讓整句
+# 都被當成同一個忌口片語（「不要牛肉　要飲料」會多出「要飲料」這個假忌口）。
+# 注意「、」不在這裡：它是忌口項目之間的並列符號，不是句子結束。
+_EXCLUDE_STOPS = ("。", "，", ",", "；", ";", "！", "!", "？", "?",
+                  "\n", "\t", " ", "　")
+
+
+def _cut_at_first_stop(seg: str) -> str:
+    """切到最靠前的那個斷句字元。
+
+    不能照清單順序逐一 find 就 break——那樣切到的是「清單裡第一個出現過的」
+    符號，不是句子裡位置最前面的，遇到混用標點就會切錯位置。
+    """
+    positions = [pos for pos in (seg.find(s) for s in _EXCLUDE_STOPS) if pos != -1]
+    return seg[:min(positions)] if positions else seg
+
+
+def _is_negated(text: str, idx: int) -> bool:
+    """檢查 text[idx] 這個詞的前 3 個字內有沒有否定詞。
+
+    用來擋掉「不吃大辣」這種：關鍵字「大辣」有命中，但整句其實是否定的。
+    """
+    return any(n in text[max(0, idx - 3):idx] for n in _NEGATORS)
+
+
+def _match_spice(t: str) -> Optional[str]:
+    """從自然語句判斷辣度，回傳 _SPICE_WORDS 裡的標準值或 None。"""
+    for w in _SPICE_MILD:
+        if w in t:
+            return "小辣"
+    for w in _SPICE_NONE:
+        if w in t:
+            return "不辣"
+    for w, level in _SPICE_STRONG:
+        idx = t.find(w)
+        if idx != -1:
+            return "小辣" if _is_negated(t, idx) else level
+    for w in _SPICE_YES:
+        idx = t.find(w)
+        if idx != -1 and not _is_negated(t, idx):
+            return "中辣"
+    # 前面都沒中，但句子裡有「辣」又帶否定詞（例如「這家不會辣吧」）
+    idx = t.find("辣")
+    if idx != -1 and _is_negated(t, idx):
+        return "不辣"
+    return None
+
+
+_CN_DIGITS = {"零": 0, "一": 1, "二": 2, "兩": 2, "三": 3, "四": 4,
+              "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+_CN_UNITS = {"十": 10, "百": 100, "千": 1000}
+
+
+def _cn_to_int(s: str) -> Optional[int]:
+    """把「兩百」「三百五」「一千二」這類中文數字轉成整數，無法解析回 None。"""
+    total = current = 0
+    last_unit = 1
+    for ch in s:
+        if ch in _CN_DIGITS:
+            current = _CN_DIGITS[ch]
+        elif ch in _CN_UNITS:
+            unit = _CN_UNITS[ch]
+            total += (current or 1) * unit
+            current = 0
+            last_unit = unit
+        else:
+            return None
+    if current:
+        # 「三百五」口語是 350，尾數要補上比前一個單位小一級的位數
+        total += current * (last_unit // 10) if last_unit >= 10 and total else current
+    return total or None
+
+
+_BUDGET_CUES = r"預算|不超過|不要超過|沒超過|小於|低於|最多|上限|以內|以下|<="
+# 兩個 pattern 都把金額放在具名群組 amount/cn，避免用位置索引取到單位字元。
+_BUDGET_PATTERNS = [
+    re.compile(rf"(?:{_BUDGET_CUES})\s*(?P<amount>\d{{2,6}})"),
+    re.compile(r"(?P<amount>\d{2,6})\s*(?:元|塊|圓|NT\$?|NTD)", re.IGNORECASE),
+    re.compile(rf"(?:{_BUDGET_CUES})\s*(?P<cn>[一二兩三四五六七八九十百千]+)"),
+    re.compile(r"(?P<cn>[一二兩三四五六七八九十百千]+)\s*(?:元|塊|圓)"),
+    # 「一千二以內」「800 以內」——提示詞在金額後面，單位可省略
+    re.compile(r"(?P<amount>\d{2,6})\s*(?:元|塊|圓)?\s*(?:以內|以下|之內|左右|上下)"),
+    re.compile(r"(?P<cn>[一二兩三四五六七八九十百千]+)\s*(?:元|塊|圓)?\s*(?:以內|以下|之內|左右|上下)"),
+]
+
+
+def _match_budget(t: str) -> Optional[float]:
+    """抓預算金額，支援「預算300」「800元」「兩百塊以內」等寫法。"""
+    for pat in _BUDGET_PATTERNS:
+        m = pat.search(t)
+        if not m:
+            continue
+        groups = m.groupdict()
+        if groups.get("amount"):
+            try:
+                return float(groups["amount"])
+            except ValueError:
+                continue
+        if groups.get("cn"):
+            value = _cn_to_int(groups["cn"])
+            if value:
+                return float(value)
+    return None
+
 
 def extract_prefs_with_llm(text: str) -> Preferences:
     """ 使用 LLM 智能提取使用者偏好（語意理解）"""
@@ -258,42 +382,31 @@ def extract_prefs_from_text(text: str) -> Preferences:
     t = text.strip()
 
     # 辣度
-    for w in _SPICE_WORDS:
-        if w in t:
-            prefs["spiceLevel"] = "小辣" if w == "微辣" else w
-            break
-    else:
-        # 沒有出現明確等級，但提到想吃辣/重口味，也給一個預設辣度
-        if any(k in t for k in ["要辣", "吃辣", "辣一點", "重口味"]):
-            prefs["spiceLevel"] = "辣"
+    spice = _match_spice(t)
+    if spice:
+        prefs["spiceLevel"] = spice
 
     # 忌口
     excludes: List[str] = []
-    for cue in ("不要", "不吃", "忌口"):
+    for cue in ("不要", "不吃", "不敢吃", "忌口", "過敏"):
         idx = t.find(cue)
         if idx != -1:
             seg = t[idx + len(cue):]
-            for stop in ["。", " ", "，", ",", ";", "！", "?", "\n"]:
-                cut = seg.find(stop)
-                if cut != -1:
-                    seg = seg[:cut]
-                    break
-            for p in re.split(r"[、,\s]+", seg):
+            seg = _cut_at_first_stop(seg)
+            # 「跟/和/與/及/還有」也是並列詞。不切開的話「牛肉跟豬肉」會變成一個
+            # 對不到任何菜名的假關鍵字，等於整條忌口失效。
+            for p in re.split(r"[、,\s]+|跟|和|與|及|還有|以及|加上", seg):
                 p = p.strip()
-                if p:
+                # 辣度已由 spiceLevel 表達，留在這裡只會產生「太辣」這種無效關鍵字
+                if p and p not in _SPICE_NOISE:
                     excludes.append(p)
     if excludes:
         prefs["excludes"] = list(dict.fromkeys(excludes))
 
     # 預算
-    m = re.search(r"(預算|不超過|小於|低於|<=)\s*(\d{2,6})", t)
-    if not m:
-        m = re.search(r"(\d{2,6})\s*(元|塊|NT|NTD)", t, flags=re.IGNORECASE)
-    if m:
-        try:
-            prefs["budget"] = float(m.group(2) if m.lastindex and m.lastindex >= 2 else m.group(1))
-        except Exception:
-            pass
+    budget = _match_budget(t)
+    if budget is not None:
+        prefs["budget"] = budget
 
     # 菜系
     for c in ("中式", "日式", "泰式", "美式", "韓式", "義式"):
@@ -332,13 +445,19 @@ def extract_prefs_from_text(text: str) -> Preferences:
         prefs["needDrink"] = True
         print(f" [DEBUG extract_prefs] 識別到「要飲料」，設定 needDrink=True")
 
-    # 人數
-    m2 = re.search(r"(\d{1,2})\s*人", t)
+    # 人數。「四個人」「兩位」這種口語跟「4人」一樣常見，中文數字也要吃。
+    m2 = re.search(r"(\d{1,2})\s*(?:個|位)?\s*人", t)
     if m2:
         try:
             prefs["people"] = int(m2.group(1))
-        except Exception:
+        except ValueError:
             pass
+    else:
+        m2 = re.search(r"([一二兩三四五六七八九十]+)\s*(?:個|位)?\s*人", t)
+        if m2:
+            people = _cn_to_int(m2.group(1))
+            if people:
+                prefs["people"] = people
 
     # 動態權重線索
     cue_main = any(k in t for k in ["主菜", "吃飽", "份量", "大份", "有菜有肉"])
