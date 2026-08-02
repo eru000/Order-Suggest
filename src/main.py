@@ -832,6 +832,103 @@ def generate_conversation(
     return reply, history
 
 
+def generate_ai_reply_stream(
+    rec: Dict[str, object],
+    user_input: str,
+    model: Optional[str] = None,
+    timeout: float = 180.0,
+):
+    """串流版 generate_ai_reply()。
+
+    降級策略跟非串流版不同：一旦已經吐出任何文字，就不能再改用模板補救，
+    否則畫面上會出現「半段 AI 回覆 + 一整段模板」的重複內容。
+    所以只有在「一個字都還沒吐出來」時才降級。
+    """
+    from ollama_fuc import chat_stream as _ollama_chat_stream
+
+    mdl = model or DEFAULT_MODEL
+    prompt = _build_recommendation_prompt(rec, user_input)
+    produced = False
+
+    try:
+        for piece in _ollama_chat_stream(
+            [{"role": "user", "content": prompt}], model=mdl, timeout=timeout
+        ):
+            if piece:
+                produced = True
+                yield piece
+    except Exception as e:
+        print(f" [generate_ai_reply_stream] 錯誤: {e}"
+              f"{'，已輸出部分內容，不再降級' if produced else '，降級使用模板'}")
+        if not produced:
+            yield _fallback_format(rec)
+        return
+
+    if not produced:
+        print(" [generate_ai_reply_stream] LLM 返回空回覆，降級使用模板")
+        yield _fallback_format(rec)
+
+
+def generate_conversation_stream(
+    history: List[ConversationTurn],
+    user_input: str,
+    menu: Menu,
+    prefs: Preferences,
+    model: Optional[str] = None,
+):
+    """與 generate_conversation() 相同的流程，但拆成多個事件逐步吐出。
+
+    事件順序刻意設計成「先資料、後文字」：
+
+      1. {"type": "recommendation"} —— recommend() 是純本機計算，實測 0.0 秒，
+         所以推薦品項與價格可以立刻送到畫面上。
+      2. {"type": "delta"} —— AI 的說明文字，逐段補上。
+
+    這個順序很重要。實測 LLM 的等待幾乎全部落在「第一個字出現之前」
+    （12-42 秒，且與 prompt 長度無關，是遠端排隊），生成本身只要 1.4-2.3 秒。
+    所以單純把回覆改成串流幾乎沒有幫助——真正有感的是先把已經算好的推薦
+    結果送出去，讓使用者一秒內就看到答案，再等 AI 補說明。
+
+    history 會在串流結束後才寫入完整回覆——中途中斷的半截內容不該被當成
+    有效的對話紀錄帶進下一輪。
+    """
+    history.append({"role": "user", "content": user_input, "meta": {}})
+
+    dynamic = extract_prefs_from_text(user_input)
+    dynamic.setdefault("notes", user_input)
+    merge_prefs_inplace(prefs, dynamic)
+
+    try:
+        if ollama_recommend is None:
+            raise RuntimeError("推薦功能未載入")
+        rec = ollama_recommend(menu, prefs, top_k=5, model=model)
+    except Exception as e:
+        text = f"推薦發生錯誤：{e}"
+        history.append({"role": "assistant", "content": text, "meta": {}})
+        yield {"type": "delta", "text": text}
+        return
+
+    items = [i for i in (rec.get("items") or []) if isinstance(i, dict)]
+    subtotal = sum(
+        float(i.get("price") or 0)
+        for i in items
+        if isinstance(i.get("price"), (int, float))
+    )
+    yield {
+        "type": "recommendation",
+        "items": items,
+        "meta": rec.get("meta") or {},
+        "subtotal": subtotal,
+    }
+
+    pieces: List[str] = []
+    for piece in generate_ai_reply_stream(rec, user_input, model=model):
+        pieces.append(piece)
+        yield {"type": "delta", "text": piece}
+
+    history.append({"role": "assistant", "content": "".join(pieces), "meta": {}})
+
+
 
 
 def _validate_menu(menu: Menu) -> None:

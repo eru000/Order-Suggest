@@ -1456,30 +1456,30 @@ h1, h2, h3,
     font-size: 10px;
   }
   
-  /* 按鈕區域：左右分欄 */
+  /* 按鈕區域：手機上排成一列。
+     原本左右兩欄都是 flex-direction: column，5 顆按鈕會疊成三排，
+     光 header 就吃掉 199px——iPhone 13 螢幕高只有 664px，等於 30% 拿去放按鈕，
+     聊天內容被擠到幾乎看不見。改成橫排後 header 約 100px。 */
   .header-actions {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px 14px;
     width: 100%;
   }
-  
-  .header-actions-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
+
+  /* display: contents 讓左右兩組的按鈕直接成為 .header-actions 的排版對象。
+     不這樣做的話，5 顆按鈕會被綁在各自容器裡互相擠壓，而按鈕文字是
+     white-space: nowrap，壓縮後會溢出容器變成疊字。 */
+  .header-actions-left,
   .header-actions-right {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    min-width: 85px;
+    display: contents;
   }
   
   .header-actions button {
     font-size: 12px;
     padding: 6px 2px; /* 減少內邊距 */
+    /* 不准被 flex 壓縮：文字是 nowrap，一旦盒子被壓窄就會溢出疊到隔壁按鈕上 */
+    flex: 0 0 auto;
     width: auto; /* 自動寬度 */
     height: auto;
     white-space: nowrap;
@@ -1557,10 +1557,15 @@ h1, h2, h3,
     font-size: 13px;
   }
   
+  /* 原本是 width/height: 34px 的正方形——那是純圖示按鈕的尺寸。
+     但這些按鈕都有文字標籤（深色模式、清空對話…），而文字是
+     white-space: nowrap，固定 34px 寬會讓每顆按鈕的文字整個溢出，
+     在手機上疊成一團完全看不懂。改成由內容決定寬度，只保留觸控高度。 */
   .header-actions button {
-    width: 34px;
-    height: 34px;
-    font-size: 15px;
+    width: auto;
+    height: auto;
+    min-height: 34px;
+    font-size: 13px;
   }
   
   /* Toast 通知 */
@@ -2281,6 +2286,105 @@ h1, h2, h3,
 .vision-notice ul {
   margin: 0;
   padding-left: 18px;
+}
+
+/* ---- 即時推薦卡片 ----------------------------------------------------
+   推薦品項是本機算出來的（實測 0.03 秒），所以先顯示在這張卡片上，
+   不必等 LLM 的第一個字（遠端排隊，實測要 12-42 秒）。
+   AI 的說明文字之後再串流補進下面的 .rec-prose。                        */
+
+.rec-card {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  background: var(--bg-raised);
+}
+
+.rec-card.hidden {
+  display: none;
+}
+
+.rec-head {
+  margin-bottom: var(--space-2);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.rec-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rec-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+}
+
+.rec-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 500;
+  /* 菜名可能很長，手機上要能斷行而不是把卡片撐爆 */
+  overflow-wrap: anywhere;
+}
+
+.rec-price {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.rec-why {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.rec-total {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+/* 等 AI 補說明時的提示。這段等待實測 12-42 秒，一定要讓它看起來像在動，
+   否則會被當成當機。 */
+.rec-waiting {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+.rec-waiting::after {
+  content: '';
+  animation: rec-dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes rec-dots {
+  0%   { content: ''; }
+  25%  { content: '·'; }
+  50%  { content: '··'; }
+  75%  { content: '···'; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rec-waiting::after {
+    animation: none;
+    content: '···';
+  }
+}
+
+/* 手機直向時把理由收掉，一行放不下三欄 */
+@media (max-width: 480px) {
+  .rec-why {
+    display: none;
+  }
 }
 
 .vision-section-title {

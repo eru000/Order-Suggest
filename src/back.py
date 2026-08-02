@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional
 import base64
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import asyncio
@@ -23,6 +23,7 @@ from main import (
     Menu, Preferences, ConversationTurn,
     _validate_menu, normalize_menu, write_menu_json,
     generate_conversation,
+    generate_conversation_stream,
 )
 
 from restaurant_reviews import load_review_cache, refresh_restaurant_reviews
@@ -588,6 +589,47 @@ def api_chat(req: ChatReq):
     _log_chat(req.sessionId, req.text, reply, prefs)
 
     return {"reply": reply}
+
+
+@app.post("/api/chat/stream")
+def api_chat_stream(req: ChatReq):
+    """SSE 串流版對話。
+
+    先送 recommendation 事件（本機計算，約 1 秒內到），再逐段送 AI 說明文字。
+    重點在第一個事件：LLM 的第一個字要等 12-42 秒（遠端排隊，與 prompt 長度
+    無關），但推薦品項與價格不必等它。
+
+    前端拿不到串流時會自動退回 /api/chat，所以這支掛掉不會讓功能不可用。
+    """
+    s = SESSIONS.setdefault(req.sessionId, {"prefs": {}, "history": []})
+    prefs: Preferences = s["prefs"]  # type: ignore[assignment]
+    history: List[ConversationTurn] = s["history"]  # type: ignore[assignment]
+
+    def event_stream():
+        pieces: List[str] = []
+        try:
+            for event in generate_conversation_stream(history, req.text, menu, prefs):
+                if event.get("type") == "delta":
+                    pieces.append(event.get("text", ""))
+                yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+        except Exception as e:
+            print(f"[/api/chat/stream] 串流中斷: {e}")
+            yield f"data: {json.dumps({'type': 'error', 'error': str(e)}, ensure_ascii=False)}\n\n"
+        else:
+            _log_chat(req.sessionId, req.text, "".join(pieces), prefs)
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            # Render、Cloudflare 之類的反向代理預設會緩衝回應，
+            # 沒有這個標頭的話會整段憋到最後才送出，串流就白做了。
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 @app.get("/api/restaurant-review")
 def get_restaurant_review(restaurant_name: Optional[str] = None):
