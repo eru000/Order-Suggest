@@ -1,7 +1,7 @@
 
 import os, json, re, shutil, subprocess, random, time
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple
 from urllib import request, error
 
 # 修正導入路徑（src 目錄下要用 db.db_client）
@@ -44,6 +44,14 @@ OLLAMA_BIN = os.getenv("OLLAMA_BIN", "ollama")
 API_BASE_URL = os.getenv("API_BASE_URL", "").rstrip("/")
 API_KEY = os.getenv("API_KEY", "")
 VISION_MODEL = os.getenv("VISION_MODEL", "llama4scout")
+
+
+def _float_env(name: str, default: float) -> float:
+    try:
+        return float(os.getenv(name, str(default)))
+    except (TypeError, ValueError):
+        return default
+
 
 def _cli_available() -> bool:
     return shutil.which(OLLAMA_BIN) is not None #檢查路徑是否找到執行檔
@@ -120,7 +128,12 @@ def _build_prompt_from_messages(messages: List[Dict[str, str]]) -> str:
     parts.append("助理:")
     return "\n".join(parts)
 #把多輪對話messages轉成一段提示字串，再用CLI方式呼叫Ollama
-def _api_chat(messages: List[Dict[str, str]], model: str, timeout: float = 180.0) -> str:
+def _api_chat(
+    messages: List[Dict[str, Any]],
+    model: str,
+    timeout: float = 180.0,
+    temperature: Optional[float] = None,
+) -> str:
     url = API_BASE_URL
     if not url.endswith("/chat/completions"):
         url = f"{url}/chat/completions"
@@ -128,7 +141,8 @@ def _api_chat(messages: List[Dict[str, str]], model: str, timeout: float = 180.0
     payload = {
         "model": model,
         "messages": messages,
-        "temperature": float(os.getenv("API_TEMPERATURE", "0.7")),
+        # 辨識類呼叫要 temperature=0，不能套用對話用的預設值
+        "temperature": _float_env("API_TEMPERATURE", 0.7) if temperature is None else temperature,
     }
     data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     req = request.Request(
@@ -168,27 +182,99 @@ def chat(messages: List[Dict[str, str]], model: Optional[str] = None, timeout: f
     return _cli_run(["run", mdl], input_text=prompt, timeout=timeout)
 
 
-def vision_chat(
-    prompt: str,
-    image_url: str,
+def _api_chat_stream(
+    messages: List[Dict[str, Any]],
+    model: str,
+    timeout: float = 180.0,
+    temperature: Optional[float] = None,
+) -> Iterator[str]:
+    """OpenAI 相容的 SSE 串流，逐段 yield 文字。
+
+    總耗時跟非串流版差不多，差別在第一個字什麼時候出現：
+    實測整段要 11-28 秒，但第一個字約 4-5 秒就到，等待感完全不同。
+    """
+    url = API_BASE_URL
+    if not url.endswith("/chat/completions"):
+        url = f"{url}/chat/completions"
+
+    payload = {
+        "model": model,
+        "messages": messages,
+        "temperature": _float_env("API_TEMPERATURE", 0.7) if temperature is None else temperature,
+        "stream": True,
+    }
+    req = request.Request(
+        url,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+
+    try:
+        resp = request.urlopen(req, timeout=timeout)
+    except error.HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"model API stream failed: HTTP {exc.code} {detail}") from exc
+
+    with resp:
+        for raw in resp:
+            line = raw.decode("utf-8", errors="replace").strip()
+            if not line.startswith("data:"):
+                continue
+            body = line[5:].strip()
+            if body == "[DONE]":
+                return
+            try:
+                obj = json.loads(body)
+            except json.JSONDecodeError:
+                # 心跳或被切斷的片段，跳過就好，不該讓整條串流掛掉
+                continue
+            choices = obj.get("choices") or [{}]
+            piece = (choices[0].get("delta") or {}).get("content")
+            if piece:
+                yield piece
+
+
+def chat_stream(
+    messages: List[Dict[str, str]],
     model: Optional[str] = None,
     timeout: float = 180.0,
+) -> Iterator[str]:
+    """串流版 chat()。沒有設定遠端 API 時，退回一次性回應並整段 yield。"""
+    mdl = model or DEFAULT_MODEL
+    if API_BASE_URL and API_KEY:
+        api_model = (os.environ.get("API_MODEL") or os.environ.get("AI_MODEL")
+                     or os.environ.get("MODEL") or mdl)
+        yield from _api_chat_stream(messages, api_model, timeout=timeout)
+        return
+    # 本機 Ollama CLI 沒有串流介面，只能等它跑完再一次吐出來
+    prompt = _build_prompt_from_messages(messages)
+    yield _cli_run(["run", mdl], input_text=prompt, timeout=timeout)
+
+
+def vision_chat(
+    prompt: str,
+    image_url: str | Sequence[str],
+    model: Optional[str] = None,
+    timeout: float = 180.0,
+    temperature: Optional[float] = None,
 ) -> str:
-    """Call an OpenAI-compatible vision model with one image URL."""
+    """Call an OpenAI-compatible vision model with one or more images."""
     if not API_BASE_URL or not API_KEY:
         raise RuntimeError("vision model requires API_BASE_URL and API_KEY")
 
-    mdl = model or VISION_MODEL
-    messages = [
-        {
-            "role": "user",
-            "content": [
-                {"type": "text", "text": prompt},
-                {"type": "image_url", "image_url": {"url": image_url}},
-            ],
-        }
-    ]
-    return _api_chat(messages, mdl, timeout=timeout)  # type: ignore[arg-type]
+    content: List[Dict[str, Any]] = [{"type": "text", "text": prompt}]
+    urls = [image_url] if isinstance(image_url, str) else list(image_url)
+    content.extend({"type": "image_url", "image_url": {"url": url}} for url in urls)
+    return _api_chat(
+        [{"role": "user", "content": content}],
+        model or VISION_MODEL,
+        timeout=timeout,
+        temperature=_float_env("VISION_TEMPERATURE", 0.0) if temperature is None else temperature,
+    )
 
 _MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文紙本菜單、木牌、黑板或螢幕截圖）。
 請仔細辨識所有菜品名稱與價格，只回傳以下 JSON 格式，不要其他文字：

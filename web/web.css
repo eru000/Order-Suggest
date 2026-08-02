@@ -4,33 +4,159 @@
    CSS Variables - Light Mode (Default)
    ============================================ */
 :root {
-  --bg: #f6f7fb;
-  --surface: #ffffff;
-  --surface-strong: #f3f4f6;
-  --primary: #2563eb;
-  --primary-2: #4f46e5;
-  --primary-soft: rgba(37, 99, 235, 0.12);
-  --fg: #0f172a;
-  --fg-muted: #64748b;
-  --border: rgba(15, 23, 42, 0.10);
-  --shadow-soft: 0 12px 28px rgba(15, 23, 42, 0.10);
-  --radius: 14px;
+  /* ---- 字體 ----
+     -apple-system 要排最前面：Mac 上才會拿到 SF Pro，中文自動落到蘋方。
+     Windows 沒有蘋方，會落到 Noto Sans TC（HTML 有載）。 */
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang TC",
+             "Noto Sans TC", "Segoe UI", sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang TC",
+                  "Noto Sans TC", "Segoe UI", sans-serif;
+
+  /* ---- 底層與表面 ---- */
+  --bg-canvas: #F2F2F7;   /* Apple systemGroupedBackground：白卡浮在灰底上 */
+  --bg-surface: #FFFFFF;
+  --bg-raised: #F5F5F7;
+  --bg-sunken: #E9E9EE;
+
+  /* ---- 邊界（Apple systemGray 系列，去掉藍調）---- */
+  --border-subtle: #E5E5EA;
+  --border-default: #D1D1D6;
+  --border-strong: #C6C6C8;
+
+  /* ---- 文字四階 ---- */
+  --text-primary: #1D1D1F;
+  --text-secondary: #57575C;
+  --text-tertiary: #6E6E73;
+  --text-disabled: #A1A1A6;
+
+  /* ---- 強調色：tint 與 solid 分工 ----
+     tint 是 iOS 系統藍，用在不承載白字的地方（icon、focus、選取）
+     solid 是 apple.com 按鈕實際用的填色，配白字 4.69:1 過 AA */
+  --accent-tint: #007AFF;
+  --accent-solid: #0071E3;
+  --accent-hover: #0062C4;
+  --accent-pressed: #0055AB;
+  --accent-text: #0062C4;
+  --accent-subtle: #E8F1FE;
+  --accent-border: #A8D0FF;
+
+  /* ---- 語意色：Apple 系統色，不降飽和 ---- */
+  --success: #34C759;
+  --success-text: #248A3D;
+  --warning: #FF9500;
+  --warning-text: #B25000;
+  --danger: #FF3B30;
+  --danger-text: #C7362B;
+  --danger-subtle: #FFF1F0;
+
+  /* ---- 材質 ---- */
+  --material-chrome: rgba(255, 255, 255, 0.72);
+  --material-thick: rgba(255, 255, 255, 0.86);
+  --material-thin: rgba(255, 255, 255, 0.66);
+  --material-scrim: rgba(0, 0, 0, 0.32);
+  --material-edge-top: rgba(255, 255, 255, 0.60);
+  --material-edge-hairline: rgba(0, 0, 0, 0.08);
+  --material-blur: blur(20px) saturate(180%);
+  --material-blur-thick: blur(30px) saturate(180%);
+
+  /* ---- 圓角 ---- */
+  --radius-sm: 6px;
+  --radius-control: 10px;
+  --radius-card: 16px;
+  --radius-modal: 20px;
+  --radius-full: 9999px;
+
+  /* ---- 陰影：每階兩層，貼近的定義邊緣、擴散的給高度 ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08), 0 20px 48px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.10), 0 32px 80px rgba(0, 0, 0, 0.16);
+
+  /* ---- 間距 ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- 版面 ---- */
+  --content-max: 720px;
+  --sidebar-w: 280px;
+  --header-h: 56px;
+  --gutter: 28px;
+  /* 輸入區高度會隨 textarea 變動，由 JS 量測後寫回 */
+  --footer-h: 88px;
+
+  /* 內建的 CSS easing 太軟，UI 動畫一律用這兩條 */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* ---- 舊變數名對應到新 token ----
+     既有規則不必逐條改寫就能吃到新色盤 */
+  --bg: var(--bg-canvas);
+  --surface: var(--bg-surface);
+  --surface-strong: var(--bg-raised);
+  --primary: var(--accent-solid);
+  --primary-2: var(--accent-solid);
+  --primary-soft: var(--accent-subtle);
+  --fg: var(--text-primary);
+  --fg-muted: var(--text-tertiary);
+  --border: var(--border-default);
+  --shadow-soft: var(--shadow-sm);
+  --radius: var(--radius-card);
 }
 
 /* ============================================
    Dark Mode Variables
    ============================================ */
 [data-theme="dark"] {
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface-strong: #334155;
-  --primary: #3b82f6;
-  --primary-2: #6366f1;
-  --primary-soft: rgba(59, 130, 246, 0.15);
-  --fg: #f1f5f9;
-  --fg-muted: #94a3b8;
-  --border: rgba(241, 245, 249, 0.1);
-  --shadow-soft: 0 12px 28px rgba(0, 0, 0, 0.5);
+  /* 接近純黑：OLED 上是 Apple 的標準做法，也讓 #1C1C1E 的面板浮得更明顯 */
+  --bg-canvas: #000000;
+  --bg-surface: #1C1C1E;
+  --bg-raised: #2C2C2E;
+  --bg-sunken: #000000;
+
+  --border-subtle: #2C2C2E;
+  --border-default: #38383A;
+  --border-strong: #48484A;
+
+  --text-primary: #F5F5F7;
+  --text-secondary: #A1A1A6;
+  --text-tertiary: #8E8E93;
+  --text-disabled: #565C6A;
+
+  --accent-tint: #0A84FF;
+  --accent-solid: #0A84FF;
+  --accent-hover: #3395FF;
+  --accent-pressed: #0071E3;
+  --accent-text: #409CFF;
+  --accent-subtle: #0A2540;
+  --accent-border: rgba(10, 132, 255, 0.4);
+
+  --success: #30D158;
+  --success-text: #30D158;
+  --warning: #FF9F0A;
+  --warning-text: #FF9F0A;
+  --danger: #FF453A;
+  --danger-text: #FF453A;
+  --danger-subtle: #2A1917;
+
+  --material-chrome: rgba(28, 28, 30, 0.72);
+  --material-thick: rgba(28, 28, 30, 0.88);
+  --material-thin: rgba(38, 38, 40, 0.70);
+  --material-scrim: rgba(0, 0, 0, 0.52);
+  --material-edge-top: rgba(255, 255, 255, 0.10);
+  --material-edge-hairline: rgba(255, 255, 255, 0.08);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.6), 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.7), 0 20px 48px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.75), 0 32px 80px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================
@@ -48,18 +174,26 @@ html, body {
 }
 
 body {
-  font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--fg);
-  background: radial-gradient(1200px 900px at 20% 0%, rgba(37, 99, 235, 0.08), transparent 60%),
-              radial-gradient(1000px 800px at 80% 20%, rgba(99, 102, 241, 0.08), transparent 55%),
-              var(--bg);
-  transition: background 0.3s ease, color 0.3s ease;
+  /* 原本 'Noto Sans TC' 排在最前面，等於 Mac 上永遠拿不到 SF Pro 與蘋方 */
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: 0.003em;
+  color: var(--text-primary);
+  background: var(--bg-canvas);
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-[data-theme="dark"] body {
-  background: radial-gradient(1200px 900px at 20% 0%, rgba(59, 130, 246, 0.15), transparent 60%),
-              radial-gradient(1000px 800px at 80% 20%, rgba(99, 102, 241, 0.15), transparent 55%),
-              var(--bg);
+/* 20px 以上換 SF Pro Display：Apple 的光學字級分界，字腔與字距都不同 */
+h1, h2, h3,
+.chat-title,
+.menu-modal-title,
+.vision-title,
+.lc-home-title {
+  font-family: var(--font-display);
 }
 
 .hidden {
@@ -73,7 +207,7 @@ body {
   height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: var(--sidebar-w) 1fr;
 }
 
 @media (max-width: 900px) {
@@ -88,15 +222,17 @@ body {
 /* ============================================
    Sidebar
    ============================================ */
+/* 側邊欄底下沒有內容會經過，做半透明模糊等於沒做。
+   靠實色白 + 髮絲右邊框跟灰色 canvas 分層就夠了。 */
 .sidebar {
-  background: rgba(255, 255, 255, 0.92);
-  border-right: 1px solid var(--border);
-  padding: 16px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
   min-height: 0;
-  transition: background 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 [data-theme="dark"] .sidebar {
@@ -108,27 +244,28 @@ body {
   padding: 2px;
 }
 
+/* 原本是藍紫漸層藥丸，跟「刪掉漸層、主色只給單一動作」兩條都衝突 */
 .logo-chip {
-  font-weight: 800;
-  padding: 10px 12px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(99, 102, 241, 0.08));
-  border: 1px solid var(--border);
+  padding: var(--space-2) var(--space-1);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.008em;
+  color: var(--text-primary);
 }
 
 .brand-subtitle {
-  color: var(--fg-muted);
-  font-size: 12px;
-  margin-top: 6px;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  margin-top: var(--space-1);
 }
 
 /* 餐廳選擇器樣式 */
 .restaurant-selector {
-  padding: 12px;
-  margin: 8px 0;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.03));
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  padding: var(--space-3);
+  margin: 0;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
 }
 
 .restaurant-label {
@@ -147,13 +284,15 @@ body {
   background: var(--surface);
   color: var(--fg);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
   font-weight: 500;
 }
 
-.restaurant-select:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+@media (hover: hover) and (pointer: fine) {
+  .restaurant-select:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
 }
 
 .restaurant-select:focus {
@@ -169,17 +308,18 @@ body {
 }
 
 .restaurant-info {
-  font-size: 11px;
-  color: var(--fg-muted);
-  margin-top: 4px;
-  padding: 4px 8px;
-  background: var(--surface-strong);
-  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--text-tertiary);
+  margin-top: var(--space-2);
+  padding: 0;
+  background: none;
 }
 
 /* 深色模式下的餐廳選擇器 */
 [data-theme="dark"] .restaurant-selector {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.08));
+  background: var(--bg-raised);
 }
 
 [data-theme="dark"] .restaurant-select {
@@ -211,13 +351,15 @@ body {
   background: var(--surface);
   color: var(--fg);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
   font-weight: 500;
 }
 
-.restaurant-selector select:hover {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-soft);
+@media (hover: hover) and (pointer: fine) {
+  .restaurant-selector select:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+  }
 }
 
 .restaurant-selector select:focus {
@@ -414,25 +556,37 @@ body {
   gap: 10px;
 }
 
+/* Secondary 層級 */
 .action-btn {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 10px 12px;
-  border-radius: 12px;
+  width: 100%;
+  border: 1px solid var(--border-default);
+  background: var(--bg-surface);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
   cursor: pointer;
-  font-weight: 600;
-  color: var(--fg);
-  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, opacity 200ms ease;
 }
 
+/* 「新對話」原本是漸層實心藍。主色一個畫面只留給一個主要動作，
+   那個位置是送出鈕，所以這裡降成 Secondary。 */
 .action-btn.primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  color: #fff;
-  border: none;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
 }
 
-.action-btn:hover {
-  opacity: 0.9;
+/* 按下的瞬間就要有反應。等到放開才回饋，介面會像沒在聽 */
+.action-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action-btn:hover {
+    opacity: 0.9;
+  }
 }
 
 /* ============================================
@@ -460,19 +614,34 @@ body {
   gap: 8px;
 }
 
+/* Ghost 層級：透明無邊框、次要文字色。
+   六顆同等份量的有框按鈕會一起搶注意力，退成 ghost 之後才排得出主次。 */
 .ghost-btn {
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-control);
+  border: none;
+  background: transparent;
   cursor: pointer;
-  font-weight: 700;
-  color: var(--fg);
-  transition: all 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.003em;
+  color: var(--text-secondary);
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
 }
 
-.ghost-btn:hover {
-  background: var(--surface-strong);
+.ghost-btn:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ghost-btn:hover {
+    background: var(--bg-raised);
+    color: var(--text-primary);
+  }
+}
+
+[data-theme="dark"] .ghost-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .chat-list {
@@ -513,8 +682,18 @@ body {
   color: var(--fg);
 }
 
-.chat-list-item:hover {
-  background: var(--surface-strong);
+.chat-list-item {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.chat-list-item:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-list-item:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .chat-list-title {
@@ -560,8 +739,18 @@ body {
   color: var(--fg);
 }
 
-.chat-list-more:hover {
-  background: var(--surface-strong);
+.chat-list-more {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.chat-list-more:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-list-more:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .sidebar-meta {
@@ -574,26 +763,34 @@ body {
 /* ============================================
    Chat Panel
    ============================================ */
+/* 從 grid 三列改成定位容器：頂部 bar 與輸入區浮在上層，
+   聊天內容從它們底下捲過去 —— 材質要有東西經過才看得出模糊。 */
 .chat-panel {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  position: relative;
+  height: 100vh;
   min-height: 0;
+  overflow: hidden;
 }
 
 .chat-header {
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  min-height: var(--header-h);
+  padding: var(--space-2) var(--gutter);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  transition: background 0.3s ease;
-}
-
-[data-theme="dark"] .chat-header {
-  background: rgba(30, 41, 59, 0.75);
+  gap: var(--space-3);
+  background: var(--material-chrome);
+  backdrop-filter: var(--material-blur);
+  -webkit-backdrop-filter: var(--material-blur);
+  border-bottom: 1px solid var(--material-edge-hairline);
+  /* 上緣亮邊：光打在玻璃邊緣，沒有它就只是一塊半透明色塊 */
+  box-shadow: inset 0 1px 0 var(--material-edge-top);
+  transition: background-color 0.3s ease;
 }
 
 .header-left {
@@ -604,13 +801,18 @@ body {
 
 .chat-title {
   margin: 0;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 .chat-subtitle {
-  margin: 4px 0 0 0;
-  color: var(--fg-muted);
-  font-size: 12px;
+  margin: 2px 0 0 0;
+  color: var(--text-tertiary);
+  font-size: 13px;
+  letter-spacing: 0.006em;
 }
 
 /* 手機版餐廳選擇器 - 預設隱藏 */
@@ -634,15 +836,18 @@ body {
    Chat Body
    ============================================ */
 .chat-body {
-  min-height: 0;
-  overflow: auto;
-  padding: 18px;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  /* 上下留出 bar 的高度，內容才會從材質底下經過而不是被切掉。
+     兩個高度由 JS 實測後寫回，因為輸入框會隨字數長高。 */
+  padding: calc(var(--header-h) + var(--space-6)) var(--gutter)
+           calc(var(--footer-h) + var(--space-6));
 }
 
+/* 裝飾性漸層線，跟新的層次系統重複了 */
 .chat-bar {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin-bottom: 16px;
+  display: none;
 }
 
 /* Home */
@@ -654,7 +859,9 @@ body {
 
 .lc-home-title {
   font-size: 2rem;
-  letter-spacing: 0.5px;
+  /* 字級越大字距要越收，正值 tracking 會讓大標讀起來鬆散 */
+  letter-spacing: -0.02em;
+  line-height: 1.1;
   margin: 0 0 14px;
 }
 
@@ -668,11 +875,11 @@ body {
    Conversation
    ============================================ */
 .conversation {
-  max-width: 920px;
+  max-width: var(--content-max);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-4);
 }
 
 .message {
@@ -698,16 +905,19 @@ body {
 }
 
 .bubble {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 12px 14px;
-  box-shadow: var(--shadow-soft);
-  line-height: 1.6;
-  max-width: 78ch;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  padding: var(--space-3) var(--space-4);
+  /* 柔和擴散陰影 + 髮絲邊框並用：白卡浮在灰底上的層次 */
+  box-shadow: var(--shadow-sm);
+  font-size: 17px;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  max-width: 100%;
   white-space: pre-wrap;
   word-break: break-word;
-  color: var(--fg);
+  color: var(--text-primary);
 }
 
 .message.user .bubble {
@@ -750,31 +960,34 @@ body {
    Chat Footer (Input Area)
    ============================================ */
 .chat-footer {
-  padding: 14px 18px;
-  border-top: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(8px);
-  transition: background 0.3s ease;
-}
-
-[data-theme="dark"] .chat-footer {
-  background: rgba(30, 41, 59, 0.82);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: var(--space-3) var(--gutter) var(--space-4);
+  background: var(--material-chrome);
+  backdrop-filter: var(--material-blur);
+  -webkit-backdrop-filter: var(--material-blur);
+  border-top: 1px solid var(--material-edge-hairline);
+  box-shadow: inset 0 1px 0 var(--material-edge-top);
+  transition: background-color 0.3s ease;
 }
 
 .input-area {
-  max-width: 920px;
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
 .input-wrapper {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 10px;
-  padding: 10px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-soft);
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-card);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 .chat-input,
@@ -799,11 +1012,26 @@ body {
   color: #fff;
   cursor: pointer;
   font-weight: 700;
+  transition: transform 160ms var(--ease-out), opacity 200ms ease;
+}
+
+/* 全站最常被按的元素，原本連 hover 都沒有 */
+.send-btn:active:not(:disabled),
+#send-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .send-btn:hover:not(:disabled),
+  #send-btn:hover:not(:disabled) {
+    opacity: 0.92;
+  }
 }
 
 .send-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* ============================================
@@ -831,8 +1059,18 @@ body {
   color: var(--fg);
 }
 
-.chat-menu-item:hover {
-  background: var(--surface-strong);
+.chat-menu-item {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.chat-menu-item:active {
+  transform: scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-menu-item:hover {
+    background: var(--surface-strong);
+  }
 }
 
 .chat-menu-item.danger {
@@ -868,6 +1106,28 @@ body {
   border: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow-soft);
+  /* 位移量抽成變數，降低動態時只要把它歸零就好 */
+  --toast-offset: 12px;
+  opacity: 1;
+  transform: translateY(0);
+  /* 用 transition 不用 keyframes：toast 會連續冒出來，
+     keyframes 被打斷會從頭重播，transition 會從當前值接續 */
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+/* toast 停在左下角，就從下方進場 */
+@starting-style {
+  .toast {
+    opacity: 0;
+    transform: translateY(var(--toast-offset));
+  }
+}
+
+/* 沿同一條路徑退場，而且比進場快 */
+.toast.is-leaving {
+  opacity: 0;
+  transform: translateY(var(--toast-offset));
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
 }
 
 .toast-msg {
@@ -884,8 +1144,18 @@ body {
   font-weight: 600;
 }
 
-.toast-action:hover {
-  opacity: 0.9;
+.toast-action {
+  transition: transform 160ms var(--ease-out), opacity 200ms ease;
+}
+
+.toast-action:active {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toast-action:hover {
+    opacity: 0.9;
+  }
 }
 
 .toast-close {
@@ -898,8 +1168,18 @@ body {
   color: var(--fg);
 }
 
-.toast-close:hover {
-  background: var(--surface-strong);
+.toast-close {
+  transition: transform 160ms var(--ease-out), background-color 200ms ease;
+}
+
+.toast-close:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toast-close:hover {
+    background: var(--surface-strong);
+  }
 }
 
 /* ============================================
@@ -970,12 +1250,7 @@ body {
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-  }
-  
-  .restaurant-select-mobile:hover {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary-soft);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
   }
   
   .restaurant-select-mobile:focus {
@@ -1181,30 +1456,30 @@ body {
     font-size: 10px;
   }
   
-  /* 按鈕區域：左右分欄 */
+  /* 按鈕區域：手機上排成一列。
+     原本左右兩欄都是 flex-direction: column，5 顆按鈕會疊成三排，
+     光 header 就吃掉 199px——iPhone 13 螢幕高只有 664px，等於 30% 拿去放按鈕，
+     聊天內容被擠到幾乎看不見。改成橫排後 header 約 100px。 */
   .header-actions {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 6px 14px;
     width: 100%;
   }
-  
-  .header-actions-left {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
+
+  /* display: contents 讓左右兩組的按鈕直接成為 .header-actions 的排版對象。
+     不這樣做的話，5 顆按鈕會被綁在各自容器裡互相擠壓，而按鈕文字是
+     white-space: nowrap，壓縮後會溢出容器變成疊字。 */
+  .header-actions-left,
   .header-actions-right {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    min-width: 85px;
+    display: contents;
   }
   
   .header-actions button {
     font-size: 12px;
     padding: 6px 2px; /* 減少內邊距 */
+    /* 不准被 flex 壓縮：文字是 nowrap，一旦盒子被壓窄就會溢出疊到隔壁按鈕上 */
+    flex: 0 0 auto;
     width: auto; /* 自動寬度 */
     height: auto;
     white-space: nowrap;
@@ -1282,10 +1557,15 @@ body {
     font-size: 13px;
   }
   
+  /* 原本是 width/height: 34px 的正方形——那是純圖示按鈕的尺寸。
+     但這些按鈕都有文字標籤（深色模式、清空對話…），而文字是
+     white-space: nowrap，固定 34px 寬會讓每顆按鈕的文字整個溢出，
+     在手機上疊成一團完全看不懂。改成由內容決定寬度，只保留觸控高度。 */
   .header-actions button {
-    width: 34px;
-    height: 34px;
-    font-size: 15px;
+    width: auto;
+    height: auto;
+    min-height: 34px;
+    font-size: 13px;
   }
   
   /* Toast 通知 */
@@ -1398,7 +1678,7 @@ body {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn 200ms var(--ease-out);
 }
 
 [data-theme="dark"] .menu-modal-overlay {
@@ -1415,8 +1695,18 @@ body {
   max-height: 85vh;
   display: flex;
   flex-direction: column;
-  animation: slideUp 0.3s ease;
+  animation: slideUp 280ms var(--ease-out);
   border: 1px solid var(--border);
+}
+
+/* 退場沿進場的同一條路徑倒回去，而且更快。
+   原本是直接 display:none 硬切，東西憑空消失會讀起來像壞掉 */
+.menu-modal.is-leaving .menu-modal-overlay {
+  animation: fadeIn 160ms var(--ease-out) reverse forwards;
+}
+
+.menu-modal.is-leaving .menu-modal-content {
+  animation: slideUp 160ms var(--ease-out) reverse forwards;
 }
 
 .menu-modal-header {
@@ -1448,12 +1738,18 @@ body {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
 }
 
-.menu-modal-close:hover {
-  background: var(--surface-strong);
-  color: var(--fg);
+.menu-modal-close:active {
+  transform: scale(0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-modal-close:hover {
+    background: var(--surface-strong);
+    color: var(--fg);
+  }
 }
 
 .menu-modal-body {
@@ -1498,14 +1794,17 @@ body {
   padding: 12px 16px;
   background: var(--surface-strong);
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: transform 200ms var(--ease-out), background-color 200ms ease, border-color 200ms ease;
   border: 1px solid transparent;
 }
 
-.menu-item:hover {
-  background: var(--primary-soft);
-  border-color: var(--primary);
-  transform: translateX(4px);
+/* 位移一定要 gate：觸控裝置點一下 hover 會黏住，項目會停在偏移 4px 的位置 */
+@media (hover: hover) and (pointer: fine) {
+  .menu-item:hover {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    transform: translateX(4px);
+  }
 }
 
 .menu-item-name {
@@ -1595,6 +1894,780 @@ body {
   .menu-item-name,
   .menu-item-price {
     font-size: 14px;
+  }
+}
+
+/* ============================================
+   降低透明度偏好
+   材質全部換成實色，模糊拿掉。這是必要退路，不是加分項。
+   ============================================ */
+@media (prefers-reduced-transparency: reduce) {
+  .chat-header,
+  .chat-footer {
+    background: var(--bg-surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+    border-color: var(--border-default);
+  }
+}
+
+/* ============================================
+   降低動態偏好 — 既有介面
+   不是關掉所有回饋，是換成不會引起前庭不適的版本：
+   保留不透明度與顏色變化，移除位移與縮放。
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .action-btn:active,
+  .ghost-btn:active,
+  .send-btn:active,
+  #send-btn:active,
+  .send-btn:active:not(:disabled),
+  #send-btn:active:not(:disabled),
+  .chat-list-item:active,
+  .chat-list-more:active,
+  .chat-menu-item:active,
+  .toast-action:active,
+  .toast-close:active,
+  .menu-modal-close:active,
+  .menu-item:hover {
+    transform: none;
+  }
+
+  .toast {
+    --toast-offset: 0px;
+  }
+
+  .menu-modal-overlay,
+  .menu-modal-content,
+  .menu-modal.is-leaving .menu-modal-overlay,
+  .menu-modal.is-leaving .menu-modal-content {
+    animation: fadeIn 160ms ease;
+  }
+
+  /* 切換深淺色時不要整片背景慢慢漸變 */
+  body,
+  [data-theme="dark"] body,
+  .sidebar,
+  .chat-header,
+  .chat-footer {
+    transition: none;
+  }
+}
+
+/* ============================================
+   照片辨識菜單（VLM）— 辨識 → 確認 → 修正
+   ============================================ */
+
+/* 進退場用 transition 而非 keyframes：使用者可能連續開關，
+   transition 會從當前值重新導向，keyframes 會從頭重播。
+   退場刻意比進場快（系統回應要俐落，使用者決策時才需要慢）。 */
+.vision-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 160ms var(--ease-out), visibility 160ms;
+}
+
+.vision-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 220ms var(--ease-out), visibility 220ms;
+}
+
+.vision-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(3px);
+}
+
+[data-theme="dark"] .vision-modal-overlay {
+  background: rgba(0, 0, 0, 0.62);
+}
+
+/* modal 保持 transform-origin: center —— 它不錨定在某個觸發元件上 */
+.vision-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  max-height: 86vh;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.22);
+  /* 縮放、位移、模糊一起動，讀起來像一塊實體浮上來，而不是憑空淡入 */
+  transform: scale(0.96) translateY(10px);
+  filter: blur(6px);
+  transition: transform 180ms var(--ease-out), filter 180ms var(--ease-out);
+}
+
+.vision-modal.is-open .vision-sheet {
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+  transition: transform 280ms var(--ease-out), filter 280ms var(--ease-out);
+}
+
+[data-theme="dark"] .vision-sheet {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* --- 標頭 --- */
+.vision-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.vision-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em; /* 大字收緊，小字不動 */
+  color: var(--fg);
+}
+
+.vision-step {
+  margin: 4px 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+
+.vision-close {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, color 200ms ease;
+}
+
+.vision-close:active {
+  transform: scale(0.94);
+}
+
+.vision-close:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- 內容區 --- */
+.vision-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 20px;
+}
+
+/* 還沒捲到底時底緣淡出，讓「下面還有」看得出來，比一條硬分隔線清楚。
+   只有真的有東西可捲才加上，內容不長時不該無故淡化。 */
+.vision-body.has-more {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+}
+
+/* hidden 屬性只是 UA 樣式的 display:none，會被任何作者端 display 規則蓋掉。
+   這個元件用 hidden 切換好幾個區塊，所以統一擋回來，避免下次新增區塊又踩到。 */
+.vision-sheet [hidden] {
+  display: none;
+}
+
+/* --- 步驟 1：選檔 --- */
+.vision-drop {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  padding: 32px 20px;
+  border: 1.5px dashed var(--border);
+  border-radius: 14px;
+  background: var(--surface-strong);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 200ms ease, background-color 200ms ease, transform 160ms var(--ease-out);
+}
+
+.vision-drop:active {
+  transform: scale(0.99);
+}
+
+.vision-drop.is-dragging {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.vision-drop-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.vision-drop-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.vision-drop-hint {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.vision-field {
+  margin-top: 16px;
+}
+
+.vision-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+.vision-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.vision-input:focus-visible {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+/* --- 步驟 2：辨識中 --- */
+.vision-busy {
+  display: grid;
+  gap: 14px;
+  padding: 24px 4px;
+  text-align: center;
+}
+
+.vision-busy-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.vision-busy-note {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+
+.vision-busy-elapsed {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+}
+
+/* 不確定型進度：刻意不假裝知道進度，只表示「還在動」 */
+.vision-track {
+  position: relative;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  overflow: hidden;
+}
+
+.vision-track::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  animation: vision-sweep 1.4s linear infinite;
+}
+
+@keyframes vision-sweep {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(350%); }
+}
+
+/* --- 步驟 3：確認 --- */
+.vision-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.vision-chip {
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.vision-chip.good {
+  background: #dcfce7;
+  border-color: transparent;
+  color: #166534;
+}
+
+.vision-chip.warn {
+  background: #fef3c7;
+  border-color: transparent;
+  color: #92400e;
+}
+
+.vision-chip.bad {
+  background: #fee2e2;
+  border-color: transparent;
+  color: #991b1b;
+}
+
+[data-theme="dark"] .vision-chip.good {
+  background: rgba(34, 197, 94, 0.16);
+  color: #86efac;
+}
+
+[data-theme="dark"] .vision-chip.warn {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fcd34d;
+}
+
+[data-theme="dark"] .vision-chip.bad {
+  background: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+}
+
+.vision-notice {
+  display: grid;
+  gap: 6px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+[data-theme="dark"] .vision-notice {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fcd34d;
+}
+
+.vision-notice-title {
+  font-weight: 700;
+}
+
+.vision-notice ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* ---- 即時推薦卡片 ----------------------------------------------------
+   推薦品項是本機算出來的（實測 0.03 秒），所以先顯示在這張卡片上，
+   不必等 LLM 的第一個字（遠端排隊，實測要 12-42 秒）。
+   AI 的說明文字之後再串流補進下面的 .rec-prose。                        */
+
+.rec-card {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  background: var(--bg-raised);
+}
+
+.rec-card.hidden {
+  display: none;
+}
+
+.rec-head {
+  margin-bottom: var(--space-2);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.rec-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rec-list li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+}
+
+.rec-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-weight: 500;
+  /* 菜名可能很長，手機上要能斷行而不是把卡片撐爆 */
+  overflow-wrap: anywhere;
+}
+
+.rec-price {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.rec-why {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.rec-total {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+}
+
+/* 等 AI 補說明時的提示。這段等待實測 12-42 秒，一定要讓它看起來像在動，
+   否則會被當成當機。 */
+.rec-waiting {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+}
+
+.rec-waiting::after {
+  content: '';
+  animation: rec-dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes rec-dots {
+  0%   { content: ''; }
+  25%  { content: '·'; }
+  50%  { content: '··'; }
+  75%  { content: '···'; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rec-waiting::after {
+    animation: none;
+    content: '···';
+  }
+}
+
+/* 手機直向時把理由收掉，一行放不下三欄 */
+@media (max-width: 480px) {
+  .rec-why {
+    display: none;
+  }
+}
+
+.vision-section-title {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-muted);
+}
+
+.vision-items {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.vision-cat {
+  margin: 10px 0 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--fg-muted);
+}
+
+.vision-cat:first-child {
+  margin-top: 0;
+}
+
+.vision-item {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: var(--surface-strong);
+  font-size: 0.875rem;
+}
+
+/* 編號必須跟後端修正指令的編號一致，所以跨分類連續編號 */
+.vision-item-no {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  color: var(--fg-muted);
+  text-align: right;
+}
+
+.vision-item-name {
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.vision-item-price {
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.vision-item-price.missing {
+  color: var(--fg-muted);
+  font-weight: 500;
+}
+
+/* 只有第一次進入確認步驟才做依序浮現；改完一項重播整串會很吵。
+   延遲索引由 JS 寫在 --i：品項之間夾著分類標題，用 nth-child 會數錯。
+   索引在 JS 端就封頂，長菜單不會讓最後幾項等太久。 */
+.vision-items.is-first-reveal .vision-item {
+  opacity: 0;
+  animation: vision-rise 260ms var(--ease-out) calc(var(--i, 0) * 40ms) forwards;
+}
+
+@keyframes vision-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 修正列 --- */
+.vision-correct {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: start;
+}
+
+.vision-correct-hint {
+  grid-column: 1 / -1;
+  margin-top: -2px;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.vision-correct-msg {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--primary);
+}
+
+/* --- 頁尾按鈕 --- */
+.vision-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+}
+
+.vision-accept {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  cursor: pointer;
+}
+
+.vision-accept input {
+  margin-top: 2px;
+  flex: 0 0 auto;
+  accent-color: var(--primary);
+}
+
+.vision-foot-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.vision-btn {
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 200ms ease, opacity 200ms ease;
+}
+
+.vision-btn:active {
+  transform: scale(0.97);
+}
+
+.vision-btn.primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+}
+
+.vision-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.vision-error {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+[data-theme="dark"] .vision-error {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+}
+
+/* hover 只給真正有指標裝置的環境，觸控點一下不該留著 hover 狀態 */
+@media (hover: hover) and (pointer: fine) {
+  .vision-close:hover {
+    background: var(--surface-strong);
+    color: var(--fg);
+  }
+
+  .vision-drop:hover {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+  }
+
+  .vision-btn:hover:not(:disabled) {
+    background: var(--surface-strong);
+  }
+
+  .vision-btn.primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    opacity: 0.92;
+  }
+}
+
+@media (max-width: 640px) {
+  .vision-modal {
+    padding: 12px;
+  }
+
+  .vision-sheet {
+    max-height: 92vh;
+    border-radius: 14px;
+  }
+
+  .vision-head {
+    padding: 14px 16px 12px;
+  }
+
+  .vision-body {
+    padding: 14px 16px;
+  }
+
+  .vision-foot {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 16px;
+  }
+
+  .vision-foot-actions {
+    margin-left: 0;
+  }
+
+  .vision-foot-actions .vision-btn {
+    flex: 1;
+  }
+
+  .vision-correct {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 降低動態：保留不透明度變化（有助於理解狀態），移除位移、縮放與循環動畫 */
+@media (prefers-reduced-motion: reduce) {
+  .vision-sheet,
+  .vision-modal.is-open .vision-sheet {
+    transform: none;
+    filter: none;
+    transition: opacity 160ms ease;
+  }
+
+  .vision-btn:active,
+  .vision-close:active,
+  .vision-drop:active {
+    transform: none;
+  }
+
+  .vision-items.is-first-reveal .vision-item {
+    opacity: 1;
+    animation: none;
+  }
+
+  .vision-track::after {
+    animation: none;
+    width: 100%;
+    background: var(--primary-soft);
+  }
+}
+
+/* 降低透明度：實心背景、拿掉模糊 */
+@media (prefers-reduced-transparency: reduce) {
+  .vision-modal-overlay {
+    background: rgba(15, 23, 42, 0.86);
+    backdrop-filter: none;
+  }
+
+  [data-theme="dark"] .vision-modal-overlay {
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .vision-sheet {
+    filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .vision-sheet {
+    border-color: var(--fg);
+  }
+
+  .vision-chip,
+  .vision-btn {
+    border-color: var(--fg);
   }
 }
 

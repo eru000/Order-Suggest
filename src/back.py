@@ -1,29 +1,13 @@
-import os, sys, json
-from typing import Dict, List, Optional
+import os, sys, json, re, threading, time, uuid
+from typing import Any, Dict, List, Optional
 import base64
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import asyncio
-import concurrent.futures
 
-if sys.platform.startswith('win32'):
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
-
-def _run_crawler(restaurant_name: str):
-    """在獨立執行緒 + 全新 ProactorEventLoop 跑爬蟲，避免與 uvicorn SelectorEventLoop 衝突"""
-    import asyncio
-    loop = asyncio.new_event_loop()
-    if sys.platform.startswith('win32'):
-        loop = asyncio.ProactorEventLoop()
-    asyncio.set_event_loop(loop)
-    try:
-        return loop.run_until_complete(crawl_menu.quick_crawl(restaurant_name))
-    finally:
-        loop.close()
-   
 # 確保可以從 src/ 匯入模組
 SRC_DIR = os.path.dirname(os.path.abspath(__file__))
 if SRC_DIR not in sys.path:
@@ -39,17 +23,18 @@ from main import (
     Menu, Preferences, ConversationTurn,
     _validate_menu, normalize_menu, write_menu_json,
     generate_conversation,
+    generate_conversation_stream,
 )
 
-# 匯入爬蟲模組
-try:
-    import crawl_menu
-    CRAWLER_AVAILABLE = True
-except ImportError as e:
-    print(f"[警告] 無法匯入 crawl_menu: {e}")
-    CRAWLER_AVAILABLE = False
-
 from restaurant_reviews import load_review_cache, refresh_restaurant_reviews
+
+# VLM 菜單辨識（分塊辨識 + 交叉校對 + 人工確認）
+from menu_vision import (
+    MAX_IMAGE_BYTES,
+    analyze_menu_image,
+    apply_manual_correction,
+    to_persisted_document,
+)
 
 # 專案路徑設定（PROJECT_ROOT 已在上方第16行定義）
 WEB_DIR = os.path.join(PROJECT_ROOT, "web")
@@ -246,20 +231,128 @@ else:
 # 簡單 session 記憶
 SESSIONS: Dict[str, Dict[str, object]] = {}
 
-
-def _crawler_error_message(restaurant) -> Optional[str]:
-    if not restaurant:
-        return None
-    if getattr(restaurant, "error", "") == "google_verification_required":
-        return "Google 要求人機驗證，請在自動開啟的 Chrome 完成驗證後，重新爬取同一間餐廳。"
-    return None
+# 待確認的 VLM 辨識結果。辨識完不直接落地，等使用者確認過才寫入菜單，
+# 所以需要一個有時效的暫存區。
+PENDING_ANALYSES: Dict[str, Dict[str, object]] = {}
+PENDING_ANALYSIS_LOCK = threading.Lock()
+PENDING_ANALYSIS_TTL_SECONDS = 15 * 60
 
 
-def _crawler_no_menu_message(restaurant_name: str) -> str:
-    return (
-        f"找不到足夠菜單資料：{restaurant_name} 的文字菜單、Google 圖片搜尋結果截圖與候選圖片解析，"
-        "都沒有達到 8 項以上的可用菜單門檻。"
-    )
+def _safe_menu_path(restaurant_name: str) -> str:
+    safe_name = re.sub(r'[<>:"/\\|?*\x00-\x1f]+', "_", restaurant_name).strip(" ._")
+    safe_name = re.sub(r"\s+", "_", safe_name)[:100]
+    if not safe_name:
+        raise ValueError("餐廳名稱無法作為檔名")
+    return os.path.join(PROJECT_ROOT, f"menu_{safe_name}.json")
+
+
+def _prune_pending_analyses(now: Optional[float] = None) -> None:
+    current = now if now is not None else time.time()
+    expired = [
+        analysis_id for analysis_id, entry in PENDING_ANALYSES.items()
+        if float(entry.get("expires_at") or 0) <= current
+    ]
+    for analysis_id in expired:
+        PENDING_ANALYSES.pop(analysis_id, None)
+
+
+def _store_pending_analysis(result: Dict[str, Any]) -> str:
+    analysis_id = uuid.uuid4().hex
+    now = time.time()
+    with PENDING_ANALYSIS_LOCK:
+        _prune_pending_analyses(now)
+        PENDING_ANALYSES[analysis_id] = {
+            "result": result,
+            "created_at": now,
+            "expires_at": now + PENDING_ANALYSIS_TTL_SECONDS,
+        }
+    return analysis_id
+
+
+def _take_pending_analysis(analysis_id: str) -> Dict[str, Any]:
+    with PENDING_ANALYSIS_LOCK:
+        _prune_pending_analyses()
+        entry = PENDING_ANALYSES.pop(analysis_id, None)
+    if not entry or not isinstance(entry.get("result"), dict):
+        raise ValueError("辨識結果不存在或已超過 15 分鐘，請重新上傳照片")
+    return entry["result"]  # type: ignore[return-value]
+
+
+def _correct_pending_analysis(analysis_id: str, instruction: str) -> Dict[str, Any]:
+    with PENDING_ANALYSIS_LOCK:
+        _prune_pending_analyses()
+        entry = PENDING_ANALYSES.get(analysis_id)
+        if not entry or not isinstance(entry.get("result"), dict):
+            raise ValueError("辨識結果不存在或已超過 15 分鐘，請重新上傳照片")
+        correction = apply_manual_correction(entry["result"], instruction)  # type: ignore[arg-type]
+        entry["expires_at"] = time.time() + PENDING_ANALYSIS_TTL_SECONDS
+        return correction
+
+
+def _analysis_response(result: Dict[str, Any], analysis_id: str) -> Dict[str, Any]:
+    quality = result.get("quality") if isinstance(result.get("quality"), dict) else {}
+    item_count = int(quality.get("itemCount") or sum(
+        len(category.get("items", [])) for category in result.get("categories", []) if isinstance(category, dict)
+    ))
+    return {
+        "success": True,
+        "analysisId": analysis_id,
+        "expiresInSeconds": PENDING_ANALYSIS_TTL_SECONDS,
+        "restaurantNameCandidate": result.get("detected_restaurant_name") or result.get("restaurant_name") or "",
+        "requestedRestaurantName": (result.get("identity") or {}).get("userHint", "")
+        if isinstance(result.get("identity"), dict) else "",
+        "itemCount": item_count,
+        "categories": result.get("categories", []),
+        "sourceType": result.get("source_type"),
+        "quality": quality,
+        "priceCoverage": quality.get("priceCoverage", 0),
+        "conflicts": result.get("conflicts", []),
+        "identity": result.get("identity", {}),
+        "identityConflict": bool(result.get("identityConflict")),
+        "needsAcceptance": bool(
+            result.get("identityConflict")
+            or result.get("conflicts")
+            or float(quality.get("score") or 0) < 0.75
+        ),
+        "warnings": result.get("warnings", []),
+    }
+
+
+def _register_vision_menu(result: Dict[str, Any]) -> Dict[str, Any]:
+    """把一份已確認的 VLM 辨識結果寫成菜單檔並設為當前餐廳。"""
+    global ACTIVE_RESTAURANT, menu
+    restaurant_name = str(result.get("restaurant_name") or "").strip()
+    if not restaurant_name:
+        raise ValueError("無法確認餐廳名稱，請先輸入餐廳名稱")
+
+    category_map = {
+        str(category.get("name") or "其他"): {"items": list(category.get("items") or [])}
+        for category in result.get("categories", [])
+        if isinstance(category, dict) and category.get("items")
+    }
+    item_count = sum(len(value["items"]) for value in category_map.values())
+    if not item_count:
+        raise ValueError("沒有可新增的菜單項目")
+
+    runtime_menu: Menu = {
+        "restaurants": {
+            restaurant_name: {
+                "name": restaurant_name,
+                "categories": category_map,
+            }
+        }
+    }
+    # 先寫暫存檔再 replace，避免中途失敗留下半份菜單
+    output_path = _safe_menu_path(restaurant_name)
+    temporary_path = f"{output_path}.tmp"
+    with open(temporary_path, "w", encoding="utf-8") as file:
+        json.dump(to_persisted_document(result), file, ensure_ascii=False, indent=2)
+    os.replace(temporary_path, output_path)
+
+    RESTAURANT_MENUS[restaurant_name] = runtime_menu
+    ACTIVE_RESTAURANT = restaurant_name
+    menu = runtime_menu
+    return {"restaurantName": restaurant_name, "itemCount": item_count, "categories": list(category_map)}
 
 
 def _log_chat(session_id: str, user_text: str, reply: str, prefs: Preferences) -> None:
@@ -292,52 +385,15 @@ class ChatReq(BaseModel):
 class ChatResp(BaseModel):
     reply: str
 
-class CrawlReq(BaseModel):
-    query: str
-    maxShops: Optional[int] = 5
-    maxItems: Optional[int] = 30
-
-class CrawlResp(BaseModel):
-    success: bool
-    message: str
-    itemCount: Optional[int] = None
-    restaurants: Optional[List[dict]] = None
-
-class FoodpandaSearchReq(BaseModel):
-    """搜尋 Foodpanda 餐廳（只列出，不爬菜單）"""
-    query: str
-    city: Optional[str] = "taichung"
-    maxResults: Optional[int] = 10
-
-class FoodpandaSearchResp(BaseModel):
-    """搜尋結果"""
-    success: bool
-    message: str
-    restaurants: Optional[List[dict]] = None
-
-class FoodpandaReq(BaseModel):
-    """爬取特定餐廳的菜單"""
-    vendorCode: str  # Foodpanda 餐廳代碼（例如：s1ab）
-    restaurantName: Optional[str] = None  # 顯示用
-
-class FoodpandaResp(BaseModel):
-    success: bool
-    message: str
-    restaurant: Optional[dict] = None
-    menuItems: Optional[List[dict]] = None
-
-class UpdateMenuReq(BaseModel):
-    """遠端觸發爬蟲更新菜單"""
-    restaurant_name: str  # 餐廳名稱（例如：肯德基大甲）
-
-class UpdateMenuResp(BaseModel):
-    status: str  # "success" 或 "error"
-    message: str
-    restaurant_name: Optional[str] = None
-    menu_items_count: Optional[int] = None
-
 class RestaurantReviewRefreshReq(BaseModel):
     restaurant_name: str
+
+class VisionConfirmReq(BaseModel):
+    restaurant_name: str = ""
+    accept_conflicts: bool = False
+
+class VisionCorrectionReq(BaseModel):
+    instruction: str
 
 @app.get("/health")
 def health():
@@ -345,7 +401,14 @@ def health():
 
 @app.get("/")
 def index():
-    return FileResponse(os.path.join(WEB_DIR, "web.html"))
+    # no-cache 是「每次都先問伺服器」，不是「不准快取」。沒有這個標頭時瀏覽器
+    # 會自行決定要不要快取，可能拿到舊的 web.html —— 而舊 HTML 裡寫的是舊的
+    # ?v= 版本號，於是又去載舊的 CSS，改了樣式卻看不到任何變化。
+    # 有 ETag 在，重新驗證通常只回 304，成本很低。
+    return FileResponse(
+        os.path.join(WEB_DIR, "web.html"),
+        headers={"Cache-Control": "no-cache"},
+    )
 
 @app.get("/api/current-menu")
 def get_current_menu():
@@ -388,163 +451,6 @@ def get_current_menu():
             "categories": []
         }
 
-
-@app.post("/api/search-foodpanda", response_model=FoodpandaSearchResp)
-async def api_search_foodpanda(req: FoodpandaSearchReq):
-    """
-    搜尋餐廳（改用 Google 菜單爬蟲）
-    """
-    return FoodpandaSearchResp(
-        success=True,
-        message=f" 找到餐廳：{req.query}",
-        restaurants=[{
-            "name": req.query,
-            "vendorCode": req.query,  # 直接用搜尋關鍵字
-            "rating": None,
-            "deliveryTime": None,
-            "url": f"https://www.google.com/search?q={req.query}"
-        }]
-    )
-
-@app.post("/api/crawl-foodpanda", response_model=FoodpandaResp)
-async def api_crawl_foodpanda(req: FoodpandaReq):
-    """
-    爬取餐廳菜單（使用 crawl_menu.py）
-    
-    這個 API 會呼叫 crawl_menu.py 進行半自動爬蟲：
-    1. 自動開啟 Chrome 並搜尋餐廳
-    2. 需要手動點擊菜單頁面（避免反爬蟲機制）
-    3. 自動爬取菜單資料
-    """
-    
-    if not CRAWLER_AVAILABLE:
-        return FoodpandaResp(
-            success=False,
-            message="爬蟲模組未安裝或無法匯入"
-        )
-    
-    try:
-        import json
-        from pathlib import Path
-        from dataclasses import asdict
-        
-        restaurant_name = req.vendorCode  # vendorCode 就是餐廳名稱
-        
-        print(f"\n{'='*60}")
-        print(f" 開始爬取：{restaurant_name}")
-        print(f"{'='*60}")
-        print(f"[調試] PROJECT_ROOT = {PROJECT_ROOT}")
-        print(f"[調試] 當前工作目錄 = {os.getcwd()}")
-        print(f"[調試] CRAWLER_AVAILABLE = {CRAWLER_AVAILABLE}")
-        
-        # 使用獨立 thread + ProactorEventLoop 跑爬蟲（避免與 uvicorn event loop 衝突）
-        loop = asyncio.get_event_loop()
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-            restaurant = await loop.run_in_executor(pool, _run_crawler, restaurant_name)
-
-        crawler_error = _crawler_error_message(restaurant)
-        if crawler_error:
-            return FoodpandaResp(
-                success=False,
-                message=crawler_error
-            )
-        
-        if restaurant and restaurant.menu_items:
-            print(f"[爬蟲] 成功爬取 {len(restaurant.menu_items)} 道菜")
-            
-            # 儲存菜單 JSON（使用絕對路徑）
-            output_filename = f'menu_{restaurant.name.replace(" ", "_")}.json'
-            json_file = Path(PROJECT_ROOT) / output_filename
-            
-            print(f"[調試] 準備儲存至: {json_file}")
-            
-            json_file.write_text(
-                json.dumps(asdict(restaurant), ensure_ascii=False, indent=2),
-                encoding='utf-8'
-            )
-            print(f"[爬蟲] 菜單已儲存: {json_file}")
-            
-            # 驗證檔案確實存在
-            if json_file.exists():
-                print(f"[驗證] ✓ 檔案存在，大小: {json_file.stat().st_size} bytes")
-            else:
-                print(f"[錯誤] ✗ 檔案未找到: {json_file}")
-            
-            # 讀取保存的 JSON 檔案
-            data = json.loads(json_file.read_text(encoding='utf-8'))
-            print(f"讀取到菜單項目數: {len(data.get('menu_items', []))}")
-            
-            # 轉換為前端格式
-            menu_items = []
-            for item in data.get('menu_items', []):
-                menu_items.append({
-                    "dish": item.get('name', ''),
-                    "price": item.get('price', '價格未提供')
-                })
-            
-            # 如果菜單為空，返回失敗
-            if len(menu_items) == 0:
-                return FoodpandaResp(
-                    success=False,
-                    message=f" 爬蟲執行成功但找不到菜單資料\n\n 可能原因：\n1. 餐廳沒有在 Google Maps 上架菜單\n2. 餐廳名稱不完整\n3. 沒有手動點擊菜單頁面\n\n 解決方法：\n確保在 Chrome 中手動點擊了「菜單」標籤"
-                )
-            
-            # 將爬取的菜單轉換為系統菜單格式並保存到全域變數
-            global menu, RESTAURANT_MENUS, ACTIVE_RESTAURANT
-            
-            crawled_menu: Menu = {
-                "restaurants": {
-                    restaurant.name: {
-                        "name": data.get('name', restaurant.name),
-                        "categories": {
-                            "全部菜色": {
-                                "items": [
-                                    {
-                                        "name": item.get('name', ''),
-                                        "price": item.get('price', '價格未提供').replace('$', '').replace(',', '').strip()
-                                    }
-                                    for item in data.get('menu_items', [])
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-            
-            # 更新多餐廳管理
-            RESTAURANT_MENUS[restaurant.name] = crawled_menu
-            ACTIVE_RESTAURANT = restaurant.name
-            menu = crawled_menu
-            print(f" 已將 {restaurant.name} 加入餐廳列表並設為當前活動餐廳")
-            
-            return FoodpandaResp(
-                success=True,
-                message=f" 成功爬取 {restaurant.name} 的菜單",
-                restaurant={
-                    "name": data.get('name', restaurant.name),
-                    "rating": None,
-                    "deliveryTime": None
-                },
-                menuItems=menu_items
-            )
-        else:
-            # 爬蟲返回但沒有菜單資料
-            print(f"[爬蟲] 爬取失敗：未取得菜單資料")
-            return FoodpandaResp(
-                success=False,
-                message=_crawler_no_menu_message(restaurant_name)
-            )
-    
-    except Exception as e:
-        error_msg = str(e)
-        print(f"[錯誤] 爬蟲執行失敗: {error_msg}")
-        import traceback
-        traceback.print_exc()
-        
-        return FoodpandaResp(
-            success=False,
-            message=f" 系統錯誤：{error_msg}\n\n請檢查後端日誌"
-        )
 
 @app.post("/api/upload-menu-photo")
 async def upload_menu_photo(
@@ -599,6 +505,79 @@ async def upload_menu_photo(
         return {"success": False, "message": f"辨識失敗：{str(e)}"}
 
 
+@app.post("/api/menu/vision")
+async def create_menu_from_photo(
+    restaurant_name: str = Form(default=""),
+    image: UploadFile = File(...),
+):
+    """辨識照片，結果先進待確認區，不直接寫入菜單。"""
+    image_bytes = await image.read(MAX_IMAGE_BYTES + 1)
+    if len(image_bytes) > MAX_IMAGE_BYTES:
+        raise HTTPException(413, "圖片不可超過 10 MB")
+    try:
+        # 辨識是同步且會打好幾次 VLM，丟到執行緒避免卡住事件迴圈
+        loop = asyncio.get_running_loop()
+        result = await loop.run_in_executor(
+            None,
+            lambda: analyze_menu_image(image_bytes, image.content_type or "", restaurant_name),
+        )
+        analysis_id = _store_pending_analysis(result)
+        return _analysis_response(result, analysis_id)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(502, f"VLM 服務錯誤：{exc}") from exc
+
+
+@app.post("/api/menu/vision/{analysis_id}/confirm")
+def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
+    """使用者確認後才把待確認結果寫成菜單。"""
+    try:
+        result = _take_pending_analysis(analysis_id)
+        restaurant_name = (req.restaurant_name or str(result.get("restaurant_name") or "")).strip()
+        if not restaurant_name:
+            restaurant_name = str(result.get("detected_restaurant_name") or "").strip()
+        if not restaurant_name:
+            raise ValueError("請提供餐廳名稱後再確認")
+        quality = result.get("quality") if isinstance(result.get("quality"), dict) else {}
+        needs_acceptance = bool(
+            result.get("identityConflict")
+            or result.get("conflicts")
+            or float(quality.get("score") or 0) < 0.75
+        )
+        if needs_acceptance and not req.accept_conflicts:
+            # 放回待確認區，讓使用者看過摘要後可以再送一次
+            with PENDING_ANALYSIS_LOCK:
+                PENDING_ANALYSES[analysis_id] = {
+                    "result": result,
+                    "created_at": time.time(),
+                    "expires_at": time.time() + PENDING_ANALYSIS_TTL_SECONDS,
+                }
+            raise HTTPException(409, "店名、辨識衝突或品質需要人工檢查，請確認摘要後明確接受再送出")
+        result["restaurant_name"] = restaurant_name
+        summary = _register_vision_menu(result)
+        return {"success": True, **summary, "quality": result.get("quality", {}), "warnings": result.get("warnings", [])}
+    except HTTPException:
+        raise
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/menu/vision/{analysis_id}/correct")
+def correct_menu_from_photo(analysis_id: str, req: VisionCorrectionReq):
+    """修正待確認結果，不動到已存檔的菜單。"""
+    try:
+        correction = _correct_pending_analysis(analysis_id, req.instruction)
+        result = correction["result"]
+        return {
+            **_analysis_response(result, analysis_id),
+            "correctionMessage": correction["message"],
+            "manualCorrections": result.get("manualCorrections", []),
+        }
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
 @app.post("/api/chat", response_model=ChatResp)
 def api_chat(req: ChatReq):
     s = SESSIONS.setdefault(req.sessionId, {"prefs": {}, "history": []})
@@ -610,6 +589,47 @@ def api_chat(req: ChatReq):
     _log_chat(req.sessionId, req.text, reply, prefs)
 
     return {"reply": reply}
+
+
+@app.post("/api/chat/stream")
+def api_chat_stream(req: ChatReq):
+    """SSE 串流版對話。
+
+    先送 recommendation 事件（本機計算，約 1 秒內到），再逐段送 AI 說明文字。
+    重點在第一個事件：LLM 的第一個字要等 12-42 秒（遠端排隊，與 prompt 長度
+    無關），但推薦品項與價格不必等它。
+
+    前端拿不到串流時會自動退回 /api/chat，所以這支掛掉不會讓功能不可用。
+    """
+    s = SESSIONS.setdefault(req.sessionId, {"prefs": {}, "history": []})
+    prefs: Preferences = s["prefs"]  # type: ignore[assignment]
+    history: List[ConversationTurn] = s["history"]  # type: ignore[assignment]
+
+    def event_stream():
+        pieces: List[str] = []
+        try:
+            for event in generate_conversation_stream(history, req.text, menu, prefs):
+                if event.get("type") == "delta":
+                    pieces.append(event.get("text", ""))
+                yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+        except Exception as e:
+            print(f"[/api/chat/stream] 串流中斷: {e}")
+            yield f"data: {json.dumps({'type': 'error', 'error': str(e)}, ensure_ascii=False)}\n\n"
+        else:
+            _log_chat(req.sessionId, req.text, "".join(pieces), prefs)
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            # Render、Cloudflare 之類的反向代理預設會緩衝回應，
+            # 沒有這個標頭的話會整段憋到最後才送出，串流就白做了。
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 @app.get("/api/restaurant-review")
 def get_restaurant_review(restaurant_name: Optional[str] = None):
@@ -738,126 +758,6 @@ def delete_menu(restaurant_name: str):
         "activeRestaurant": ACTIVE_RESTAURANT
     }
 
-@app.post("/api/update-menu", response_model=UpdateMenuResp)
-async def update_menu(req: UpdateMenuReq):
-    """遠端觸發爬蟲更新菜單"""
-    
-    if not CRAWLER_AVAILABLE:
-        return UpdateMenuResp(
-            status="error",
-            message="爬蟲模組未安裝或無法匯入"
-        )
-    
-    restaurant_name = req.restaurant_name
-    print(f"\n{'='*60}")
-    print(f"[API] 收到遠端爬蟲請求")
-    print(f"[API] 目標餐廳: {restaurant_name}")
-    print(f"{'='*60}\n")
-    
-    try:
-        # 執行爬蟲
-        print(f"[爬蟲] 開始爬取: {restaurant_name}")
-        print(f"[調試] PROJECT_ROOT = {PROJECT_ROOT}")
-        print(f"[調試] 當前工作目錄 = {os.getcwd()}")
-        
-        loop = asyncio.get_event_loop()
-        with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-            restaurant = await loop.run_in_executor(pool, _run_crawler, restaurant_name)
-
-        crawler_error = _crawler_error_message(restaurant)
-        if crawler_error:
-            return UpdateMenuResp(
-                status="error",
-                message=crawler_error
-            )
-        
-        if restaurant and restaurant.menu_items:
-            print(f"[爬蟲] 成功爬取 {len(restaurant.menu_items)} 道菜")
-            
-            # 儲存菜單 JSON（確保使用絕對路徑）
-            import json
-            from pathlib import Path
-            from dataclasses import asdict
-            
-            # 使用絕對路徑確保儲存到專案根目錄
-            output_filename = f'menu_{restaurant.name.replace(" ", "_")}.json'
-            output_file = os.path.abspath(os.path.join(PROJECT_ROOT, output_filename))
-            
-            print(f"[調試] 準備儲存至: {output_file}")
-            
-            # 確保目錄存在
-            os.makedirs(os.path.dirname(output_file), exist_ok=True)
-            
-            Path(output_file).write_text(
-                json.dumps(asdict(restaurant), ensure_ascii=False, indent=2),
-                encoding='utf-8'
-            )
-            print(f"[爬蟲] 菜單已儲存: {output_file}")
-            
-            # 驗證檔案確實存在
-            if os.path.exists(output_file):
-                print(f"[驗證] ✓ 檔案存在，大小: {os.path.getsize(output_file)} bytes")
-            else:
-                print(f"[錯誤] ✗ 檔案未找到: {output_file}")
-            
-            # 重新載入菜單到系統中
-            try:
-                global RESTAURANT_MENUS, ACTIVE_RESTAURANT
-                
-                # 重新讀取剛儲存的菜單檔案
-                with open(output_file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                
-                if "menu_items" in data and isinstance(data["menu_items"], list):
-                    crawled_menu: Menu = {
-                        "restaurants": {
-                            restaurant.name: {
-                                "name": data.get('name', restaurant.name),
-                                "categories": {
-                                    "全部菜色": {
-                                        "items": [
-                                            {
-                                                "name": item.get('name', ''),
-                                                "price": item.get('price', '價格未提供').replace('$', '').replace(',', '').strip() if isinstance(item.get('price'), str) else item.get('price')
-                                            }
-                                            for item in data.get('menu_items', [])
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    RESTAURANT_MENUS[restaurant.name] = crawled_menu
-                    ACTIVE_RESTAURANT = restaurant.name
-                    menu = crawled_menu
-                    print(f"[系統] 已將 {restaurant.name} 設為活動餐廳")
-            except Exception as e:
-                print(f"[警告] 重新載入菜單失敗: {e}")
-            
-            return UpdateMenuResp(
-                status="success",
-                message=f"成功爬取 {restaurant.name} 的菜單",
-                restaurant_name=restaurant.name,
-                menu_items_count=len(restaurant.menu_items)
-            )
-        else:
-            print(f"[爬蟲] 爬取失敗：未取得菜單資料")
-            return UpdateMenuResp(
-                status="error",
-                message=_crawler_no_menu_message(restaurant_name)
-            )
-            
-    except Exception as e:
-        error_msg = str(e)
-        print(f"[錯誤] 爬蟲執行失敗: {error_msg}")
-        import traceback
-        traceback.print_exc()
-        
-        return UpdateMenuResp(
-            status="error",
-            message=f"爬蟲執行失敗: {error_msg}"
-        )
-
 if __name__ == "__main__":
     import uvicorn
     
@@ -866,8 +766,15 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", "7890"))
     
     print(f" 啟動後端服務...")
-    print(f" 訪問: http://localhost:{port}")
+    print(f" 本機: http://localhost:{port}")
+    if host == "0.0.0.0":
+        # 同一個 Wi-Fi 下的手機要用這個網址才連得到
+        try:
+            import socket
+            lan_ip = socket.gethostbyname(socket.gethostname())
+            print(f" 手機/區網: http://{lan_ip}:{port}")
+        except Exception:
+            pass
     print(f" 靜態檔案: ../web")
-    print(f" 爬蟲: crawler_google_bwzfsc.py")
     print(f"\n按 Ctrl+C 停止服務\n")
     uvicorn.run(app, host=host, port=port)

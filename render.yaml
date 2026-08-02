@@ -1,0 +1,33 @@
+# Render 部署設定。在 Render 選 "New +" -> "Blueprint" 並指向這個 repo，
+# 它會讀這個檔把服務建起來。
+#
+# API_KEY 標成 sync: false，代表值不寫在 repo 裡，第一次部署時 Render 會問你，
+# 之後可在 Dashboard -> Environment 修改（金鑰 90 天到期時就是改這裡）。
+services:
+  - type: web
+    name: order-suggest
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r requirements.txt
+    # back.py 在 src/ 底下，且用 __file__ 推算 web/ 與專案根目錄，
+    # 所以 --app-dir 指到 src 就好，不需要改工作目錄。
+    startCommand: uvicorn back:app --app-dir src --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.10"
+      - key: API_BASE_URL
+        value: https://api.ithu.tw/v1
+      - key: API_KEY
+        sync: false
+      - key: API_MODEL
+        value: vibe
+      - key: VISION_MODEL
+        value: llama4scout
+      - key: VISION_VERIFY_MODEL
+        value: mistral-small-4
+      - key: USE_LLM_EXTRACTION
+        value: "false"
+      - key: USE_LLM_CLASSIFICATION
+        value: "false"
