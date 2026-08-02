@@ -483,7 +483,14 @@ def health():
 
 @app.get("/")
 def index():
-    return FileResponse(os.path.join(WEB_DIR, "web.html"))
+    # no-cache 是「每次都先問伺服器」，不是「不准快取」。沒有這個標頭時瀏覽器
+    # 會自行決定要不要快取，可能拿到舊的 web.html —— 而舊 HTML 裡寫的是舊的
+    # ?v= 版本號，於是又去載舊的 CSS，改了樣式卻看不到任何變化。
+    # 有 ETag 在，重新驗證通常只回 304，成本很低。
+    return FileResponse(
+        os.path.join(WEB_DIR, "web.html"),
+        headers={"Cache-Control": "no-cache"},
+    )
 
 @app.get("/api/current-menu")
 def get_current_menu():
