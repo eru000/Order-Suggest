@@ -16,8 +16,10 @@ logs/*.log
 # Local restaurant review cache
 reviews_*.json
 
-# .env 刻意進版控：組員 clone 完要能直接跑，金鑰過期各自替換。
-# 這是公開 repo，所以這把金鑰視同公開，被盜用就重發一把。
+# 本機環境與憑證只留在開發電腦；可提交的範本放在 .env.example。
+.env
+.env.*
+!.env.example
 
 # 爬蟲留下的舊資料夾。爬蟲已移除，但既有的工作目錄裡還留著這個資料夾，
 # 列在這裡才不會被誤加進版控。

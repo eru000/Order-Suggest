@@ -2,6 +2,8 @@ fastapi>=0.110
 uvicorn[standard]>=0.27
 pydantic>=2.5
 python-multipart>=0.0.9
+beautifulsoup4>=4.12
+playwright>=1.41
 
 # VLM 菜單辨識（menu_vision）
 Pillow>=10.2

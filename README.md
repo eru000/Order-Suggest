@@ -23,17 +23,36 @@ pip install -r requirements.txt
 copy .env.example .env        # macOS/Linux 用 cp
 ```
 
-打開 `.env`，把 `API_KEY=` 填上金鑰。**金鑰不在 repo 裡**，跟組員要（私訊傳，
-不要貼進 GitHub）。金鑰 90 天到期，過期要去 api.ithu.tw 重發。
+打開 `.env`，把 `API_KEY=` 填上金鑰。餐廳評價搜尋不需要額外的搜尋 API
+金鑰。**金鑰不要提交到 GitHub。**
 
 ### 啟動
 
 ```bash
-python -m uvicorn back:app --app-dir src --host 0.0.0.0 --port 7890
+python -m uvicorn back:app --app-dir src --host 127.0.0.1 --port 7890
 ```
 
-瀏覽器開 http://localhost:7890 。
+終端機會顯示 `Uvicorn running on http://127.0.0.1:7890`，瀏覽器開
+http://localhost:7890 或 http://127.0.0.1:7890 都可以。
 手機要連的話看 [DEPLOY.md](DEPLOY.md)，**需要先加防火牆規則**，否則一定連不上。
+
+### 餐廳評價
+
+在評價區輸入任意餐廳名稱後按「自動搜尋」；也可以直接使用目前菜單的餐廳名稱。
+系統會搜尋公開來源、確認同名分店，整理推薦分、
+資料信心、優缺點與可信度風險；結果會快取成 `reviews_餐廳名稱.json`。
+需要改對應分店時按「換分店」重新選擇。評價更新會需要數十秒，請等候按鈕恢復。
+
+`REVIEW_SEARCH_MODE=auto` 會先用 Playwright 開啟 Google Maps 公開店家頁，讀取店名、
+地址與頁面公開的星等，再使用免金鑰的愛食記、Bing RSS、Google News RSS，以及
+Dcard、PTT、痞客邦、PopDaily、WalkerLand 等定向查詢補充食記。只有相關來源不足時，
+才回退到 Google 瀏覽器搜尋與 Jina／DuckDuckGo／Bing HTML 搜尋。程式不會繞過登入牆、
+驗證碼，也不會捏造 Google 頁面未公開的評論數。
+
+`POST /api/restaurant-review/refresh` 另接受 `source_urls` 字串陣列，可加入使用者提供的
+Dcard、部落格或評論平台公開網址。第一次使用自動瀏覽器搜尋前請執行
+`python -m playwright install chromium`；無法安裝瀏覽器的環境可把
+`REVIEW_SEARCH_MODE` 改成 `rss`。
 
 ### 跑測試
 

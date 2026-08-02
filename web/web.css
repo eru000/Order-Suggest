@@ -397,9 +397,10 @@ h1, h2, h3,
 }
 
 .review-refresh {
-  padding: 6px 9px;
+  padding: 8px 10px;
   border-radius: 8px;
   font-size: 12px;
+  flex: 0 0 auto;
 }
 
 .review-refresh:disabled {
@@ -407,10 +408,99 @@ h1, h2, h3,
   opacity: 0.6;
 }
 
+.review-search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.review-search-label {
+  color: var(--fg-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.review-search-row {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.review-search-input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 9px;
+  color: var(--fg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 12px;
+}
+
+.review-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.review-search-input:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.review-search-hint {
+  color: var(--fg-muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.review-platform-rating {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 10px;
+  color: #713f12;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 9px;
+}
+
+.review-platform-rating strong {
+  font-size: 14px;
+}
+
+.review-platform-rating span {
+  color: #92400e;
+  font-size: 10px;
+  text-align: right;
+}
+
+[data-theme="dark"] .review-platform-rating {
+  color: #fde68a;
+  background: rgba(120, 53, 15, 0.25);
+  border-color: rgba(245, 158, 11, 0.42);
+}
+
+[data-theme="dark"] .review-platform-rating span {
+  color: #fcd34d;
+}
+
 .review-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.review-head-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.review-head-actions .ghost-btn {
+  padding: 6px 8px;
+  font-size: 11px;
 }
 
 .review-empty,
@@ -422,9 +512,46 @@ h1, h2, h3,
 
 .review-score-row {
   display: grid;
-  grid-template-columns: 52px 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.review-metric {
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-left: 3px solid #2563eb;
+  border-radius: 8px;
+  background: var(--surface-strong);
+}
+
+.review-metric.confidence {
+  border-left-color: #0f766e;
+}
+
+.review-metric strong,
+.review-metric span {
+  display: block;
+}
+
+.review-metric strong {
+  color: var(--fg);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.review-metric span {
+  color: var(--fg-muted);
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+.review-status-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 24px;
 }
 
 .review-score {
@@ -465,6 +592,39 @@ h1, h2, h3,
   color: #991b1b;
 }
 
+.review-risk.unknown {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.review-identity {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.review-identity strong {
+  color: var(--fg);
+  font-size: 12px;
+}
+
+.review-identity span,
+.review-notice {
+  color: var(--fg-muted);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.review-search-meta {
+  display: grid;
+  gap: 3px;
+  margin-top: 8px;
+  color: var(--fg-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 .review-summary {
   color: var(--fg);
   font-size: 12px;
@@ -488,6 +648,75 @@ h1, h2, h3,
   color: var(--fg);
   font-size: 12px;
   line-height: 1.55;
+}
+
+.review-more {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+.review-more > summary {
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.review-more[open] > summary {
+  margin-bottom: 8px;
+}
+
+.review-aspects {
+  display: grid;
+  gap: 5px;
+  padding-top: 2px;
+}
+
+.review-aspect {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.review-aspect div {
+  min-width: 0;
+}
+
+.review-aspect span,
+.review-aspect small {
+  display: block;
+}
+
+.review-aspect span {
+  color: var(--fg);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.review-aspect small {
+  color: var(--fg-muted);
+  font-size: 9px;
+}
+
+.review-aspect strong {
+  color: var(--fg);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.review-evidence-links {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 5px;
+}
+
+.review-evidence-link {
+  color: var(--primary);
+  font-size: 9px;
+  font-weight: 800;
 }
 
 .review-sources {
@@ -533,6 +762,27 @@ h1, h2, h3,
   -webkit-box-orient: vertical;
 }
 
+.review-source-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.review-source-meta b {
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: var(--primary-soft);
+  color: var(--fg-muted);
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.review-source-meta b.sponsored {
+  background: #fef3c7;
+  color: #92400e;
+}
+
 [data-theme="dark"] .review-risk {
   background: rgba(34, 197, 94, 0.16);
   color: #86efac;
@@ -547,6 +797,87 @@ h1, h2, h3,
   background: rgba(239, 68, 68, 0.16);
   color: #fca5a5;
 }
+
+[data-theme="dark"] .review-risk.unknown {
+  background: rgba(156, 163, 175, 0.18);
+  color: #d1d5db;
+}
+
+.review-identity-modal-content {
+  width: min(620px, calc(100vw - 32px));
+}
+
+.mobile-review-modal-content {
+  width: min(540px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+}
+
+.mobile-review-modal-content .menu-modal-body {
+  overflow-y: auto;
+}
+
+.mobile-review-modal-content .review-panel {
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.review-identity-help {
+  margin: 0 0 12px;
+  color: var(--fg-muted);
+  font-size: 13px;
+}
+
+.review-candidates {
+  display: grid;
+  gap: 8px;
+}
+
+.review-candidate {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+}
+
+.review-candidate:hover,
+.review-candidate:focus-visible {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  outline: none;
+}
+
+.review-candidate strong,
+.review-candidate span,
+.review-candidate small,
+.review-candidate b {
+  display: block;
+}
+
+.review-candidate strong {
+  font-size: 14px;
+}
+
+.review-candidate span,
+.review-candidate small {
+  color: var(--fg-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.review-candidate b {
+  color: #0f766e;
+  font-size: 10px;
+}
+
+/* ============================================
+   Sidebar Actions
 
 /* ============================================
    Sidebar Actions
@@ -817,6 +1148,10 @@ h1, h2, h3,
 
 /* 手機版餐廳選擇器 - 預設隱藏 */
 .restaurant-select-mobile {
+  display: none;
+}
+
+.mobile-review-btn {
   display: none;
 }
 
@@ -1237,6 +1572,10 @@ h1, h2, h3,
 
 /* 手機設備 (小於 768px) */
 @media (max-width: 768px) {
+  .mobile-review-btn {
+    display: inline-flex;
+  }
+
   /* 顯示手機版餐廳選擇器 */
   .restaurant-select-mobile {
     display: block;
@@ -1699,14 +2038,42 @@ h1, h2, h3,
   border: 1px solid var(--border);
 }
 
-/* 退場沿進場的同一條路徑倒回去，而且更快。
-   原本是直接 display:none 硬切，東西憑空消失會讀起來像壞掉 */
-.menu-modal.is-leaving .menu-modal-overlay {
-  animation: fadeIn 160ms var(--ease-out) reverse forwards;
+/* 菜單專用可中斷狀態。其他評價 Modal 仍沿用 hidden，不互相影響。 */
+.menu-modal--interactive {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 160ms var(--ease-out), visibility 0s linear 160ms;
 }
 
-.menu-modal.is-leaving .menu-modal-content {
-  animation: slideUp 160ms var(--ease-out) reverse forwards;
+.menu-modal--interactive.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 220ms var(--ease-out), visibility 0s linear 0s;
+}
+
+.menu-modal--interactive .menu-modal-overlay {
+  opacity: 0;
+  animation: none;
+  transition: opacity 160ms var(--ease-out);
+}
+
+.menu-modal--interactive.is-open .menu-modal-overlay {
+  opacity: 1;
+}
+
+.menu-modal--interactive .menu-modal-content {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  animation: none;
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.menu-modal--interactive.is-open .menu-modal-content {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-duration: 220ms;
 }
 
 .menu-modal-header {
@@ -1939,10 +2306,15 @@ h1, h2, h3,
   }
 
   .menu-modal-overlay,
-  .menu-modal-content,
-  .menu-modal.is-leaving .menu-modal-overlay,
-  .menu-modal.is-leaving .menu-modal-content {
+  .menu-modal-content {
     animation: fadeIn 160ms ease;
+  }
+
+  .menu-modal--interactive,
+  .menu-modal--interactive .menu-modal-overlay,
+  .menu-modal--interactive .menu-modal-content {
+    animation: none;
+    transition: none;
   }
 
   /* 切換深淺色時不要整片背景慢慢漸變 */

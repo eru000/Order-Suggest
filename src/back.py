@@ -26,7 +26,11 @@ from main import (
     generate_conversation_stream,
 )
 
-from restaurant_reviews import load_review_cache, refresh_restaurant_reviews
+from restaurant_reviews import (
+    identify_restaurant_candidates,
+    load_review_cache,
+    refresh_restaurant_reviews,
+)
 
 # VLM 菜單辨識（分塊辨識 + 交叉校對 + 人工確認）
 from menu_vision import (
@@ -387,6 +391,11 @@ class ChatResp(BaseModel):
 
 class RestaurantReviewRefreshReq(BaseModel):
     restaurant_name: str
+    restaurant_identity: Optional[Dict[str, object]] = None
+    source_urls: Optional[List[str]] = None
+
+class RestaurantReviewIdentifyReq(BaseModel):
+    restaurant_name: str
 
 class VisionConfirmReq(BaseModel):
     restaurant_name: str = ""
@@ -640,18 +649,60 @@ def get_restaurant_review(restaurant_name: Optional[str] = None):
             "success": False,
             "message": "尚未選擇餐廳",
             "restaurantName": None,
+            "schemaVersion": 3,
+            "restaurantIdentity": None,
+            "needsIdentity": True,
+            "needsRefresh": False,
             "updatedAt": None,
+            "recommendationScore": 0,
+            "confidenceScore": 0,
             "overallScore": 0,
             "sentiment": "unknown",
             "summary": "",
             "pros": [],
             "cons": [],
+            "prosEvidence": [],
+            "consEvidence": [],
             "recommendedFor": [],
-            "riskLevel": "low",
-            "riskReasons": [],
+            "aspects": {},
+            "riskLevel": "unknown",
+            "riskReasons": ["尚未選擇餐廳"],
+            "riskSignals": [],
+            "evidence": [],
             "sources": [],
+            "searchMeta": {
+                "status": "no_relevant_sources",
+                "provider": None,
+                "attemptedProviders": [],
+                "rawResultCount": 0,
+                "relevantSourceCount": 0,
+            },
         }
     return load_review_cache(PROJECT_ROOT, target)
+
+@app.post("/api/restaurant-review/identify")
+async def identify_restaurant_review(req: RestaurantReviewIdentifyReq):
+    """搜尋可能的餐廳分店，交由使用者確認後才更新評價。"""
+    restaurant_name = (req.restaurant_name or "").strip()
+    if not restaurant_name:
+        raise HTTPException(400, "restaurant_name 不可為空")
+    if len(restaurant_name) > 120:
+        raise HTTPException(400, "restaurant_name 不可超過 120 個字元")
+    loop = asyncio.get_event_loop()
+    try:
+        candidates = await loop.run_in_executor(
+            None,
+            lambda: identify_restaurant_candidates(restaurant_name),
+        )
+        return {
+            "success": bool(candidates),
+            "restaurantName": restaurant_name,
+            "candidates": candidates,
+            "message": "請確認要分析的餐廳分店" if candidates else "找不到可確認的餐廳分店",
+        }
+    except Exception as e:
+        print(f"[評價] 店家辨識失敗: {e}")
+        raise HTTPException(500, f"店家辨識失敗: {str(e)}")
 
 @app.post("/api/restaurant-review/refresh")
 async def refresh_restaurant_review(req: RestaurantReviewRefreshReq):
@@ -659,14 +710,19 @@ async def refresh_restaurant_review(req: RestaurantReviewRefreshReq):
     restaurant_name = (req.restaurant_name or "").strip()
     if not restaurant_name:
         raise HTTPException(400, "restaurant_name 不可為空")
-    if RESTAURANT_MENUS and restaurant_name not in RESTAURANT_MENUS:
-        raise HTTPException(404, f"餐廳 '{restaurant_name}' 不存在")
+    if len(restaurant_name) > 120:
+        raise HTTPException(400, "restaurant_name 不可超過 120 個字元")
 
     loop = asyncio.get_event_loop()
     try:
         return await loop.run_in_executor(
             None,
-            lambda: refresh_restaurant_reviews(PROJECT_ROOT, restaurant_name),
+            lambda: refresh_restaurant_reviews(
+                PROJECT_ROOT,
+                restaurant_name,
+                req.restaurant_identity,
+                req.source_urls,
+            ),
         )
     except Exception as e:
         print(f"[評價] 更新失敗: {e}")
@@ -762,7 +818,9 @@ if __name__ == "__main__":
     import uvicorn
     
     # 可以用環境變數自訂 host 和 port
-    host = os.environ.get("HOST", "0.0.0.0")
+    # 本機開發預設只綁定 loopback，Uvicorn 會顯示可直接開啟的本機網址。
+    # 若要讓同一個 Wi-Fi 的手機連線，部署／區網啟動時再設 HOST=0.0.0.0。
+    host = os.environ.get("HOST", "127.0.0.1")
     port = int(os.environ.get("PORT", "7890"))
     
     print(f" 啟動後端服務...")
