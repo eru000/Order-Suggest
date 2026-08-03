@@ -12,8 +12,8 @@ services:
     buildCommand: pip install -r requirements.txt
     # back.py 在 src/ 底下，且用 __file__ 推算 web/ 與專案根目錄，
     # 所以 --app-dir 指到 src 就好，不需要改工作目錄。
-    startCommand: uvicorn back:app --app-dir src --host 0.0.0.0 --port $PORT
-    healthCheckPath: /health
+    startCommand: python -m alembic upgrade head && python src/migrate_legacy_data.py && uvicorn back:app --app-dir src --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health/readiness
     envVars:
       - key: PYTHON_VERSION
         value: "3.12.10"
@@ -21,13 +21,30 @@ services:
         value: https://api.ithu.tw/v1
       - key: API_KEY
         sync: false
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: APP_ENV
+        value: production
+      - key: TRUST_PROXY_HEADERS
+        value: "true"
       - key: API_MODEL
         value: vibe
       - key: VISION_MODEL
         value: llama4scout
       - key: VISION_VERIFY_MODEL
         value: mistral-small-4
+      # Google 菜單爬蟲需要 Windows Chrome + CDP，只在本機啟用。
+      - key: CRAWLER_ENABLED
+        value: "false"
       - key: USE_LLM_EXTRACTION
         value: "false"
       - key: USE_LLM_CLASSIFICATION
+        value: "false"
+      - key: SEMANTIC_RECOMMENDER_ENABLED
+        value: "true"
+      - key: SEMANTIC_SHADOW_MODE
         value: "false"

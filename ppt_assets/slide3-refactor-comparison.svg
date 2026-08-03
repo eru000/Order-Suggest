@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">OrderSuggest 主要檔案重構前後行數比較</title>
+  <desc id="desc">back.py 從 756 行降至 12 行，web.html 從 1905 行降至 237 行，ollama_fuc.py 從 805 行降至 277 行。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8FAFF"/>
+      <stop offset="1" stop-color="#EEF4FF"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#163B73" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" rx="40" fill="url(#bg)"/>
+
+  <text x="110" y="105" fill="#12233F" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="54" font-weight="700">主檔行數明顯下降</text>
+  <text x="112" y="156" fill="#5B6B84" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="24">功能移至獨立模組，入口與頁面結構變得更精簡</text>
+
+  <g font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="21" fill="#5B6B84">
+    <circle cx="1130" cy="116" r="9" fill="#243B64"/>
+    <text x="1150" y="124">改造前</text>
+    <circle cx="1280" cy="116" r="9" fill="#13BDEB"/>
+    <text x="1300" y="124">目前</text>
+  </g>
+
+  <g stroke="#D9E2F0" stroke-width="2">
+    <line x1="350" y1="238" x2="1490" y2="238"/>
+    <line x1="350" y1="238" x2="350" y2="755"/>
+    <line x1="635" y1="238" x2="635" y2="755" stroke-dasharray="5 10"/>
+    <line x1="920" y1="238" x2="920" y2="755" stroke-dasharray="5 10"/>
+    <line x1="1205" y1="238" x2="1205" y2="755" stroke-dasharray="5 10"/>
+    <line x1="1490" y1="238" x2="1490" y2="755" stroke-dasharray="5 10"/>
+  </g>
+
+  <g fill="#7B8AA3" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif" font-size="18" text-anchor="middle">
+    <text x="350" y="218">0</text>
+    <text x="635" y="218">500</text>
+    <text x="920" y="218">1,000</text>
+    <text x="1205" y="218">1,500</text>
+    <text x="1490" y="218">2,000 行</text>
+  </g>
+
+  <g font-family="Noto Sans TC, Microsoft JhengHei, sans-serif">
+    <g>
+      <text x="110" y="340" fill="#12233F" font-size="30" font-weight="700">back.py</text>
+      <text x="110" y="375" fill="#6B7A91" font-size="20">後端 API 入口</text>
+      <line x1="357" y1="350" x2="781" y2="350" stroke="#99A9C2" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="781" cy="350" r="18" fill="#243B64" filter="url(#softShadow)"/>
+      <circle cx="357" cy="350" r="18" fill="#13BDEB" filter="url(#softShadow)"/>
+      <text x="781" y="313" fill="#243B64" font-size="25" font-weight="700" text-anchor="middle">756</text>
+      <text x="357" y="403" fill="#008FB8" font-size="25" font-weight="700" text-anchor="middle">12</text>
+      <text x="1450" y="360" fill="#008FB8" font-size="28" font-weight="700" text-anchor="end">−98.4%</text>
+    </g>
+
+    <g>
+      <text x="110" y="515" fill="#12233F" font-size="30" font-weight="700">web.html</text>
+      <text x="110" y="550" fill="#6B7A91" font-size="20">前端頁面結構</text>
+      <line x1="485" y1="525" x2="1436" y2="525" stroke="#99A9C2" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="1436" cy="525" r="18" fill="#243B64" filter="url(#softShadow)"/>
+      <circle cx="485" cy="525" r="18" fill="#13BDEB" filter="url(#softShadow)"/>
+      <text x="1436" y="488" fill="#243B64" font-size="25" font-weight="700" text-anchor="middle">1,905</text>
+      <text x="485" y="578" fill="#008FB8" font-size="25" font-weight="700" text-anchor="middle">237</text>
+      <text x="1450" y="610" fill="#008FB8" font-size="28" font-weight="700" text-anchor="end">−87.6%</text>
+    </g>
+
+    <g>
+      <text x="110" y="690" fill="#12233F" font-size="30" font-weight="700">ollama_fuc.py</text>
+      <text x="110" y="725" fill="#6B7A91" font-size="20">模型串接與推薦邏輯</text>
+      <line x1="508" y1="700" x2="809" y2="700" stroke="#99A9C2" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="809" cy="700" r="18" fill="#243B64" filter="url(#softShadow)"/>
+      <circle cx="508" cy="700" r="18" fill="#13BDEB" filter="url(#softShadow)"/>
+      <text x="809" y="663" fill="#243B64" font-size="25" font-weight="700" text-anchor="middle">805</text>
+      <text x="508" y="753" fill="#008FB8" font-size="25" font-weight="700" text-anchor="middle">277</text>
+      <text x="1450" y="710" fill="#008FB8" font-size="28" font-weight="700" text-anchor="end">−65.6%</text>
+    </g>
+  </g>
+
+  <g transform="translate(110 816)" font-family="Noto Sans TC, Microsoft JhengHei, sans-serif">
+    <rect x="0" y="-31" width="1380" height="62" rx="18" fill="#E3EEFF"/>
+    <text x="30" y="9" fill="#28466F" font-size="22" font-weight="600">重點：程式不是被刪除，而是依職責移至 API、服務、推薦、資料存取與前端腳本等獨立模組。</text>
+  </g>
+</svg>

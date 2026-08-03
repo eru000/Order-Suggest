@@ -2,6 +2,13 @@
 __pycache__/
 *.pyc
 *.pyo
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.tmp
 
 # Local virtual environments
 .venv/
@@ -12,6 +19,10 @@ venv/
 # Logs
 logs/*.jsonl
 logs/*.log
+logs/crawler/
+data/*.db
+data/*.db-shm
+data/*.db-wal
 
 # Local restaurant review cache
 reviews_*.json

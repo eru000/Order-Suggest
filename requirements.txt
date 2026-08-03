@@ -8,3 +8,7 @@ playwright>=1.41
 # VLM 菜單辨識（menu_vision）
 Pillow>=10.2
 pillow-heif>=0.18      # iPhone HEIC 照片
+redis>=5.0,<6.0
+SQLAlchemy>=2.0,<3.0
+alembic>=1.13,<2.0
+psycopg[binary]>=3.2,<4.0

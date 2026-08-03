@@ -93,12 +93,25 @@ repo 裡的 [render.yaml](render.yaml) 已經設定好，不用再寫任何東�
 2. 它會問 `API_KEY`（其他變數 render.yaml 裡已經填好），貼上金鑰
 3. 等 build 完成
 
+### 資料服務與 migration
+
+正式環境現在以 PostgreSQL 為唯一持久化來源，並用 Redis 保存短期快取、
+待確認菜單與分散式鎖。部署前設定 `DATABASE_URL`、`REDIS_URL`，然後執行：
+
+```powershell
+python -m alembic upgrade head
+python src/migrate_legacy_data.py
+```
+
+舊有 `menu_*.json`、`reviews_*.json` 與 SQLite session 只會被冪等匯入，
+執行中的新增菜單與評價不再寫回 JSON。
+
 ### 免費方案的兩個限制
 
 - **15 分鐘沒人用就休眠**，下一個請求要等約 50 秒喚醒。
   → demo 前 2 分鐘先用手機開一次把它叫醒。
-- 檔案系統是暫存的。重新部署後，執行中新增的菜單會消失，
-  但 repo 裡的 `menu_*.json` 一直都在，demo 用的餐廳不受影響。
+- 檔案系統是暫存的；已確認的菜單、評價與 session 會保存在 PostgreSQL，
+  Redis 遺失時則由 PostgreSQL 回填可恢復的快取資料。
 
 金鑰 90 天到期時，改 Dashboard → Environment 的 `API_KEY`，不用重新部署整包。
 

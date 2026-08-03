@@ -17,6 +17,8 @@ from urllib import error, request
 from urllib.parse import parse_qs, quote, quote_plus, urlencode, unquote, urljoin, urlparse, urlunparse
 from xml.etree import ElementTree
 
+from application_services import review_repository
+
 
 ReviewReport = Dict[str, Any]
 ReviewSource = Dict[str, Any]
@@ -2193,6 +2195,14 @@ def _normalize_review_report(
 
 
 def load_review_cache(project_root: str | Path, restaurant_name: str) -> ReviewReport:
+    try:
+        stored = review_repository(project_root).load(restaurant_name)
+    except Exception:
+        stored = None
+    if stored is not None:
+        return _normalize_review_report(stored, restaurant_name, default_success=True)
+    if os.getenv("DATABASE_URL", "").strip():
+        return _empty_review_report(restaurant_name)
     path = _cache_path(project_root, restaurant_name)
     if not path.exists():
         return _empty_review_report(restaurant_name)
@@ -2200,12 +2210,16 @@ def load_review_cache(project_root: str | Path, restaurant_name: str) -> ReviewR
         data = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:
         return _empty_review_report(restaurant_name, f"評價快取讀取失敗: {exc}")
-    return _normalize_review_report(data, restaurant_name, default_success=True)
+    report = _normalize_review_report(data, restaurant_name, default_success=True)
+    try:
+        review_repository(project_root).save(restaurant_name, report)
+    except Exception:
+        pass
+    return report
 
 
 def write_review_cache(project_root: str | Path, restaurant_name: str, report: ReviewReport) -> None:
-    path = _cache_path(project_root, restaurant_name)
-    path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    review_repository(project_root).save(restaurant_name, dict(report))
 
 
 def refresh_restaurant_reviews(

@@ -83,26 +83,26 @@ class RecommendBaselineTest(unittest.TestCase):
 
     # --- 預算分配 ---
 
-    def test_first_main_capped_at_40_percent_of_budget(self):
-        """預算 100 時第一份主食上限 40；全部超過就落到保底推薦。"""
+    def test_budget_uses_whole_meal_total_instead_of_arbitrary_main_ratio(self):
+        """能放進含服務費總預算的主食，不應被固定 40% 比例排除。"""
         menu = build_menu([
             {"name": "牛肉麵", "price": 50},
             {"name": "陽春麵", "price": 45},
         ])
         result = run_recommend(menu, {"budget": 100})
 
-        self.assertEqual([], names_by_reason(result, "主餐推薦"))
-        self.assertEqual(["陽春麵", "牛肉麵"], names_by_reason(result, "最經濟實惠的主餐"))
+        self.assertEqual(["陽春麵"], names_by_reason(result, "主餐推薦"))
+        self.assertLessEqual(result["meta"]["estimatedTotal"], 100)
 
-    def test_two_mains_capped_at_65_percent_of_budget(self):
-        """預算 200：第一份 60 過關，第二份會讓主食總額破 130 就跳過。"""
+    def test_people_can_request_two_mains_when_total_stays_in_budget(self):
         menu = build_menu([
             {"name": "陽春麵", "price": 60},
             {"name": "牛肉麵", "price": 100},
         ])
-        result = run_recommend(menu, {"budget": 200})
+        result = run_recommend(menu, {"budget": 200, "people": 4})
 
-        self.assertEqual(["陽春麵"], names_by_reason(result, "主餐推薦"))
+        self.assertEqual(["陽春麵", "牛肉麵"], names_by_reason(result, "主餐推薦"))
+        self.assertLessEqual(result["meta"]["estimatedTotal"], 200)
 
     def test_side_is_skipped_when_it_would_pass_90_percent_of_budget(self):
         """預算 100、主食 40，配菜會讓總額破 90 就一個都不加。"""
@@ -125,7 +125,7 @@ class RecommendBaselineTest(unittest.TestCase):
             {"name": "豬排麵", "price": 120},
             {"name": "雞腿飯", "price": 130},
         ])
-        result = run_recommend(menu)
+        result = run_recommend(menu, {"people": 4})
 
         self.assertEqual(2, len(names_by_reason(result, "主餐推薦")))
 
@@ -214,6 +214,37 @@ class RecommendBaselineTest(unittest.TestCase):
 
         self.assertEqual(250.0, result["meta"]["budget"])
         self.assertEqual(2, result["meta"]["people"])
+
+    # --- 新推薦契約：這三條在舊引擎上會失敗 ---
+
+    def test_top_k_is_a_hard_output_limit(self):
+        menu = build_menu([
+            {"name": "牛肉麵", "price": 100},
+            {"name": "雞腿飯", "price": 110},
+            {"name": "薯條", "price": 30},
+            {"name": "紅茶", "price": 20},
+        ])
+        result = run_recommend(menu, top_k=1)
+        self.assertLessEqual(len(result["items"]), 1)
+
+    def test_budget_is_never_violated_by_fallback(self):
+        menu = build_menu([{"name": "牛肉麵", "price": 100}])
+        result = run_recommend(menu, {"budget": 50})
+        total = sum(item["price"] for item in result["items"] if item["price"] is not None)
+        self.assertLessEqual(total, 50)
+        self.assertEqual([], result["items"])
+
+    def test_people_changes_required_main_course_count(self):
+        menu = build_menu([
+            {"name": "主餐牛肉麵", "price": 100},
+            {"name": "主餐雞腿飯", "price": 110},
+            {"name": "主餐豬排飯", "price": 120},
+            {"name": "主餐魚排飯", "price": 130},
+            {"name": "主餐排骨飯", "price": 140},
+        ])
+        one_person = run_recommend(menu, {"people": 1}, top_k=5)
+        eight_people = run_recommend(menu, {"people": 8}, top_k=5)
+        self.assertLess(len(one_person["items"]), len(eight_people["items"]))
 
 
 if __name__ == "__main__":

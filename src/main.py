@@ -1,7 +1,10 @@
 #import
 from __future__ import annotations
 import os, json, re, shutil, subprocess, random, time
-from typing import Dict, List, Optional, TypedDict, Literal, Tuple
+from typing import Dict, List, Optional, TypedDict, Literal, Tuple, cast
+
+from preference_engine import merge_preference_delta, parse_preferences
+from observability import emit
 
 
 DEFAULT_MODEL = (
@@ -115,6 +118,12 @@ class Preferences(TypedDict, total=False):
     needDrink: bool
     people: int
     weights: Dict[str, float]
+    preferredDish: str
+    spiceProfile: Dict[str, object]
+    allergens: List[str]
+    dietaryRestrictions: List[str]
+    budgetBasis: str
+    _operations: List[Dict[str, object]]
 
 
 class ConversationTurn(TypedDict, total=False):
@@ -365,7 +374,7 @@ def extract_prefs_with_llm(text: str) -> Preferences:
         return {}
 
 
-def extract_prefs_from_text(text: str) -> Preferences:
+def _extract_prefs_legacy(text: str) -> Preferences:
     """主要入口：結合 LLM 智能提取 + 關鍵字提取"""
     
     # 檢查是否啟用 LLM（預設 false）
@@ -503,27 +512,16 @@ def extract_prefs_from_text(text: str) -> Preferences:
     return prefs
 
 
+def extract_prefs_from_text(text: str) -> Preferences:
+    """Parse one turn into validated values plus explicit merge operations."""
+    llm_extractor = None
+    if os.environ.get("USE_LLM_EXTRACTION", "false").lower() == "true":
+        llm_extractor = extract_prefs_with_llm
+    return cast(Preferences, parse_preferences(text, llm_extractor=llm_extractor))
+
+
 def merge_prefs_inplace(base: Preferences, delta: Preferences) -> None:
-    if "budget" in delta and delta["budget"] is not None:
-        base["budget"] = delta["budget"]
-    if "people" in delta:
-        base["people"] = delta["people"]
-    if "spiceLevel" in delta:
-        base["spiceLevel"] = delta["spiceLevel"]
-    if "cuisine" in delta:
-        base["cuisine"] = delta["cuisine"]
-    if "needDrink" in delta:
-        base["needDrink"] = delta["needDrink"]  # True 或 False 都接受
-    if "excludes" in delta:
-        base["excludes"] = list(dict.fromkeys([*base.get("excludes", []), *delta["excludes"]]))  # 去重合併
-    if "weights" in delta:
-        base["weights"] = delta["weights"]  # 每輪依新輸入動態重算
-    if "notes" in delta:
-        base["notes"] = delta["notes"]
-    # 合併菜品偏好
-    if "preferredDish" in delta:
-        base["preferredDish"] = delta["preferredDish"]
-        print(f" [DEBUG merge_prefs] 更新菜品偏好: {delta['preferredDish']}")
+    merge_preference_delta(base, delta)
 
 def _fallback_format(rec: Dict[str, object]) -> str:
     """備用模板（LLM 失敗時使用）—— 原 format_recommend_text 邏輯完整保留。"""
@@ -801,8 +799,38 @@ def menu_to_json():
 conversation_history: List[ConversationTurn] = []  # 對話歷史
 
 
-
-conversation_history: List[ConversationTurn] = []  # 對話歷史
+def prepare_recommendation(
+    history: List[ConversationTurn],
+    user_input: str,
+    menu: Menu,
+    prefs: Preferences,
+    model: Optional[str] = None,
+) -> Dict[str, object]:
+    """Apply one preference delta and calculate one deterministic recommendation."""
+    started = time.perf_counter()
+    history.append({"role": "user", "content": user_input, "meta": {}})
+    dynamic = extract_prefs_from_text(user_input)
+    dynamic.setdefault("notes", user_input)
+    merge_prefs_inplace(prefs, dynamic)
+    if ollama_recommend is None:
+        raise RuntimeError("推薦功能未載入")
+    result = ollama_recommend(menu, prefs, top_k=5, model=model)
+    meta = result.get("meta") if isinstance(result, dict) else {}
+    estimated_total = meta.get("estimatedTotal") if isinstance(meta, dict) else None
+    budget = meta.get("budget") if isinstance(meta, dict) else None
+    emit(
+        "recommendation.completed",
+        durationMs=round((time.perf_counter() - started) * 1000, 2),
+        itemCount=len(result.get("items") or []),
+        noCandidates=not bool(result.get("items")),
+        budgetViolation=bool(
+            isinstance(budget, (int, float))
+            and isinstance(estimated_total, (int, float))
+            and estimated_total > budget
+        ),
+        semanticPreferences=bool(prefs.get("spiceProfile") or prefs.get("allergens")),
+    )
+    return result
 
 def generate_conversation(
     history: List[ConversationTurn],
@@ -811,19 +839,8 @@ def generate_conversation(
     prefs: Preferences,
     model: Optional[str] = None,
 ) -> Tuple[str, List[ConversationTurn]]:
-    history.append({"role": "user", "content": user_input, "meta": {}})
-
-    # 抽取→就地合併（保留上一輪條件）
-    dynamic = extract_prefs_from_text(user_input)
-    dynamic.setdefault("notes", user_input)
-    merge_prefs_inplace(prefs, dynamic)
-
-    # 直接推薦（用累積後的 prefs）
     try:
-        if ollama_recommend is None:
-            raise RuntimeError("推薦功能未載入")
-           # reply="123" #///////////////////////////////////
-        rec = ollama_recommend(menu, prefs, top_k=5, model=model)
+        rec = prepare_recommendation(history, user_input, menu, prefs, model)
         reply = generate_ai_reply(rec, user_input)
     except Exception as e:
         reply = f"推薦發生錯誤：{e}"
@@ -892,16 +909,8 @@ def generate_conversation_stream(
     history 會在串流結束後才寫入完整回覆——中途中斷的半截內容不該被當成
     有效的對話紀錄帶進下一輪。
     """
-    history.append({"role": "user", "content": user_input, "meta": {}})
-
-    dynamic = extract_prefs_from_text(user_input)
-    dynamic.setdefault("notes", user_input)
-    merge_prefs_inplace(prefs, dynamic)
-
     try:
-        if ollama_recommend is None:
-            raise RuntimeError("推薦功能未載入")
-        rec = ollama_recommend(menu, prefs, top_k=5, model=model)
+        rec = prepare_recommendation(history, user_input, menu, prefs, model)
     except Exception as e:
         text = f"推薦發生錯誤：{e}"
         history.append({"role": "assistant", "content": text, "meta": {}})
