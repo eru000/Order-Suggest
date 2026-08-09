@@ -6,12 +6,43 @@
   const ACTIVE_KEY = 'ordering_assistant_active_thread_v1';
   const ADMIN_KEY_STORAGE = 'ordering_assistant_admin_key_v1';
 
+  // 管理金鑰只存在使用者自己的瀏覽器裡，絕對不要寫死在這支檔案——它會原封
+  // 不動送到每一個訪客的瀏覽器，而且一旦 commit 就永久留在 git 歷史裡。
+  //
+  // 這裡用 localStorage 而不是 sessionStorage：sessionStorage 每個分頁各自
+  // 獨立，關掉分頁就沒了，所以每開一個新分頁都要重打一次金鑰——當初會想把
+  // 金鑰寫死就是被這點煩到。localStorage 問一次就記住，直到金鑰失效（401）
+  // 或使用者自己清掉。代價是共用電腦上會留著，所以只適合自己的機器。
+  const readStoredAdminKey = () => {
+    try {
+      // sessionStorage 是舊的存放位置，順手接過來，免得使用者要重打。
+      return localStorage.getItem(ADMIN_KEY_STORAGE)
+        || sessionStorage.getItem(ADMIN_KEY_STORAGE)
+        || '';
+    } catch (e) {
+      return '';  // 無痕模式下 storage 可能整個不能存取
+    }
+  };
+
+  const clearStoredAdminKey = () => {
+    try {
+      localStorage.removeItem(ADMIN_KEY_STORAGE);
+      sessionStorage.removeItem(ADMIN_KEY_STORAGE);
+    } catch (e) {
+      // 同上，存取不到就當作已經沒有了
+    }
+  };
+
   const requireAdminKey = () => {
-    let key = sessionStorage.getItem(ADMIN_KEY_STORAGE) || '';
+    let key = readStoredAdminKey();
     if (!key) {
-      key = String(prompt('此操作需要管理金鑰', '') || '').trim();
+      key = String(prompt('此操作需要管理金鑰（這台電腦只會問這一次）', '') || '').trim();
       if (!key) throw new Error('已取消管理操作');
-      sessionStorage.setItem(ADMIN_KEY_STORAGE, key);
+      try {
+        localStorage.setItem(ADMIN_KEY_STORAGE, key);
+      } catch (e) {
+        // 存不起來就下次再問一次，不影響這次操作
+      }
     }
     return key;
   };
@@ -21,8 +52,8 @@
     headers.set('X-Admin-Key', requireAdminKey());
     const response = await fetch(url, { ...options, headers });
     if (response.status === 401) {
-      sessionStorage.removeItem(ADMIN_KEY_STORAGE);
-      throw new Error('管理金鑰無效，已從本分頁清除，請重新操作');
+      clearStoredAdminKey();
+      throw new Error('管理金鑰無效，已清除，請重新操作');
     }
     return response;
   };
