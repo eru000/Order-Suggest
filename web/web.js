@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const { escapeHtml, formatText } = window.OrderSuggestFormat;
+  const { escapeHtml, formatText, formatStreamingText } = window.OrderSuggestFormat;
   const STORAGE_KEY = 'ordering_assistant_threads_v1';
   const ACTIVE_KEY = 'ordering_assistant_active_thread_v1';
   const ADMIN_KEY_STORAGE = 'ordering_assistant_admin_key_v1';
@@ -544,6 +544,18 @@
     let prose = '';
     let recText = '';
 
+    // 每收到一段就重設 innerHTML 等於整棵 DOM 重建，中文一次只來幾個字，
+    // 一個回覆會觸發上百次，畫面會抖。改成一個影格最多畫一次。
+    let paintHandle = 0;
+    const paintProse = () => {
+      if (paintHandle) return;
+      paintHandle = requestAnimationFrame(() => {
+        paintHandle = 0;
+        live.prose.innerHTML = formatStreamingText(prose);
+        if (isNearBottom()) scrollToBottom();
+      });
+    };
+
     try {
       for (;;) {
         const { done, value } = await reader.read();
@@ -571,8 +583,7 @@
             showLoading(false);
             if (!prose) live.prose.innerHTML = '';
             prose += ev.text || '';
-            live.prose.innerHTML = formatText(prose);
-            if (isNearBottom()) scrollToBottom();
+            paintProse();
           } else if (ev.type === 'error') {
             prose += '\n[發生錯誤] ' + ev.error;
             live.prose.innerHTML = formatText(prose);
@@ -583,6 +594,9 @@
       prose += '\n[連線中斷] ' + e;
       live.prose.innerHTML = formatText(prose);
     }
+    // 串流結束，補一次完整排版：中途被藏起來的未配對 ** 這時可能已經湊成對。
+    cancelAnimationFrame(paintHandle);
+    if (prose) live.prose.innerHTML = formatText(prose);
 
     if (!recText && !prose.trim()) {
       live.prose.innerHTML = formatText('[發生錯誤] 回覆內容為空');

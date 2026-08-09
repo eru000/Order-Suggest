@@ -196,11 +196,16 @@ def _api_chat(
     )
 
 
-def chat(messages: List[Dict[str, str]], model: Optional[str] = None, timeout: float = 180.0) -> str:
+def chat(
+    messages: List[Dict[str, str]],
+    model: Optional[str] = None,
+    timeout: float = 180.0,
+    temperature: Optional[float] = None,
+) -> str:
     mdl = model or DEFAULT_MODEL
     if API_BASE_URL and API_KEY:
         api_model = os.environ.get("API_MODEL") or os.environ.get("AI_MODEL") or os.environ.get("MODEL") or mdl
-        return _api_chat(messages, api_model, timeout=timeout)
+        return _api_chat(messages, api_model, timeout=timeout, temperature=temperature)
     prompt = _build_prompt_from_messages(messages)
     return _cli_run(["run", mdl], input_text=prompt, timeout=timeout)
 
@@ -265,13 +270,14 @@ def chat_stream(
     messages: List[Dict[str, str]],
     model: Optional[str] = None,
     timeout: float = 180.0,
+    temperature: Optional[float] = None,
 ) -> Iterator[str]:
     """串流版 chat()。沒有設定遠端 API 時，退回一次性回應並整段 yield。"""
     mdl = model or DEFAULT_MODEL
     if API_BASE_URL and API_KEY:
         api_model = (os.environ.get("API_MODEL") or os.environ.get("AI_MODEL")
                      or os.environ.get("MODEL") or mdl)
-        yield from _api_chat_stream(messages, api_model, timeout=timeout)
+        yield from _api_chat_stream(messages, api_model, timeout=timeout, temperature=temperature)
         return
     # 本機 Ollama CLI 沒有串流介面，只能等它跑完再一次吐出來
     prompt = _build_prompt_from_messages(messages)

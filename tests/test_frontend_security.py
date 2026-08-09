@@ -21,6 +21,41 @@ class FrontendSecurityTest(unittest.TestCase):
         self.assertIn("&lt;img", output)
         self.assertIn("<strong>安全</strong>", output)
 
+    def test_streaming_formatter_hides_unpaired_bold_marks(self):
+        """串流時還沒收到收尾的 ** 不該原樣印在畫面上。
+
+        文字是一段一段到的，「**建議」先到、收尾的「**」後到。舊的
+        formatText 會把那兩顆星直接顯示，等收尾到了才突然變粗體——看起來
+        像吐字吐錯又自己改。
+        """
+        module_path = json.dumps(str(ROOT / "web" / "format.js"))
+        script = (
+            f"const f=require({module_path});"
+            "const out=["
+            "  f.formatStreamingText('**建議這樣點'),"
+            "  f.formatStreamingText('**建議這樣點**'),"
+            "  f.formatStreamingText('先講**重點**再說**未完'),"
+            "];"
+            "process.stdout.write(JSON.stringify(out));"
+        )
+        streaming, complete, mixed = json.loads(
+            subprocess.check_output(["node", "-e", script], text=True, encoding="utf-8")
+        )
+        self.assertEqual(streaming, "建議這樣點", "未配對的 ** 要先藏起來，內容照樣顯示")
+        self.assertEqual(complete, "<strong>建議這樣點</strong>", "配對完成就要套粗體")
+        self.assertEqual(mixed, "先講<strong>重點</strong>再說未完")
+
+    def test_streaming_formatter_still_escapes_html(self):
+        """藏星號不能順手把跳脫也弄丟。"""
+        module_path = json.dumps(str(ROOT / "web" / "format.js"))
+        script = (
+            f"const f=require({module_path});"
+            "process.stdout.write(f.formatStreamingText('<img src=x onerror=alert(1)> **未完'));"
+        )
+        output = subprocess.check_output(["node", "-e", script], text=True, encoding="utf-8")
+        self.assertNotIn("<img", output)
+        self.assertIn("&lt;img", output)
+
 
 class FrontendSecretsTest(unittest.TestCase):
     """前端原始碼不得內嵌任何憑證。

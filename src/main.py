@@ -704,15 +704,46 @@ def _format_menu_for_prompt(menu: Optional[Dict[str, object]]) -> str:
     return "\n".join(lines)
 
 
+def _reply_temperature() -> float:
+    """推薦回覆的取樣溫度。
+
+    API_TEMPERATURE 預設 0.7 是給一般對話用的，對「照著給定的菜單資料講人話」
+    這種任務偏高——溫度越高越容易冒出菜單上沒有的菜名與價格。這裡預設 0.4：
+    夠自然但不會亂編。要調整就設 REPLY_TEMPERATURE。
+    """
+    raw = os.getenv("REPLY_TEMPERATURE", "").strip()
+    if not raw:
+        return 0.4
+    try:
+        return max(0.0, min(2.0, float(raw)))
+    except ValueError:
+        return 0.4
+
+
+_REPLY_SYSTEM_PROMPT = """你是熟悉餐廳菜單的真人點餐顧問，講話像朋友或店員，不像客服機器人。
+
+輸出規則（每一條都要遵守）：
+- 全程使用繁體中文（台灣用語）。不可以出現簡體字。
+- 控制在 300 字以內。
+- 用 1 到 3 段自然的話回答，不要條列、不要表格、不要制式標題。
+- 不要用「以下是推薦」「希望對您有幫助」「如有需要請告知」這類 AI 感的套語。
+- 可以提到少量品名與價格，但不要把資料機械地列出來。
+- 只能講資料裡有的東西。價格缺漏就誠實說不清楚，絕對不要編造菜名或數字。"""
+
+
 def _build_recommendation_prompt(
     rec: Dict[str, object],
     user_input: str,
     menu: Optional[Dict[str, object]] = None,
-) -> str:
-    """把推薦 JSON + 用戶輸入 → 適合丟給 LLM 的 Prompt 字串。
+) -> List[Dict[str, str]]:
+    """把推薦 JSON + 用戶輸入組成要送給 LLM 的 messages。
 
-    原理：LLM 的輸出品質 80% 取決於 Prompt 設計。
-    好的 Prompt 要有：角色設定、結構化資料、明確格式指示、字數限制。
+    拆成 system + user 兩則而不是塞成一大段 user，是因為完整菜單最多 150 項，
+    以前那些「回答要求」全排在那坨資料後面，模型很常讀完資料就忘了規則——
+    實測會吐出簡體字、寫得又臭又長。規則搬到 system 之後就穩定多了。
+
+    「全程繁體中文」與「300 字以內」這兩條原本寫在一段永遠執行不到的
+    第二個 return 裡，等於重構時被無聲刪掉。現在回到 system 訊息。
     """
     items   = rec.get("items") if isinstance(rec, dict) else []
     meta    = rec.get("meta")  if isinstance(rec, dict) else {}
@@ -736,12 +767,10 @@ def _build_recommendation_prompt(
     menu_text = _format_menu_for_prompt(menu)
     menu_block = f"\n{menu_text}\n" if menu_text else ""
 
-    return f"""你是熟悉餐廳菜單的真人點餐顧問。請根據使用者需求與候選餐點，用自然、像朋友或店員建議的方式回答。
-
-使用者原始需求：
+    user_content = f"""使用者這次說：
 {user_input}
 
-候選餐點 JSON（系統依條件挑出來的建議，**不是**這家店的全部品項）：
+系統依條件挑出的候選餐點（**不是**這家店的全部品項）：
 {items_json}
 {menu_block}
 目前估算：
@@ -752,45 +781,18 @@ def _build_recommendation_prompt(
 - 服務費估算：NT${service:.0f}
 - 合計估算：NT${total:.0f}
 
-注意事項：
-- 清單中部分項目可能是「加料」（價格明顯低於其他主餐），請優先推薦主餐，加料視情況補充建議。
-- 使用者問「有沒有某類餐點」時，一律看「完整菜單」再回答。候選清單裡沒有不代表店裡沒有，
-  絕對不要說「這家店沒有 XX」除非完整菜單裡真的找不到。
-- 如果完整菜單裡有更符合他這次需求的品項，可以直接改推薦那一項，不必侷限在候選清單。
-
-回答要求：
-- 不要用固定模板、表格、制式標題或「以下是推薦」這種 AI 感開場。
-- 用 1 到 3 段自然中文回答，像真的在幫朋友點餐。
-- 可以保留少量品項名稱與價格，但不要把資料機械列出。
+判斷時注意：
+- 候選清單裡部分項目可能是「加料」（價格明顯低於其他主餐），請優先講主餐。
+- 使用者問「有沒有某類餐點」時，一律看「完整菜單」再回答。候選清單裡沒有不代表
+  店裡沒有——除非完整菜單裡真的找不到，否則絕對不要說「這家店沒有 XX」。
+- 完整菜單裡若有更符合他這次需求的品項，可以直接改推薦那一項。
 - 先講最推薦怎麼點，再自然補充為什麼適合他的預算、口味或人數。
-- 如果有預算，請自然提到大概會不會超出。
-- 如果資料不足或價格缺失，要誠實說明，不要編造。
-"""
+- 有預算的話，自然提一下大概會不會超出。"""
 
-    return f"""你是一位親切的台灣中文點餐助理。請根據以下推薦清單，用自然、有溫度的繁體中文回覆使用者。
-
-【使用者需求】
-{user_input}
-
-【推薦清單（結構化資料）】
-{items_json}
-
-【預算資訊】
-- 人數：{people or "未指定"}
-- 預算：{f"NT${int(budget)}" if budget else "未指定"}
-- 需要飲料：{"是" if need_drink else "否"}
-- 餐點小計：約 NT${subtotal:.0f}
-- 10% 服務費：約 NT${service:.0f}
-- 總計：約 NT${total:.0f}
-
-【回覆要求】
-1. 開場要有溫度，自然呼應使用者的需求，不要複製貼上需求文字
-2. 逐一介紹推薦菜品，說明為什麼這道適合（別只複製 reason 欄位的字）
-3. 最後加一段「預算試算」，數字要跟上面一致
-4. 結尾自然詢問是否需要調整，不要用制式的「如有需要請告知」
-5. 全程繁體中文，語氣像真人朋友，不要條列太多符號
-6. 控制在 300 字以內
-"""
+    return [
+        {"role": "system", "content": _REPLY_SYSTEM_PROMPT},
+        {"role": "user", "content": user_content},
+    ]
 
 
 def generate_ai_reply(
@@ -809,14 +811,15 @@ def generate_ai_reply(
     """
     from ollama_fuc import chat as _ollama_chat
 
-    mdl    = model or DEFAULT_MODEL
-    prompt = _build_recommendation_prompt(rec, user_input, menu)
+    mdl      = model or DEFAULT_MODEL
+    messages = _build_recommendation_prompt(rec, user_input, menu)
 
     try:
         response = _ollama_chat(
-            [{"role": "user", "content": prompt}],
+            messages,
             model=mdl,
             timeout=timeout,
+            temperature=_reply_temperature(),
         )
         cleaned = response.strip() if isinstance(response, str) else ""
         if cleaned:
@@ -910,12 +913,12 @@ def generate_ai_reply_stream(
     from ollama_fuc import chat_stream as _ollama_chat_stream
 
     mdl = model or DEFAULT_MODEL
-    prompt = _build_recommendation_prompt(rec, user_input, menu)
+    messages = _build_recommendation_prompt(rec, user_input, menu)
     produced = False
 
     try:
         for piece in _ollama_chat_stream(
-            [{"role": "user", "content": prompt}], model=mdl, timeout=timeout
+            messages, model=mdl, timeout=timeout, temperature=_reply_temperature()
         ):
             if piece:
                 produced = True
