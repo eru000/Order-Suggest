@@ -1,4 +1,34 @@
-# Python cache / artifacts
+# ⚠ .gitignore 只擋「還沒進版控」的檔案。已經 commit 過的東西留在歷史裡，
+#   加規則也拿不掉——那種情況要換掉憑證，不是改這個檔案。
+
+# ── 機密：金鑰、憑證、環境設定 ──────────────────────────
+# 本機環境與憑證只留在開發電腦；可提交的範本放在 .env.example。
+.env
+.env.*
+!.env.example
+*.env
+secrets.json
+credentials.json
+*.pem
+*.key
+*.p12
+*.pfx
+# 本機的權限與工具設定，屬於個人環境
+.claude/settings.local.json
+
+# ── 環境與套件 ──────────────────────────────────────
+.venv/
+.venv-win/
+env/
+venv/
+node_modules/
+*.egg-info/
+dist/
+build/
+.tox/
+pip-wheel-metadata/
+
+# ── Python 快取與測試產物 ────────────────────────────
 __pycache__/
 *.pyc
 *.pyo
@@ -10,33 +40,41 @@ coverage.xml
 htmlcov/
 *.tmp
 
-# Local virtual environments
-.venv/
-.venv-win/
-env/
-venv/
-
-# Logs
-logs/*.jsonl
-logs/*.log
-logs/crawler/
+# ── 日誌與本機資料庫 ────────────────────────────────
+logs/
+*.log
+*.jsonl
 data/*.db
 data/*.db-shm
 data/*.db-wal
 
-# Local restaurant review cache
+# 本機的餐廳評價快取
 reviews_*.json
 
-# 本機環境與憑證只留在開發電腦；可提交的範本放在 .env.example。
-.env
-.env.*
-!.env.example
+# ── 展示素材：截圖與錄影 ────────────────────────────
+# 影片動輒數十 MB，GitHub 單檔超過 50MB 會警告、100MB 直接拒絕，
+# 而且進了歷史每個人 clone 都得下載。留在本機就好。
+pic and vid/
+*.mp4
+*.mov
+*.avi
+*.mkv
+螢幕擷取畫面*
+錄製內容*
+src/debug_*.png
 
-# 爬蟲留下的舊資料夾。爬蟲已移除，但既有的工作目錄裡還留著這個資料夾，
+# ── 課程文件（這是公開 repo）────────────────────────
+*.pdf
+*.docx
+
+# ── 爬蟲留下的舊資料夾 ──────────────────────────────
+# 爬蟲已移除，但既有的工作目錄裡還留著這個資料夾，
 # 列在這裡才不會被誤加進版控。
 .chrome_debug_profile/
 
-# 課程文件與 debug 產物（留在本機就好，這是公開 repo）
-*.pdf
-*.docx
-src/debug_*.png
+# ── 作業系統與編輯器雜物 ────────────────────────────
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+.idea/
