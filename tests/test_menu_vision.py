@@ -367,3 +367,47 @@ class MenuVisionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ThinkingModelResponseTests(unittest.TestCase):
+    """thinking model 的 content 可能是空的，答案留在 reasoning_content。
+
+    Ornith-397B（vibe／nemotron-3-ultra）實測回一句 {"ok":1} 就燒掉 208 個
+    completion token。推理吃光預算時 content 會空，整個切塊白跑。
+    """
+
+    def _reply(self, message):
+        return json.dumps({"choices": [{"message": message, "finish_reason": "stop"}]})
+
+    def _call(self, message, **kwargs):
+        import ollama_fuc
+
+        class FakeResponse(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+
+        with mock.patch.object(
+            ollama_fuc.request, "urlopen",
+            return_value=FakeResponse(self._reply(message).encode("utf-8")),
+        ):
+            return ollama_fuc._api_chat([{"role": "user", "content": "x"}], "m", **kwargs)
+
+    def test_uses_reasoning_content_when_it_carries_the_json(self):
+        text = self._call(
+            {"content": "", "reasoning_content": '想一下…最後給 {"categories":[]}'},
+            allow_reasoning_fallback=True,
+        )
+        self.assertIn('{"categories":[]}', text)
+
+    def test_still_raises_when_reasoning_has_no_json(self):
+        """沒有 JSON 就要照樣拋錯——呼叫端靠這個例外降級到備用模型。"""
+        with self.assertRaisesRegex(RuntimeError, "empty content"):
+            self._call(
+                {"content": "", "reasoning_content": "我需要再想想這張圖片"},
+                allow_reasoning_fallback=True,
+            )
+
+    def test_chat_path_never_returns_raw_thinking(self):
+        """對話那條路不開這個後備，否則使用者會看到思考過程而不是回覆。"""
+        with self.assertRaisesRegex(RuntimeError, "empty content"):
+            self._call({"content": "", "reasoning_content": '思考中 {"a":1}'})

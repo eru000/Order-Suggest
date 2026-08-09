@@ -35,7 +35,11 @@ MERGE_SIMILARITY = 0.92
 # .env 沒設定時的後備模型。原本這裡寫死 "gemma-4-31b"，但那個模型在學校的
 # API 上已經回 HTTP 500——組員少填一行 .env 就會每個切塊都失敗，而且錯誤
 # 訊息看起來像網路問題。同一份預設值散在四個地方也是它會飄掉的原因。
-DEFAULT_OCR_MODEL = "nemotron-3-ultra"
+#
+# ornith-35b 是 Ornith-1.0-35B（35B MoE，3B 活躍）。同一張菜單它與 397B 的
+# vibe 端點同樣拿到 100%，但單次切塊延遲中位數 3.4s vs 5.3s。菜單 OCR 是
+# 「照著抄」，不太需要 thinking model 的推理預算。
+DEFAULT_OCR_MODEL = "ornith-35b"
 DEFAULT_VERIFY_MODEL = "mistral-small-4"
 # 最終校對的輸出與切塊結果配對時的門檻。低於這個值就視為「不是同一項」，
 # 也就是被刪掉或被憑空新增。

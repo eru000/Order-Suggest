@@ -43,7 +43,7 @@ DEFAULT_MODEL = (
 OLLAMA_BIN = os.getenv("OLLAMA_BIN", "ollama")
 API_BASE_URL = os.getenv("API_BASE_URL", "").rstrip("/")
 API_KEY = os.getenv("API_KEY", "")
-VISION_MODEL = os.getenv("VISION_MODEL", "nemotron-3-ultra")
+VISION_MODEL = os.getenv("VISION_MODEL", "ornith-35b")
 
 
 def _float_env(name: str, default: float) -> float:
@@ -133,6 +133,7 @@ def _api_chat(
     model: str,
     timeout: float = 180.0,
     temperature: Optional[float] = None,
+    allow_reasoning_fallback: bool = False,
 ) -> str:
     url = API_BASE_URL
     if not url.endswith("/chat/completions"):
@@ -166,11 +167,33 @@ def _api_chat(
     choices = obj.get("choices") or []
     if not choices:
         raise RuntimeError(f"model API returned no choices: {body[:500]}")
-    message = choices[0].get("message") or {}
+    choice = choices[0]
+    message = choice.get("message") or {}
     content = message.get("content")
-    if not isinstance(content, str) or not content.strip():
-        raise RuntimeError(f"model API returned empty content: {body[:500]}")
-    return content.strip()
+    if isinstance(content, str) and content.strip():
+        return content.strip()
+
+    # Ornith-397B（vibe／nemotron-3-ultra 端點）是 thinking model，推理放在
+    # reasoning_content，content 另外給。實測回一句 {"ok":1} 就燒掉 208 個
+    # completion token——推理吃光預算時 content 會是空的，整個切塊就白跑。
+    #
+    # 只有在推理裡真的看得到 JSON 才拿來用。這點很重要：呼叫端（menu_vision）
+    # 靠這個例外降級到備用模型，實測那次降級救回了 5 個品項。若無條件回傳一段
+    # 解析不出東西的推理文字，等於把那個救援機制關掉，結果反而更差。
+    reasoning = message.get("reasoning_content")
+    if (
+        allow_reasoning_fallback
+        and isinstance(reasoning, str)
+        and ("{" in reasoning and "}" in reasoning or "[" in reasoning and "]" in reasoning)
+    ):
+        print(f"[API] {model} 的 content 是空的，改用 reasoning_content（finish_reason="
+              f"{choice.get('finish_reason')}）")
+        return reasoning.strip()
+
+    raise RuntimeError(
+        f"model API returned empty content (finish_reason={choice.get('finish_reason')}): "
+        f"{body[:500]}"
+    )
 
 
 def chat(messages: List[Dict[str, str]], model: Optional[str] = None, timeout: float = 180.0) -> str:
@@ -274,6 +297,9 @@ def vision_chat(
         model or VISION_MODEL,
         timeout=timeout,
         temperature=_float_env("VISION_TEMPERATURE", 0.0) if temperature is None else temperature,
+        # 辨識這條路只要 JSON，推理文字裡撈得到就有用。對話那條路不開，
+        # 否則使用者會看到模型的思考過程而不是回覆。
+        allow_reasoning_fallback=True,
     )
 
 _MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文紙本菜單、木牌、黑板或螢幕截圖）。
