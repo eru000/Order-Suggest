@@ -156,6 +156,47 @@ def _classify(name: str) -> str:
     return "other"
 
 
+_VARIANT_WORDS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    # 順序有意義：先判湯，否則「當歸鴨肉湯」會因為帶「肉」被歸到別類。
+    ("湯", ("湯", "羹")),
+    ("飯", ("飯", "丼", "粥")),
+    ("麵", ("麵", "麵線", "冬粉", "米粉", "粄條", "noodle", "pasta")),
+    ("點心", ("餅", "包", "餃", "捲", "酥")),
+    ("盤", ("盤", "拼盤")),
+)
+
+
+def _variant_key(name: str) -> str:
+    """粗略的品項型態，只用來判斷「這兩樣是不是同一種東西」。"""
+    value = str(name).casefold()
+    for key, words in _VARIANT_WORDS:
+        if any(word in value for word in words):
+            return key
+    return "其他"
+
+
+def _interleave_variants(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """讓同一組推薦不要擠在同一種品項上（例如三碗都是麵）。
+
+    價格相同時 sort_key 只能拿菜名的字碼位當最後順序，那等於隨機——實測會
+    出現「乾麵 40 / 香拌麵線 40 都入選，同價的鴨肉飯(小) 40 永遠差一名」。
+    這裡照原順序把品項分進型態桶再輪流取，桶內順序不動，所以偏好分數與價格
+    的優先權都還在，只是不同型態會被提前。
+    """
+    buckets: dict[str, list[dict[str, Any]]] = {}
+    for row in rows:
+        buckets.setdefault(_variant_key(row["name"]), []).append(row)
+    if len(buckets) < 2:
+        return rows
+    order = list(buckets.values())
+    merged: list[dict[str, Any]] = []
+    while any(order):
+        for bucket in order:
+            if bucket:
+                merged.append(bucket.pop(0))
+    return merged
+
+
 def _preferred(item: dict[str, Any], preferred_dish: str | None) -> bool:
     if not preferred_dish:
         return False
@@ -354,16 +395,23 @@ def _recommend_impl(
             item["name"],
         )
 
-    for rows in groups.values():
-        rows.sort(key=sort_key)
+    for kind in list(groups):
+        groups[kind].sort(key=sort_key)
+        groups[kind] = _interleave_variants(groups[kind])
 
     food_budget = budget / (1 + service_rate) if budget is not None else None
     selected: list[dict[str, Any]] = []
     subtotal = 0.0
 
-    def take(kind: str, count: int, reason: str) -> None:
+    def take(kind: str, count: int, reason: str, generous: bool = False) -> None:
         nonlocal subtotal
-        for item in groups[kind]:
+        rows = groups[kind]
+        if generous:
+            # 由便宜往貴取，三個人六百塊的預算只會點到兩百出頭，AI 每次都得說
+            # 「離預算還很遠」。補位這一段改成先挑吃得實在的，仍受 food_budget
+            # 卡關，所以預算緊的時候會自然退回便宜品項。
+            rows = sorted(rows, key=lambda item: -(item["price"] or 0))
+        for item in rows:
             if count <= 0 or len(selected) >= limit:
                 break
             price = item["price"]
@@ -386,7 +434,7 @@ def _recommend_impl(
     if need_drink:
         take("drink", _target_count(people, policy.people_per_drink), "搭配飲品")
     take("dessert", _target_count(people, policy.people_per_dessert), "搭配甜點")
-    take("other", limit - len(selected), "額外推薦")
+    take("other", limit - len(selected), "額外推薦", generous=food_budget is not None)
 
     notes = ""
     if not selected:

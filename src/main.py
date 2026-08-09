@@ -672,7 +672,43 @@ def _fallback_format(rec: Dict[str, object]) -> str:
 #  LLM 二次生成回覆
 # ──────────────────────────────────────────────────
 
-def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str:
+_MENU_PROMPT_MAX_ITEMS = 150
+
+
+def _format_menu_for_prompt(menu: Optional[Dict[str, object]]) -> str:
+    """把整份菜單壓成 prompt 用的分類清單。
+
+    沒有這段的話，LLM 只看得到 recommend() 挑出來的 5 項候選，被問到「有沒有
+    飯類」時就會照它看到的東西回答「這家沒有飯」——但菜單上其實有。
+    """
+    if not isinstance(menu, dict):
+        return ""
+    try:
+        from recommendation import _flatten_menu
+    except Exception:
+        return ""
+    rows = _flatten_menu(menu)
+    if not rows:
+        return ""
+    truncated = len(rows) > _MENU_PROMPT_MAX_ITEMS
+    grouped: Dict[str, List[str]] = {}
+    for row in rows[:_MENU_PROMPT_MAX_ITEMS]:
+        price = row.get("price")
+        label = f"{row['name']} ${price:.0f}" if isinstance(price, (int, float)) else f"{row['name']}（價格未標示）"
+        grouped.setdefault(str(row.get("category") or "未分類"), []).append(label)
+    lines = [f"完整菜單（這家店共 {len(rows)} 項）："]
+    for category, labels in grouped.items():
+        lines.append(f"[{category}] " + "、".join(labels))
+    if truncated:
+        lines.append(f"（品項太多，只列出前 {_MENU_PROMPT_MAX_ITEMS} 項）")
+    return "\n".join(lines)
+
+
+def _build_recommendation_prompt(
+    rec: Dict[str, object],
+    user_input: str,
+    menu: Optional[Dict[str, object]] = None,
+) -> str:
     """把推薦 JSON + 用戶輸入 → 適合丟給 LLM 的 Prompt 字串。
 
     原理：LLM 的輸出品質 80% 取決於 Prompt 設計。
@@ -697,15 +733,17 @@ def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str
     total   = subtotal + service
 
     items_json = json.dumps(items, ensure_ascii=False, indent=2)
+    menu_text = _format_menu_for_prompt(menu)
+    menu_block = f"\n{menu_text}\n" if menu_text else ""
 
     return f"""你是熟悉餐廳菜單的真人點餐顧問。請根據使用者需求與候選餐點，用自然、像朋友或店員建議的方式回答。
 
 使用者原始需求：
 {user_input}
 
-候選餐點 JSON：
+候選餐點 JSON（系統依條件挑出來的建議，**不是**這家店的全部品項）：
 {items_json}
-
+{menu_block}
 目前估算：
 - 人數：{people or "未指定"}
 - 預算：{f"NT${int(budget)}" if budget else "未指定"}
@@ -716,6 +754,9 @@ def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str
 
 注意事項：
 - 清單中部分項目可能是「加料」（價格明顯低於其他主餐），請優先推薦主餐，加料視情況補充建議。
+- 使用者問「有沒有某類餐點」時，一律看「完整菜單」再回答。候選清單裡沒有不代表店裡沒有，
+  絕對不要說「這家店沒有 XX」除非完整菜單裡真的找不到。
+- 如果完整菜單裡有更符合他這次需求的品項，可以直接改推薦那一項，不必侷限在候選清單。
 
 回答要求：
 - 不要用固定模板、表格、制式標題或「以下是推薦」這種 AI 感開場。
@@ -757,6 +798,7 @@ def generate_ai_reply(
     user_input: str,
     model: Optional[str] = None,
     timeout: float = 180.0,
+    menu: Optional[Dict[str, object]] = None,
 ) -> str:
     """呼叫 Gemma3 把推薦 JSON 轉成自然語言回覆。
 
@@ -768,7 +810,7 @@ def generate_ai_reply(
     from ollama_fuc import chat as _ollama_chat
 
     mdl    = model or DEFAULT_MODEL
-    prompt = _build_recommendation_prompt(rec, user_input)
+    prompt = _build_recommendation_prompt(rec, user_input, menu)
 
     try:
         response = _ollama_chat(
@@ -814,7 +856,10 @@ def prepare_recommendation(
     merge_prefs_inplace(prefs, dynamic)
     if ollama_recommend is None:
         raise RuntimeError("推薦功能未載入")
-    result = ollama_recommend(menu, prefs, top_k=5, model=model)
+    # 固定 5 項對一個人剛好，對四個人就太少——會出現「六百塊預算只點兩百」。
+    people = prefs.get("people")
+    top_k = max(5, min(8, people * 2)) if isinstance(people, int) and people > 0 else 5
+    result = ollama_recommend(menu, prefs, top_k=top_k, model=model)
     meta = result.get("meta") if isinstance(result, dict) else {}
     estimated_total = meta.get("estimatedTotal") if isinstance(meta, dict) else None
     budget = meta.get("budget") if isinstance(meta, dict) else None
@@ -841,7 +886,7 @@ def generate_conversation(
 ) -> Tuple[str, List[ConversationTurn]]:
     try:
         rec = prepare_recommendation(history, user_input, menu, prefs, model)
-        reply = generate_ai_reply(rec, user_input)
+        reply = generate_ai_reply(rec, user_input, menu=menu)
     except Exception as e:
         reply = f"推薦發生錯誤：{e}"
 
@@ -854,6 +899,7 @@ def generate_ai_reply_stream(
     user_input: str,
     model: Optional[str] = None,
     timeout: float = 180.0,
+    menu: Optional[Dict[str, object]] = None,
 ):
     """串流版 generate_ai_reply()。
 
@@ -864,7 +910,7 @@ def generate_ai_reply_stream(
     from ollama_fuc import chat_stream as _ollama_chat_stream
 
     mdl = model or DEFAULT_MODEL
-    prompt = _build_recommendation_prompt(rec, user_input)
+    prompt = _build_recommendation_prompt(rec, user_input, menu)
     produced = False
 
     try:
@@ -931,7 +977,7 @@ def generate_conversation_stream(
     }
 
     pieces: List[str] = []
-    for piece in generate_ai_reply_stream(rec, user_input, model=model):
+    for piece in generate_ai_reply_stream(rec, user_input, model=model, menu=menu):
         pieces.append(piece)
         yield {"type": "delta", "text": piece}
 
