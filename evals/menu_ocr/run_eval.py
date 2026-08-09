@@ -22,6 +22,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -302,6 +303,9 @@ def _logging_vision(sink: list[dict[str, Any]]) -> Any:
             "model": model,
             "imageCount": 1 if isinstance(image_url, str) else len(list(image_url)),
             "promptHead": prompt[:120],
+            # 用 prompt 的雜湊當 replay 的鍵，不能用呼叫順序——切塊是並行跑的，
+            # 順序每次都不一樣。
+            "promptSha": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
         }
         try:
             response = _vision_chat(prompt, image_url, model=model,
@@ -321,7 +325,9 @@ def _logging_vision(sink: list[dict[str, Any]]) -> Any:
             "endsAbruptly": not response.rstrip().endswith(("}", "]", "```")),
             "itemCount": sum(len(c["items"]) for c in normalized["categories"]),
             "items": [i["name"] for c in normalized["categories"] for i in c["items"]],
-            "responseTail": response[-200:],
+            # 完整回應是 --replay 的原料。少了它，改動解析／合併邏輯時就只能
+            # 重打 API，而模型輸出每次都不同，等於同時動了兩個變數。
+            "response": response,
         })
         sink.append(entry)
         return response
@@ -329,15 +335,46 @@ def _logging_vision(sink: list[dict[str, Any]]) -> Any:
     return logged
 
 
-def run_case(case: dict[str, Any], threshold: float, debug: bool = False) -> dict[str, Any]:
+def _replay_vision(recorded: dict[str, str]) -> Any:
+    """用錄下來的回應餵給 analyze_menu_image，完全不打 API。
+
+    模型輸出固定住之後，改動解析、合併、校對對帳這些邏輯才有辦法乾淨地
+    A/B——否則模型自己每次讀的就不一樣（實測同一張圖，有一次把「魯」
+    全讀成「鹿」），分數變化根本無法歸因。
+    """
+    def replayed(prompt: str, image_url: Any, model: Any = None,
+                 timeout: float = 180.0, temperature: Any = None) -> str:
+        key = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        if key not in recorded:
+            raise RuntimeError(
+                "replay 找不到對應的錄音：prompt 已經和錄製當時不同了。"
+                "改過 prompt 的話要重新錄一次（--debug）。"
+            )
+        return recorded[key]
+
+    return replayed
+
+
+def run_case(
+    case: dict[str, Any],
+    threshold: float,
+    debug: bool = False,
+    recorded: dict[str, str] | None = None,
+) -> dict[str, Any]:
     started = time.perf_counter()
     exchanges: list[dict[str, Any]] = []
+    if recorded is not None:
+        vision_kwargs: dict[str, Any] = {"vision_func": _replay_vision(recorded)}
+    elif debug:
+        vision_kwargs = {"vision_func": _logging_vision(exchanges)}
+    else:
+        vision_kwargs = {}
     try:
         result = analyze_menu_image(
             case["image_path"].read_bytes(),
             case["mime"],
             restaurant_hint="",  # 刻意不給提示，才測得出模型自己認不認得出店名
-            **({"vision_func": _logging_vision(exchanges)} if debug else {}),
+            **vision_kwargs,
         )
     except Exception as exc:
         return {
@@ -574,6 +611,9 @@ def main() -> int:
     parser.add_argument("--compare", nargs=2, metavar=("A", "B"), help="比較兩次執行紀錄")
     parser.add_argument("--rescore", metavar="LABEL",
                         help="用現在的計分規則重算舊紀錄，不打 API")
+    parser.add_argument("--replay", metavar="LABEL",
+                        help="用某次 --debug 錄下的模型回應重跑整條 pipeline，不打 API。"
+                             "模型輸出固定住，改動解析／合併邏輯才能乾淨地 A/B")
     args = parser.parse_args()
 
     if args.compare:
@@ -617,9 +657,34 @@ def main() -> int:
         "matchThreshold": args.threshold,
     }
 
-    planned = sum(estimate_api_calls(case["image_path"], args.fast) for case in cases)
-    print(f"案例 {len(cases)} 個，預估 API 呼叫 {planned} 次"
-          f"（OCR={config['visionModel']}，校對={config['verifyModel']}）")
+    recordings: dict[str, dict[str, str]] = {}
+    if args.replay:
+        try:
+            source = load_run(args.replay)
+        except CaseError as exc:
+            print(f"✗ {exc}")
+            return 2
+        for row in source["cases"]:
+            captured = {
+                entry["promptSha"]: entry["response"]
+                for entry in row.get("exchanges", [])
+                if entry.get("promptSha") and entry.get("response") is not None
+            }
+            if captured:
+                recordings[row["case"]] = captured
+        if not recordings:
+            print(f"✗ 「{args.replay}」沒有可重播的錄音。"
+                  f"錄音需要用 --debug 跑，且要是加入完整回應紀錄之後跑的。")
+            return 2
+        cases = [case for case in cases if case["name"] in recordings]
+        print(f"重播模式：{len(cases)} 個案例沿用「{args.replay}」錄下的模型回應，不打 API")
+
+    planned = 0 if args.replay else sum(
+        estimate_api_calls(case["image_path"], args.fast) for case in cases
+    )
+    if not args.replay:
+        print(f"案例 {len(cases)} 個，預估 API 呼叫 {planned} 次"
+              f"（OCR={config['visionModel']}，校對={config['verifyModel']}）")
 
     if args.dry_run:
         for case in cases:
@@ -629,19 +694,23 @@ def main() -> int:
         print("\n✓ 案例格式檢查通過（--dry-run 不會真的呼叫 API）")
         return 0
 
-    if not os.getenv("API_KEY"):
+    if not args.replay and not os.getenv("API_KEY"):
         print("✗ 沒有讀到 API_KEY，請確認專案根目錄的 .env")
         return 2
 
     print()
+
+    def _run(case: dict[str, Any]) -> dict[str, Any]:
+        return run_case(case, args.threshold, args.debug, recordings.get(case["name"]) if args.replay else None)
+
     if args.jobs > 1:
         with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-            rows = list(pool.map(lambda case: run_case(case, args.threshold, args.debug), cases))
+            rows = list(pool.map(_run, cases))
     else:
         rows = []
         for index, case in enumerate(cases, 1):
             print(f"  [{index}/{len(cases)}] {case['name']} …", flush=True)
-            rows.append(run_case(case, args.threshold, args.debug))
+            rows.append(_run(case))
 
     run = {
         "label": args.label,

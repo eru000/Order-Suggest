@@ -32,6 +32,13 @@ TILE_THRESHOLD = 1600
 LOW_RES_RECOVERY_LONG_SIDE = 2000
 TILE_OVERLAP = 0.12
 MERGE_SIMILARITY = 0.92
+# 最終校對的輸出與切塊結果配對時的門檻。低於這個值就視為「不是同一項」，
+# 也就是被刪掉或被憑空新增。
+VERIFY_MATCH_THRESHOLD = 0.72
+# 三個字的品名改一個字，相似度就只剩 0.667——「肉蓗飯」被校對修成「肉羹飯」
+# 會低於上面的門檻，於是同一道菜的錯字版與更正版被雙雙保留。價格一致時放寬
+# 到這個值，讓「修錯字」不會被誤判成「刪一項又加一項」。
+VERIFY_SAME_PRICE_THRESHOLD = 0.5
 
 
 def _float_env(name: str, default: float) -> float:
@@ -506,9 +513,61 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
 def _attach_sources(verified: List[Dict[str, Any]], original: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     for item in verified:
         matches = sorted(original, key=lambda source: _similarity(item["name"], source["name"]), reverse=True)
-        if matches and _similarity(item["name"], matches[0]["name"]) >= 0.72:
+        if matches and _similarity(item["name"], matches[0]["name"]) >= VERIFY_MATCH_THRESHOLD:
             item["sources"] = matches[0].get("sources", [])
     return verified
+
+
+def _same_item(left: Dict[str, Any], right: Dict[str, Any]) -> bool:
+    """這兩筆是不是同一道菜（可能只是其中一邊有錯字）。"""
+    score = _similarity(str(left.get("name") or ""), str(right.get("name") or ""))
+    if score >= VERIFY_MATCH_THRESHOLD:
+        return True
+    left_price, right_price = left.get("price"), right.get("price")
+    if score < VERIFY_SAME_PRICE_THRESHOLD or left_price is None or right_price is None:
+        return False
+    try:
+        return abs(float(left_price) - float(right_price)) < 0.01
+    except (TypeError, ValueError):
+        return False
+
+
+def _has_counterpart(item: Dict[str, Any], candidates: Sequence[Dict[str, Any]]) -> bool:
+    return any(_same_item(item, other) for other in candidates)
+
+
+def _reconcile_verified(
+    verified_items: List[Dict[str, Any]],
+    tile_items: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], List[str], List[str]]:
+    """對帳最終校對的輸出與切塊實際讀到的內容。
+
+    校對那一關原本握有絕對的刪除權：只要它沒寫進回傳，該品項就消失，
+    而且不留痕跡。實測 tile-4 把「大肉羹麵 65」讀得清清楚楚，最終輸出
+    卻沒有它；同一次校對一項也沒補回來。
+
+    這裡不讓它靜默刪除。取捨的理由是兩種錯的可見度差很多：漏掉的品項是
+    看不見的失敗——使用者不會知道菜單少了什麼，推薦引擎也永遠不會提到它；
+    多出來的品項則會出現在確認畫面上，人看得到、也能用 apply_manual_correction
+    改掉。所以補回被刪的品項並標記出來，把裁決權交還給人。
+
+    校正仍然照收：品名或價格被改過的品項，相似度夠高就配得上，不會變成
+    重複項（例如「魯肉湯飯」被更正成「魯肉湯麵」）。
+
+    回傳 (最終品項, 被刪而補回的品名, 校對憑空新增的品名)。
+    """
+    restored = [
+        dict(tile_item)
+        for tile_item in tile_items
+        if str(tile_item.get("name") or "") and not _has_counterpart(tile_item, verified_items)
+    ]
+    # 校對憑空生出來、四個切塊都沒讀到的品項最可疑：它沒有任何影像佐證。
+    invented = [
+        str(item["name"])
+        for item in verified_items
+        if str(item.get("name") or "") and not _has_counterpart(item, tile_items)
+    ]
+    return verified_items + restored, [str(item["name"]) for item in restored], invented
 
 
 def _legacy_analyze(
@@ -686,10 +745,12 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         temperature=0.0,
     ))
     verified = normalize_vision_result(verified_raw)
+    restored_by_verify: List[str] = []
+    invented_by_verify: List[str] = []
     if verified["categories"]:
-        verified_flat = _flatten_categories(verified["categories"], {})
-        merged = _attach_sources(verified_flat, merged)
-        categories = _items_to_categories(merged)
+        verified_flat = _attach_sources(_flatten_categories(verified["categories"], {}), merged)
+        final_items, restored_by_verify, invented_by_verify = _reconcile_verified(verified_flat, merged)
+        categories = _items_to_categories(final_items)
     else:
         categories = draft_categories
 
@@ -716,6 +777,12 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         warnings.append(f"圖片未見獨立店名，候選「{detected}」是由特色餐點文字推測，仍需人工確認")
     if conflicts:
         warnings.append(f"有 {len(conflicts)} 組 OCR 候選曾發生衝突，請確認摘要")
+    if restored_by_verify:
+        preview = "、".join(restored_by_verify[:5]) + ("…" if len(restored_by_verify) > 5 else "")
+        warnings.append(f"最終校對漏掉 {len(restored_by_verify)} 項切塊已讀出的品項，已補回請確認：{preview}")
+    if invented_by_verify:
+        preview = "、".join(invented_by_verify[:5]) + ("…" if len(invented_by_verify) > 5 else "")
+        warnings.append(f"有 {len(invented_by_verify)} 項只出現在最終校對、切塊都沒讀到，請特別確認：{preview}")
     if ocr_fallback_warning:
         warnings.append(ocr_fallback_warning)
     return {
@@ -731,6 +798,8 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
             "itemCount": item_count,
             "conflictCount": len(conflicts),
             "modelFallback": bool(ocr_fallback_warning),
+            "verifyDroppedCount": len(restored_by_verify),
+            "verifyInventedCount": len(invented_by_verify),
         },
         "conflicts": conflicts,
         "identity": {
