@@ -1,8 +1,10 @@
 import json
 import io
+import os
 import sys
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from PIL import Image
 
@@ -36,6 +38,23 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(result["categories"][0]["items"], [
             {"name": "牛肉麵", "price": 180.0},
             {"name": "滷肉飯", "price": None},
+        ])
+
+    def test_accepts_nested_array_shape_from_model(self):
+        """模型無視 schema 回巢狀陣列時不能整批丟掉。
+
+        實測 llama4scout 讀雙欄菜單時，右欄兩個切塊都回這個格式。舊版在
+        `isinstance(raw_category, dict)` 就 continue 掉，導致 24 項的菜單
+        只剩 14 項，而且 warnings 完全沒有提示。
+        """
+        result = menu_vision.normalize_vision_result(
+            {"categories": [["麵類", [["乾麵", 45], ["大乾麵", "NT$55"], ["時價麵", None]]]]}
+        )
+        self.assertEqual(result["categories"][0]["name"], "麵類")
+        self.assertEqual(result["categories"][0]["items"], [
+            {"name": "乾麵", "price": 45.0},
+            {"name": "大乾麵", "price": 55.0},
+            {"name": "時價麵", "price": None},
         ])
 
     def test_analyze_encodes_image_and_parses_fenced_json(self):
@@ -157,9 +176,12 @@ class MenuVisionTests(unittest.TestCase):
                 return '{"restaurant_name":"犇頂牛排","categories":[{"name":"排餐","items":[{"name":"犇頂牛排","price":230},{"name":"菲力牛排","price":360},{"name":"香煎中卷","price":280}]}]}'
             return '{"categories":[{"name":"排餐","items":[{"name":"犇頂牛排","price":230},{"name":"菲力牛排","price":360}]}]}'
 
-        result = menu_vision.analyze_menu_image(
-            buffer.getvalue(), "image/jpeg", "東海愛將", vision_func=fake_vision
-        )
+        # 這條釘的是完整流程（總覽 → 切塊 → 校對）。VISION_FAST 會少掉兩次呼叫，
+        # 而載入 .env 的其他測試會把它帶進同一個行程，所以這裡明確關掉。
+        with mock.patch.dict(os.environ, {"VISION_FAST": "0"}):
+            result = menu_vision.analyze_menu_image(
+                buffer.getvalue(), "image/jpeg", "東海愛將", vision_func=fake_vision
+            )
         self.assertEqual(len(calls), 6)
         self.assertEqual(calls[0][2], "mistral-small-4")
         self.assertTrue(all(call[3] == 0 for call in calls))
@@ -168,6 +190,69 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(result["detected_restaurant_name"], "犇頂牛排")
         self.assertTrue(result["identityConflict"])
         self.assertEqual(result["quality"]["priceCoverage"], 1.0)
+
+    def test_fast_mode_skips_only_the_overview_and_keeps_the_verifier(self):
+        """校對那關會補回切塊漏掉的品項，快速模式也不能省——省了會掉一半菜單。"""
+        image = Image.new("RGB", (2000, 1800), "white")
+        buffer = io.BytesIO()
+        image.save(buffer, "JPEG")
+        calls = []
+
+        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
+            calls.append(prompt)
+            if "最終校對員" in prompt:
+                return json.dumps(
+                    {
+                        "restaurant_name": "斗六門當歸鴨",
+                        "categories": [{"name": "主食", "items": [
+                            {"name": "鴨肉飯", "price": 40},
+                            {"name": "鴨腿飯", "price": 80},
+                        ]}],
+                    },
+                    ensure_ascii=False,
+                )
+            return json.dumps(
+                {
+                    "restaurant_name": "斗六門當歸鴨" if "tile-1" in prompt else "",
+                    "categories": [{"name": "主食", "items": [{"name": "鴨肉飯", "price": 40}]}],
+                },
+                ensure_ascii=False,
+            )
+
+        with mock.patch.dict(os.environ, {"VISION_FAST": "1"}):
+            result = menu_vision.analyze_menu_image(
+                buffer.getvalue(), "image/jpeg", vision_func=fake_vision
+            )
+
+        self.assertEqual(len(calls), 5, "四張切塊加一次校對，只少掉總覽")
+        self.assertTrue(all("版面與身分" not in prompt for prompt in calls))
+        self.assertIn("最終校對員", calls[-1])
+        self.assertEqual(result["detected_restaurant_name"], "斗六門當歸鴨")
+        names = [item["name"] for category in result["categories"] for item in category["items"]]
+        self.assertIn("鴨腿飯", names, "校對補回來的品項必須留在結果裡")
+
+    def test_fast_mode_prefers_the_longest_tile_name(self):
+        """招牌橫跨中線時每塊只看到殘名，挑最長的——殘缺的一定比完整的短。"""
+        image = Image.new("RGB", (2000, 1800), "white")
+        buffer = io.BytesIO()
+        image.save(buffer, "JPEG")
+
+        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
+            name = "斗六門當歸鴨" if "tile-2" in prompt else "當歸鴨"
+            return json.dumps(
+                {
+                    "restaurant_name": name,
+                    "categories": [{"name": "主食", "items": [{"name": "鴨肉飯", "price": 40}]}],
+                },
+                ensure_ascii=False,
+            )
+
+        with mock.patch.dict(os.environ, {"VISION_FAST": "1"}):
+            result = menu_vision.analyze_menu_image(
+                buffer.getvalue(), "image/jpeg", vision_func=fake_vision
+            )
+
+        self.assertEqual(result["detected_restaurant_name"], "斗六門當歸鴨")
 
     def test_human_can_correct_ocr_name_and_price_before_confirmation(self):
         result = {

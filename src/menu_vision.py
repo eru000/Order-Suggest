@@ -8,6 +8,7 @@ import json
 import math
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -69,6 +70,40 @@ def _clean_price(value: Any) -> Optional[float]:
     return float(match.group(1)) if match else None
 
 
+def _coerce_category(raw_category: Any) -> Optional[Dict[str, Any]]:
+    """把模型常見的替代格式收斂成 {"name", "items"}。
+
+    llama4scout 很常無視 schema，回傳巢狀陣列而不是物件：
+        {"categories": [["麵類", [["乾麵", 45], ["大乾麵", 55]]]]}
+
+    這不是壞資料——菜名與價格都是對的。但舊版直接 `isinstance(dict)` 過濾，
+    整個分類會被 continue 掉且不留痕跡。實測一張雙欄菜單就是這樣整個右半邊
+    消失（24 項只剩 14 項），而且 warnings 一個字都沒有。
+    """
+    if isinstance(raw_category, dict):
+        return raw_category
+    if isinstance(raw_category, (list, tuple)) and len(raw_category) == 2:
+        name, items = raw_category
+        if isinstance(name, str) and isinstance(items, (list, tuple)):
+            return {"name": name, "items": list(items)}
+    return None
+
+
+def _coerce_item(raw_item: Any) -> Optional[Dict[str, Any]]:
+    """同上，但針對品項。模型會回 ["乾麵", 45] 而不是 {"name":…, "price":…}。"""
+    if isinstance(raw_item, dict):
+        return raw_item
+    if isinstance(raw_item, str):
+        match = re.search(r"(?:NT\$?|\$)\s*(\d{1,6}(?:\.\d+)?)\s*$", raw_item, flags=re.I)
+        return {
+            "name": raw_item[: match.start()].strip(" -—:") if match else raw_item.strip(),
+            "price": match.group(1) if match else None,
+        }
+    if isinstance(raw_item, (list, tuple)) and raw_item and isinstance(raw_item[0], str):
+        return {"name": raw_item[0], "price": raw_item[1] if len(raw_item) > 1 else None}
+    return None
+
+
 def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, Any]:
     """Normalize untrusted model JSON without treating model confidence as quality."""
     if isinstance(raw, list):
@@ -96,7 +131,8 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
     categories: List[Dict[str, Any]] = []
     seen = set()
     for raw_category in raw_categories:
-        if not isinstance(raw_category, dict):
+        raw_category = _coerce_category(raw_category)
+        if raw_category is None:
             continue
         if not any(key in raw_category for key in ("items", "menu_items", "dishes")) and any(
             key in raw_category for key in ("price", "amount", "cost", "dish", "item_name")
@@ -105,14 +141,9 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
         category_name = str(raw_category.get("name") or "其他").strip()[:80] or "其他"
         raw_items = raw_category.get("items") or raw_category.get("menu_items") or raw_category.get("dishes") or []
         items = []
-        for raw_item in raw_items if isinstance(raw_items, list) else []:
-            if isinstance(raw_item, str):
-                match = re.search(r"(?:NT\$?|\$)\s*(\d{1,6}(?:\.\d+)?)\s*$", raw_item, flags=re.I)
-                raw_item = {
-                    "name": raw_item[: match.start()].strip(" -—:") if match else raw_item.strip(),
-                    "price": match.group(1) if match else None,
-                }
-            if not isinstance(raw_item, dict):
+        for raw_item in raw_items if isinstance(raw_items, (list, tuple)) else []:
+            raw_item = _coerce_item(raw_item)
+            if raw_item is None:
                 continue
             name = str(raw_item.get("name") or raw_item.get("dish") or raw_item.get("item_name") or raw_item.get("title") or "").strip()
             key = re.sub(r"\s+", "", name).casefold()
@@ -232,12 +263,30 @@ def _names_conflict(hint: str, detected: str) -> bool:
     return left not in right and right not in left and SequenceMatcher(None, left, right).ratio() < 0.72
 
 
-def _tile_prompt(tile_id: str, box: Sequence[int], overview: Dict[str, Any]) -> str:
+def _tile_prompt(
+    tile_id: str,
+    box: Sequence[int],
+    overview: Dict[str, Any],
+    *,
+    ask_identity: bool = False,
+) -> str:
+    """ask_identity 給快速模式用：沒跑總覽時，店名得由切塊自己順便認。"""
+    identity_rule = (
+        "\nrestaurant_name 只填這個區塊裡實際印出的店名（通常在菜單最上方）；"
+        "這一塊看不到店名就填空字串，不要猜、也不要抄欄位說明。"
+        if ask_identity
+        else ""
+    )
+    schema = (
+        '{{"restaurant_name":"","categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}'
+        if ask_identity
+        else '{{"categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}'
+    )
     return f"""你是繁體中文菜單 OCR 專家。這是原圖的高解析區塊 {tile_id}，原圖座標 {list(box)}。
 全圖初步資訊：{json.dumps(overview, ensure_ascii=False)}
 逐字抄錄此區塊內所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。
-被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。
-只回傳 JSON：{{"categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}"""
+被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。{identity_rule}
+只回傳 JSON：{schema}"""
 
 
 def _flatten_categories(categories: Sequence[Dict[str, Any]], source: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -528,41 +577,54 @@ def analyze_menu_image(
         result["confidence"] = result["quality"]["score"]
         return result
 
+    # 快速模式：跳過總覽（只判版面與店名），切塊改為並行。呼叫次數 6 → 5，
+    # 但等待從三輪縮成兩輪。
+    #
+    # 最終校對那一關**不能省**。它的 prompt 負責「補上清楚可見但遺漏的主要排
+    # 餐」，實測拿掉之後同一張照片從 31 項掉到 16 項——整個左半邊的飯類、麵類、
+    # 盤類、燙青菜全部消失。省下的那一輪等待不值這個代價。
+    fast_mode = os.getenv("VISION_FAST", "").strip().lower() in {"1", "true", "yes", "on"}
+
     full_url = _data_url(full_bytes, "image/jpeg")
     overview_prompt = """閱讀整張餐廳菜單，只做版面與身分辨識，不要逐項 OCR。
 請完全根據圖片判斷，不要參考或猜測使用者先前輸入的名稱。
 restaurant_name 只能填圖片實際印出的店名；看不清就填空字串，禁止抄寫欄位說明。
 若沒有獨立招牌，但某個特色餐點名稱清楚像品牌，可放入 brand_candidates，這只是候選而不是確認店名。
 回傳 JSON：{"restaurant_name":"","brand_candidates":[],"source_type":"menu","menu_type":"","layout":"","warnings":[]}"""
-    overview_raw = _extract_json_value(_call_vision(
-        vision_func,
-        overview_prompt,
-        full_url,
-        model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
-        temperature=0.0,
-    ))
-    overview = overview_raw if isinstance(overview_raw, dict) else {}
-
-    region_results = []
-    tile_urls = []
     requested_ocr_model = os.getenv("VISION_MODEL", "gemma-4-31b")
     verify_model = os.getenv("VISION_VERIFY_MODEL", "mistral-small-4")
     active_ocr_model = requested_ocr_model
     ocr_fallback_warning = ""
-    for region in regions:
-        tile_url = _data_url(region["bytes"], "image/jpeg")
-        tile_urls.append(tile_url)
-        tile_prompt = _tile_prompt(region["id"], region["box"], overview)
+
+    if fast_mode:
+        overview = {}
+    else:
+        overview_raw = _extract_json_value(_call_vision(
+            vision_func,
+            overview_prompt,
+            full_url,
+            model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+            temperature=0.0,
+        ))
+        overview = overview_raw if isinstance(overview_raw, dict) else {}
+
+    tile_urls = [_data_url(region["bytes"], "image/jpeg") for region in regions]
+
+    def _ocr_region(index: int) -> Dict[str, Any]:
+        """單一切塊的 OCR。降級是各切塊獨立判斷，才能安全地並行。"""
+        nonlocal active_ocr_model, ocr_fallback_warning
+        region = regions[index]
+        tile_prompt = _tile_prompt(region["id"], region["box"], overview, ask_identity=fast_mode)
         try:
             response = _call_vision(
                 vision_func,
                 tile_prompt,
-                tile_url,
-                model=active_ocr_model,
+                tile_urls[index],
+                model=requested_ocr_model,
                 temperature=_float_env("VISION_TEMPERATURE", 0.0),
             )
         except RuntimeError as exc:
-            if active_ocr_model == verify_model:
+            if requested_ocr_model == verify_model:
                 raise
             active_ocr_model = verify_model
             ocr_fallback_warning = (
@@ -572,12 +634,36 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
             response = _call_vision(
                 vision_func,
                 tile_prompt,
-                tile_url,
-                model=active_ocr_model,
+                tile_urls[index],
+                model=verify_model,
                 temperature=0.0,
             )
         normalized = normalize_vision_result(_extract_json_value(response))
-        region_results.append({"id": region["id"], "box": region["box"], "categories": normalized["categories"]})
+        return {
+            "id": region["id"],
+            "box": region["box"],
+            "categories": normalized["categories"],
+            "detected_restaurant_name": normalized.get("detected_restaurant_name", ""),
+        }
+
+    # 切塊彼此無關，串列跑等於把等待時間乘四。
+    with ThreadPoolExecutor(max_workers=len(regions)) as pool:
+        region_results = list(pool.map(_ocr_region, range(len(regions))))
+
+    if fast_mode:
+        # 沒跑總覽，店名只能從切塊來。招牌常橫跨中線被切成兩半，所以挑最長的
+        # ——殘缺的一定比完整的短。
+        #
+        # 試過另外裁一條全寬橫幅專門認店名，實測反而更糟：那是一張又寬又扁的
+        # 低資訊圖，模型會整個幻覺（把「斗六門當歸鴨」讀成「萊菔非六門餐鴨」），
+        # 而且和切塊結果的相似度剛好落在門檻邊緣擋不掉。多花一次呼叫換更差的
+        # 結果，所以拿掉了。
+        tile_names = [
+            str(region.get("detected_restaurant_name") or "").strip()
+            for region in region_results
+            if str(region.get("detected_restaurant_name") or "").strip()
+        ]
+        overview["restaurant_name"] = max(tile_names, key=len) if tile_names else ""
 
     merged, conflicts = merge_region_items(region_results)
     if not merged:
