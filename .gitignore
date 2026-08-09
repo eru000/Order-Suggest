@@ -44,9 +44,10 @@ htmlcov/
 logs/
 *.log
 *.jsonl
-data/*.db
-data/*.db-shm
-data/*.db-wal
+# 前面不加斜線，才能同時擋掉 tests/data/ 底下跑測試產生的那份
+**/data/*.db
+**/data/*.db-shm
+**/data/*.db-wal
 
 # 本機的餐廳評價快取
 reviews_*.json
