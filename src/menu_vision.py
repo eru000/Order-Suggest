@@ -32,6 +32,11 @@ TILE_THRESHOLD = 1600
 LOW_RES_RECOVERY_LONG_SIDE = 2000
 TILE_OVERLAP = 0.12
 MERGE_SIMILARITY = 0.92
+# .env 沒設定時的後備模型。原本這裡寫死 "gemma-4-31b"，但那個模型在學校的
+# API 上已經回 HTTP 500——組員少填一行 .env 就會每個切塊都失敗，而且錯誤
+# 訊息看起來像網路問題。同一份預設值散在四個地方也是它會飄掉的原因。
+DEFAULT_OCR_MODEL = "nemotron-3-ultra"
+DEFAULT_VERIFY_MODEL = "mistral-small-4"
 # 最終校對的輸出與切塊結果配對時的門檻。低於這個值就視為「不是同一項」，
 # 也就是被刪掉或被憑空新增。
 VERIFY_MATCH_THRESHOLD = 0.72
@@ -580,14 +585,14 @@ def _legacy_analyze(
     url = _data_url(image_bytes, mime)
     prompt = _tile_prompt("full", [0, 0, 0, 0], {"restaurant_hint": restaurant_hint})
     first = normalize_vision_result(_extract_json_value(_call_vision(
-        vision_func, prompt, url, model=os.getenv("VISION_MODEL", "gemma-4-31b")
+        vision_func, prompt, url, model=os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL)
     )), restaurant_hint)
     if not first["categories"]:
         retry = normalize_vision_result(_extract_json_value(_call_vision(
             vision_func,
             "讀取圖片中可見的菜名與價格，只回傳 JSON menu_items 陣列。",
             url,
-            model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+            model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         )), restaurant_hint)
         return retry
     draft = json.dumps({"restaurant_name": first["detected_restaurant_name"], "categories": first["categories"]}, ensure_ascii=False)
@@ -595,7 +600,7 @@ def _legacy_analyze(
         vision_func,
         f"對照同一張圖片校正下列菜單，只回傳完整 JSON，不得新增看不見的品項：{draft}",
         url,
-        model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+        model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
     )), restaurant_hint)
     return verified if verified["categories"] else first
 
@@ -630,7 +635,7 @@ def analyze_menu_image(
             "conflicts": [],
             "identity": {"userHint": restaurant_hint, "detectedName": detected, "candidates": [detected] if detected else []},
             "identityConflict": _names_conflict(restaurant_hint, detected),
-            "models": {"ocr": os.getenv("VISION_MODEL", "gemma-4-31b"), "verify": os.getenv("VISION_VERIFY_MODEL", "mistral-small-4")},
+            "models": {"ocr": os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL), "verify": os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL)},
             "sourceBlocks": [{"id": "full", "box": [0, 0, 0, 0]}],
         })
         result["confidence"] = result["quality"]["score"]
@@ -650,8 +655,8 @@ def analyze_menu_image(
 restaurant_name 只能填圖片實際印出的店名；看不清就填空字串，禁止抄寫欄位說明。
 若沒有獨立招牌，但某個特色餐點名稱清楚像品牌，可放入 brand_candidates，這只是候選而不是確認店名。
 回傳 JSON：{"restaurant_name":"","brand_candidates":[],"source_type":"menu","menu_type":"","layout":"","warnings":[]}"""
-    requested_ocr_model = os.getenv("VISION_MODEL", "gemma-4-31b")
-    verify_model = os.getenv("VISION_VERIFY_MODEL", "mistral-small-4")
+    requested_ocr_model = os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL)
+    verify_model = os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL)
     active_ocr_model = requested_ocr_model
     ocr_fallback_warning = ""
 
@@ -662,7 +667,7 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
             vision_func,
             overview_prompt,
             full_url,
-            model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+            model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
             temperature=0.0,
         ))
         overview = overview_raw if isinstance(overview_raw, dict) else {}
@@ -741,7 +746,7 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         vision_func,
         verify_prompt,
         tile_urls,
-        model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+        model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         temperature=0.0,
     ))
     verified = normalize_vision_result(verified_raw)
@@ -811,7 +816,7 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         },
         "identityConflict": identity_conflict,
         "models": {
-            "overview": os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+            "overview": os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
             "ocrRequested": requested_ocr_model,
             "ocr": active_ocr_model,
             "verify": verify_model,

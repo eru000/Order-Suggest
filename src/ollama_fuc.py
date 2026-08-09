@@ -43,7 +43,7 @@ DEFAULT_MODEL = (
 OLLAMA_BIN = os.getenv("OLLAMA_BIN", "ollama")
 API_BASE_URL = os.getenv("API_BASE_URL", "").rstrip("/")
 API_KEY = os.getenv("API_KEY", "")
-VISION_MODEL = os.getenv("VISION_MODEL", "llama4scout")
+VISION_MODEL = os.getenv("VISION_MODEL", "nemotron-3-ultra")
 
 
 def _float_env(name: str, default: float) -> float:
