@@ -241,7 +241,10 @@ class MenuVisionTests(unittest.TestCase):
                 buffer.getvalue(), "image/jpeg", "東海愛將", vision_func=fake_vision
             )
         self.assertEqual(len(calls), 6)
-        self.assertEqual(calls[0][2], "mistral-small-4")
+        # 釘的是「總覽走校對模型、切塊走 OCR 模型」這個路由，不是特定模型名稱。
+        # 寫死名稱的話，每次換模型設定都會誤報成測試失敗。
+        self.assertEqual(calls[0][2], menu_vision.DEFAULT_VERIFY_MODEL)
+        self.assertEqual(calls[1][2], menu_vision.DEFAULT_OCR_MODEL)
         self.assertTrue(all(call[3] == 0 for call in calls))
         self.assertIsInstance(calls[-1][1], list)
         self.assertEqual(len(calls[-1][1]), 4)

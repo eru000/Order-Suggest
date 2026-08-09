@@ -39,8 +39,13 @@ MERGE_SIMILARITY = 0.92
 # ornith-35b 是 Ornith-1.0-35B（35B MoE，3B 活躍）。同一張菜單它與 397B 的
 # vibe 端點同樣拿到 100%，但單次切塊延遲中位數 3.4s vs 5.3s。菜單 OCR 是
 # 「照著抄」，不太需要 thinking model 的推理預算。
+#
+# 校對那關同時負責店名辨識，原本用 mistral-small-4 四次全錯（把「向宏魯肉飯」
+# 讀成「台客魚肉粒」，純紅色的圖也說是棕色）。改成同一個 ornith-35b 之後店名
+# 正確。OCR 與校對同模型不會讓校對變成橡皮圖章——它的價值來自視角不同：
+# 切塊各自只看四分之一，校對一次看完四塊，實測仍補回 7 個切塊漏掉的品項。
 DEFAULT_OCR_MODEL = "ornith-35b"
-DEFAULT_VERIFY_MODEL = "mistral-small-4"
+DEFAULT_VERIFY_MODEL = "ornith-35b"
 # 最終校對的輸出與切塊結果配對時的門檻。低於這個值就視為「不是同一項」，
 # 也就是被刪掉或被憑空新增。
 VERIFY_MATCH_THRESHOLD = 0.72
