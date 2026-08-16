@@ -814,6 +814,14 @@
   const visionStepEl = document.getElementById('vision-step');
   const visionCloseBtn = document.getElementById('vision-close');
   const visionDrop = document.getElementById('vision-drop');
+  const visionCropEl = document.getElementById('vision-crop');
+  const visionCropStage = document.getElementById('vision-crop-stage');
+  const visionCropImage = document.getElementById('vision-crop-image');
+  const visionCropFilename = document.getElementById('vision-crop-filename');
+  const visionCropSize = document.getElementById('vision-crop-size');
+  const visionCropHint = document.getElementById('vision-crop-hint');
+  const visionCropChangeBtn = document.getElementById('vision-crop-change');
+  const visionCropToolbar = visionCropEl?.querySelector('.vision-crop-toolbar');
   const visionNameEl = document.getElementById('vision-name');
   const visionBusyNote = document.getElementById('vision-busy-note');
   const visionElapsedEl = document.getElementById('vision-elapsed');
@@ -831,6 +839,26 @@
   const visionSubmitBtn = document.getElementById('vision-submit');
 
   const VISION_MAX_BYTES = 10 * 1024 * 1024;
+  const VISION_CROP_MAX_EDGE = 2400;
+  const VISION_CROPPER_TEMPLATE = `
+    <cropper-canvas background scale-step="0.1">
+      <cropper-image rotatable scalable translatable></cropper-image>
+      <cropper-shade hidden></cropper-shade>
+      <cropper-handle action="select" plain></cropper-handle>
+      <cropper-selection initial-coverage="0.92" movable resizable>
+        <cropper-grid role="grid" bordered covered></cropper-grid>
+        <cropper-crosshair centered></cropper-crosshair>
+        <cropper-handle action="move" theme-color="rgba(255, 255, 255, 0.35)"></cropper-handle>
+        <cropper-handle action="n-resize"></cropper-handle>
+        <cropper-handle action="e-resize"></cropper-handle>
+        <cropper-handle action="s-resize"></cropper-handle>
+        <cropper-handle action="w-resize"></cropper-handle>
+        <cropper-handle action="ne-resize"></cropper-handle>
+        <cropper-handle action="nw-resize"></cropper-handle>
+        <cropper-handle action="se-resize"></cropper-handle>
+        <cropper-handle action="sw-resize"></cropper-handle>
+      </cropper-selection>
+    </cropper-canvas>`;
 
   const visionPanels = {
     pick: document.getElementById('vision-panel-pick'),
@@ -847,6 +875,9 @@
   let visionTicker = null;
   let visionStartedAt = 0;
   let visionReturnFocus = null;
+  let visionCropper = null;
+  let visionCropObjectUrl = null;
+  let visionCropLoadToken = 0;
 
   // 底緣淡出只在真的還有內容可捲時出現
   const updateVisionScrollEdge = () => {
@@ -879,8 +910,152 @@
     return '正在做最後校對，逐項對照原圖修正錯字與價格。';
   };
 
+  const formatVisionFileSize = (bytes) => {
+    if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+  };
+
+  const destroyVisionCropper = () => {
+    visionCropLoadToken += 1;
+    if (visionCropper && typeof visionCropper.destroy === 'function') {
+      visionCropper.destroy();
+    }
+    visionCropper = null;
+    if (visionCropObjectUrl) URL.revokeObjectURL(visionCropObjectUrl);
+    visionCropObjectUrl = null;
+    if (visionCropImage) {
+      visionCropImage.onload = null;
+      visionCropImage.onerror = null;
+      visionCropImage.removeAttribute('src');
+      visionCropImage.removeAttribute('style');
+      if (visionCropStage && !visionCropStage.contains(visionCropImage)) {
+        visionCropStage.appendChild(visionCropImage);
+      }
+    }
+    visionCropStage?.querySelectorAll('cropper-canvas').forEach((el) => el.remove());
+    visionCropStage?.classList.remove('is-fallback');
+  };
+
+  const showVisionCropFallback = (message, { showPreview = true } = {}) => {
+    if (visionCropper && typeof visionCropper.destroy === 'function') visionCropper.destroy();
+    visionCropper = null;
+    visionCropStage?.querySelectorAll('cropper-canvas').forEach((el) => el.remove());
+    if (visionCropImage) visionCropImage.style.display = showPreview ? '' : 'none';
+    visionCropToolbar.hidden = true;
+    visionCropStage.hidden = !showPreview;
+    visionCropStage.classList.toggle('is-fallback', showPreview);
+    visionCropHint.textContent = message;
+    visionCropHint.classList.add('warn');
+    requestAnimationFrame(updateVisionScrollEdge);
+  };
+
+  const setupVisionCropper = (file) => {
+    destroyVisionCropper();
+    const loadToken = visionCropLoadToken;
+    visionCropFilename.textContent = file.name;
+    visionCropSize.textContent = formatVisionFileSize(file.size);
+    visionCropHint.textContent = '拖曳框線，只留下菜單內容；手機可用雙指縮放。';
+    visionCropHint.classList.remove('warn');
+    visionCropToolbar.hidden = false;
+    visionCropStage.hidden = false;
+    visionCropStage.classList.remove('is-fallback');
+
+    visionCropObjectUrl = URL.createObjectURL(file);
+    visionCropImage.onload = () => {
+      if (loadToken !== visionCropLoadToken) return;
+      const width = visionCropImage.naturalWidth;
+      const height = visionCropImage.naturalHeight;
+      visionCropSize.textContent = `${width} × ${height} px・${formatVisionFileSize(file.size)}`;
+
+      const CropperConstructor = window.Cropper && (window.Cropper.default || window.Cropper);
+      if (typeof CropperConstructor !== 'function') {
+        showVisionCropFallback('裁切工具目前無法載入，這次仍可直接送出原圖。');
+        return;
+      }
+
+      try {
+        visionCropper = new CropperConstructor(visionCropImage, {
+          container: visionCropStage,
+          template: VISION_CROPPER_TEMPLATE,
+        });
+        if (!visionCropper.getCropperSelection()) throw new Error('找不到裁切範圍');
+        requestAnimationFrame(updateVisionScrollEdge);
+      } catch (error) {
+        showVisionCropFallback(`無法開啟裁切工具，這次會使用原圖：${error.message || '未知錯誤'}`);
+      }
+    };
+    visionCropImage.onerror = () => {
+      if (loadToken !== visionCropLoadToken) return;
+      showVisionCropFallback('瀏覽器無法預覽這種圖片格式，會直接把原圖送給模型辨識。', { showPreview: false });
+    };
+    visionCropImage.src = visionCropObjectUrl;
+  };
+
+  const canvasToBlob = (canvas, type, quality) => new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (blob) resolve(blob);
+      else reject(new Error('瀏覽器無法產生裁切圖片'));
+    }, type, quality);
+  });
+
+  const prepareVisionUploadFile = async () => {
+    if (!visionCropper) return visionFile;
+    const selection = visionCropper.getCropperSelection();
+    if (!selection || selection.width <= 0 || selection.height <= 0) {
+      throw new Error('裁切範圍是空的，請按「重設」後再試一次。');
+    }
+
+    // 限制長邊，避免手機高畫素照片在瀏覽器建立超大 canvas；2400 px 對菜單文字仍有足夠細節。
+    const sourceLongEdge = Math.max(visionCropImage.naturalWidth, visionCropImage.naturalHeight);
+    const outputLongEdge = Math.max(1, Math.min(sourceLongEdge, VISION_CROP_MAX_EDGE));
+    const aspectRatio = selection.width / selection.height;
+    const outputWidth = Math.max(1, Math.round(aspectRatio >= 1 ? outputLongEdge : outputLongEdge * aspectRatio));
+    const outputHeight = Math.max(1, Math.round(aspectRatio >= 1 ? outputLongEdge / aspectRatio : outputLongEdge));
+    const canvas = await selection.$toCanvas({
+      width: outputWidth,
+      height: outputHeight,
+      beforeDraw: (context, targetCanvas) => {
+        context.fillStyle = '#ffffff';
+        context.fillRect(0, 0, targetCanvas.width, targetCanvas.height);
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = 'high';
+      },
+    });
+    const blob = await canvasToBlob(canvas, 'image/jpeg', 0.94);
+    if (blob.size > VISION_MAX_BYTES) {
+      throw new Error('裁切後的圖片仍超過 10 MB，請縮小裁切範圍後再試一次。');
+    }
+    const baseName = (visionFile.name || 'menu').replace(/\.[^.]+$/, '');
+    return new File([blob], `${baseName}-cropped.jpg`, {
+      type: 'image/jpeg',
+      lastModified: Date.now(),
+    });
+  };
+
+  const runVisionCropAction = (action) => {
+    if (!visionCropper) return;
+    const cropperImage = visionCropper.getCropperImage();
+    const selection = visionCropper.getCropperSelection();
+    try {
+      if (action === 'rotate-left') cropperImage?.$rotate('-90deg');
+      else if (action === 'rotate-right') cropperImage?.$rotate('90deg');
+      else if (action === 'zoom-out') cropperImage?.$zoom(-0.1);
+      else if (action === 'zoom-in') cropperImage?.$zoom(0.1);
+      else if (action === 'reset') {
+        cropperImage?.$resetTransform().$center('contain');
+        selection?.$reset();
+      }
+      visionCropHint.textContent = '拖曳框線，只留下菜單內容；手機可用雙指縮放。';
+      visionCropHint.classList.remove('warn');
+    } catch (error) {
+      visionCropHint.textContent = `圖片調整失敗：${error.message || '請重選照片'}`;
+      visionCropHint.classList.add('warn');
+    }
+  };
+
   const openVision = () => {
     visionReturnFocus = document.activeElement;
+    destroyVisionCropper();
     visionFile = null;
     visionAnalysisId = null;
     visionResult = null;
@@ -889,6 +1064,8 @@
     visionCorrectMsg.hidden = true;
     visionAcceptWrap.hidden = true;
     visionAcceptEl.checked = false;
+    visionDrop.hidden = false;
+    visionCropEl.hidden = true;
     visionDrop.querySelector('.vision-drop-title').textContent = '點一下選照片，或把照片拖進來';
     visionStepEl.textContent = '選一張菜單照片';
     visionSubmitBtn.textContent = '開始辨識';
@@ -904,6 +1081,7 @@
     if (visionAbort) { visionAbort.abort(); visionAbort = null; }
     stopVisionTicker();
     visionModal.classList.remove('is-open');
+    destroyVisionCropper();
     if (visionReturnFocus && typeof visionReturnFocus.focus === 'function') {
       visionReturnFocus.focus();
     }
@@ -922,14 +1100,21 @@
 
   const pickVisionFile = (file) => {
     if (!file) return;
+    if (file.type && !file.type.startsWith('image/')) {
+      showVisionError('這不是圖片檔。請選擇 JPEG、PNG、WebP 或 HEIC 菜單照片。');
+      return;
+    }
     if (file.size > VISION_MAX_BYTES) {
       showVisionError(`這張照片 ${(file.size / 1024 / 1024).toFixed(1)} MB，超過 10 MB 上限。請用相機的一般畫質重拍，或先縮圖。`);
       return;
     }
     visionFile = file;
+    visionDrop.hidden = true;
+    visionCropEl.hidden = false;
+    setupVisionCropper(file);
     visionDrop.querySelector('.vision-drop-title').textContent = file.name;
-    visionStepEl.textContent = '準備好了，可以開始辨識';
-    visionSubmitBtn.textContent = '開始辨識';
+    visionStepEl.textContent = '調整範圍後，交給 AI 理解菜單';
+    visionSubmitBtn.textContent = '裁切並開始辨識';
     visionSubmitBtn.disabled = false;
     setVisionStage('pick');
   };
@@ -1030,6 +1215,21 @@
 
   const startVisionAnalysis = async () => {
     if (!visionFile) return;
+    const sourceFile = visionFile;
+    visionStepEl.textContent = '正在套用裁切範圍';
+    visionSubmitBtn.disabled = true;
+    visionSubmitBtn.textContent = '準備圖片中…';
+
+    let uploadFile;
+    try {
+      uploadFile = await prepareVisionUploadFile();
+    } catch (error) {
+      if (!visionModal.classList.contains('is-open')) return;
+      showVisionError(error.message || '無法產生裁切圖片');
+      return;
+    }
+    if (!visionModal.classList.contains('is-open') || visionFile !== sourceFile) return;
+
     setVisionStage('busy');
     visionStepEl.textContent = '辨識中，這會需要一點時間';
     visionSubmitBtn.disabled = true;
@@ -1048,7 +1248,7 @@
     visionAbort = new AbortController();
     try {
       const form = new FormData();
-      form.append('image', visionFile);
+      form.append('image', uploadFile);
       form.append('restaurant_name', visionNameEl.value.trim());
       form.append('session_id', getActiveSessionId());
       const res = await adminFetch('/api/menu/vision', {
@@ -1166,6 +1366,12 @@
   visionDrop?.addEventListener('drop', (e) => {
     const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
     pickVisionFile(file);
+  });
+  visionCropChangeBtn?.addEventListener('click', openVisionFilePicker);
+  visionCropToolbar?.addEventListener('click', (e) => {
+    const button = e.target.closest('[data-vision-crop-action]');
+    if (!button) return;
+    runVisionCropAction(button.dataset.visionCropAction);
   });
 
   visionCorrectBtn?.addEventListener('click', correctVisionMenu);

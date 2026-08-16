@@ -6,7 +6,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
   <title>點餐助手</title>
-  <link rel="stylesheet" href="/web/web.css?v=20260802-stream" />
+  <link rel="stylesheet" href="/web/web.css?v=20260816-cropper" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
@@ -202,6 +202,26 @@
             <span class="vision-drop-title">點一下選照片，或把照片拖進來</span>
             <span class="vision-drop-hint">支援 JPEG、PNG、WebP、HEIC，10 MB 以內<br>拍整張菜單就好，太大的圖會自動切塊辨識</span>
           </div>
+          <div id="vision-crop" class="vision-crop" hidden>
+            <div class="vision-crop-meta">
+              <div>
+                <div id="vision-crop-filename" class="vision-crop-filename"></div>
+                <div id="vision-crop-size" class="vision-crop-size"></div>
+              </div>
+              <button id="vision-crop-change" class="vision-btn compact" type="button">更換照片</button>
+            </div>
+            <div id="vision-crop-stage" class="vision-crop-stage">
+              <img id="vision-crop-image" alt="準備裁切的菜單照片" />
+            </div>
+            <div class="vision-crop-toolbar" role="toolbar" aria-label="調整菜單照片">
+              <button class="vision-btn compact" type="button" data-vision-crop-action="rotate-left">↶ 左轉</button>
+              <button class="vision-btn compact" type="button" data-vision-crop-action="rotate-right">↷ 右轉</button>
+              <button class="vision-btn compact" type="button" data-vision-crop-action="zoom-out">− 縮小</button>
+              <button class="vision-btn compact" type="button" data-vision-crop-action="zoom-in">＋ 放大</button>
+              <button class="vision-btn compact" type="button" data-vision-crop-action="reset">重設</button>
+            </div>
+            <p id="vision-crop-hint" class="vision-crop-hint">拖曳框線，只留下菜單內容；手機可用雙指縮放。</p>
+          </div>
           <div class="vision-field">
             <label class="vision-label" for="vision-name">餐廳名稱（可留空，讓它從照片裡認）</label>
             <input id="vision-name" class="vision-input" type="text" placeholder="例如：忠鼎原汁牛肉麵" autocomplete="off" />
@@ -256,7 +276,10 @@
   </div>
 
   <script src="/web/format.js?v=20260809-2"></script>
-  <script src="/web/web.js?v=20260809-2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cropperjs@2.1.1/dist/cropper.min.js"
+          integrity="sha256-J/Kdrjxvp6X2EmkB9NH4y7w2dWGWBGqn6X0urhQTGXk="
+          crossorigin="anonymous"></script>
+  <script src="/web/web.js?v=20260816-cropper"></script>
 </body>
 
 </html>
