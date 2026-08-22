@@ -1,0 +1,1285 @@
+{
+  "schemaVersion": 2,
+  "name": "test",
+  "source": "user_photo_vlm",
+  "source_type": "menu",
+  "confirmedAt": "2026-08-02T05:48:52.694293+00:00",
+  "quality": {
+    "score": 0.7,
+    "priceCoverage": 0.986,
+    "itemCount": 70,
+    "conflictCount": 5,
+    "modelFallback": true
+  },
+  "identity": {
+    "userHint": "test",
+    "detectedName": "牛排客",
+    "candidates": [
+      "牛排客",
+      "test"
+    ],
+    "candidateInferred": false,
+    "menuType": "餐廳菜單"
+  },
+  "identityConflict": true,
+  "models": {
+    "overview": "mistral-small-4",
+    "ocrRequested": "gemma-4-31b",
+    "ocr": "mistral-small-4",
+    "verify": "mistral-small-4"
+  },
+  "sourceBlocks": [
+    {
+      "id": "tile-1",
+      "box": [
+        0,
+        0,
+        1014,
+        1434
+      ]
+    },
+    {
+      "id": "tile-2",
+      "box": [
+        796,
+        0,
+        1810,
+        1434
+      ]
+    },
+    {
+      "id": "tile-3",
+      "box": [
+        0,
+        1126,
+        1014,
+        2560
+      ]
+    },
+    {
+      "id": "tile-4",
+      "box": [
+        796,
+        1126,
+        1810,
+        2560
+      ]
+    }
+  ],
+  "manualCorrections": [],
+  "warnings": [
+    "使用者店名「test」與圖片候選「牛排客」不同，確認前不會存檔",
+    "有 5 組 OCR 候選曾發生衝突，請確認摘要",
+    "主要 OCR 模型 gemma-4-31b 無法使用，本張圖片已改由 mistral-small-4 辨識"
+  ],
+  "menu_items": [
+    {
+      "id": "item-001",
+      "name": "美國椒鹽牛排",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類單點"
+    },
+    {
+      "id": "item-002",
+      "name": "活凍草蝦(一隻)",
+      "price": 55.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-003",
+      "name": "天使紅蝦(一隻)",
+      "price": 60.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-004",
+      "name": "明蝦(一隻)",
+      "price": 120.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-005",
+      "name": "鮭蝦(六隻)",
+      "price": 180.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-006",
+      "name": "小卷(一隻)",
+      "price": 85.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-007",
+      "name": "鮭魚片(100g)",
+      "price": 140.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-008",
+      "name": "鯖魚片(100g)",
+      "price": 160.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮單點"
+    },
+    {
+      "id": "item-009",
+      "name": "芥蘭時蔬",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "蔬菜單點"
+    },
+    {
+      "id": "item-010",
+      "name": "蘆筍(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "蔬菜單點"
+    },
+    {
+      "id": "item-011",
+      "name": "青花椰(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "蔬菜單點"
+    },
+    {
+      "id": "item-012",
+      "name": "芝白筍(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "蔬菜單點"
+    },
+    {
+      "id": "item-013",
+      "name": "山葵高麗(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        }
+      ],
+      "category": "蔬菜單點"
+    },
+    {
+      "id": "item-014",
+      "name": "玉米筍(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        },
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "蔬菜單點"
+    },
+    {
+      "id": "item-015",
+      "name": "高麗菜",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-1",
+          "box": [
+            0,
+            0,
+            1014,
+            1434
+          ]
+        },
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "地瓜"
+    },
+    {
+      "id": "item-016",
+      "name": "地瓜(一條)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "地瓜"
+    },
+    {
+      "id": "item-017",
+      "name": "美國極上霜降牛7公斤套餐",
+      "price": 450.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-018",
+      "name": "美國極上霜降牛7公斤單點",
+      "price": 330.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-019",
+      "name": "美國極上菲力牛排(一隻)",
+      "price": 55.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-020",
+      "name": "美國極上紐約客牛排(一隻)",
+      "price": 60.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-021",
+      "name": "美國極上T骨牛排(一隻)",
+      "price": 120.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-022",
+      "name": "美國極上骨肉相連牛排(一隻)",
+      "price": 180.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-023",
+      "name": "美國極上牛肋條(一隻)",
+      "price": 85.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-024",
+      "name": "美國極上牛小排(300g)",
+      "price": 140.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-025",
+      "name": "美國極上牛小排(400g)",
+      "price": 160.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "肉類"
+    },
+    {
+      "id": "item-026",
+      "name": "鮭魚(一份)",
+      "price": 130.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮"
+    },
+    {
+      "id": "item-027",
+      "name": "鮮蝦(一份)",
+      "price": 135.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮"
+    },
+    {
+      "id": "item-028",
+      "name": "北海道干貝(一顆)",
+      "price": 60.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮"
+    },
+    {
+      "id": "item-029",
+      "name": "北海道扇貝(一顆)",
+      "price": 70.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮"
+    },
+    {
+      "id": "item-030",
+      "name": "大虎蝦(一隻)",
+      "price": 200.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮"
+    },
+    {
+      "id": "item-031",
+      "name": "加拿大空運波士頓龍蝦(一隻)",
+      "price": null,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "海鮮"
+    },
+    {
+      "id": "item-032",
+      "name": "豆皮",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-033",
+      "name": "川耳",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-034",
+      "name": "水豆腐",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-035",
+      "name": "涼豆腐(手工自製)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-036",
+      "name": "精鹽枯",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-037",
+      "name": "鴨精枯",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-038",
+      "name": "杏鮑枯",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-039",
+      "name": "金針枯",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-2",
+          "box": [
+            796,
+            0,
+            1810,
+            1434
+          ]
+        }
+      ],
+      "category": "飲料"
+    },
+    {
+      "id": "item-040",
+      "name": "芽白筍(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-041",
+      "name": "山荔薑(季節限定)",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-042",
+      "name": "牛番茄",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-043",
+      "name": "芋頭(四個)",
+      "price": 50.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-044",
+      "name": "綜合菜盤",
+      "price": 120.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-045",
+      "name": "白飯",
+      "price": 20.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-046",
+      "name": "王子麵",
+      "price": 20.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-047",
+      "name": "手工老饕麵",
+      "price": 25.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-048",
+      "name": "冬粉",
+      "price": 20.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-049",
+      "name": "五味醬(一份)",
+      "price": 20.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-050",
+      "name": "啤酒",
+      "price": 60.0,
+      "sources": [
+        {
+          "block": "tile-3",
+          "box": [
+            0,
+            1126,
+            1014,
+            2560
+          ]
+        }
+      ],
+      "category": "分類"
+    },
+    {
+      "id": "item-051",
+      "name": "冰豆腐（手工自製）",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-052",
+      "name": "精靈結",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-053",
+      "name": "鴨膀結",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-054",
+      "name": "杏鮑菇",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-055",
+      "name": "金針菇",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-056",
+      "name": "小香菇",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-057",
+      "name": "（節限定）",
+      "price": 50.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（節限定）"
+    },
+    {
+      "id": "item-058",
+      "name": "三杯雞",
+      "price": 180.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（三杯）"
+    },
+    {
+      "id": "item-059",
+      "name": "綜合蛤類",
+      "price": 120.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "綜合蛤類"
+    },
+    {
+      "id": "item-060",
+      "name": "（必點）★",
+      "price": 100.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "綜合蛤類"
+    },
+    {
+      "id": "item-061",
+      "name": "鰻魚丸",
+      "price": 80.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-062",
+      "name": "手工花枝棍",
+      "price": 150.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-063",
+      "name": "手工鮮蝦花枝棍",
+      "price": 200.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-064",
+      "name": "黃金老油條",
+      "price": 55.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-065",
+      "name": "蜂蜜三寶（果凍鴨血.豆腐.米血糕）",
+      "price": 115.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-066",
+      "name": "蛋餃",
+      "price": 65.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-067",
+      "name": "魚餃（10粒）",
+      "price": 100.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-068",
+      "name": "米血糕",
+      "price": 55.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-069",
+      "name": "起士片（一份二片）",
+      "price": 20.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "（必點）★"
+    },
+    {
+      "id": "item-070",
+      "name": "（可以抵單點）",
+      "price": 300.0,
+      "sources": [
+        {
+          "block": "tile-4",
+          "box": [
+            796,
+            1126,
+            1810,
+            2560
+          ]
+        }
+      ],
+      "category": "酒類開瓶費（瓶）"
+    }
+  ]
+}
