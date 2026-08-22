@@ -11,7 +11,6 @@ LINE bot 那幾條需要 line_bot.py，本分支還沒有）。
 
 import asyncio
 import io
-import json
 import sys
 import tempfile
 import time
@@ -27,6 +26,8 @@ if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 import back  # noqa: E402
+
+SESSION_ID = "test_session"
 
 
 def jpeg_upload(name: str = "menu.jpg") -> UploadFile:
@@ -54,7 +55,7 @@ class VisionEndpointTests(unittest.TestCase):
         }
         with mock.patch.object(back, "analyze_menu_image", return_value=result) as analyze, \
                 mock.patch.object(back, "_register_vision_menu") as register:
-            response = asyncio.run(back.create_menu_from_photo("測試餐廳", jpeg_upload()))
+            response = asyncio.run(back.create_menu_from_photo("測試餐廳", SESSION_ID, jpeg_upload()))
 
         self.assertEqual(1, response["itemCount"])
         self.assertTrue(response["analysisId"])
@@ -70,14 +71,14 @@ class VisionEndpointTests(unittest.TestCase):
             "conflicts": [],
             "identityConflict": False,
         }
-        analysis_id = back._store_pending_analysis(result)
+        analysis_id = back._store_pending_analysis(result, SESSION_ID)
         with mock.patch.object(
             back,
             "_register_vision_menu",
             return_value={"restaurantName": "測試餐廳", "itemCount": 1, "categories": ["主餐"]},
         ) as register:
             response = back.confirm_menu_from_photo(
-                analysis_id, back.VisionConfirmReq(restaurant_name="測試餐廳")
+                analysis_id, back.VisionConfirmReq(restaurant_name="測試餐廳", sessionId=SESSION_ID)
             )
 
         self.assertTrue(response["success"])
@@ -93,10 +94,13 @@ class VisionEndpointTests(unittest.TestCase):
             "conflicts": [],
             "identityConflict": True,
         }
-        analysis_id = back._store_pending_analysis(result)
+        analysis_id = back._store_pending_analysis(result, SESSION_ID)
 
         with self.assertRaises(HTTPException) as caught:
-            back.confirm_menu_from_photo(analysis_id, back.VisionConfirmReq(restaurant_name="東海愛將"))
+            back.confirm_menu_from_photo(
+                analysis_id,
+                back.VisionConfirmReq(restaurant_name="東海愛將", sessionId=SESSION_ID),
+            )
 
         self.assertEqual(409, caught.exception.status_code)
         # 被擋下來之後結果要留在待確認區，使用者才能接受衝突後再送一次
@@ -109,11 +113,11 @@ class VisionEndpointTests(unittest.TestCase):
             "quality": {"score": 0.7, "priceCoverage": 1, "itemCount": 1},
             "conflicts": [],
         }
-        analysis_id = back._store_pending_analysis(result)
+        analysis_id = back._store_pending_analysis(result, SESSION_ID)
 
         response = back.correct_menu_from_photo(
             analysis_id,
-            back.VisionCorrectionReq(instruction="把豬肝飯改成豬腳飯"),
+            back.VisionCorrectionReq(instruction="把豬肝飯改成豬腳飯", sessionId=SESSION_ID),
         )
 
         self.assertTrue(response["success"])
@@ -123,43 +127,39 @@ class VisionEndpointTests(unittest.TestCase):
 
     # --- 本分支補的 ---
 
-    def test_register_vision_menu_actually_writes_file_and_switches_restaurant(self):
-        """真的跑一次落地，不 mock。對方的測試沒有覆蓋這條路徑。"""
+    def test_register_vision_menu_persists_to_catalog(self):
+        """Confirmed menus are versioned in the repository instead of runtime JSON files."""
         result = {
             "restaurant_name": "煙霧測試餐廳",
             "categories": [{"name": "主餐", "items": [{"name": "牛肉麵", "price": 180}]}],
             "quality": {"score": 0.9, "priceCoverage": 1, "itemCount": 1},
         }
-        prev_active = back.ACTIVE_RESTAURANT
-        prev_menu = back.menu
-        with tempfile.TemporaryDirectory() as tmp:
-            try:
-                with mock.patch.object(back, "PROJECT_ROOT", tmp):
-                    summary = back._register_vision_menu(result)
-                    written = Path(tmp) / "menu_煙霧測試餐廳.json"
-
-                    self.assertTrue(written.exists(), "應該寫出菜單檔")
-                    saved = json.loads(written.read_text(encoding="utf-8"))
-                    self.assertEqual(2, saved["schemaVersion"])
-                    self.assertEqual("user_photo_vlm", saved["source"])
-                    self.assertEqual("牛肉麵", saved["menu_items"][0]["name"])
-                    # 沒有留下 .tmp 殘骸
-                    self.assertEqual([], list(Path(tmp).glob("*.tmp")))
-
-                self.assertEqual("煙霧測試餐廳", summary["restaurantName"])
-                self.assertEqual(1, summary["itemCount"])
-                self.assertEqual("煙霧測試餐廳", back.ACTIVE_RESTAURANT)
-            finally:
-                back.ACTIVE_RESTAURANT = prev_active
-                back.menu = prev_menu
-                back.RESTAURANT_MENUS.pop("煙霧測試餐廳", None)
+        try:
+            summary = back._register_vision_menu(result)
+            persisted = back.RESTAURANT_MENUS["煙霧測試餐廳"]
+            item = persisted["restaurants"]["煙霧測試餐廳"]["categories"]["主餐"]["items"][0]
+            self.assertEqual("牛肉麵", item["name"])
+            self.assertIn("semantic", item)
+            self.assertEqual("煙霧測試餐廳", summary["restaurantName"])
+            self.assertEqual(1, summary["itemCount"])
+        finally:
+            back.RESTAURANT_MENUS.pop("煙霧測試餐廳", None)
 
     def test_expired_pending_analysis_is_rejected(self):
-        analysis_id = back._store_pending_analysis({"restaurant_name": "過期店", "categories": []})
+        analysis_id = back._store_pending_analysis(
+            {"restaurant_name": "過期店", "categories": []}, SESSION_ID
+        )
         back.PENDING_ANALYSES[analysis_id]["expires_at"] = time.time() - 1
 
         with self.assertRaises(ValueError):
-            back._take_pending_analysis(analysis_id)
+            back._take_pending_analysis(analysis_id, SESSION_ID)
+
+    def test_pending_analysis_cannot_be_used_by_another_session(self):
+        analysis_id = back._store_pending_analysis(
+            {"restaurant_name": "測試店", "categories": []}, SESSION_ID
+        )
+        with self.assertRaises(ValueError):
+            back._take_pending_analysis(analysis_id, "other_session")
 
     def test_legacy_upload_menu_photo_endpoint_still_exists(self):
         """前端已改走 /api/menu/vision，舊端點暫時留著當退路。

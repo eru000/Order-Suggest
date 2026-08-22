@@ -2,7 +2,13 @@ fastapi>=0.110
 uvicorn[standard]>=0.27
 pydantic>=2.5
 python-multipart>=0.0.9
+beautifulsoup4>=4.12
+playwright>=1.41
 
 # VLM 菜單辨識（menu_vision）
 Pillow>=10.2
 pillow-heif>=0.18      # iPhone HEIC 照片
+redis>=5.0,<6.0
+SQLAlchemy>=2.0,<3.0
+alembic>=1.13,<2.0
+psycopg[binary]>=3.2,<4.0

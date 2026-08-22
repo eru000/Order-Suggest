@@ -1,7 +1,10 @@
 #import
 from __future__ import annotations
 import os, json, re, shutil, subprocess, random, time
-from typing import Dict, List, Optional, TypedDict, Literal, Tuple
+from typing import Dict, List, Optional, TypedDict, Literal, Tuple, cast
+
+from preference_engine import merge_preference_delta, parse_preferences
+from observability import emit
 
 
 DEFAULT_MODEL = (
@@ -115,6 +118,12 @@ class Preferences(TypedDict, total=False):
     needDrink: bool
     people: int
     weights: Dict[str, float]
+    preferredDish: str
+    spiceProfile: Dict[str, object]
+    allergens: List[str]
+    dietaryRestrictions: List[str]
+    budgetBasis: str
+    _operations: List[Dict[str, object]]
 
 
 class ConversationTurn(TypedDict, total=False):
@@ -365,7 +374,7 @@ def extract_prefs_with_llm(text: str) -> Preferences:
         return {}
 
 
-def extract_prefs_from_text(text: str) -> Preferences:
+def _extract_prefs_legacy(text: str) -> Preferences:
     """主要入口：結合 LLM 智能提取 + 關鍵字提取"""
     
     # 檢查是否啟用 LLM（預設 false）
@@ -503,27 +512,16 @@ def extract_prefs_from_text(text: str) -> Preferences:
     return prefs
 
 
+def extract_prefs_from_text(text: str) -> Preferences:
+    """Parse one turn into validated values plus explicit merge operations."""
+    llm_extractor = None
+    if os.environ.get("USE_LLM_EXTRACTION", "false").lower() == "true":
+        llm_extractor = extract_prefs_with_llm
+    return cast(Preferences, parse_preferences(text, llm_extractor=llm_extractor))
+
+
 def merge_prefs_inplace(base: Preferences, delta: Preferences) -> None:
-    if "budget" in delta and delta["budget"] is not None:
-        base["budget"] = delta["budget"]
-    if "people" in delta:
-        base["people"] = delta["people"]
-    if "spiceLevel" in delta:
-        base["spiceLevel"] = delta["spiceLevel"]
-    if "cuisine" in delta:
-        base["cuisine"] = delta["cuisine"]
-    if "needDrink" in delta:
-        base["needDrink"] = delta["needDrink"]  # True 或 False 都接受
-    if "excludes" in delta:
-        base["excludes"] = list(dict.fromkeys([*base.get("excludes", []), *delta["excludes"]]))  # 去重合併
-    if "weights" in delta:
-        base["weights"] = delta["weights"]  # 每輪依新輸入動態重算
-    if "notes" in delta:
-        base["notes"] = delta["notes"]
-    # 合併菜品偏好
-    if "preferredDish" in delta:
-        base["preferredDish"] = delta["preferredDish"]
-        print(f" [DEBUG merge_prefs] 更新菜品偏好: {delta['preferredDish']}")
+    merge_preference_delta(base, delta)
 
 def _fallback_format(rec: Dict[str, object]) -> str:
     """備用模板（LLM 失敗時使用）—— 原 format_recommend_text 邏輯完整保留。"""
@@ -674,11 +672,78 @@ def _fallback_format(rec: Dict[str, object]) -> str:
 #  LLM 二次生成回覆
 # ──────────────────────────────────────────────────
 
-def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str:
-    """把推薦 JSON + 用戶輸入 → 適合丟給 LLM 的 Prompt 字串。
+_MENU_PROMPT_MAX_ITEMS = 150
 
-    原理：LLM 的輸出品質 80% 取決於 Prompt 設計。
-    好的 Prompt 要有：角色設定、結構化資料、明確格式指示、字數限制。
+
+def _format_menu_for_prompt(menu: Optional[Dict[str, object]]) -> str:
+    """把整份菜單壓成 prompt 用的分類清單。
+
+    沒有這段的話，LLM 只看得到 recommend() 挑出來的 5 項候選，被問到「有沒有
+    飯類」時就會照它看到的東西回答「這家沒有飯」——但菜單上其實有。
+    """
+    if not isinstance(menu, dict):
+        return ""
+    try:
+        from recommendation import _flatten_menu
+    except Exception:
+        return ""
+    rows = _flatten_menu(menu)
+    if not rows:
+        return ""
+    truncated = len(rows) > _MENU_PROMPT_MAX_ITEMS
+    grouped: Dict[str, List[str]] = {}
+    for row in rows[:_MENU_PROMPT_MAX_ITEMS]:
+        price = row.get("price")
+        label = f"{row['name']} ${price:.0f}" if isinstance(price, (int, float)) else f"{row['name']}（價格未標示）"
+        grouped.setdefault(str(row.get("category") or "未分類"), []).append(label)
+    lines = [f"完整菜單（這家店共 {len(rows)} 項）："]
+    for category, labels in grouped.items():
+        lines.append(f"[{category}] " + "、".join(labels))
+    if truncated:
+        lines.append(f"（品項太多，只列出前 {_MENU_PROMPT_MAX_ITEMS} 項）")
+    return "\n".join(lines)
+
+
+def _reply_temperature() -> float:
+    """推薦回覆的取樣溫度。
+
+    API_TEMPERATURE 預設 0.7 是給一般對話用的，對「照著給定的菜單資料講人話」
+    這種任務偏高——溫度越高越容易冒出菜單上沒有的菜名與價格。這裡預設 0.4：
+    夠自然但不會亂編。要調整就設 REPLY_TEMPERATURE。
+    """
+    raw = os.getenv("REPLY_TEMPERATURE", "").strip()
+    if not raw:
+        return 0.4
+    try:
+        return max(0.0, min(2.0, float(raw)))
+    except ValueError:
+        return 0.4
+
+
+_REPLY_SYSTEM_PROMPT = """你是熟悉餐廳菜單的真人點餐顧問，講話像朋友或店員，不像客服機器人。
+
+輸出規則（每一條都要遵守）：
+- 全程使用繁體中文（台灣用語）。不可以出現簡體字。
+- 控制在 300 字以內。
+- 用 1 到 3 段自然的話回答，不要條列、不要表格、不要制式標題。
+- 不要用「以下是推薦」「希望對您有幫助」「如有需要請告知」這類 AI 感的套語。
+- 可以提到少量品名與價格，但不要把資料機械地列出來。
+- 只能講資料裡有的東西。價格缺漏就誠實說不清楚，絕對不要編造菜名或數字。"""
+
+
+def _build_recommendation_prompt(
+    rec: Dict[str, object],
+    user_input: str,
+    menu: Optional[Dict[str, object]] = None,
+) -> List[Dict[str, str]]:
+    """把推薦 JSON + 用戶輸入組成要送給 LLM 的 messages。
+
+    拆成 system + user 兩則而不是塞成一大段 user，是因為完整菜單最多 150 項，
+    以前那些「回答要求」全排在那坨資料後面，模型很常讀完資料就忘了規則——
+    實測會吐出簡體字、寫得又臭又長。規則搬到 system 之後就穩定多了。
+
+    「全程繁體中文」與「300 字以內」這兩條原本寫在一段永遠執行不到的
+    第二個 return 裡，等於重構時被無聲刪掉。現在回到 system 訊息。
     """
     items   = rec.get("items") if isinstance(rec, dict) else []
     meta    = rec.get("meta")  if isinstance(rec, dict) else {}
@@ -699,15 +764,15 @@ def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str
     total   = subtotal + service
 
     items_json = json.dumps(items, ensure_ascii=False, indent=2)
+    menu_text = _format_menu_for_prompt(menu)
+    menu_block = f"\n{menu_text}\n" if menu_text else ""
 
-    return f"""你是熟悉餐廳菜單的真人點餐顧問。請根據使用者需求與候選餐點，用自然、像朋友或店員建議的方式回答。
-
-使用者原始需求：
+    user_content = f"""使用者這次說：
 {user_input}
 
-候選餐點 JSON：
+系統依條件挑出的候選餐點（**不是**這家店的全部品項）：
 {items_json}
-
+{menu_block}
 目前估算：
 - 人數：{people or "未指定"}
 - 預算：{f"NT${int(budget)}" if budget else "未指定"}
@@ -716,42 +781,18 @@ def _build_recommendation_prompt(rec: Dict[str, object], user_input: str) -> str
 - 服務費估算：NT${service:.0f}
 - 合計估算：NT${total:.0f}
 
-注意事項：
-- 清單中部分項目可能是「加料」（價格明顯低於其他主餐），請優先推薦主餐，加料視情況補充建議。
-
-回答要求：
-- 不要用固定模板、表格、制式標題或「以下是推薦」這種 AI 感開場。
-- 用 1 到 3 段自然中文回答，像真的在幫朋友點餐。
-- 可以保留少量品項名稱與價格，但不要把資料機械列出。
+判斷時注意：
+- 候選清單裡部分項目可能是「加料」（價格明顯低於其他主餐），請優先講主餐。
+- 使用者問「有沒有某類餐點」時，一律看「完整菜單」再回答。候選清單裡沒有不代表
+  店裡沒有——除非完整菜單裡真的找不到，否則絕對不要說「這家店沒有 XX」。
+- 完整菜單裡若有更符合他這次需求的品項，可以直接改推薦那一項。
 - 先講最推薦怎麼點，再自然補充為什麼適合他的預算、口味或人數。
-- 如果有預算，請自然提到大概會不會超出。
-- 如果資料不足或價格缺失，要誠實說明，不要編造。
-"""
+- 有預算的話，自然提一下大概會不會超出。"""
 
-    return f"""你是一位親切的台灣中文點餐助理。請根據以下推薦清單，用自然、有溫度的繁體中文回覆使用者。
-
-【使用者需求】
-{user_input}
-
-【推薦清單（結構化資料）】
-{items_json}
-
-【預算資訊】
-- 人數：{people or "未指定"}
-- 預算：{f"NT${int(budget)}" if budget else "未指定"}
-- 需要飲料：{"是" if need_drink else "否"}
-- 餐點小計：約 NT${subtotal:.0f}
-- 10% 服務費：約 NT${service:.0f}
-- 總計：約 NT${total:.0f}
-
-【回覆要求】
-1. 開場要有溫度，自然呼應使用者的需求，不要複製貼上需求文字
-2. 逐一介紹推薦菜品，說明為什麼這道適合（別只複製 reason 欄位的字）
-3. 最後加一段「預算試算」，數字要跟上面一致
-4. 結尾自然詢問是否需要調整，不要用制式的「如有需要請告知」
-5. 全程繁體中文，語氣像真人朋友，不要條列太多符號
-6. 控制在 300 字以內
-"""
+    return [
+        {"role": "system", "content": _REPLY_SYSTEM_PROMPT},
+        {"role": "user", "content": user_content},
+    ]
 
 
 def generate_ai_reply(
@@ -759,6 +800,7 @@ def generate_ai_reply(
     user_input: str,
     model: Optional[str] = None,
     timeout: float = 180.0,
+    menu: Optional[Dict[str, object]] = None,
 ) -> str:
     """呼叫 Gemma3 把推薦 JSON 轉成自然語言回覆。
 
@@ -769,14 +811,15 @@ def generate_ai_reply(
     """
     from ollama_fuc import chat as _ollama_chat
 
-    mdl    = model or DEFAULT_MODEL
-    prompt = _build_recommendation_prompt(rec, user_input)
+    mdl      = model or DEFAULT_MODEL
+    messages = _build_recommendation_prompt(rec, user_input, menu)
 
     try:
         response = _ollama_chat(
-            [{"role": "user", "content": prompt}],
+            messages,
             model=mdl,
             timeout=timeout,
+            temperature=_reply_temperature(),
         )
         cleaned = response.strip() if isinstance(response, str) else ""
         if cleaned:
@@ -801,8 +844,41 @@ def menu_to_json():
 conversation_history: List[ConversationTurn] = []  # 對話歷史
 
 
-
-conversation_history: List[ConversationTurn] = []  # 對話歷史
+def prepare_recommendation(
+    history: List[ConversationTurn],
+    user_input: str,
+    menu: Menu,
+    prefs: Preferences,
+    model: Optional[str] = None,
+) -> Dict[str, object]:
+    """Apply one preference delta and calculate one deterministic recommendation."""
+    started = time.perf_counter()
+    history.append({"role": "user", "content": user_input, "meta": {}})
+    dynamic = extract_prefs_from_text(user_input)
+    dynamic.setdefault("notes", user_input)
+    merge_prefs_inplace(prefs, dynamic)
+    if ollama_recommend is None:
+        raise RuntimeError("推薦功能未載入")
+    # 固定 5 項對一個人剛好，對四個人就太少——會出現「六百塊預算只點兩百」。
+    people = prefs.get("people")
+    top_k = max(5, min(8, people * 2)) if isinstance(people, int) and people > 0 else 5
+    result = ollama_recommend(menu, prefs, top_k=top_k, model=model)
+    meta = result.get("meta") if isinstance(result, dict) else {}
+    estimated_total = meta.get("estimatedTotal") if isinstance(meta, dict) else None
+    budget = meta.get("budget") if isinstance(meta, dict) else None
+    emit(
+        "recommendation.completed",
+        durationMs=round((time.perf_counter() - started) * 1000, 2),
+        itemCount=len(result.get("items") or []),
+        noCandidates=not bool(result.get("items")),
+        budgetViolation=bool(
+            isinstance(budget, (int, float))
+            and isinstance(estimated_total, (int, float))
+            and estimated_total > budget
+        ),
+        semanticPreferences=bool(prefs.get("spiceProfile") or prefs.get("allergens")),
+    )
+    return result
 
 def generate_conversation(
     history: List[ConversationTurn],
@@ -811,20 +887,9 @@ def generate_conversation(
     prefs: Preferences,
     model: Optional[str] = None,
 ) -> Tuple[str, List[ConversationTurn]]:
-    history.append({"role": "user", "content": user_input, "meta": {}})
-
-    # 抽取→就地合併（保留上一輪條件）
-    dynamic = extract_prefs_from_text(user_input)
-    dynamic.setdefault("notes", user_input)
-    merge_prefs_inplace(prefs, dynamic)
-
-    # 直接推薦（用累積後的 prefs）
     try:
-        if ollama_recommend is None:
-            raise RuntimeError("推薦功能未載入")
-           # reply="123" #///////////////////////////////////
-        rec = ollama_recommend(menu, prefs, top_k=5, model=model)
-        reply = generate_ai_reply(rec, user_input)
+        rec = prepare_recommendation(history, user_input, menu, prefs, model)
+        reply = generate_ai_reply(rec, user_input, menu=menu)
     except Exception as e:
         reply = f"推薦發生錯誤：{e}"
 
@@ -837,6 +902,7 @@ def generate_ai_reply_stream(
     user_input: str,
     model: Optional[str] = None,
     timeout: float = 180.0,
+    menu: Optional[Dict[str, object]] = None,
 ):
     """串流版 generate_ai_reply()。
 
@@ -847,12 +913,12 @@ def generate_ai_reply_stream(
     from ollama_fuc import chat_stream as _ollama_chat_stream
 
     mdl = model or DEFAULT_MODEL
-    prompt = _build_recommendation_prompt(rec, user_input)
+    messages = _build_recommendation_prompt(rec, user_input, menu)
     produced = False
 
     try:
         for piece in _ollama_chat_stream(
-            [{"role": "user", "content": prompt}], model=mdl, timeout=timeout
+            messages, model=mdl, timeout=timeout, temperature=_reply_temperature()
         ):
             if piece:
                 produced = True
@@ -892,16 +958,8 @@ def generate_conversation_stream(
     history 會在串流結束後才寫入完整回覆——中途中斷的半截內容不該被當成
     有效的對話紀錄帶進下一輪。
     """
-    history.append({"role": "user", "content": user_input, "meta": {}})
-
-    dynamic = extract_prefs_from_text(user_input)
-    dynamic.setdefault("notes", user_input)
-    merge_prefs_inplace(prefs, dynamic)
-
     try:
-        if ollama_recommend is None:
-            raise RuntimeError("推薦功能未載入")
-        rec = ollama_recommend(menu, prefs, top_k=5, model=model)
+        rec = prepare_recommendation(history, user_input, menu, prefs, model)
     except Exception as e:
         text = f"推薦發生錯誤：{e}"
         history.append({"role": "assistant", "content": text, "meta": {}})
@@ -922,7 +980,7 @@ def generate_conversation_stream(
     }
 
     pieces: List[str] = []
-    for piece in generate_ai_reply_stream(rec, user_input, model=model):
+    for piece in generate_ai_reply_stream(rec, user_input, model=model, menu=menu):
         pieces.append(piece)
         yield {"type": "delta", "text": piece}
 

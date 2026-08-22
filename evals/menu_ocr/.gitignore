@@ -1,0 +1,11 @@
+# 執行紀錄是本機實驗結果，不進版控
+runs/
+
+# 照片可能拍到店家或路人。要共用的話再逐張 git add -f
+cases/*.jpg
+cases/*.jpeg
+cases/*.png
+cases/*.webp
+cases/*.heic
+cases/*.heif
+__pycache__/

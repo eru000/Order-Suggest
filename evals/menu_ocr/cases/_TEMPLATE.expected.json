@@ -1,0 +1,8 @@
+{
+  "_說明": "把這份複製成跟照片同名的 .expected.json，例如 doumen.jpg → doumen.expected.json。底線開頭的欄位會被忽略。",
+  "restaurant_name": "照片上實際印出的店名，看不到就把這個欄位整個刪掉",
+  "items": [
+    { "name": "照菜單抄的完整品名", "price": 70 },
+    { "name": "菜單上沒印價格的品項", "price": null }
+  ]
+}

@@ -8,6 +8,7 @@ import json
 import math
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -31,6 +32,27 @@ TILE_THRESHOLD = 1600
 LOW_RES_RECOVERY_LONG_SIDE = 2000
 TILE_OVERLAP = 0.12
 MERGE_SIMILARITY = 0.92
+# .env 沒設定時的後備模型。原本這裡寫死 "gemma-4-31b"，但那個模型在學校的
+# API 上已經回 HTTP 500——組員少填一行 .env 就會每個切塊都失敗，而且錯誤
+# 訊息看起來像網路問題。同一份預設值散在四個地方也是它會飄掉的原因。
+#
+# ornith-35b 是 Ornith-1.0-35B（35B MoE，3B 活躍）。同一張菜單它與 397B 的
+# vibe 端點同樣拿到 100%，但單次切塊延遲中位數 3.4s vs 5.3s。菜單 OCR 是
+# 「照著抄」，不太需要 thinking model 的推理預算。
+#
+# 校對那關同時負責店名辨識，原本用 mistral-small-4 四次全錯（把「向宏魯肉飯」
+# 讀成「台客魚肉粒」，純紅色的圖也說是棕色）。改成同一個 ornith-35b 之後店名
+# 正確。OCR 與校對同模型不會讓校對變成橡皮圖章——它的價值來自視角不同：
+# 切塊各自只看四分之一，校對一次看完四塊，實測仍補回 7 個切塊漏掉的品項。
+DEFAULT_OCR_MODEL = "ornith-35b"
+DEFAULT_VERIFY_MODEL = "ornith-35b"
+# 最終校對的輸出與切塊結果配對時的門檻。低於這個值就視為「不是同一項」，
+# 也就是被刪掉或被憑空新增。
+VERIFY_MATCH_THRESHOLD = 0.72
+# 三個字的品名改一個字，相似度就只剩 0.667——「肉蓗飯」被校對修成「肉羹飯」
+# 會低於上面的門檻，於是同一道菜的錯字版與更正版被雙雙保留。價格一致時放寬
+# 到這個值，讓「修錯字」不會被誤判成「刪一項又加一項」。
+VERIFY_SAME_PRICE_THRESHOLD = 0.5
 
 
 def _float_env(name: str, default: float) -> float:
@@ -69,6 +91,40 @@ def _clean_price(value: Any) -> Optional[float]:
     return float(match.group(1)) if match else None
 
 
+def _coerce_category(raw_category: Any) -> Optional[Dict[str, Any]]:
+    """把模型常見的替代格式收斂成 {"name", "items"}。
+
+    llama4scout 很常無視 schema，回傳巢狀陣列而不是物件：
+        {"categories": [["麵類", [["乾麵", 45], ["大乾麵", 55]]]]}
+
+    這不是壞資料——菜名與價格都是對的。但舊版直接 `isinstance(dict)` 過濾，
+    整個分類會被 continue 掉且不留痕跡。實測一張雙欄菜單就是這樣整個右半邊
+    消失（24 項只剩 14 項），而且 warnings 一個字都沒有。
+    """
+    if isinstance(raw_category, dict):
+        return raw_category
+    if isinstance(raw_category, (list, tuple)) and len(raw_category) == 2:
+        name, items = raw_category
+        if isinstance(name, str) and isinstance(items, (list, tuple)):
+            return {"name": name, "items": list(items)}
+    return None
+
+
+def _coerce_item(raw_item: Any) -> Optional[Dict[str, Any]]:
+    """同上，但針對品項。模型會回 ["乾麵", 45] 而不是 {"name":…, "price":…}。"""
+    if isinstance(raw_item, dict):
+        return raw_item
+    if isinstance(raw_item, str):
+        match = re.search(r"(?:NT\$?|\$)\s*(\d{1,6}(?:\.\d+)?)\s*$", raw_item, flags=re.I)
+        return {
+            "name": raw_item[: match.start()].strip(" -—:") if match else raw_item.strip(),
+            "price": match.group(1) if match else None,
+        }
+    if isinstance(raw_item, (list, tuple)) and raw_item and isinstance(raw_item[0], str):
+        return {"name": raw_item[0], "price": raw_item[1] if len(raw_item) > 1 else None}
+    return None
+
+
 def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, Any]:
     """Normalize untrusted model JSON without treating model confidence as quality."""
     if isinstance(raw, list):
@@ -96,7 +152,8 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
     categories: List[Dict[str, Any]] = []
     seen = set()
     for raw_category in raw_categories:
-        if not isinstance(raw_category, dict):
+        raw_category = _coerce_category(raw_category)
+        if raw_category is None:
             continue
         if not any(key in raw_category for key in ("items", "menu_items", "dishes")) and any(
             key in raw_category for key in ("price", "amount", "cost", "dish", "item_name")
@@ -105,14 +162,9 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
         category_name = str(raw_category.get("name") or "其他").strip()[:80] or "其他"
         raw_items = raw_category.get("items") or raw_category.get("menu_items") or raw_category.get("dishes") or []
         items = []
-        for raw_item in raw_items if isinstance(raw_items, list) else []:
-            if isinstance(raw_item, str):
-                match = re.search(r"(?:NT\$?|\$)\s*(\d{1,6}(?:\.\d+)?)\s*$", raw_item, flags=re.I)
-                raw_item = {
-                    "name": raw_item[: match.start()].strip(" -—:") if match else raw_item.strip(),
-                    "price": match.group(1) if match else None,
-                }
-            if not isinstance(raw_item, dict):
+        for raw_item in raw_items if isinstance(raw_items, (list, tuple)) else []:
+            raw_item = _coerce_item(raw_item)
+            if raw_item is None:
                 continue
             name = str(raw_item.get("name") or raw_item.get("dish") or raw_item.get("item_name") or raw_item.get("title") or "").strip()
             key = re.sub(r"\s+", "", name).casefold()
@@ -232,12 +284,30 @@ def _names_conflict(hint: str, detected: str) -> bool:
     return left not in right and right not in left and SequenceMatcher(None, left, right).ratio() < 0.72
 
 
-def _tile_prompt(tile_id: str, box: Sequence[int], overview: Dict[str, Any]) -> str:
+def _tile_prompt(
+    tile_id: str,
+    box: Sequence[int],
+    overview: Dict[str, Any],
+    *,
+    ask_identity: bool = False,
+) -> str:
+    """ask_identity 給快速模式用：沒跑總覽時，店名得由切塊自己順便認。"""
+    identity_rule = (
+        "\nrestaurant_name 只填這個區塊裡實際印出的店名（通常在菜單最上方）；"
+        "這一塊看不到店名就填空字串，不要猜、也不要抄欄位說明。"
+        if ask_identity
+        else ""
+    )
+    schema = (
+        '{{"restaurant_name":"","categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}'
+        if ask_identity
+        else '{{"categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}'
+    )
     return f"""你是繁體中文菜單 OCR 專家。這是原圖的高解析區塊 {tile_id}，原圖座標 {list(box)}。
 全圖初步資訊：{json.dumps(overview, ensure_ascii=False)}
 逐字抄錄此區塊內所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。
-被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。
-只回傳 JSON：{{"categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}"""
+被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。{identity_rule}
+只回傳 JSON：{schema}"""
 
 
 def _flatten_categories(categories: Sequence[Dict[str, Any]], source: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -457,9 +527,61 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
 def _attach_sources(verified: List[Dict[str, Any]], original: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     for item in verified:
         matches = sorted(original, key=lambda source: _similarity(item["name"], source["name"]), reverse=True)
-        if matches and _similarity(item["name"], matches[0]["name"]) >= 0.72:
+        if matches and _similarity(item["name"], matches[0]["name"]) >= VERIFY_MATCH_THRESHOLD:
             item["sources"] = matches[0].get("sources", [])
     return verified
+
+
+def _same_item(left: Dict[str, Any], right: Dict[str, Any]) -> bool:
+    """這兩筆是不是同一道菜（可能只是其中一邊有錯字）。"""
+    score = _similarity(str(left.get("name") or ""), str(right.get("name") or ""))
+    if score >= VERIFY_MATCH_THRESHOLD:
+        return True
+    left_price, right_price = left.get("price"), right.get("price")
+    if score < VERIFY_SAME_PRICE_THRESHOLD or left_price is None or right_price is None:
+        return False
+    try:
+        return abs(float(left_price) - float(right_price)) < 0.01
+    except (TypeError, ValueError):
+        return False
+
+
+def _has_counterpart(item: Dict[str, Any], candidates: Sequence[Dict[str, Any]]) -> bool:
+    return any(_same_item(item, other) for other in candidates)
+
+
+def _reconcile_verified(
+    verified_items: List[Dict[str, Any]],
+    tile_items: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], List[str], List[str]]:
+    """對帳最終校對的輸出與切塊實際讀到的內容。
+
+    校對那一關原本握有絕對的刪除權：只要它沒寫進回傳，該品項就消失，
+    而且不留痕跡。實測 tile-4 把「大肉羹麵 65」讀得清清楚楚，最終輸出
+    卻沒有它；同一次校對一項也沒補回來。
+
+    這裡不讓它靜默刪除。取捨的理由是兩種錯的可見度差很多：漏掉的品項是
+    看不見的失敗——使用者不會知道菜單少了什麼，推薦引擎也永遠不會提到它；
+    多出來的品項則會出現在確認畫面上，人看得到、也能用 apply_manual_correction
+    改掉。所以補回被刪的品項並標記出來，把裁決權交還給人。
+
+    校正仍然照收：品名或價格被改過的品項，相似度夠高就配得上，不會變成
+    重複項（例如「魯肉湯飯」被更正成「魯肉湯麵」）。
+
+    回傳 (最終品項, 被刪而補回的品名, 校對憑空新增的品名)。
+    """
+    restored = [
+        dict(tile_item)
+        for tile_item in tile_items
+        if str(tile_item.get("name") or "") and not _has_counterpart(tile_item, verified_items)
+    ]
+    # 校對憑空生出來、四個切塊都沒讀到的品項最可疑：它沒有任何影像佐證。
+    invented = [
+        str(item["name"])
+        for item in verified_items
+        if str(item.get("name") or "") and not _has_counterpart(item, tile_items)
+    ]
+    return verified_items + restored, [str(item["name"]) for item in restored], invented
 
 
 def _legacy_analyze(
@@ -472,14 +594,14 @@ def _legacy_analyze(
     url = _data_url(image_bytes, mime)
     prompt = _tile_prompt("full", [0, 0, 0, 0], {"restaurant_hint": restaurant_hint})
     first = normalize_vision_result(_extract_json_value(_call_vision(
-        vision_func, prompt, url, model=os.getenv("VISION_MODEL", "gemma-4-31b")
+        vision_func, prompt, url, model=os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL)
     )), restaurant_hint)
     if not first["categories"]:
         retry = normalize_vision_result(_extract_json_value(_call_vision(
             vision_func,
             "讀取圖片中可見的菜名與價格，只回傳 JSON menu_items 陣列。",
             url,
-            model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+            model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         )), restaurant_hint)
         return retry
     draft = json.dumps({"restaurant_name": first["detected_restaurant_name"], "categories": first["categories"]}, ensure_ascii=False)
@@ -487,7 +609,7 @@ def _legacy_analyze(
         vision_func,
         f"對照同一張圖片校正下列菜單，只回傳完整 JSON，不得新增看不見的品項：{draft}",
         url,
-        model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+        model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
     )), restaurant_hint)
     return verified if verified["categories"] else first
 
@@ -522,11 +644,19 @@ def analyze_menu_image(
             "conflicts": [],
             "identity": {"userHint": restaurant_hint, "detectedName": detected, "candidates": [detected] if detected else []},
             "identityConflict": _names_conflict(restaurant_hint, detected),
-            "models": {"ocr": os.getenv("VISION_MODEL", "gemma-4-31b"), "verify": os.getenv("VISION_VERIFY_MODEL", "mistral-small-4")},
+            "models": {"ocr": os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL), "verify": os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL)},
             "sourceBlocks": [{"id": "full", "box": [0, 0, 0, 0]}],
         })
         result["confidence"] = result["quality"]["score"]
         return result
+
+    # 快速模式：跳過總覽（只判版面與店名），切塊改為並行。呼叫次數 6 → 5，
+    # 但等待從三輪縮成兩輪。
+    #
+    # 最終校對那一關**不能省**。它的 prompt 負責「補上清楚可見但遺漏的主要排
+    # 餐」，實測拿掉之後同一張照片從 31 項掉到 16 項——整個左半邊的飯類、麵類、
+    # 盤類、燙青菜全部消失。省下的那一輪等待不值這個代價。
+    fast_mode = os.getenv("VISION_FAST", "").strip().lower() in {"1", "true", "yes", "on"}
 
     full_url = _data_url(full_bytes, "image/jpeg")
     overview_prompt = """閱讀整張餐廳菜單，只做版面與身分辨識，不要逐項 OCR。
@@ -534,35 +664,40 @@ def analyze_menu_image(
 restaurant_name 只能填圖片實際印出的店名；看不清就填空字串，禁止抄寫欄位說明。
 若沒有獨立招牌，但某個特色餐點名稱清楚像品牌，可放入 brand_candidates，這只是候選而不是確認店名。
 回傳 JSON：{"restaurant_name":"","brand_candidates":[],"source_type":"menu","menu_type":"","layout":"","warnings":[]}"""
-    overview_raw = _extract_json_value(_call_vision(
-        vision_func,
-        overview_prompt,
-        full_url,
-        model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
-        temperature=0.0,
-    ))
-    overview = overview_raw if isinstance(overview_raw, dict) else {}
-
-    region_results = []
-    tile_urls = []
-    requested_ocr_model = os.getenv("VISION_MODEL", "gemma-4-31b")
-    verify_model = os.getenv("VISION_VERIFY_MODEL", "mistral-small-4")
+    requested_ocr_model = os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL)
+    verify_model = os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL)
     active_ocr_model = requested_ocr_model
     ocr_fallback_warning = ""
-    for region in regions:
-        tile_url = _data_url(region["bytes"], "image/jpeg")
-        tile_urls.append(tile_url)
-        tile_prompt = _tile_prompt(region["id"], region["box"], overview)
+
+    if fast_mode:
+        overview = {}
+    else:
+        overview_raw = _extract_json_value(_call_vision(
+            vision_func,
+            overview_prompt,
+            full_url,
+            model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
+            temperature=0.0,
+        ))
+        overview = overview_raw if isinstance(overview_raw, dict) else {}
+
+    tile_urls = [_data_url(region["bytes"], "image/jpeg") for region in regions]
+
+    def _ocr_region(index: int) -> Dict[str, Any]:
+        """單一切塊的 OCR。降級是各切塊獨立判斷，才能安全地並行。"""
+        nonlocal active_ocr_model, ocr_fallback_warning
+        region = regions[index]
+        tile_prompt = _tile_prompt(region["id"], region["box"], overview, ask_identity=fast_mode)
         try:
             response = _call_vision(
                 vision_func,
                 tile_prompt,
-                tile_url,
-                model=active_ocr_model,
+                tile_urls[index],
+                model=requested_ocr_model,
                 temperature=_float_env("VISION_TEMPERATURE", 0.0),
             )
         except RuntimeError as exc:
-            if active_ocr_model == verify_model:
+            if requested_ocr_model == verify_model:
                 raise
             active_ocr_model = verify_model
             ocr_fallback_warning = (
@@ -572,12 +707,36 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
             response = _call_vision(
                 vision_func,
                 tile_prompt,
-                tile_url,
-                model=active_ocr_model,
+                tile_urls[index],
+                model=verify_model,
                 temperature=0.0,
             )
         normalized = normalize_vision_result(_extract_json_value(response))
-        region_results.append({"id": region["id"], "box": region["box"], "categories": normalized["categories"]})
+        return {
+            "id": region["id"],
+            "box": region["box"],
+            "categories": normalized["categories"],
+            "detected_restaurant_name": normalized.get("detected_restaurant_name", ""),
+        }
+
+    # 切塊彼此無關，串列跑等於把等待時間乘四。
+    with ThreadPoolExecutor(max_workers=len(regions)) as pool:
+        region_results = list(pool.map(_ocr_region, range(len(regions))))
+
+    if fast_mode:
+        # 沒跑總覽，店名只能從切塊來。招牌常橫跨中線被切成兩半，所以挑最長的
+        # ——殘缺的一定比完整的短。
+        #
+        # 試過另外裁一條全寬橫幅專門認店名，實測反而更糟：那是一張又寬又扁的
+        # 低資訊圖，模型會整個幻覺（把「斗六門當歸鴨」讀成「萊菔非六門餐鴨」），
+        # 而且和切塊結果的相似度剛好落在門檻邊緣擋不掉。多花一次呼叫換更差的
+        # 結果，所以拿掉了。
+        tile_names = [
+            str(region.get("detected_restaurant_name") or "").strip()
+            for region in region_results
+            if str(region.get("detected_restaurant_name") or "").strip()
+        ]
+        overview["restaurant_name"] = max(tile_names, key=len) if tile_names else ""
 
     merged, conflicts = merge_region_items(region_results)
     if not merged:
@@ -596,14 +755,16 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         vision_func,
         verify_prompt,
         tile_urls,
-        model=os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+        model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         temperature=0.0,
     ))
     verified = normalize_vision_result(verified_raw)
+    restored_by_verify: List[str] = []
+    invented_by_verify: List[str] = []
     if verified["categories"]:
-        verified_flat = _flatten_categories(verified["categories"], {})
-        merged = _attach_sources(verified_flat, merged)
-        categories = _items_to_categories(merged)
+        verified_flat = _attach_sources(_flatten_categories(verified["categories"], {}), merged)
+        final_items, restored_by_verify, invented_by_verify = _reconcile_verified(verified_flat, merged)
+        categories = _items_to_categories(final_items)
     else:
         categories = draft_categories
 
@@ -630,6 +791,12 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         warnings.append(f"圖片未見獨立店名，候選「{detected}」是由特色餐點文字推測，仍需人工確認")
     if conflicts:
         warnings.append(f"有 {len(conflicts)} 組 OCR 候選曾發生衝突，請確認摘要")
+    if restored_by_verify:
+        preview = "、".join(restored_by_verify[:5]) + ("…" if len(restored_by_verify) > 5 else "")
+        warnings.append(f"最終校對漏掉 {len(restored_by_verify)} 項切塊已讀出的品項，已補回請確認：{preview}")
+    if invented_by_verify:
+        preview = "、".join(invented_by_verify[:5]) + ("…" if len(invented_by_verify) > 5 else "")
+        warnings.append(f"有 {len(invented_by_verify)} 項只出現在最終校對、切塊都沒讀到，請特別確認：{preview}")
     if ocr_fallback_warning:
         warnings.append(ocr_fallback_warning)
     return {
@@ -645,6 +812,8 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
             "itemCount": item_count,
             "conflictCount": len(conflicts),
             "modelFallback": bool(ocr_fallback_warning),
+            "verifyDroppedCount": len(restored_by_verify),
+            "verifyInventedCount": len(invented_by_verify),
         },
         "conflicts": conflicts,
         "identity": {
@@ -656,7 +825,7 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
         },
         "identityConflict": identity_conflict,
         "models": {
-            "overview": os.getenv("VISION_VERIFY_MODEL", "mistral-small-4"),
+            "overview": os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
             "ocrRequested": requested_ocr_model,
             "ocr": active_ocr_model,
             "verify": verify_model,

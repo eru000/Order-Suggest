@@ -1,138 +1,80 @@
-<!-- rtk-instructions v2 -->
-# RTK (Rust Token Killer) - Token-Optimized Commands
+# OrderSuggest
 
-## Golden Rule
+繁體中文點餐助理：使用者上傳菜單照片 → VLM 辨識成結構化菜單 → 規則式推薦引擎
+挑品項 → LLM 把結果轉成自然語言回覆。FastAPI + 原生 JS 前端，模型走學校的
+OpenAI 相容 API（api.ithu.tw）。
 
-**Always prefix commands with `rtk`**. If RTK has a dedicated filter, it uses it. If not, it passes through unchanged. This means RTK is always safe to use.
+## 驗證要求
 
-**Important**: Even in command chains with `&&`, use `rtk`:
-```bash
-# ❌ Wrong
-git add . && git commit -m "msg" && git push
+**不要在沒有實際執行的情況下斷言原因。**
 
-# ✅ Correct
-rtk git add . && rtk git commit -m "msg" && rtk git push
+這個專案有過代價很高的教訓。一次辨識準確度調查裡，三個「讀完 code 很有把握」
+的假設——`max_tokens` 截斷、2×2 切塊把直式菜單切壞、OCR 模型繁中太弱——
+**全部是錯的**。真正的原因是 `normalize_vision_result` 對非 dict 的分類靜默
+`continue`：模型把整個右半邊菜單讀得好好的，是解析這一關把它扔了。三個假設
+不管動手改哪一個都不會有用，而且會讓人更確信「模型就是爛」。
+
+所以：
+
+1. **改完一定要跑測試。** 130 個測試 3 秒跑完，沒有不跑的理由。
+2. **說「原因是 X」之前先證明 X。** 加 log、寫最小重現、或跑 evals。
+3. **報告時分清楚哪些真的跑過、哪些是推測。** 是推測就明講是推測。
+4. **測試綠燈不等於功能正確**——見下一節。
+
+## 測試涵蓋不到的東西
+
+`tests/` 把所有 vision 與 LLM 呼叫都 mock 掉了。測試全過**不代表**：
+
+- 菜單辨識準不準
+- AI 回覆的文字品質好不好
+
+這兩件事只能實跑。辨識準確度用 `evals/menu_ocr/`（會真的打 API 燒配額，
+刻意不進 CI）：
+
+```powershell
+.venv\Scripts\python.exe evals\menu_ocr\run_eval.py --dry-run          # 先看要燒幾次呼叫
+.venv\Scripts\python.exe evals\menu_ocr\run_eval.py --label 這次改了什麼
+.venv\Scripts\python.exe evals\menu_ocr\run_eval.py --compare 改動前 改動後
+.venv\Scripts\python.exe evals\menu_ocr\run_eval.py --debug            # 記錄每次呼叫的原始往返
+.venv\Scripts\python.exe evals\menu_ocr\run_eval.py --rescore 某次label # 改計分規則後免費重算
 ```
 
-## RTK Commands by Workflow
+`--debug` 是分辨「切塊根本沒讀到」與「切塊讀到了但最終校對刪掉」的唯一方法。
+兩者最終結果一樣，修法完全相反。
 
-### Build & Compile (80-90% savings)
-```bash
-rtk cargo build         # Cargo build output
-rtk cargo check         # Cargo check output
-rtk cargo clippy        # Clippy warnings grouped by file (80%)
-rtk tsc                 # TypeScript errors grouped by file/code (83%)
-rtk lint                # ESLint/Biome violations grouped (84%)
-rtk prettier --check    # Files needing format only (70%)
-rtk next build          # Next.js build with route metrics (87%)
+## 怎麼跑
+
+Windows + PowerShell。Python 一律用專案的 venv，不要用系統的。
+
+```powershell
+# 測試：用 unittest，沒有裝 pytest。-t 必須給 tests，給 . 會 ImportError
+.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -t tests
+
+# 啟動
+.venv\Scripts\python.exe -m uvicorn back:app --app-dir src --reload
 ```
 
-### Test (60-99% savings)
-```bash
-rtk cargo test          # Cargo test failures only (90%)
-rtk go test             # Go test failures only (90%)
-rtk jest                # Jest failures only (99.5%)
-rtk vitest              # Vitest failures only (99.5%)
-rtk playwright test     # Playwright failures only (94%)
-rtk pytest              # Python test failures only (90%)
-rtk rake test           # Ruby test failures only (90%)
-rtk rspec               # RSpec test failures only (60%)
-rtk test <cmd>          # Generic test wrapper - failures only
+CI 另外會跑 ruff 與 mypy，但**範圍只有指定的那幾個檔案，不是全專案**，而且
+這兩個工具預設沒裝在 venv 裡（只在 `requirements-dev.txt`）。要在本機跑先：
+
+```powershell
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe -m ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py
+.venv\Scripts\python.exe -m mypy src/recommendation.py src/security.py src/session_store.py src/persistence.py
 ```
 
-### Git (59-80% savings)
-```bash
-rtk git status          # Compact status
-rtk git log             # Compact log (works with all git flags)
-rtk git diff            # Compact diff (80%)
-rtk git show            # Compact show (80%)
-rtk git add             # Ultra-compact confirmations (59%)
-rtk git commit          # Ultra-compact confirmations (59%)
-rtk git push            # Ultra-compact confirmations
-rtk git pull            # Ultra-compact confirmations
-rtk git branch          # Compact branch list
-rtk git fetch           # Compact fetch
-rtk git stash           # Compact stash
-rtk git worktree        # Compact worktree
-```
+中文輸出在 cp950 主控台會噴 `UnicodeEncodeError`，自己寫的 script 開頭要
+`sys.stdout.reconfigure(encoding="utf-8")`。
 
-Note: Git passthrough works for ALL subcommands, even those not explicitly listed.
+## 幾個會誤導判斷的事實
 
-### GitHub (26-87% savings)
-```bash
-rtk gh pr view <num>    # Compact PR view (87%)
-rtk gh pr checks        # Compact PR checks (79%)
-rtk gh run list         # Compact workflow runs (82%)
-rtk gh issue list       # Compact issue list (80%)
-rtk gh api              # Compact API responses (26%)
-```
-
-### JavaScript/TypeScript Tooling (70-90% savings)
-```bash
-rtk pnpm list           # Compact dependency tree (70%)
-rtk pnpm outdated       # Compact outdated packages (80%)
-rtk pnpm install        # Compact install output (90%)
-rtk npm run <script>    # Compact npm script output
-rtk npx <cmd>           # Compact npx command output
-rtk prisma              # Prisma without ASCII art (88%)
-```
-
-### Files & Search (60-75% savings)
-```bash
-rtk ls <path>           # Tree format, compact (65%)
-rtk read <file>         # Code reading with filtering (60%)
-rtk grep <pattern>      # Search grouped by file (75%). Format flags (-c, -l, -L, -o, -Z) run raw.
-rtk find <pattern>      # Find grouped by directory (70%)
-```
-
-### Analysis & Debug (70-90% savings)
-```bash
-rtk err <cmd>           # Filter errors only from any command
-rtk log <file>          # Deduplicated logs with counts
-rtk json <file>         # JSON structure without values
-rtk deps                # Dependency overview
-rtk env                 # Environment variables compact
-rtk summary <cmd>       # Smart summary of command output
-rtk diff                # Ultra-compact diffs
-```
-
-### Infrastructure (85% savings)
-```bash
-rtk docker ps           # Compact container list
-rtk docker images       # Compact image list
-rtk docker logs <c>     # Deduplicated logs
-rtk kubectl get         # Compact resource list
-rtk kubectl logs        # Deduplicated pod logs
-```
-
-### Network (65-70% savings)
-```bash
-rtk curl <url>          # Compact HTTP responses (70%)
-rtk wget <url>          # Compact download output (65%)
-```
-
-### Meta Commands
-```bash
-rtk gain                # View token savings statistics
-rtk gain --history      # View command history with savings
-rtk discover            # Analyze Claude Code sessions for missed RTK usage
-rtk proxy <cmd>         # Run command without filtering (for debugging)
-rtk init                # Add RTK instructions to CLAUDE.md
-rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
-```
-
-## Token Savings Overview
-
-| Category | Commands | Typical Savings |
-|----------|----------|-----------------|
-| Tests | vitest, playwright, cargo test | 90-99% |
-| Build | next, tsc, lint, prettier | 70-87% |
-| Git | status, log, diff, add, commit | 59-80% |
-| GitHub | gh pr, gh run, gh issue | 26-87% |
-| Package Managers | pnpm, npm, npx | 70-90% |
-| Files | ls, read, grep, find | 60-75% |
-| Infrastructure | docker, kubectl | 85% |
-| Network | curl, wget | 65-70% |
-
-Overall average: **60-90% token reduction** on common development operations.
-<!-- /rtk-instructions -->
+- **學校 API 有伺服器端快取。** 實測：完全相同的請求第二次 0.25 秒回、內容
+  一字不差；只差一個空白字元就變 1.2 秒且結果不同。所以重跑同一個設定
+  **不是**獨立取樣，不能拿來估變異數。改 model / prompt / 圖片才會真的重算。
+- **`.env` 在 `import ollama_fuc` 當下就被讀進來**（`_load_env_file()`，不是
+  python-dotenv）。測試裡動 `os.environ` 要注意這個時序。
+- **`USE_LLM_CLASSIFICATION` 必須維持 false。** 程式碼裡的預設值是 true，而它
+  會對每個菜單品項各打一次 LLM——85 項的菜單會讓單次對話慢到 57 秒。
+- **爬蟲與評論搜尋用不同機制**：`crawl_menu.py` 走 CDP 接本機 Chrome；
+  `restaurant_reviews.py` 用 `chromium.launch()`，需要先
+  `playwright install chromium`，沒裝會靜默退回 RSS 而不是報錯。
