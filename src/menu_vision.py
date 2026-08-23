@@ -29,12 +29,19 @@ from ollama_fuc import vision_chat
 ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"}
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
 TILE_THRESHOLD = 1600
-LOW_RES_RECOVERY_LONG_SIDE = 2000
-# 手機照片常是 4032px。實測同一張圖只改長邊，總覽那次呼叫 4032→12.2s、
-# 2000→6.3s、1200→4.4s，尺寸幾乎線性主導延遲。切塊後每塊約長邊一半，
-# 2600 讓每塊約 1450px——比目前驗證過的 2000px 全圖（切塊約 1100px）還高，
-# 所以是純粹省時間，不是拿準確度換。
-MAX_LONG_SIDE = 2600
+# 所有圖片一律正規化到這個長邊：小的放大、大的縮小。
+#
+# 2600 是量出來的。同一張 guoshao_6col（原圖只有 910px）：正規化到 2000 時
+# 單次呼叫的價格正確率 54.5%，到 2600 變成 100%——六次呼叫的切塊架構是
+# 77.3%。內插沒有增加任何資訊，變好是因為文字在模型固定的圖片 token 預算裡
+# 佔到更多 token。
+#
+# 注意：先前有 LOW_RES_RECOVERY_LONG_SIDE=4000 與 MAX_LONG_SIDE=2600 兩個常
+# 數，順序是先放大再砍，所以標成「4000」的那輪實測其實跑的是 2600。真正的
+# 4000 沒有測過。
+TARGET_LONG_SIDE = 2600
+# 低於這個尺寸的圖放大只會放大雜訊，不碰。
+MIN_UPSCALE_LONG_SIDE = 400
 # 總覽只判斷版面與店名，prompt 明寫「不要逐項 OCR」，不需要讀清楚每個價格。
 OVERVIEW_LONG_SIDE = 1400
 TILE_OVERLAP = 0.12
@@ -225,34 +232,34 @@ def _encode_jpeg(image: Image.Image, quality: int = 94) -> bytes:
 
 
 def prepare_image_regions(image_bytes: bytes) -> Tuple[bytes, List[Dict[str, Any]], Tuple[int, int]]:
-    """Apply EXIF orientation and return either one region or overlapping 2x2 regions."""
+    """EXIF 轉正、把長邊正規化到 TARGET_LONG_SIDE，回傳單一整圖區塊。
+
+    通訊軟體與剪貼簿常把一張看得清楚的 2500px 菜單壓成 840px，所以小圖要放
+    大；手機原檔又常是 4032px，送過去只是讓每次呼叫多扛 1MB。兩邊都收斂到
+    同一個長邊最單純。
+    """
     with Image.open(io.BytesIO(image_bytes)) as opened:
         image = ImageOps.exif_transpose(opened).convert("RGB")
-    # Messaging clients and clipboard uploads sometimes downscale a readable
-    # 2500px menu to ~840px. Upscale moderately before tiling so the vision API
-    # does not downsample already tiny Chinese glyphs a second time.
-    original_width, original_height = image.size
-    if 400 <= max(original_width, original_height) < TILE_THRESHOLD:
-        scale = LOW_RES_RECOVERY_LONG_SIDE / max(original_width, original_height)
-        recovered_size = (
-            max(1, int(round(original_width * scale))),
-            max(1, int(round(original_height * scale))),
-        )
-        image = image.resize(recovered_size, Image.Resampling.LANCZOS).filter(
-            ImageFilter.UnsharpMask(radius=1.2, percent=120, threshold=3)
-        )
-    # 大圖縮到上限再切。原本完全沒有縮小分支，4032px 的照片會原尺寸送進
-    # API，總覽與最終校對各扛 1.87MB。
-    if max(image.size) > MAX_LONG_SIDE:
-        shrink = MAX_LONG_SIDE / max(image.size)
+    target = _int_env("VISION_LONG_SIDE", TARGET_LONG_SIDE)
+    long_side = max(image.size)
+    if long_side >= MIN_UPSCALE_LONG_SIDE and long_side != target:
+        scale = target / long_side
         image = image.resize(
-            (max(1, int(round(image.width * shrink))), max(1, int(round(image.height * shrink)))),
+            (max(1, int(round(image.width * scale))), max(1, int(round(image.height * scale)))),
             Image.Resampling.LANCZOS,
         )
+        if scale > 1:
+            # 放大會糊，銳化一下讓筆畫邊緣回來。縮小不需要。
+            image = image.filter(ImageFilter.UnsharpMask(radius=1.2, percent=120, threshold=3))
 
     width, height = image.size
     full = _encode_jpeg(image)
-    if max(width, height) <= TILE_THRESHOLD:
+    # VISION_TILES=0 完全關掉切塊。--debug 記錄顯示切塊在直式菜單上是主動有害
+    # 的：budaoweng 的木板品名在上、價格在下，2×2 的水平切線攔腰砍過，四塊
+    # 分別吐出 null 價格、空陣列、以及「北」「噌」「青」這種被切一半的字，
+    # 最後全靠校對看完整張圖救回來。四個 eval 案例比對下來，切塊多花的 4 次
+    # 呼叫沒有多讀到任何一項。
+    if not _tiling_enabled() or max(width, height) <= TILE_THRESHOLD:
         return full, [{"id": "full", "box": [0, 0, width, height], "bytes": full}], (width, height)
 
     overlap_x = int(round(width * TILE_OVERLAP / 2))
@@ -268,6 +275,18 @@ def prepare_image_regions(image_bytes: bytes) -> Tuple[bytes, List[Dict[str, Any
     for index, box in enumerate(boxes, 1):
         regions.append({"id": f"tile-{index}", "box": list(box), "bytes": _encode_jpeg(image.crop(box))})
     return full, regions, (width, height)
+
+
+def _int_env(name: str, default: int) -> int:
+    try:
+        return int(str(os.getenv(name, "")).strip() or default)
+    except ValueError:
+        return default
+
+
+def _tiling_enabled() -> bool:
+    """切塊預設關閉，見 analyze_menu_image 的說明。VISION_TILES=1 可以開回來。"""
+    return os.getenv("VISION_TILES", "0").strip().lower() in {"1", "true", "yes", "on"}
 
 
 def _overview_bytes(full_bytes: bytes) -> bytes:
@@ -344,7 +363,12 @@ def _tile_prompt(
         if ask_identity
         else '{{"categories":[{{"title":"分類","items":[{{"dish":"完整品名","price":230}}]}}]}}'
     )
-    return f"""你是繁體中文菜單 OCR 專家。這是原圖的高解析區塊 {tile_id}，原圖座標 {list(box)}。
+    where = (
+        "這是整張菜單的完整照片。"
+        if tile_id == "full"
+        else f"這是原圖的高解析區塊 {tile_id}，原圖座標 {list(box)}。"
+    )
+    return f"""你是繁體中文菜單 OCR 專家。{where}
 全圖初步資訊：{json.dumps(overview, ensure_ascii=False)}
 逐字抄錄此區塊內所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。
 被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。{identity_rule}
@@ -687,6 +711,26 @@ def analyze_menu_image(
     *,
     vision_func: Any = vision_chat,
 ) -> Dict[str, Any]:
+    """一次呼叫讀完整張菜單。
+
+    這裡曾經是「總覽 → 2×2 切塊並行 OCR → 最終校對」的六次呼叫流程。四個
+    eval 案例、131 項對照答案的實測顯示，那套架構是在用呼叫次數補償解析度
+    不足——把輸入放大到 4000px 再單次呼叫，每個維度都不輸：
+
+        指標          六次呼叫   單次 @4000
+        召回率          82.4%      82.4%    漏掉的是同一批品項，一項不差
+        精確率          99.1%      99.1%
+        價格正確率      86.1%      96.3%    +10.2pt
+        店名            3/3        3/3
+        總耗時         367.8s      74.7s
+
+    切塊贏的地方不是「分開讀」，而是每塊只涵蓋四分之一畫面，文字在模型固定
+    的圖片 token 預算裡佔得比較多。放大輸入就有同樣效果，而且不會像切塊那樣
+    弄壞直式版面——budaoweng 的木板品名在上價格在下，2x2 的水平切線攔腰砍
+    過，四塊分別吐出 null 價格、空陣列、和「北」「噌」「青」這種半個字。
+
+    要回到舊架構：git checkout snapshot/6call-baseline
+    """
     if not image_bytes:
         raise ValueError("圖片內容不可為空")
     if len(image_bytes) > MAX_IMAGE_BYTES:
@@ -716,190 +760,56 @@ def analyze_menu_image(
         result["confidence"] = result["quality"]["score"]
         return result
 
-    # 快速模式：跳過總覽（只判版面與店名），切塊改為並行。呼叫次數 6 → 5，
-    # 但等待從三輪縮成兩輪。
-    #
-    # 最終校對那一關**不能省**。它的 prompt 負責「補上清楚可見但遺漏的主要排
-    # 餐」，實測拿掉之後同一張照片從 31 項掉到 16 項——整個左半邊的飯類、麵類、
-    # 盤類、燙青菜全部消失。省下的那一輪等待不值這個代價。
-    fast_mode = os.getenv("VISION_FAST", "").strip().lower() in {"1", "true", "yes", "on"}
-
-    # 實驗用：一次呼叫讀完整張圖，不切塊也不校對——就是 ChatGPT 的做法。
-    # 目的是量「六次呼叫的架構到底換到多少準確度」，正式啟用前要先過四個
-    # eval 案例。
-    if os.getenv("VISION_SINGLE_CALL", "").strip().lower() in {"1", "true", "yes", "on"}:
-        single = normalize_vision_result(_extract_json_value(_call_vision(
-            vision_func,
-            _tile_prompt("full", [0, 0, *image_size], {}, ask_identity=True),
-            _data_url(full_bytes, "image/jpeg"),
-            model=os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL),
-            temperature=0.0,
-        )), restaurant_hint)
-        if not single["categories"]:
-            raise ValueError("照片中沒有辨識到可用的菜單或菜色")
-        count = sum(len(c["items"]) for c in single["categories"])
-        priced = sum(i.get("price") is not None for c in single["categories"] for i in c["items"])
-        cov = round(priced / count, 3) if count else 0.0
-        detected = single.get("detected_restaurant_name", "")
-        single.update({
-            "quality": {"score": round(cov * 0.7 + 0.2, 3), "priceCoverage": cov,
-                        "itemCount": count, "modelFallback": False,
-                        "verifyDroppedCount": 0, "verifyInventedCount": 0, "conflictCount": 0},
-            "conflicts": [],
-            "identity": {"userHint": restaurant_hint, "detectedName": detected,
-                         "candidates": [detected] if detected else []},
-            "identityConflict": _names_conflict(restaurant_hint, detected),
-        })
-        return single
-
-    full_url = _data_url(full_bytes, "image/jpeg")
-    overview_prompt = """閱讀整張餐廳菜單，只做版面與身分辨識，不要逐項 OCR。
-請完全根據圖片判斷，不要參考或猜測使用者先前輸入的名稱。
-restaurant_name 只能填圖片實際印出的店名；看不清就填空字串，禁止抄寫欄位說明。
-若沒有獨立招牌，但某個特色餐點名稱清楚像品牌，可放入 brand_candidates，這只是候選而不是確認店名。
-回傳 JSON：{"restaurant_name":"","brand_candidates":[],"source_type":"menu","menu_type":"","layout":"","warnings":[]}"""
     requested_ocr_model = os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL)
     verify_model = os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL)
     active_ocr_model = requested_ocr_model
     ocr_fallback_warning = ""
 
-    if fast_mode:
-        overview = {}
-    else:
-        overview_raw = _extract_json_value(_call_vision(
+    prompt = _tile_prompt("full", [0, 0, *image_size], {}, ask_identity=True)
+    image_url = _data_url(full_bytes, "image/jpeg")
+    try:
+        response = _call_vision(
             vision_func,
-            overview_prompt,
-            _data_url(_overview_bytes(full_bytes), "image/jpeg"),
-            model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
-            temperature=0.0,
-        ))
-        overview = overview_raw if isinstance(overview_raw, dict) else {}
+            prompt,
+            image_url,
+            model=requested_ocr_model,
+            temperature=_float_env("VISION_TEMPERATURE", 0.0),
+        )
+    except RuntimeError as exc:
+        if requested_ocr_model == verify_model:
+            raise
+        active_ocr_model = verify_model
+        ocr_fallback_warning = (
+            f"主要 OCR 模型 {requested_ocr_model} 無法使用，本張圖片已改由 {verify_model} 辨識"
+        )
+        print(f"[Vision] {ocr_fallback_warning}: {exc}")
+        response = _call_vision(vision_func, prompt, image_url, model=verify_model, temperature=0.0)
 
-    tile_urls = [_data_url(region["bytes"], "image/jpeg") for region in regions]
-
-    def _ocr_region(index: int) -> Dict[str, Any]:
-        """單一切塊的 OCR。降級是各切塊獨立判斷，才能安全地並行。"""
-        nonlocal active_ocr_model, ocr_fallback_warning
-        region = regions[index]
-        tile_prompt = _tile_prompt(region["id"], region["box"], overview, ask_identity=fast_mode)
-        try:
-            response = _call_vision(
-                vision_func,
-                tile_prompt,
-                tile_urls[index],
-                model=requested_ocr_model,
-                temperature=_float_env("VISION_TEMPERATURE", 0.0),
-            )
-        except RuntimeError as exc:
-            if requested_ocr_model == verify_model:
-                raise
-            active_ocr_model = verify_model
-            ocr_fallback_warning = (
-                f"主要 OCR 模型 {requested_ocr_model} 無法使用，本張圖片已改由 {verify_model} 辨識"
-            )
-            print(f"[Vision] {ocr_fallback_warning}: {exc}")
-            response = _call_vision(
-                vision_func,
-                tile_prompt,
-                tile_urls[index],
-                model=verify_model,
-                temperature=0.0,
-            )
-        normalized = normalize_vision_result(_extract_json_value(response))
-        return {
-            "id": region["id"],
-            "box": region["box"],
-            "categories": normalized["categories"],
-            "detected_restaurant_name": normalized.get("detected_restaurant_name", ""),
-        }
-
-    # 切塊彼此無關，串列跑等於把等待時間乘四。
-    with ThreadPoolExecutor(max_workers=len(regions)) as pool:
-        region_results = list(pool.map(_ocr_region, range(len(regions))))
-
-    if fast_mode:
-        # 沒跑總覽，店名只能從切塊來。招牌常橫跨中線被切成兩半，所以挑最長的
-        # ——殘缺的一定比完整的短。
-        #
-        # 試過另外裁一條全寬橫幅專門認店名，實測反而更糟：那是一張又寬又扁的
-        # 低資訊圖，模型會整個幻覺（把「斗六門當歸鴨」讀成「萊菔非六門餐鴨」），
-        # 而且和切塊結果的相似度剛好落在門檻邊緣擋不掉。多花一次呼叫換更差的
-        # 結果，所以拿掉了。
-        tile_names = [
-            str(region.get("detected_restaurant_name") or "").strip()
-            for region in region_results
-            if str(region.get("detected_restaurant_name") or "").strip()
-        ]
-        overview["restaurant_name"] = max(tile_names, key=len) if tile_names else ""
-
-    merged, conflicts = merge_region_items(region_results)
-    if not merged:
+    result = normalize_vision_result(_extract_json_value(response), restaurant_hint)
+    categories = result["categories"]
+    if not categories:
         raise ValueError("照片中沒有辨識到可用的菜單或菜色")
 
-    # 本來這一關送的是全部高解析切塊，讓校對看得比全圖清楚。2026-08 起學校閘道
-    # 改成「一個 prompt 最多 1 張圖」（HTTP 400 At most 1 image(s) may be provided
-    # in one prompt），多圖直接被擋，整條辨識線在這裡斷掉。改送單張全圖——它是
-    # 低解析度救援放大後的 2000px 版本，不是原始縮圖，所以並非完全退回舊路。
-    draft_categories = _items_to_categories(merged)
-    verify_prompt = f"""你是菜單 OCR 最終校對員。這是整張菜單的完整照片。
-請逐項對照圖片校正草稿：修正錯字與價格、合併重疊區重複項、刪除虛構項目、補上清楚可見但遺漏的主要排餐。
-不能把 230 看成 330，也不能把 360 看成 560。繁體中文店名與菜名照印刷文字。
-草稿：{json.dumps(_to_wire_categories(draft_categories), ensure_ascii=False)}
-待裁決衝突：{json.dumps(conflicts, ensure_ascii=False)}
-restaurant_name 只能填圖片實際印出的店名，看不清就填空字串。禁止把「店名、分類、菜名」等欄位說明當作內容。
-只回傳 JSON：{{"restaurant_name":"","categories":[{{"title":"","items":[{{"dish":"","price":null}}]}}]}}"""
-    verified_raw = _extract_json_value(_call_vision(
-        vision_func,
-        verify_prompt,
-        full_url,
-        model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
-        temperature=0.0,
-    ))
-    verified = normalize_vision_result(verified_raw)
-    restored_by_verify: List[str] = []
-    invented_by_verify: List[str] = []
-    if verified["categories"]:
-        verified_flat = _attach_sources(_flatten_categories(verified["categories"], {}), merged)
-        final_items, restored_by_verify, invented_by_verify = _reconcile_verified(verified_flat, merged)
-        categories = _items_to_categories(final_items)
-    else:
-        categories = draft_categories
-
-    brand_candidates = [
-        str(value).strip()[:120] for value in overview.get("brand_candidates", [])
-        if isinstance(value, str) and value.strip()
-    ] if isinstance(overview.get("brand_candidates"), list) else []
-    printed_name = str(verified.get("detected_restaurant_name") or overview.get("restaurant_name") or "").strip()
-    detected = printed_name or (brand_candidates[0] if brand_candidates else "")
+    detected = str(result.get("detected_restaurant_name") or "").strip()
     item_count = sum(len(category["items"]) for category in categories)
     priced = sum(item.get("price") is not None for category in categories for item in category["items"])
     coverage = round(priced / item_count, 3) if item_count else 0.0
-    unresolved = sum(not conflict.get("resolved") for conflict in conflicts)
-    quality_score = round(min(1.0, coverage * 0.55 + min(item_count / 20, 1) * 0.25 + (0.2 if unresolved == 0 else 0.1)), 3)
+    quality_score = round(min(1.0, coverage * 0.55 + min(item_count / 20, 1) * 0.25 + 0.2), 3)
     if ocr_fallback_warning:
-        # A fallback can keep the flow usable but must never masquerade as a
-        # high-confidence primary OCR result.
+        # 降級可以讓流程走完，但不能假裝成高信心的主要辨識結果。
         quality_score = min(quality_score, 0.7)
+
     identity_conflict = _names_conflict(restaurant_hint, detected)
-    warnings = [str(value)[:200] for value in overview.get("warnings", []) if str(value).strip()] if isinstance(overview.get("warnings"), list) else []
+    warnings = [str(v)[:200] for v in (result.get("warnings") or []) if str(v).strip()]
     if identity_conflict:
         warnings.append(f"使用者店名「{restaurant_hint}」與圖片候選「{detected}」不同，確認前不會存檔")
-    if not printed_name and detected:
-        warnings.append(f"圖片未見獨立店名，候選「{detected}」是由特色餐點文字推測，仍需人工確認")
-    if conflicts:
-        warnings.append(f"有 {len(conflicts)} 組 OCR 候選曾發生衝突，請確認摘要")
-    if restored_by_verify:
-        preview = "、".join(restored_by_verify[:5]) + ("…" if len(restored_by_verify) > 5 else "")
-        warnings.append(f"最終校對漏掉 {len(restored_by_verify)} 項切塊已讀出的品項，已補回請確認：{preview}")
-    if invented_by_verify:
-        preview = "、".join(invented_by_verify[:5]) + ("…" if len(invented_by_verify) > 5 else "")
-        warnings.append(f"有 {len(invented_by_verify)} 項只出現在最終校對、切塊都沒讀到，請特別確認：{preview}")
     if ocr_fallback_warning:
         warnings.append(ocr_fallback_warning)
+
     return {
         "restaurant_name": (restaurant_hint.strip() or detected)[:120],
         "detected_restaurant_name": detected[:120],
-        "source_type": str(overview.get("source_type") or "menu"),
+        "source_type": str(result.get("source_type") or "menu"),
         "confidence": quality_score,
         "categories": categories,
         "warnings": warnings[:8],
@@ -907,27 +817,24 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
             "score": quality_score,
             "priceCoverage": coverage,
             "itemCount": item_count,
-            "conflictCount": len(conflicts),
+            # 沒有切塊就沒有重疊區，這兩個計數永遠是 0。欄位保留是因為前端與
+            # 待確認流程的回應 schema 還在讀。
+            "conflictCount": 0,
             "modelFallback": bool(ocr_fallback_warning),
-            "verifyDroppedCount": len(restored_by_verify),
-            "verifyInventedCount": len(invented_by_verify),
+            "verifyDroppedCount": 0,
+            "verifyInventedCount": 0,
         },
-        "conflicts": conflicts,
+        "conflicts": [],
         "identity": {
             "userHint": restaurant_hint.strip(),
             "detectedName": detected[:120],
-            "candidates": list(dict.fromkeys(value for value in (detected[:120], *brand_candidates, restaurant_hint.strip()) if value)),
-            "candidateInferred": bool(detected and not printed_name),
-            "menuType": str(overview.get("menu_type") or ""),
+            "candidates": list(dict.fromkeys(v for v in (detected[:120], restaurant_hint.strip()) if v)),
+            "candidateInferred": False,
+            "menuType": "",
         },
         "identityConflict": identity_conflict,
-        "models": {
-            "overview": os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
-            "ocrRequested": requested_ocr_model,
-            "ocr": active_ocr_model,
-            "verify": verify_model,
-        },
-        "sourceBlocks": [{"id": region["id"], "box": region["box"]} for region in regions],
+        "models": {"ocrRequested": requested_ocr_model, "ocr": active_ocr_model},
+        "sourceBlocks": [{"id": r["id"], "box": r["box"]} for r in regions],
         "imageSize": {"width": image_size[0], "height": image_size[1]},
     }
 

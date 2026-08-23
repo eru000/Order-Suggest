@@ -190,26 +190,53 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(document["schemaVersion"], 2)
         self.assertTrue(document["confirmedAt"])
 
-    def test_exif_orientation_and_overlapping_two_by_two_tiles(self):
+    def test_exif_applied_and_large_image_is_one_region_by_default(self):
+        """切塊預設關閉，所以大圖也只回一塊。EXIF 轉正仍要生效。"""
         image = Image.new("RGB", (2000, 1800), "white")
         exif = Image.Exif()
         exif[274] = 1
         buffer = io.BytesIO()
         image.save(buffer, "JPEG", exif=exif)
         _, regions, size = menu_vision.prepare_image_regions(buffer.getvalue())
-        self.assertEqual(size, (2000, 1800))
-        self.assertEqual(len(regions), 4)
-        self.assertEqual(regions[0]["box"], [0, 0, 1120, 1008])
-        self.assertEqual(regions[1]["box"], [880, 0, 2000, 1008])
-        self.assertEqual(regions[1]["box"][0] - regions[0]["box"][2], -240)
+        self.assertEqual(max(size), menu_vision.TARGET_LONG_SIDE)
+        self.assertEqual(size[0] / size[1], 2000 / 1800)   # 長寬比不變
+        self.assertEqual(len(regions), 1)
+        self.assertEqual(regions[0]["id"], "full")
+        self.assertEqual(regions[0]["box"], [0, 0, size[0], size[1]])
 
-    def test_low_resolution_messaging_copy_is_recovered_before_tiling(self):
+    def test_tiling_still_available_behind_the_flag(self):
+        """切塊沒有刪掉，只是預設不走。VISION_TILES=1 要能拿回 2x2 重疊切塊。"""
+        image = Image.new("RGB", (2000, 1800), "white")
+        buffer = io.BytesIO()
+        image.save(buffer, "JPEG")
+        with mock.patch.dict(os.environ, {"VISION_TILES": "1"}):
+            _, regions, size = menu_vision.prepare_image_regions(buffer.getvalue())
+        self.assertEqual(len(regions), 4)
+        self.assertEqual(regions[0]["box"][0:2], [0, 0])
+        self.assertEqual(regions[3]["box"][2:4], list(size))
+        # 相鄰兩塊要重疊，招牌橫跨中線時才不會被切斷
+        self.assertLess(regions[1]["box"][0], regions[0]["box"][2])
+
+    def test_every_image_is_normalised_to_the_same_long_side(self):
+        """小圖放大、大圖縮小，都收斂到 TARGET_LONG_SIDE。
+
+        2600 是量出來的：guoshao_6col（原圖 910px）正規化到 2000 時價格正確率
+        54.5%，到 2600 變成 100%。內插沒有增加資訊，變好是因為文字在模型固定
+        的圖片 token 預算裡佔到更多 token。
+        """
         image = Image.new("RGB", (841, 607), "white")
         buffer = io.BytesIO()
         image.save(buffer, "PNG")
         _, regions, size = menu_vision.prepare_image_regions(buffer.getvalue())
-        self.assertEqual(size[0], 2000)
-        self.assertEqual(len(regions), 4)
+        self.assertEqual(max(size), menu_vision.TARGET_LONG_SIDE)
+        self.assertEqual(len(regions), 1)
+
+        big = Image.new("RGB", (4032, 3024), "white")
+        buf2 = io.BytesIO()
+        big.save(buf2, "JPEG")
+        _, _, big_size = menu_vision.prepare_image_regions(buf2.getvalue())
+        self.assertEqual(max(big_size), menu_vision.TARGET_LONG_SIDE)
+
 
     def test_merge_requires_matching_price_and_reports_conflict(self):
         results = [
@@ -220,7 +247,13 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(len(merged), 2)
         self.assertEqual(conflicts[0]["type"], "price")
 
-    def test_dense_image_routes_overview_tiles_and_verifier(self):
+    def test_dense_image_is_read_in_a_single_call(self):
+        """整條流程只打一次 API，而且送的是整張圖。
+
+        這裡曾經釘的是「總覽 → 4 塊並行 → 校對」六次呼叫。四個 eval 案例實測
+        那套架構是在用呼叫次數補償解析度不足，換成單次呼叫後召回與精確持平、
+        價格正確率反而從 86.1% 升到 96.3%。
+        """
         image = Image.new("RGB", (2000, 1800), "white")
         buffer = io.BytesIO()
         image.save(buffer, "JPEG")
@@ -228,97 +261,55 @@ class MenuVisionTests(unittest.TestCase):
 
         def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
             calls.append((prompt, image_url, model, temperature))
-            if "版面與身分" in prompt:
-                return '{"restaurant_name":"犇頂牛排","source_type":"menu","menu_type":"牛排館"}'
-            if "最終校對員" in prompt:
-                return '{"restaurant_name":"犇頂牛排","categories":[{"name":"排餐","items":[{"name":"犇頂牛排","price":230},{"name":"菲力牛排","price":360},{"name":"香煎中卷","price":280}]}]}'
-            return '{"categories":[{"name":"排餐","items":[{"name":"犇頂牛排","price":230},{"name":"菲力牛排","price":360}]}]}'
+            return json.dumps({
+                "restaurant_name": "犇頂牛排",
+                "categories": [{"title": "排餐", "items": [
+                    {"dish": "犇頂牛排", "price": 230},
+                    {"dish": "菲力牛排", "price": 360},
+                ]}],
+            }, ensure_ascii=False)
 
-        # 這條釘的是完整流程（總覽 → 切塊 → 校對）。VISION_FAST 會少掉兩次呼叫，
-        # 而載入 .env 的其他測試會把它帶進同一個行程，所以這裡明確關掉。
-        with mock.patch.dict(os.environ, {"VISION_FAST": "0"}):
-            result = menu_vision.analyze_menu_image(
-                buffer.getvalue(), "image/jpeg", "東海愛將", vision_func=fake_vision
-            )
-        self.assertEqual(len(calls), 6)
-        # 釘的是「總覽走校對模型、切塊走 OCR 模型」這個路由，不是特定模型名稱。
-        # 寫死名稱的話，每次換模型設定都會誤報成測試失敗。
-        self.assertEqual(calls[0][2], menu_vision.DEFAULT_VERIFY_MODEL)
-        self.assertEqual(calls[1][2], menu_vision.DEFAULT_OCR_MODEL)
-        self.assertTrue(all(call[3] == 0 for call in calls))
-        # 校對只能收單張圖：閘道 2026-08 起限制一個 prompt 最多 1 張圖，
-        # 送 list 會被擋成 HTTP 400。
-        self.assertIsInstance(calls[-1][1], str)
-        # 總覽拿的是縮圖（只判版面與店名，不做 OCR），校對拿全圖，
-        # 兩者刻意不同——之前共用全圖讓總覽白白多花一倍時間。
+        result = menu_vision.analyze_menu_image(
+            buffer.getvalue(), "image/jpeg", "東海愛將", vision_func=fake_vision
+        )
+
+        self.assertEqual(len(calls), 1)
         self.assertIsInstance(calls[0][1], str)
-        self.assertLess(len(calls[0][1]), len(calls[-1][1]))
+        self.assertEqual(calls[0][2], menu_vision.DEFAULT_OCR_MODEL)
+        self.assertEqual(calls[0][3], 0)
+        self.assertIn("這是整張菜單的完整照片", calls[0][0])
         self.assertEqual(result["detected_restaurant_name"], "犇頂牛排")
         self.assertTrue(result["identityConflict"])
         self.assertEqual(result["quality"]["priceCoverage"], 1.0)
+        self.assertEqual(result["conflicts"], [])
 
-    def test_fast_mode_skips_only_the_overview_and_keeps_the_verifier(self):
-        """校對那關會補回切塊漏掉的品項，快速模式也不能省——省了會掉一半菜單。"""
-        image = Image.new("RGB", (2000, 1800), "white")
+    def test_falls_back_to_verify_model_when_ocr_model_is_unavailable(self):
+        """主要 OCR 模型掛掉要能降級，而且不能假裝成高信心結果。"""
+        image = Image.new("RGB", (900, 800), "white")
         buffer = io.BytesIO()
         image.save(buffer, "JPEG")
-        calls = []
+        seen = []
 
         def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
-            calls.append(prompt)
-            if "最終校對員" in prompt:
-                return json.dumps(
-                    {
-                        "restaurant_name": "斗六門當歸鴨",
-                        "categories": [{"name": "主食", "items": [
-                            {"name": "鴨肉飯", "price": 40},
-                            {"name": "鴨腿飯", "price": 80},
-                        ]}],
-                    },
-                    ensure_ascii=False,
-                )
-            return json.dumps(
-                {
-                    "restaurant_name": "斗六門當歸鴨" if "tile-1" in prompt else "",
-                    "categories": [{"name": "主食", "items": [{"name": "鴨肉飯", "price": 40}]}],
-                },
-                ensure_ascii=False,
-            )
+            seen.append(model)
+            if len(seen) == 1:
+                raise RuntimeError("model API request failed: HTTP 500")
+            return json.dumps({
+                "restaurant_name": "斗六門當歸鴨",
+                "categories": [{"title": "主食", "items": [{"dish": "鴨肉飯", "price": 40}]}],
+            }, ensure_ascii=False)
 
-        with mock.patch.dict(os.environ, {"VISION_FAST": "1"}):
+        with mock.patch.dict(os.environ, {"VISION_MODEL": "broken-model",
+                                          "VISION_VERIFY_MODEL": "backup-model"}):
             result = menu_vision.analyze_menu_image(
                 buffer.getvalue(), "image/jpeg", vision_func=fake_vision
             )
 
-        self.assertEqual(len(calls), 5, "四張切塊加一次校對，只少掉總覽")
-        self.assertTrue(all("版面與身分" not in prompt for prompt in calls))
-        self.assertIn("最終校對員", calls[-1])
+        self.assertEqual(seen, ["broken-model", "backup-model"])
+        self.assertTrue(result["quality"]["modelFallback"])
+        self.assertLessEqual(result["quality"]["score"], 0.7)
         self.assertEqual(result["detected_restaurant_name"], "斗六門當歸鴨")
-        names = [item["name"] for category in result["categories"] for item in category["items"]]
-        self.assertIn("鴨腿飯", names, "校對補回來的品項必須留在結果裡")
 
-    def test_fast_mode_prefers_the_longest_tile_name(self):
-        """招牌橫跨中線時每塊只看到殘名，挑最長的——殘缺的一定比完整的短。"""
-        image = Image.new("RGB", (2000, 1800), "white")
-        buffer = io.BytesIO()
-        image.save(buffer, "JPEG")
-
-        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
-            name = "斗六門當歸鴨" if "tile-2" in prompt else "當歸鴨"
-            return json.dumps(
-                {
-                    "restaurant_name": name,
-                    "categories": [{"name": "主食", "items": [{"name": "鴨肉飯", "price": 40}]}],
-                },
-                ensure_ascii=False,
-            )
-
-        with mock.patch.dict(os.environ, {"VISION_FAST": "1"}):
-            result = menu_vision.analyze_menu_image(
-                buffer.getvalue(), "image/jpeg", vision_func=fake_vision
-            )
-
-        self.assertEqual(result["detected_restaurant_name"], "斗六門當歸鴨")
 
     def test_human_can_correct_ocr_name_and_price_before_confirmation(self):
         result = {

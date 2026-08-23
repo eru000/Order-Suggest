@@ -121,14 +121,19 @@ def load_cases(only: list[str] | None = None) -> list[dict[str, Any]]:
 
 
 def estimate_api_calls(image_path: Path, fast: bool) -> int:
-    """算這張圖會打幾次 API：總覽 + 切塊 + 最終校對。純本機計算。"""
+    """算這張圖會打幾次 API。純本機計算。
+
+    辨識已改成單次呼叫（見 menu_vision.analyze_menu_image 的說明），所以除非
+    用 VISION_TILES=1 把切塊開回來，否則永遠是 1。
+    """
     from PIL import Image, ImageOps
 
+    if not menu_vision._tiling_enabled():
+        return 1
     with Image.open(image_path) as opened:
         width, height = ImageOps.exif_transpose(opened).size
-    if 400 <= max(width, height) < menu_vision.TILE_THRESHOLD:
-        # prepare_image_regions 會先放大再判斷要不要切塊。
-        scale = menu_vision.LOW_RES_RECOVERY_LONG_SIDE / max(width, height)
+    if max(width, height) >= menu_vision.MIN_UPSCALE_LONG_SIDE:
+        scale = menu_vision.TARGET_LONG_SIDE / max(width, height)
         width, height = round(width * scale), round(height * scale)
     tiles = 1 if max(width, height) <= menu_vision.TILE_THRESHOLD else 4
     overview = 0 if fast else 1
