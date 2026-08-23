@@ -57,64 +57,6 @@ class MenuVisionTests(unittest.TestCase):
             {"name": "時價麵", "price": None},
         ])
 
-    def test_verify_pass_cannot_silently_delete_items(self):
-        """最終校對漏掉的品項要補回來，不能靜默消失。
-
-        實測 tile-4 把「大肉羹麵 65」讀得清清楚楚，最終校對的回傳卻沒有
-        它。漏掉的品項是看不見的失敗，所以補回並標記，讓人工複核裁決。
-        """
-        tiles = [
-            {"name": "大肉羹麵", "price": 65.0, "category": "麵類", "sources": [{"block": "tile-4"}]},
-            {"name": "魯肉湯飯", "price": 45.0, "category": "麵類", "sources": [{"block": "tile-2"}]},
-        ]
-        verified = [
-            # 錯字被更正：不該被當成「刪掉一項又新增一項」。
-            {"name": "魯肉湯麵", "price": 45.0, "category": "麵類"},
-            # 切塊都沒讀到，只有校對生出來的。
-            {"name": "招牌炒飯", "price": 80.0, "category": "飯類"},
-        ]
-        final, restored, invented = menu_vision._reconcile_verified(verified, tiles)
-
-        self.assertEqual(restored, ["大肉羹麵"])
-        self.assertEqual(invented, ["招牌炒飯"])
-        names = [item["name"] for item in final]
-        self.assertIn("大肉羹麵", names)
-        self.assertIn("魯肉湯麵", names)
-        self.assertNotIn("魯肉湯飯", names, "更正過的品名不該同時留下舊的那一個")
-        self.assertEqual(len(names), 3)
-
-    def test_short_name_typo_fix_is_not_counted_as_delete_plus_add(self):
-        """三個字的品名改一個字，相似度只剩 0.667——低於一般門檻。
-
-        實測校對把「肉蓗飯」修成「肉羹飯」，結果錯字版被當成「被刪掉」而
-        補回、更正版被當成「憑空新增」，同一道菜留下兩筆。價格一致時放寬
-        門檻才能認出這是同一項。
-        """
-        tiles = [{"name": "肉蓗飯", "price": 55.0, "category": "飯類", "sources": []}]
-        verified = [{"name": "肉羹飯", "price": 55.0, "category": "飯類"}]
-        final, restored, invented = menu_vision._reconcile_verified(verified, tiles)
-        self.assertEqual(restored, [])
-        self.assertEqual(invented, [])
-        self.assertEqual([item["name"] for item in final], ["肉羹飯"])
-
-    def test_same_price_shortcut_does_not_merge_genuinely_different_dishes(self):
-        """放寬不能寬到把不同的菜黏在一起。
-
-        這份菜單上肉羹飯與肉羹麵都是 55 元，是兩道真的不同的菜。
-        """
-        tiles = [
-            {"name": "肉羹飯", "price": 55.0, "category": "飯類", "sources": []},
-            {"name": "肉羹麵", "price": 55.0, "category": "麵類", "sources": []},
-        ]
-        verified = [
-            {"name": "肉羹飯", "price": 55.0, "category": "飯類"},
-            {"name": "肉羹麵", "price": 55.0, "category": "麵類"},
-        ]
-        final, restored, invented = menu_vision._reconcile_verified(verified, tiles)
-        self.assertEqual(restored, [])
-        self.assertEqual(invented, [])
-        self.assertEqual({item["name"] for item in final}, {"肉羹飯", "肉羹麵"})
-
     def test_analyze_encodes_image_and_parses_fenced_json(self):
         captured = {}
 
@@ -237,15 +179,6 @@ class MenuVisionTests(unittest.TestCase):
         _, _, big_size = menu_vision.prepare_image_regions(buf2.getvalue())
         self.assertEqual(max(big_size), menu_vision.TARGET_LONG_SIDE)
 
-
-    def test_merge_requires_matching_price_and_reports_conflict(self):
-        results = [
-            {"id": "tile-1", "box": [0, 0, 100, 100], "categories": [{"name": "牛排", "items": [{"name": "犇頂牛排", "price": 230}]}]},
-            {"id": "tile-2", "box": [80, 0, 180, 100], "categories": [{"name": "牛排", "items": [{"name": "犇頂牛排", "price": 330}]}]},
-        ]
-        merged, conflicts = menu_vision.merge_region_items(results)
-        self.assertEqual(len(merged), 2)
-        self.assertEqual(conflicts[0]["type"], "price")
 
     def test_dense_image_is_read_in_a_single_call(self):
         """整條流程只打一次 API，而且送的是整張圖。

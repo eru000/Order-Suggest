@@ -5,10 +5,8 @@ from __future__ import annotations
 import base64
 import io
 import json
-import math
 import os
 import re
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -289,25 +287,6 @@ def _tiling_enabled() -> bool:
     return os.getenv("VISION_TILES", "0").strip().lower() in {"1", "true", "yes", "on"}
 
 
-def _overview_bytes(full_bytes: bytes) -> bytes:
-    """總覽用的縮圖。
-
-    總覽只判斷版面與店名，不做逐項 OCR，卻一直跟最終校對共用同一張全解析度
-    圖。實測同一張圖只改長邊，這次呼叫 4032px 要 12.2 秒、1200px 只要 4.4 秒
-    ——延遲幾乎和尺寸成正比，所以這裡送大圖是純粹的浪費。
-    """
-    with Image.open(io.BytesIO(full_bytes)) as opened:
-        image = opened.convert("RGB")
-        if max(image.size) <= OVERVIEW_LONG_SIDE:
-            return full_bytes
-        shrink = OVERVIEW_LONG_SIDE / max(image.size)
-        smaller = image.resize(
-            (max(1, int(round(image.width * shrink))), max(1, int(round(image.height * shrink)))),
-            Image.Resampling.LANCZOS,
-        )
-    return _encode_jpeg(smaller)
-
-
 def _call_vision(
     vision_func: Any,
     prompt: str,
@@ -373,94 +352,6 @@ def _tile_prompt(
 逐字抄錄此區塊內所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。
 被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。{identity_rule}
 只回傳 JSON：{schema}"""
-
-
-def _flatten_categories(categories: Sequence[Dict[str, Any]], source: Dict[str, Any]) -> List[Dict[str, Any]]:
-    flattened = []
-    for category in categories:
-        if not isinstance(category, dict):
-            continue
-        category_name = str(category.get("name") or "其他")
-        for item in category.get("items", []):
-            if isinstance(item, dict):
-                flattened.append({**item, "category": category_name, "sources": [source]})
-    return flattened
-
-
-def merge_region_items(region_results: Sequence[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """Merge duplicates only at >=0.92 similarity and with compatible prices."""
-    merged: List[Dict[str, Any]] = []
-    conflicts: List[Dict[str, Any]] = []
-    for region in region_results:
-        source = {"block": region["id"], "box": list(region["box"])}
-        for candidate in _flatten_categories(region.get("categories", []), source):
-            best = None
-            best_score = 0.0
-            for existing in merged:
-                score = _similarity(candidate["name"], existing["name"])
-                if score > best_score:
-                    best, best_score = existing, score
-            if best is not None and best_score >= MERGE_SIMILARITY:
-                left_price, right_price = best.get("price"), candidate.get("price")
-                if left_price is not None and right_price is not None and left_price != right_price:
-                    conflicts.append({
-                        "type": "price",
-                        "candidates": [best["name"], candidate["name"]],
-                        "prices": [left_price, right_price],
-                        "blocks": [best["sources"][0]["block"], source["block"]],
-                        "resolved": False,
-                    })
-                    merged.append(candidate)
-                    continue
-                best["sources"].append(source)
-                if best.get("price") is None and candidate.get("price") is not None:
-                    best["price"] = candidate["price"]
-                continue
-            if best is not None and best_score >= 0.84:
-                conflicts.append({
-                    "type": "name",
-                    "candidates": [best["name"], candidate["name"]],
-                    "prices": [best.get("price"), candidate.get("price")],
-                    "blocks": [best["sources"][0]["block"], source["block"]],
-                    "resolved": False,
-                })
-            merged.append(candidate)
-    return merged, conflicts
-
-
-def _items_to_categories(items: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    category_map: Dict[str, List[Dict[str, Any]]] = {}
-    for index, item in enumerate(items, 1):
-        public = {"id": f"item-{index:03d}", "name": item["name"], "price": item.get("price")}
-        if item.get("description"):
-            public["description"] = item["description"]
-        if item.get("sources"):
-            public["sources"] = item["sources"]
-        category_map.setdefault(str(item.get("category") or "其他"), []).append(public)
-    return [{"name": name, "items": values} for name, values in category_map.items()]
-
-
-def _to_wire_categories(categories: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Rename `name` to `title`/`dish` for anything the model sees or returns.
-
-    學校 API 的閘道會把輸出 JSON 裡的 `name` 欄位當成 function call，轉進
-    tool_calls 並把 content 清空——實測 mistral-small-4／llama4scout／ornith-35b
-    三個模型都一樣，換成不含 name 的 schema 三個就全部正常。所以送進 prompt 的
-    草稿也要用同一套 key，免得模型照抄回 `name`。
-    """
-    wire = []
-    for category in categories:
-        if not isinstance(category, dict):
-            continue
-        items = []
-        for item in category.get("items") or []:
-            if not isinstance(item, dict):
-                continue
-            renamed = {key: value for key, value in item.items() if key != "name"}
-            renamed["dish"] = item.get("name", "")
-            items.append(renamed)
-        wire.append({"title": category.get("name", ""), "items": items})
-    return wire
 
 
 def _menu_item_refs(result: Dict[str, Any]) -> List[Tuple[str, Dict[str, Any]]]:
@@ -610,66 +501,6 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
             conflict["resolved"] = True
             conflict["resolvedBy"] = "human"
     return {"message": message, "change": change, "result": result}
-
-
-def _attach_sources(verified: List[Dict[str, Any]], original: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    for item in verified:
-        matches = sorted(original, key=lambda source: _similarity(item["name"], source["name"]), reverse=True)
-        if matches and _similarity(item["name"], matches[0]["name"]) >= VERIFY_MATCH_THRESHOLD:
-            item["sources"] = matches[0].get("sources", [])
-    return verified
-
-
-def _same_item(left: Dict[str, Any], right: Dict[str, Any]) -> bool:
-    """這兩筆是不是同一道菜（可能只是其中一邊有錯字）。"""
-    score = _similarity(str(left.get("name") or ""), str(right.get("name") or ""))
-    if score >= VERIFY_MATCH_THRESHOLD:
-        return True
-    left_price, right_price = left.get("price"), right.get("price")
-    if score < VERIFY_SAME_PRICE_THRESHOLD or left_price is None or right_price is None:
-        return False
-    try:
-        return abs(float(left_price) - float(right_price)) < 0.01
-    except (TypeError, ValueError):
-        return False
-
-
-def _has_counterpart(item: Dict[str, Any], candidates: Sequence[Dict[str, Any]]) -> bool:
-    return any(_same_item(item, other) for other in candidates)
-
-
-def _reconcile_verified(
-    verified_items: List[Dict[str, Any]],
-    tile_items: Sequence[Dict[str, Any]],
-) -> Tuple[List[Dict[str, Any]], List[str], List[str]]:
-    """對帳最終校對的輸出與切塊實際讀到的內容。
-
-    校對那一關原本握有絕對的刪除權：只要它沒寫進回傳，該品項就消失，
-    而且不留痕跡。實測 tile-4 把「大肉羹麵 65」讀得清清楚楚，最終輸出
-    卻沒有它；同一次校對一項也沒補回來。
-
-    這裡不讓它靜默刪除。取捨的理由是兩種錯的可見度差很多：漏掉的品項是
-    看不見的失敗——使用者不會知道菜單少了什麼，推薦引擎也永遠不會提到它；
-    多出來的品項則會出現在確認畫面上，人看得到、也能用 apply_manual_correction
-    改掉。所以補回被刪的品項並標記出來，把裁決權交還給人。
-
-    校正仍然照收：品名或價格被改過的品項，相似度夠高就配得上，不會變成
-    重複項（例如「魯肉湯飯」被更正成「魯肉湯麵」）。
-
-    回傳 (最終品項, 被刪而補回的品名, 校對憑空新增的品名)。
-    """
-    restored = [
-        dict(tile_item)
-        for tile_item in tile_items
-        if str(tile_item.get("name") or "") and not _has_counterpart(tile_item, verified_items)
-    ]
-    # 校對憑空生出來、四個切塊都沒讀到的品項最可疑：它沒有任何影像佐證。
-    invented = [
-        str(item["name"])
-        for item in verified_items
-        if str(item.get("name") or "") and not _has_counterpart(item, tile_items)
-    ]
-    return verified_items + restored, [str(item["name"]) for item in restored], invented
 
 
 def _legacy_analyze(
