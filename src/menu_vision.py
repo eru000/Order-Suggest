@@ -724,6 +724,34 @@ def analyze_menu_image(
     # 盤類、燙青菜全部消失。省下的那一輪等待不值這個代價。
     fast_mode = os.getenv("VISION_FAST", "").strip().lower() in {"1", "true", "yes", "on"}
 
+    # 實驗用：一次呼叫讀完整張圖，不切塊也不校對——就是 ChatGPT 的做法。
+    # 目的是量「六次呼叫的架構到底換到多少準確度」，正式啟用前要先過四個
+    # eval 案例。
+    if os.getenv("VISION_SINGLE_CALL", "").strip().lower() in {"1", "true", "yes", "on"}:
+        single = normalize_vision_result(_extract_json_value(_call_vision(
+            vision_func,
+            _tile_prompt("full", [0, 0, *image_size], {}, ask_identity=True),
+            _data_url(full_bytes, "image/jpeg"),
+            model=os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL),
+            temperature=0.0,
+        )), restaurant_hint)
+        if not single["categories"]:
+            raise ValueError("照片中沒有辨識到可用的菜單或菜色")
+        count = sum(len(c["items"]) for c in single["categories"])
+        priced = sum(i.get("price") is not None for c in single["categories"] for i in c["items"])
+        cov = round(priced / count, 3) if count else 0.0
+        detected = single.get("detected_restaurant_name", "")
+        single.update({
+            "quality": {"score": round(cov * 0.7 + 0.2, 3), "priceCoverage": cov,
+                        "itemCount": count, "modelFallback": False,
+                        "verifyDroppedCount": 0, "verifyInventedCount": 0, "conflictCount": 0},
+            "conflicts": [],
+            "identity": {"userHint": restaurant_hint, "detectedName": detected,
+                         "candidates": [detected] if detected else []},
+            "identityConflict": _names_conflict(restaurant_hint, detected),
+        })
+        return single
+
     full_url = _data_url(full_bytes, "image/jpeg")
     overview_prompt = """閱讀整張餐廳菜單，只做版面與身分辨識，不要逐項 OCR。
 請完全根據圖片判斷，不要參考或猜測使用者先前輸入的名稱。
