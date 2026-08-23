@@ -246,8 +246,10 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(calls[0][2], menu_vision.DEFAULT_VERIFY_MODEL)
         self.assertEqual(calls[1][2], menu_vision.DEFAULT_OCR_MODEL)
         self.assertTrue(all(call[3] == 0 for call in calls))
-        self.assertIsInstance(calls[-1][1], list)
-        self.assertEqual(len(calls[-1][1]), 4)
+        # 校對只能收單張圖：閘道 2026-08 起限制一個 prompt 最多 1 張圖，
+        # 送 list 會被擋成 HTTP 400。送的是全圖，和總覽那次同一張。
+        self.assertIsInstance(calls[-1][1], str)
+        self.assertEqual(calls[-1][1], calls[0][1])
         self.assertEqual(result["detected_restaurant_name"], "犇頂牛排")
         self.assertTrue(result["identityConflict"])
         self.assertEqual(result["quality"]["priceCoverage"], 1.0)

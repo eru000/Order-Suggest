@@ -773,9 +773,11 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
     if not merged:
         raise ValueError("照片中沒有辨識到可用的菜單或菜色")
 
-    # The final pass sees the high-resolution regions, not a downscaled full image.
+    # 本來這一關送的是全部高解析切塊，讓校對看得比全圖清楚。2026-08 起學校閘道
+    # 改成「一個 prompt 最多 1 張圖」（HTTP 400 At most 1 image(s) may be provided
+    # in one prompt），多圖直接被擋，整條辨識線在這裡斷掉。
     draft_categories = _items_to_categories(merged)
-    verify_prompt = f"""你是菜單 OCR 最終校對員。接下來圖片依序是 {', '.join(region['id'] for region in regions)}。
+    verify_prompt = f"""你是菜單 OCR 最終校對員。這是整張菜單的完整照片。
 請逐項對照圖片校正草稿：修正錯字與價格、合併重疊區重複項、刪除虛構項目、補上清楚可見但遺漏的主要排餐。
 不能把 230 看成 330，也不能把 360 看成 560。繁體中文店名與菜名照印刷文字。
 草稿：{json.dumps(_to_wire_categories(draft_categories), ensure_ascii=False)}
@@ -785,7 +787,7 @@ restaurant_name 只能填圖片實際印出的店名，看不清就填空字串�
     verified_raw = _extract_json_value(_call_vision(
         vision_func,
         verify_prompt,
-        tile_urls,
+        full_url,
         model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         temperature=0.0,
     ))
