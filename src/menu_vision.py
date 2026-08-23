@@ -30,6 +30,13 @@ ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/heic", "i
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
 TILE_THRESHOLD = 1600
 LOW_RES_RECOVERY_LONG_SIDE = 2000
+# 手機照片常是 4032px。實測同一張圖只改長邊，總覽那次呼叫 4032→12.2s、
+# 2000→6.3s、1200→4.4s，尺寸幾乎線性主導延遲。切塊後每塊約長邊一半，
+# 2600 讓每塊約 1450px——比目前驗證過的 2000px 全圖（切塊約 1100px）還高，
+# 所以是純粹省時間，不是拿準確度換。
+MAX_LONG_SIDE = 2600
+# 總覽只判斷版面與店名，prompt 明寫「不要逐項 OCR」，不需要讀清楚每個價格。
+OVERVIEW_LONG_SIDE = 1400
 TILE_OVERLAP = 0.12
 MERGE_SIMILARITY = 0.92
 # .env 沒設定時的後備模型。原本這裡寫死 "gemma-4-31b"，但那個模型在學校的
@@ -234,6 +241,15 @@ def prepare_image_regions(image_bytes: bytes) -> Tuple[bytes, List[Dict[str, Any
         image = image.resize(recovered_size, Image.Resampling.LANCZOS).filter(
             ImageFilter.UnsharpMask(radius=1.2, percent=120, threshold=3)
         )
+    # 大圖縮到上限再切。原本完全沒有縮小分支，4032px 的照片會原尺寸送進
+    # API，總覽與最終校對各扛 1.87MB。
+    if max(image.size) > MAX_LONG_SIDE:
+        shrink = MAX_LONG_SIDE / max(image.size)
+        image = image.resize(
+            (max(1, int(round(image.width * shrink))), max(1, int(round(image.height * shrink)))),
+            Image.Resampling.LANCZOS,
+        )
+
     width, height = image.size
     full = _encode_jpeg(image)
     if max(width, height) <= TILE_THRESHOLD:
@@ -252,6 +268,25 @@ def prepare_image_regions(image_bytes: bytes) -> Tuple[bytes, List[Dict[str, Any
     for index, box in enumerate(boxes, 1):
         regions.append({"id": f"tile-{index}", "box": list(box), "bytes": _encode_jpeg(image.crop(box))})
     return full, regions, (width, height)
+
+
+def _overview_bytes(full_bytes: bytes) -> bytes:
+    """總覽用的縮圖。
+
+    總覽只判斷版面與店名，不做逐項 OCR，卻一直跟最終校對共用同一張全解析度
+    圖。實測同一張圖只改長邊，這次呼叫 4032px 要 12.2 秒、1200px 只要 4.4 秒
+    ——延遲幾乎和尺寸成正比，所以這裡送大圖是純粹的浪費。
+    """
+    with Image.open(io.BytesIO(full_bytes)) as opened:
+        image = opened.convert("RGB")
+        if max(image.size) <= OVERVIEW_LONG_SIDE:
+            return full_bytes
+        shrink = OVERVIEW_LONG_SIDE / max(image.size)
+        smaller = image.resize(
+            (max(1, int(round(image.width * shrink))), max(1, int(round(image.height * shrink)))),
+            Image.Resampling.LANCZOS,
+        )
+    return _encode_jpeg(smaller)
 
 
 def _call_vision(
@@ -706,7 +741,7 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
         overview_raw = _extract_json_value(_call_vision(
             vision_func,
             overview_prompt,
-            full_url,
+            _data_url(_overview_bytes(full_bytes), "image/jpeg"),
             model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
             temperature=0.0,
         ))
@@ -775,7 +810,8 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
 
     # 本來這一關送的是全部高解析切塊，讓校對看得比全圖清楚。2026-08 起學校閘道
     # 改成「一個 prompt 最多 1 張圖」（HTTP 400 At most 1 image(s) may be provided
-    # in one prompt），多圖直接被擋，整條辨識線在這裡斷掉。
+    # in one prompt），多圖直接被擋，整條辨識線在這裡斷掉。改送單張全圖——它是
+    # 低解析度救援放大後的 2000px 版本，不是原始縮圖，所以並非完全退回舊路。
     draft_categories = _items_to_categories(merged)
     verify_prompt = f"""你是菜單 OCR 最終校對員。這是整張菜單的完整照片。
 請逐項對照圖片校正草稿：修正錯字與價格、合併重疊區重複項、刪除虛構項目、補上清楚可見但遺漏的主要排餐。
