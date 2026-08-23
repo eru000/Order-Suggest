@@ -127,6 +127,57 @@ def _build_prompt_from_messages(messages: List[Dict[str, str]]) -> str:
             parts.append(f"使用者: {content}")
     parts.append("助理:")
     return "\n".join(parts)
+_PAYLOAD_KEYS = ("categories", "menu_items", "items", "restaurant_name")
+
+
+def _looks_like_payload(value: Any) -> bool:
+    """Reject the coordinate arrays and stray braces that litter thinking text."""
+    if isinstance(value, dict):
+        return any(key in value for key in _PAYLOAD_KEYS)
+    # _legacy_analyze 的重試會要一個 menu_items 陣列，所以頂層 list 也算數，
+    # 但必須是物件組成的——[686, 880, 1558, 2000] 這種座標要擋掉。
+    if isinstance(value, list):
+        return bool(value) and all(isinstance(entry, dict) for entry in value)
+    return False
+
+
+def _find_json_payload(text: str) -> Optional[str]:
+    """Return the first balanced JSON span that actually carries data, else None."""
+    for start, opener in enumerate(text):
+        if opener not in "{[":
+            continue
+        closer = "}" if opener == "{" else "]"
+        depth = 0
+        in_string = False
+        escaped = False
+        for end in range(start, len(text)):
+            char = text[end]
+            if in_string:
+                if escaped:
+                    escaped = False
+                elif char == "\\":
+                    escaped = True
+                elif char == '"':
+                    in_string = False
+                continue
+            if char == '"':
+                in_string = True
+            elif char == opener:
+                depth += 1
+            elif char == closer:
+                depth -= 1
+                if depth == 0:
+                    span = text[start:end + 1]
+                    try:
+                        parsed = json.loads(span)
+                    except ValueError:
+                        break
+                    if _looks_like_payload(parsed):
+                        return span
+                    break
+    return None
+
+
 #把多輪對話messages轉成一段提示字串，再用CLI方式呼叫Ollama
 def _api_chat(
     messages: List[Dict[str, Any]],
@@ -180,15 +231,20 @@ def _api_chat(
     # 只有在推理裡真的看得到 JSON 才拿來用。這點很重要：呼叫端（menu_vision）
     # 靠這個例外降級到備用模型，實測那次降級救回了 5 個品項。若無條件回傳一段
     # 解析不出東西的推理文字，等於把那個救援機制關掉，結果反而更差。
+    #
+    # 舊版只檢查「有沒有成對括號」，這個門檻太低：ornith-35b 的思考文字裡有
+    # prompt 回抄的切塊座標 [686, 880, 1558, 2000]，光這個就能讓判斷通過。實測
+    # 四個切塊全中——模型其實把菜單讀對了（鴨肉飯 60、鴨腿飯 80…），但最終
+    # JSON 從沒吐出來，於是這裡回傳一整段英文思考，_extract_json_value 抽到那
+    # 串座標當成菜單，最後 0 個品項。而且因為沒拋例外，降級救援整個被跳過。
+    # 所以現在改成必須真的 parse 得出帶資料的 JSON 才算數。
     reasoning = message.get("reasoning_content")
-    if (
-        allow_reasoning_fallback
-        and isinstance(reasoning, str)
-        and ("{" in reasoning and "}" in reasoning or "[" in reasoning and "]" in reasoning)
-    ):
-        print(f"[API] {model} 的 content 是空的，改用 reasoning_content（finish_reason="
-              f"{choice.get('finish_reason')}）")
-        return reasoning.strip()
+    if allow_reasoning_fallback and isinstance(reasoning, str):
+        payload = _find_json_payload(reasoning)
+        if payload is not None:
+            print(f"[API] {model} 的 content 是空的，改用 reasoning_content 裡的 JSON"
+                  f"（finish_reason={choice.get('finish_reason')}）")
+            return payload
 
     raise RuntimeError(
         f"model API returned empty content (finish_reason={choice.get('finish_reason')}): "
@@ -313,8 +369,8 @@ _MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文
 {
   "restaurant_name": "餐廳名稱或null",
   "menu_items": [
-    {"name": "菜名", "price": "價格數字"},
-    {"name": "菜名2", "price": null}
+    {"dish": "菜名", "price": "價格數字"},
+    {"dish": "菜名2", "price": null}
   ]
 }
 規則：

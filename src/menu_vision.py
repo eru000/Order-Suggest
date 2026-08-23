@@ -159,7 +159,11 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
             key in raw_category for key in ("price", "amount", "cost", "dish", "item_name")
         ):
             raw_category = {"name": "菜單", "items": [raw_category]}
-        category_name = str(raw_category.get("name") or "其他").strip()[:80] or "其他"
+        # `title` 是 prompt 現在要求的 key（`name` 會被閘道轉成 tool_calls），
+        # `name` 保留是為了舊資料與 LINE 那條路傳進來的結構。
+        category_name = str(
+            raw_category.get("name") or raw_category.get("title") or "其他"
+        ).strip()[:80] or "其他"
         raw_items = raw_category.get("items") or raw_category.get("menu_items") or raw_category.get("dishes") or []
         items = []
         for raw_item in raw_items if isinstance(raw_items, (list, tuple)) else []:
@@ -298,10 +302,12 @@ def _tile_prompt(
         if ask_identity
         else ""
     )
+    # schema 刻意不用 `name` 當 key——閘道會把帶 name 的輸出 JSON 轉成 tool_calls，
+    # content 變成空的，整個切塊白跑。詳見 _to_wire_categories 的說明。
     schema = (
-        '{{"restaurant_name":"","categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}'
+        '{{"restaurant_name":"","categories":[{{"title":"分類","items":[{{"dish":"完整品名","price":230}}]}}]}}'
         if ask_identity
-        else '{{"categories":[{{"name":"分類","items":[{{"name":"完整品名","price":230}}]}}]}}'
+        else '{{"categories":[{{"title":"分類","items":[{{"dish":"完整品名","price":230}}]}}]}}'
     )
     return f"""你是繁體中文菜單 OCR 專家。這是原圖的高解析區塊 {tile_id}，原圖座標 {list(box)}。
 全圖初步資訊：{json.dumps(overview, ensure_ascii=False)}
@@ -373,6 +379,29 @@ def _items_to_categories(items: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]
             public["sources"] = item["sources"]
         category_map.setdefault(str(item.get("category") or "其他"), []).append(public)
     return [{"name": name, "items": values} for name, values in category_map.items()]
+
+
+def _to_wire_categories(categories: Sequence[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Rename `name` to `title`/`dish` for anything the model sees or returns.
+
+    學校 API 的閘道會把輸出 JSON 裡的 `name` 欄位當成 function call，轉進
+    tool_calls 並把 content 清空——實測 mistral-small-4／llama4scout／ornith-35b
+    三個模型都一樣，換成不含 name 的 schema 三個就全部正常。所以送進 prompt 的
+    草稿也要用同一套 key，免得模型照抄回 `name`。
+    """
+    wire = []
+    for category in categories:
+        if not isinstance(category, dict):
+            continue
+        items = []
+        for item in category.get("items") or []:
+            if not isinstance(item, dict):
+                continue
+            renamed = {key: value for key, value in item.items() if key != "name"}
+            renamed["dish"] = item.get("name", "")
+            items.append(renamed)
+        wire.append({"title": category.get("name", ""), "items": items})
+    return wire
 
 
 def _menu_item_refs(result: Dict[str, Any]) -> List[Tuple[str, Dict[str, Any]]]:
@@ -599,7 +628,9 @@ def _legacy_analyze(
     if not first["categories"]:
         retry = normalize_vision_result(_extract_json_value(_call_vision(
             vision_func,
-            "讀取圖片中可見的菜名與價格，只回傳 JSON menu_items 陣列。",
+            # 用 dish 不用 name：閘道看到 name 會把輸出轉成 tool_calls。
+            '讀取圖片中可見的菜名與價格，只回傳 JSON：'
+            '{"menu_items":[{"dish":"品名","price":0}]}',
             url,
             model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         )), restaurant_hint)
@@ -747,10 +778,10 @@ restaurant_name 只能填圖片實際印出的店名；看不清就填空字串�
     verify_prompt = f"""你是菜單 OCR 最終校對員。接下來圖片依序是 {', '.join(region['id'] for region in regions)}。
 請逐項對照圖片校正草稿：修正錯字與價格、合併重疊區重複項、刪除虛構項目、補上清楚可見但遺漏的主要排餐。
 不能把 230 看成 330，也不能把 360 看成 560。繁體中文店名與菜名照印刷文字。
-草稿：{json.dumps(draft_categories, ensure_ascii=False)}
+草稿：{json.dumps(_to_wire_categories(draft_categories), ensure_ascii=False)}
 待裁決衝突：{json.dumps(conflicts, ensure_ascii=False)}
 restaurant_name 只能填圖片實際印出的店名，看不清就填空字串。禁止把「店名、分類、菜名」等欄位說明當作內容。
-只回傳 JSON：{{"restaurant_name":"","categories":[{{"name":"","items":[{{"name":"","price":null}}]}}]}}"""
+只回傳 JSON：{{"restaurant_name":"","categories":[{{"title":"","items":[{{"dish":"","price":null}}]}}]}}"""
     verified_raw = _extract_json_value(_call_vision(
         vision_func,
         verify_prompt,
