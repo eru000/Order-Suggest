@@ -567,20 +567,42 @@ async def create_menu_from_photo(
         raise HTTPException(502, f"VLM 服務錯誤：{exc}") from exc
 
 
+def _restore_pending_analysis(analysis_id: str, result: Dict[str, Any], session_id: str) -> None:
+    """把取走的待確認結果放回去。
+
+    _take_pending_analysis 是「取走」，一旦取出就不在快取裡了。原本只有 409
+    那條路徑會放回去，其他任何失敗都會讓使用者 22 秒的辨識結果永久消失，
+    只能重新上傳整張照片重跑一次——這是實際回報的問題。
+    """
+    with PENDING_ANALYSIS_LOCK:
+        PENDING_ANALYSES[analysis_id] = {
+            "result": result,
+            "session_id": session_id,
+            "created_at": time.time(),
+            "expires_at": time.time() + PENDING_ANALYSIS_TTL_SECONDS,
+        }
+
+
 @app.post(
     "/api/menu/vision/{analysis_id}/confirm",
     dependencies=[Depends(require_admin_key), Depends(rate_limit("menu-vision-confirm", 30, 60))],
 )
 def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
     """使用者確認後才把待確認結果寫成菜單。"""
+    state = _session(req.sessionId)
     try:
-        state = _session(req.sessionId)
         result = _take_pending_analysis(analysis_id, req.sessionId)
+    except ValueError as exc:
+        # 取不出來（過期、session 不符）就沒有東西可以還原
+        raise HTTPException(422, str(exc)) from exc
+
+    try:
         restaurant_name = (req.restaurant_name or str(result.get("restaurant_name") or "")).strip()
         if not restaurant_name:
             restaurant_name = str(result.get("detected_restaurant_name") or "").strip()
-        if not restaurant_name:
-            raise ValueError("請提供餐廳名稱後再確認")
+        # 兩邊都沒有就交給 ingestion 產生「未命名菜單」。照片上本來就常常沒印
+        # 店名（手寫木牌、只有品項的價目表），辨識結果是好的，不該因為少一個
+        # 標籤就整批丟掉、逼使用者回頭補打。
         quality = result.get("quality") if isinstance(result.get("quality"), dict) else {}
         needs_acceptance = bool(
             result.get("identityConflict")
@@ -588,25 +610,24 @@ def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
             or float(quality.get("score") or 0) < 0.75
         )
         if needs_acceptance and not req.accept_conflicts:
-            # 放回待確認區，讓使用者看過摘要後可以再送一次
-            with PENDING_ANALYSIS_LOCK:
-                PENDING_ANALYSES[analysis_id] = {
-                    "result": result,
-                    "session_id": req.sessionId,
-                    "created_at": time.time(),
-                    "expires_at": time.time() + PENDING_ANALYSIS_TTL_SECONDS,
-                }
             raise HTTPException(409, "店名、辨識衝突或品質需要人工檢查，請確認摘要後明確接受再送出")
         result["restaurant_name"] = restaurant_name
         summary = _register_vision_menu(result)
-        with state.lock:
-            state.active_restaurant = summary["restaurantName"]
-        SESSIONS.save(req.sessionId)
-        return {"success": True, **summary, "quality": result.get("quality", {}), "warnings": result.get("warnings", [])}
     except HTTPException:
+        # 409 要讓使用者勾了「接受」再送一次，結果必須還在
+        _restore_pending_analysis(analysis_id, result, req.sessionId)
         raise
     except ValueError as exc:
+        _restore_pending_analysis(analysis_id, result, req.sessionId)
         raise HTTPException(422, str(exc)) from exc
+    except Exception:
+        _restore_pending_analysis(analysis_id, result, req.sessionId)
+        raise
+
+    with state.lock:
+        state.active_restaurant = summary["restaurantName"]
+    SESSIONS.save(req.sessionId)
+    return {"success": True, **summary, "quality": result.get("quality", {}), "warnings": result.get("warnings", [])}
 
 
 @app.post(

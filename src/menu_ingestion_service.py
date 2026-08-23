@@ -5,6 +5,9 @@ from collections.abc import MutableMapping
 from typing import Any
 
 
+UNNAMED_MENU_NAME = "未命名菜單"
+
+
 class MenuIngestionService:
     """Normalizes all ingestion sources before one transactional catalog write."""
 
@@ -30,10 +33,26 @@ class MenuIngestionService:
     def is_non_food(name: str) -> bool:
         return any(keyword in name for keyword in ("塑膠袋", "購物袋", "甜心卡"))
 
+    def unnamed_menu_name(self) -> str:
+        """照片上沒印店名、模型也認不出來時的退路。
+
+        店名是 catalog 的 key，不能留空——空字串會讓之後切換餐廳、查評價、
+        存檔全部對不上。但也沒理由因此逼使用者先想一個名字：辨識結果本身
+        是好的，缺的只是一個標籤。所以自動給一個，重複就往後編號。
+        """
+        if UNNAMED_MENU_NAME not in self.catalog:
+            return UNNAMED_MENU_NAME
+        index = 2
+        while f"{UNNAMED_MENU_NAME} {index}" in self.catalog:
+            index += 1
+        return f"{UNNAMED_MENU_NAME} {index}"
+
     def register_vision(self, result: dict[str, Any]) -> dict[str, Any]:
         restaurant_name = str(result.get("restaurant_name") or "").strip()
         if not restaurant_name:
-            raise ValueError("無法確認餐廳名稱，請先輸入餐廳名稱")
+            restaurant_name = str(result.get("detected_restaurant_name") or "").strip()
+        if not restaurant_name:
+            restaurant_name = self.unnamed_menu_name()
         category_map = {
             str(category.get("name") or "其他"): {"items": list(category.get("items") or [])}
             for category in result.get("categories", [])
