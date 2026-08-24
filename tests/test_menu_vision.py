@@ -40,6 +40,22 @@ class MenuVisionTests(unittest.TestCase):
             {"name": "滷肉飯", "price": None},
         ])
 
+    def test_single_character_item_survives_when_it_has_a_price(self):
+        """加料吊牌常常只有一個字。
+
+        不倒翁的木板就是「麵 20」「蛋 20」「叉燒 30」。舊的 len(name) < 2 會把
+        前兩項無聲丟掉，而且不留 warning——eval 上看起來像模型沒讀到，實際上
+        是解析這一關吃掉的。一個字又沒價格的（「元」「份」）仍然當雜訊擋掉。
+        """
+        result = menu_vision.normalize_vision_result({"categories": [{"title": "加料", "items": [
+            {"dish": "麵", "price": 20},
+            {"dish": "蛋", "price": 20},
+            {"dish": "叉燒", "price": 30},
+            {"dish": "元", "price": None},
+        ]}]})
+        got = [(item["name"], item["price"]) for cat in result["categories"] for item in cat["items"]]
+        self.assertEqual([("麵", 20.0), ("蛋", 20.0), ("叉燒", 30.0)], got)
+
     def test_accepts_nested_array_shape_from_model(self):
         """模型無視 schema 回巢狀陣列時不能整批丟掉。
 

@@ -184,13 +184,20 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
                 continue
             name = str(raw_item.get("name") or raw_item.get("dish") or raw_item.get("item_name") or raw_item.get("title") or "").strip()
             key = re.sub(r"\s+", "", name).casefold()
-            if len(name) < 2 or key in seen:
-                continue
-            seen.add(key)
             price = raw_item.get("price")
             if price is None:
                 price = raw_item.get("amount") if raw_item.get("amount") is not None else raw_item.get("cost")
-            item: Dict[str, Any] = {"name": name[:160], "price": _clean_price(price)}
+            clean_price = _clean_price(price)
+            # 單字品名在加料吊牌與小攤菜單上很常見——不倒翁的木板就是「麵 20」
+            # 「蛋 20」。舊的 len(name) < 2 一律丟掉，而且不留 warning，所以那兩
+            # 塊牌子不管模型有沒有讀到都不會出現在結果裡。但一個字又沒有價格的
+            # 多半是 OCR 撿到的雜訊，所以只在有價格時放行。
+            if not name or key in seen:
+                continue
+            if len(name) < 2 and clean_price is None:
+                continue
+            seen.add(key)
+            item: Dict[str, Any] = {"name": name[:160], "price": clean_price}
             description = str(raw_item.get("description") or "").strip()
             if description:
                 item["description"] = description[:300]
