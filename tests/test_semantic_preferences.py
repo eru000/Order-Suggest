@@ -127,5 +127,45 @@ class StructuredPreferenceTest(unittest.TestCase):
         self.assertIn("素肉燥飯", names)
         self.assertIn("燙青菜", names)
 
+    def test_positive_cue_becomes_likes_and_changes_ranking(self):
+        """正面偏好要能影響排序。
+
+        recommendation.py 一直有讀 prefs["likes"] 加分，但沒有人產生它，
+        所以「我要當歸的」以前跟「有什麼推薦？」拿到一模一樣的清單。
+        """
+        parsed = parse_preferences("我要當歸的")
+        self.assertEqual(parsed["likes"], ["當歸"])
+
+        catalog = {
+            "categories": [
+                {
+                    "name": "全部",
+                    "items": [
+                        {"name": "什錦炒飯", "price": 65},
+                        {"name": "當歸麵", "price": 65},
+                    ],
+                }
+            ]
+        }
+        liked = recommend(catalog, parsed, top_k=1)
+        plain = recommend(catalog, parse_preferences("有什麼推薦？"), top_k=1)
+        self.assertEqual(liked["items"][0]["name"], "當歸麵")
+        self.assertNotEqual(liked["items"][0]["name"], plain["items"][0]["name"])
+
+    def test_negation_is_not_read_as_a_like(self):
+        """「不要」含「要」、「不吃」含「吃」——單字觸發詞會把否定讀成喜歡。"""
+        for text in ("我不要辣", "我不吃麵", "不要飲料", "我不要當歸"):
+            self.assertIsNone(parse_preferences(text).get("likes"), text)
+
+    def test_disliking_a_term_drops_it_from_likes(self):
+        base: dict = {}
+        merge_preference_delta(base, parse_preferences("我要當歸的"))
+        merge_preference_delta(base, parse_preferences("也喜歡蓮子"))
+        self.assertEqual(base["likes"], ["當歸", "蓮子"])
+        merge_preference_delta(base, parse_preferences("不要當歸"))
+        self.assertEqual(base["likes"], ["蓮子"])
+        self.assertIn("當歸", base["excludes"])
+
+
 if __name__ == "__main__":
     unittest.main()

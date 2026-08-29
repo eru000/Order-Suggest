@@ -170,6 +170,20 @@ def _split_terms(value: str) -> list[str]:
     ]
 
 
+# 「不要」含「要」、「不吃」含「吃」，所以正面觸發詞一律用多字詞，且把否定
+# 形式排在同一條 alternation 之外——單字「要」會把「我不要辣」讀成喜歡辣。
+LIKE_CUES = re.compile(r"想吃|愛吃|要吃|想喝|想點|我要|喜歡|來個|來份|來碗|來一份")
+
+# 只削掉動詞開頭與語尾助詞。不碰數量詞是刻意的：「三杯雞」削掉「三杯」會變成
+# 「雞」，比漏抓還糟——漏抓只是少加分，錯抓會推薦到完全不相干的品項。
+_LIKE_LEADING = re.compile(r"^[吃喝點來]+")
+_LIKE_TRAILING = re.compile(r"[的嗎呢啊喔吧了]+$")
+
+
+def _clean_like(term: str) -> str:
+    return _LIKE_TRAILING.sub("", _LIKE_LEADING.sub("", term.strip())).strip()
+
+
 def _canonical_allergen(term: str) -> str | None:
     for canonical, aliases in ALLERGEN_ALIASES.items():
         if any(alias in term for alias in aliases):
@@ -269,6 +283,28 @@ def parse_preferences(
                         PreferenceOperation(action="add", field="dislikes", value=term)
                     )
 
+    # recommendation.py 一直有讀 prefs["likes"] 並加分，但兩邊都沒有人產生它，
+    # 所以「我要當歸的」跟「有什麼推薦？」以前會給出一模一樣的結果。
+    for match in LIKE_CUES.finditer(source):
+        for raw in _split_terms(source[match.end() :]):
+            term = _clean_like(raw)
+            if not term or term in spice_noise or "過敏" in term:
+                continue
+            if term in parsed.dislikes or term in parsed.likes:
+                continue
+            parsed.likes.append(term)
+            parsed.operations.append(
+                PreferenceOperation(action="add", field="likes", value=term)
+            )
+
+    # 同一句裡又喜歡又不吃，以不吃為準——把牴觸的正面偏好收回去。
+    for term in parsed.dislikes:
+        if term in parsed.likes:
+            parsed.likes.remove(term)
+        parsed.operations.append(
+            PreferenceOperation(action="remove", field="likes", value=term)
+        )
+
     removal_patterns = (
         re.compile(r"(?:可以吃|可以接受)([^，。；;！!？?\s]+)了?"),
         re.compile(r"([^，。；;！!？?\s]+)(?:可以吃|可以了)"),
@@ -316,6 +352,8 @@ def _to_legacy_dict(parsed: ParsedPreferences) -> dict[str, Any]:
             value["spiceLevel"] = ("不辣", "小辣", "小辣", "中辣", "大辣", "大辣")[target]
     if parsed.dislikes:
         value["excludes"] = list(dict.fromkeys(parsed.dislikes))
+    if parsed.likes:
+        value["likes"] = list(dict.fromkeys(parsed.likes))
     if parsed.allergens:
         value["allergens"] = list(dict.fromkeys(parsed.allergens))
     if parsed.dietary_restrictions:
@@ -357,6 +395,7 @@ def merge_preference_delta(base: dict[str, Any], delta: dict[str, Any]) -> None:
 
     list_fields = {
         "dislikes": "excludes",
+        "likes": "likes",
         "allergens": "allergens",
         "dietaryRestrictions": "dietaryRestrictions",
     }
@@ -375,7 +414,7 @@ def merge_preference_delta(base: dict[str, Any], delta: dict[str, Any]) -> None:
     for key, value in delta.items():
         if key == "_operations":
             continue
-        if key in {"excludes", "allergens", "dietaryRestrictions"}:
+        if key in {"excludes", "likes", "allergens", "dietaryRestrictions"}:
             removed = {
                 op.get("value")
                 for op in operations
