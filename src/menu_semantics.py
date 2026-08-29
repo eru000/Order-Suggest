@@ -4,7 +4,7 @@ import copy
 import re
 from typing import Any
 
-SEMANTIC_SCHEMA_VERSION = 1
+SEMANTIC_SCHEMA_VERSION = 2
 
 ROLE_TERMS: dict[str, tuple[str, ...]] = {
     "drink": (
@@ -63,6 +63,53 @@ ALLERGEN_TERMS: dict[str, tuple[str, ...]] = {
 }
 
 
+VEGETARIAN_MARKERS = ("素", "蔬食")
+VEGETARIAN_INGREDIENTS = (
+    "青菜",
+    "蔬菜",
+    "豆腐",
+    "豆干",
+    "豆皮",
+    "菇",
+    "海帶",
+    "紫菜",
+    "地瓜",
+    "玉米",
+    "筍",
+)
+MEAT_TERMS = (
+    "雞", "豬", "牛", "鴨", "鵝", "羊", "肉", "培根", "火腿", "香腸", "貢丸", "排骨",
+    "魚", "蝦", "蟹", "海鮮", "花枝", "小卷", "魷魚", "蛤", "蚵", "干貝",
+)
+ANIMAL_PRODUCT_TERMS = ("蛋", "奶", "起司", "乳酪", "優格", "蜂蜜", "美乃滋")
+
+
+def _dietary(name: str, explicit: Any) -> tuple[list[str], list[str]]:
+    """從品名推斷素食相容性，回傳 (相容, 不相容)。
+
+    兩個都空代表「從品名判斷不出來」。這個三態很重要：舊版只有
+    ``dietaryFlags`` 一個清單，而 deterministic 路徑永遠回空，推薦器的
+    ``dietary.issubset(flags)`` 就必定失敗——使用者說一句「我吃素」整份菜單
+    會被清空。分出 conflicts 之後，推薦器才能只排除確定衝突的品項。
+    """
+    if isinstance(explicit, list) and explicit:
+        return [str(value) for value in explicit], []
+    has_marker = any(term in name for term in VEGETARIAN_MARKERS)
+    has_meat = any(term in name for term in MEAT_TERMS)
+    has_animal = any(term in name for term in ANIMAL_PRODUCT_TERMS)
+    flags: list[str] = []
+    conflicts: list[str] = []
+    # 「素肉燥飯」的素字優先於肉字——店家自己標素就是素。
+    if has_marker or (not has_meat and any(term in name for term in VEGETARIAN_INGREDIENTS)):
+        flags.append("vegetarian")
+        (conflicts if has_animal else flags).append("vegan")
+    elif has_meat:
+        conflicts.extend(("vegetarian", "vegan"))
+    elif has_animal:
+        conflicts.append("vegan")
+    return flags, conflicts
+
+
 def _role(name: str, category: str) -> tuple[str, float]:
     value = f"{category} {name}".casefold()
     for role, terms in ROLE_TERMS.items():
@@ -116,12 +163,14 @@ def annotate_item(item: dict[str, Any], category: str = "") -> dict[str, Any]:
         [str(tag) for tag in value.get("tags", [])] if isinstance(value.get("tags"), list) else []
     )
     role, confidence = _role(name, category)
+    dietary_flags, dietary_conflicts = _dietary(name, value.get("dietaryFlags"))
     value["semantic"] = {
         "schemaVersion": SEMANTIC_SCHEMA_VERSION,
         "role": str(value.get("role") or role),
         "spice": _spice(name, tags),
         "allergens": _allergens(name, value.get("allergens")),
-        "dietaryFlags": list(value.get("dietaryFlags") or []),
+        "dietaryFlags": dietary_flags,
+        "dietaryConflicts": dietary_conflicts,
         "ingredients": list(value.get("ingredients") or []),
         "tasteTags": list(value.get("tasteTags") or []),
         "confidence": confidence,

@@ -318,11 +318,18 @@ def _recommend_impl(
             dict(raw_allergens) if isinstance(raw_allergens, dict) else {}
         )
         item_allergens = {str(value) for value in allergen_data.get("values", [])}
-        if allergies and (not allergen_data.get("known") or allergies & item_allergens):
-            continue
         flags = {str(value) for value in semantic.get("dietaryFlags", [])}
-        if dietary and not dietary.issubset(flags):
+        conflicts = {str(value) for value in semantic.get("dietaryConflicts", [])}
+        # 舊版是「不確定就排除」，而 deterministic 標註的 known 永遠是 False、
+        # dietaryFlags 永遠是空的——結果只要使用者提到過敏或吃素，候選就會被
+        # 清成零項。現在只排除確定衝突的，不確定的保留但標記，由排序壓到後面
+        # 並在 notes 提醒使用者向店家確認。
+        if (allergies & item_allergens) or (dietary & conflicts):
             continue
+        uncertain = bool(allergies and not allergen_data.get("known")) or bool(
+            dietary and not dietary.issubset(flags)
+        )
+        item = {**item, "dietUncertain": uncertain}
         raw_spice = semantic.get("spice")
         spice_data: dict[str, Any] = dict(raw_spice) if isinstance(raw_spice, dict) else {}
         if spice_profile.get("strict"):
@@ -389,6 +396,8 @@ def _recommend_impl(
 
     def sort_key(item: dict[str, Any]):
         return (
+            # 成分確定的一律排在不確定的前面——安全性優先於偏好分數。
+            bool(item.get("dietUncertain")),
             -float(item.get("preferenceScore") or 0),
             item["price"] is None,
             item["price"] if item["price"] is not None else UNKNOWN_PRICE,
@@ -424,6 +433,7 @@ def _recommend_impl(
                     "category": item["category"],
                     "reason": reason,
                     "type": kind,
+                    "uncertain": bool(item.get("dietUncertain")),
                 }
             )
             subtotal += price or 0.0
@@ -439,6 +449,14 @@ def _recommend_impl(
     notes = ""
     if not selected:
         notes = "預算不足或沒有符合條件且價格明確的品項"
+    elif allergies or dietary:
+        unverified = [row["name"] for row in selected[:limit] if row.get("uncertain")]
+        if unverified:
+            notes = (
+                "菜單只有品名沒有成分表，以下品項無法確認成分："
+                + "、".join(unverified)
+                + "。點餐時請再向店家確認。"
+            )
     return {
         "items": selected[:limit],
         "notes": notes,

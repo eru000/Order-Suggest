@@ -763,6 +763,10 @@ def _build_recommendation_prompt(
     service = round(subtotal * 0.1, 1)
     total   = subtotal + service
 
+    # 推薦器的 notes 以前沒進過 prompt，等於「成分無法確認」這類提醒寫了也沒人看得到。
+    rec_notes = str(rec.get("notes") or "").strip() if isinstance(rec, dict) else ""
+    notes_block = f"\n必須轉達給使用者的提醒：\n{rec_notes}\n" if rec_notes else ""
+
     items_json = json.dumps(items, ensure_ascii=False, indent=2)
     menu_text = _format_menu_for_prompt(menu)
     menu_block = f"\n{menu_text}\n" if menu_text else ""
@@ -780,8 +784,9 @@ def _build_recommendation_prompt(
 - 小計：NT${subtotal:.0f}
 - 服務費估算：NT${service:.0f}
 - 合計估算：NT${total:.0f}
-
+{notes_block}
 判斷時注意：
+- 出現「必須轉達給使用者的提醒」時，一定要在回覆裡講出來，不可以省略。
 - 候選清單裡部分項目可能是「加料」（價格明顯低於其他主餐），請優先講主餐。
 - 使用者問「有沒有某類餐點」時，一律看「完整菜單」再回答。候選清單裡沒有不代表
   店裡沒有——除非完整菜單裡真的找不到，否則絕對不要說「這家店沒有 XX」。
