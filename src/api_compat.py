@@ -64,6 +64,7 @@ from runtime_cache import DistributedLock, ExpiringJsonStore
 from conversation_service import ConversationService
 from menu_ingestion_service import MenuIngestionService
 from pending_analysis_service import PendingAnalysisService
+from observability import configure_logging, emit
 
 # 專案路徑設定（PROJECT_ROOT 已在上方第16行定義）
 WEB_DIR = os.path.join(PROJECT_ROOT, "web")
@@ -98,6 +99,46 @@ app.add_middleware(
 )
 # 提供 /web/* 靜態檔案
 app.mount("/web", StaticFiles(directory=WEB_DIR), name="web")
+
+configure_logging(LOG_DIR)
+
+
+@app.middleware("http")
+async def _request_timing(request, call_next):
+    """記錄每一筆請求的耗時到 logs/events.jsonl。
+
+    Starlette 的 ``call_next`` 一律回傳 streaming 形式的回應，所以這裡分兩個
+    數字：``ttfbMs`` 是拿到 header 的時間，``durationMs`` 是 body 真的送完的
+    時間。對 /api/chat/stream 這種邊生成邊送的端點，只看前者會嚴重低估。
+    """
+    started = time.perf_counter()
+    response = await call_next(request)
+    ttfb_ms = round((time.perf_counter() - started) * 1000, 1)
+
+    def _record(duration_ms: float) -> None:
+        emit(
+            "http.request",
+            method=request.method,
+            path=request.url.path,
+            status=response.status_code,
+            durationMs=duration_ms,
+            ttfbMs=ttfb_ms,
+        )
+
+    iterator = getattr(response, "body_iterator", None)
+    if iterator is None:
+        _record(ttfb_ms)
+        return response
+
+    async def _timed_body():
+        try:
+            async for chunk in iterator:
+                yield chunk
+        finally:
+            _record(round((time.perf_counter() - started) * 1000, 1))
+
+    response.body_iterator = _timed_body()
+    return response
 
 # 載入共用菜單庫；活動餐廳由各 session 個別保存。
 DEFAULT_RESTAURANT_NAME = os.getenv("DEFAULT_RESTAURANT_NAME", "預設餐廳")

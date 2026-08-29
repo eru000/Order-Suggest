@@ -7,6 +7,7 @@ import io
 import json
 import os
 import re
+import time
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -21,6 +22,7 @@ except ImportError:
     # JPEG/PNG/WebP continue to work; requirements.txt installs HEIF support.
     pass
 
+from observability import emit
 from ollama_fuc import vision_chat
 
 
@@ -585,6 +587,7 @@ def analyze_menu_image(
     if mime not in ALLOWED_IMAGE_TYPES:
         raise ValueError("僅支援 JPEG、PNG、WebP 或 HEIC 圖片")
 
+    started = time.perf_counter()
     try:
         full_bytes, regions, image_size = prepare_image_regions(image_bytes)
     except Exception:
@@ -612,7 +615,9 @@ def analyze_menu_image(
     ocr_fallback_warning = ""
 
     prompt = _tile_prompt("full", [0, 0, *image_size], {}, ask_identity=True)
+    prepare_ms = round((time.perf_counter() - started) * 1000, 1)
     image_url = _data_url(full_bytes, "image/jpeg")
+    ocr_started = time.perf_counter()
     try:
         response = _call_vision(
             vision_func,
@@ -631,6 +636,7 @@ def analyze_menu_image(
         print(f"[Vision] {ocr_fallback_warning}: {exc}")
         response = _call_vision(vision_func, prompt, image_url, model=verify_model, temperature=0.0)
 
+    ocr_ms = round((time.perf_counter() - ocr_started) * 1000, 1)
     result = normalize_vision_result(_extract_json_value(response), restaurant_hint)
     categories = result["categories"]
     if not categories:
@@ -651,6 +657,20 @@ def analyze_menu_image(
         warnings.append(f"使用者店名「{restaurant_hint}」與圖片候選「{detected}」不同，確認前不會存檔")
     if ocr_fallback_warning:
         warnings.append(ocr_fallback_warning)
+
+    emit(
+        "menu_vision.analyzed",
+        model=active_ocr_model,
+        modelFallback=bool(ocr_fallback_warning),
+        # prepareMs 是本機縮放，ocrMs 才是模型呼叫——兩者分開才看得出慢在哪。
+        prepareMs=prepare_ms,
+        ocrMs=ocr_ms,
+        totalMs=round((time.perf_counter() - started) * 1000, 1),
+        imageSize=list(image_size),
+        itemCount=item_count,
+        priceCoverage=coverage,
+        qualityScore=quality_score,
+    )
 
     return {
         "restaurant_name": (restaurant_hint.strip() or detected)[:120],
