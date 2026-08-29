@@ -152,9 +152,13 @@ def build_session_repository(project_root: str | Path) -> SessionRepository:
             build_database(project_root, create_schema=False)
         )
     else:
+        from storage.database import isolate_test_path, resolve_data_dir
+
         configured = os.getenv("DATABASE_PATH", "").strip()
-        database_path = (
-            Path(configured) if configured else Path(project_root) / "data" / "ordersuggest.db"
+        # 走 resolve_data_dir / isolate_test_path 而不是自己拼路徑，
+        # 測試才不會連舊版 sqlite 一起寫穿。
+        database_path = isolate_test_path(
+            Path(configured) if configured else resolve_data_dir(project_root) / "ordersuggest.db"
         )
         primary = SQLiteSessionRepository(database_path)
     redis_url = os.getenv("REDIS_URL", "").strip()
