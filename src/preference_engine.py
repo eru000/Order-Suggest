@@ -67,13 +67,15 @@ SPICE_RULES: tuple[tuple[re.Pattern[str], dict[str, Any]], ...] = (
     ),
     (
         re.compile(
-            r"不吃辣|不能吃辣|不敢吃辣|不會吃辣|受不了辣|怕辣|不要辣|不加辣|免辣|去辣|無辣|不辣"
+            r"不吃辣|不能吃辣|不敢吃辣|不會吃辣|不想吃辣|不愛吃辣|不喜歡辣|受不了辣|怕辣"
+            r"|不要辣|不加辣|免辣|去辣|無辣|不辣"
         ),
         {"maximum": 0, "target": 0, "strict": True},
     ),
     (re.compile(r"越辣越好|爆辣|特辣|超辣"), {"minimum": 4, "target": 5, "strict": False}),
     (re.compile(r"大辣|很辣|重辣"), {"minimum": 3, "target": 4, "strict": False}),
-    (re.compile(r"中辣|要辣|愛吃辣|嗜辣|辣一點|重口味"), {"target": 3, "strict": False}),
+    # 這條放在否定規則之後，「不愛吃辣」才不會被「愛吃辣」搶去判成中辣。
+    (re.compile(r"中辣|要辣|愛吃辣|想吃辣|嗜辣|辣一點|重口味"), {"target": 3, "strict": False}),
     (
         re.compile(r"微辣|小辣|一點點辣|一點辣|可以吃一點辣|辣度普通"),
         {"maximum": 2, "target": 1, "strict": False},
@@ -172,10 +174,13 @@ def _split_terms(value: str) -> list[str]:
 
 # 「不要」含「要」、「不吃」含「吃」，所以正面觸發詞一律用多字詞，且把否定
 # 形式排在同一條 alternation 之外——單字「要」會把「我不要辣」讀成喜歡辣。
-LIKE_CUES = re.compile(r"想吃|愛吃|要吃|想喝|想點|我要|喜歡|來個|來份|來碗|來一份")
+# 前面那個字是否定詞就不算數：「我不想吃麵」的「想吃」、「我不喜歡蓮子」的
+# 「喜歡」都會命中，少了這個 lookbehind 會把討厭讀成喜歡。
+LIKE_CUES = re.compile(r"(?<![不別沒])(?:想吃|愛吃|要吃|想喝|想點|我要|喜歡|來個|來份|來碗|來一份)")
 
 # 只削掉動詞開頭與語尾助詞。不碰數量詞是刻意的：「三杯雞」削掉「三杯」會變成
 # 「雞」，比漏抓還糟——漏抓只是少加分，錯抓會推薦到完全不相干的品項。
+_DISLIKE_LEADING = re.compile(r"^(?:不要|不吃|不敢吃|不想吃|不愛吃|不喜歡|忌口|別吃|別)+")
 _LIKE_LEADING = re.compile(r"^[吃喝點來]+")
 _LIKE_TRAILING = re.compile(r"[的嗎呢啊喔吧了]+$")
 
@@ -273,15 +278,21 @@ def parse_preferences(
                     )
 
     spice_noise = {"辣", "太辣", "很辣", "超辣", "大辣", "中辣", "小辣", "微辣", "重辣", "飲料"}
-    for cue in ("不要", "不吃", "不敢吃", "忌口"):
+    for cue in ("不要", "不吃", "不敢吃", "不想吃", "不愛吃", "不喜歡", "忌口"):
         for match in re.finditer(cue, source):
             segment = source[match.end() :]
-            for term in _split_terms(segment):
-                if term and term not in spice_noise and "過敏" not in term:
-                    parsed.dislikes.append(term)
-                    parsed.operations.append(
-                        PreferenceOperation(action="add", field="dislikes", value=term)
-                    )
+            for raw in _split_terms(segment):
+                # 「我不吃麵、不吃粥」切出來的第二段是「不吃粥」——觸發詞跟著
+                # 被切進來了。留著的話 AI 會把「不吃粥」當成一道菜名唸出來。
+                term = _DISLIKE_LEADING.sub("", raw).strip()
+                if not term or term in spice_noise or "過敏" in term:
+                    continue
+                if term in parsed.dislikes:
+                    continue
+                parsed.dislikes.append(term)
+                parsed.operations.append(
+                    PreferenceOperation(action="add", field="dislikes", value=term)
+                )
 
     # recommendation.py 一直有讀 prefs["likes"] 並加分，但兩邊都沒有人產生它，
     # 所以「我要當歸的」跟「有什麼推薦？」以前會給出一模一樣的結果。

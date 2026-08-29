@@ -153,9 +153,32 @@ class StructuredPreferenceTest(unittest.TestCase):
         self.assertNotEqual(liked["items"][0]["name"], plain["items"][0]["name"])
 
     def test_negation_is_not_read_as_a_like(self):
-        """「不要」含「要」、「不吃」含「吃」——單字觸發詞會把否定讀成喜歡。"""
-        for text in ("我不要辣", "我不吃麵", "不要飲料", "我不要當歸"):
+        """「不要」含「要」、「不吃」含「吃」——單字觸發詞會把否定讀成喜歡。
+
+        後三個是「否定詞 + 正面觸發詞」：「不想吃」含「想吃」、「不喜歡」含
+        「喜歡」，光靠多字詞擋不住，要再加否定的 lookbehind。
+        """
+        for text in ("我不要辣", "我不吃麵", "不要飲料", "我不要當歸",
+                     "我不想吃麵", "我不喜歡蓮子", "我不愛吃辣"):
             self.assertIsNone(parse_preferences(text).get("likes"), text)
+
+    def test_negated_cues_become_excludes(self):
+        self.assertEqual(parse_preferences("我不想吃麵").get("excludes"), ["麵"])
+        self.assertEqual(parse_preferences("我不喜歡蓮子").get("excludes"), ["蓮子"])
+
+    def test_repeated_cue_does_not_leak_into_the_term(self):
+        """「我不吃麵、不吃粥」切出來的第二段會夾帶「不吃」。
+
+        留著的話 AI 會把「不吃粥」當成一道菜名唸出來。
+        """
+        self.assertEqual(parse_preferences("我不吃麵、不吃粥").get("excludes"), ["麵", "粥"])
+
+    def test_spice_phrasings_and_their_negations(self):
+        """「想吃辣」以前完全沒被收，「不愛吃辣」則被「愛吃辣」搶去判成中辣。"""
+        for text in ("我想吃辣的", "我愛吃辣", "想吃辣一點"):
+            self.assertEqual(parse_preferences(text).get("spiceLevel"), "中辣", text)
+        for text in ("我不想吃辣", "我不愛吃辣", "我不要辣", "不敢吃辣"):
+            self.assertEqual(parse_preferences(text).get("spiceLevel"), "不辣", text)
 
     def test_disliking_a_term_drops_it_from_likes(self):
         base: dict = {}
