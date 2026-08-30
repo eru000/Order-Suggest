@@ -77,12 +77,52 @@
   const input = document.getElementById('input');
   const sendBtn = document.getElementById('send-btn');
   const loading = document.getElementById('loading');
+  const toolbarRestaurantMeta = document.getElementById('toolbar-restaurant-meta');
+  const mobileRestaurantCount = document.getElementById('mobile-restaurant-count');
+  const globalRestaurantName = document.getElementById('global-restaurant-name');
+  const assistantStatus = document.getElementById('assistant-status');
+  const managementDrawer = document.getElementById('management-drawer');
+  const mobileNavBtn = document.getElementById('mobile-nav-btn');
+  const drawerCloseBtn = document.getElementById('drawer-close-btn');
+  const drawerScrim = document.getElementById('drawer-scrim');
 
   let threads = [];
   let activeThreadId = null;
   let menuThreadId = null;
   let lastUndo = null;
   let searchQuery = '';
+  let drawerReturnFocus = null;
+
+  const setAssistantStatus = (text, state = 'ready') => {
+    if (!assistantStatus) return;
+    assistantStatus.dataset.state = state;
+    assistantStatus.innerHTML = `<span class="state-dot" aria-hidden="true"></span>${escapeHtml(text)}`;
+  };
+
+  const openManagementDrawer = () => {
+    if (!managementDrawer || window.innerWidth >= 992) return;
+    drawerReturnFocus = document.activeElement;
+    document.body.classList.add('drawer-open');
+    mobileNavBtn?.setAttribute('aria-expanded', 'true');
+    managementDrawer.setAttribute('aria-hidden', 'false');
+    window.requestAnimationFrame(() => drawerCloseBtn?.focus({ preventScroll: true }));
+  };
+
+  const closeManagementDrawer = ({ restoreFocus = true } = {}) => {
+    if (!managementDrawer) return;
+    document.body.classList.remove('drawer-open');
+    mobileNavBtn?.setAttribute('aria-expanded', 'false');
+    if (window.innerWidth < 992) managementDrawer.setAttribute('aria-hidden', 'true');
+    else managementDrawer.removeAttribute('aria-hidden');
+    if (restoreFocus && drawerReturnFocus instanceof HTMLElement) {
+      drawerReturnFocus.focus({ preventScroll: true });
+    }
+    drawerReturnFocus = null;
+  };
+
+  if (managementDrawer && window.innerWidth < 992) {
+    managementDrawer.setAttribute('aria-hidden', 'true');
+  }
 
   const nowTs = () => Date.now();
   const sidFactory = () => 't_' + Math.random().toString(16).slice(2) + Date.now().toString(16);
@@ -428,10 +468,12 @@
   const showLoading = (show) => {
     if (!loading) return;
     if (show) {
+      setAssistantStatus('正在產生推薦', 'busy');
       loading.classList.remove('hidden');
       chatBox.appendChild(loading);
       if (isNearBottom()) scrollToBottom();
     } else {
+      setAssistantStatus('等待需求', 'ready');
       loading.classList.add('hidden');
     }
   };
@@ -494,8 +536,9 @@
         + '<span class="rec-price">' + price + '</span>' + why + '</li>';
     }).join('');
     const subtotal = (typeof ev.subtotal === 'number' && ev.subtotal > 0)
-      ? '<div class="rec-total">小計 <strong>$' + Math.round(ev.subtotal) + '</strong></div>' : '';
-    card.innerHTML = '<div class="rec-head">建議這樣點</div><ul class="rec-list">' + rows + '</ul>' + subtotal;
+      ? '<div class="rec-total"><span>共 ' + items.length + ' 道菜</span><span>合計 <strong>$' + Math.round(ev.subtotal) + '</strong></span></div>' : '';
+    card.innerHTML = '<div class="rec-head"><span><strong>推薦點餐單</strong><span class="rec-head-meta">依照目前需求組合</span></span><span class="rec-head-meta">價格</span></div>'
+      + '<ul class="rec-list">' + rows + '</ul>' + subtotal;
     card.classList.remove('hidden');
   };
 
@@ -804,6 +847,33 @@
 
   newChatBtn?.addEventListener('click', () => newChat({ notice: '已建立新對話' }));
   crawlMenuBtn?.addEventListener('click', crawlRestaurantMenu);
+  mobileNavBtn?.addEventListener('click', openManagementDrawer);
+  drawerCloseBtn?.addEventListener('click', () => closeManagementDrawer());
+  drawerScrim?.addEventListener('click', () => closeManagementDrawer());
+  document.querySelectorAll('[data-proxy-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-proxy-target');
+      const target = targetId ? document.getElementById(targetId) : null;
+      closeManagementDrawer({ restoreFocus: false });
+      target?.click();
+    });
+  });
+  chatListEl?.addEventListener('click', () => {
+    if (window.innerWidth < 992) closeManagementDrawer({ restoreFocus: false });
+  });
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && document.body.classList.contains('drawer-open')) {
+      closeManagementDrawer();
+    }
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 992) {
+      if (document.body.classList.contains('drawer-open')) closeManagementDrawer({ restoreFocus: false });
+      managementDrawer?.removeAttribute('aria-hidden');
+    } else if (!document.body.classList.contains('drawer-open')) {
+      managementDrawer?.setAttribute('aria-hidden', 'true');
+    }
+  });
 
   /* ---------------------------------------------
      照片辨識菜單：辨識 → 確認 → 修正
@@ -1421,6 +1491,7 @@
   let reviewRequestController = null;
   let reviewRequestVersion = 0;
   let activeReviewRestaurantName = '';
+  let mobileReviewPreviousFocus = null;
 
   const getSelectedRestaurantName = () => {
     const name = restaurantSelect?.value || restaurantSelectMobile?.value || '';
@@ -1701,8 +1772,10 @@
 
   function openMobileReviewModal() {
     if (!mobileReviewModal || !mobileReviewBody || !reviewPanel) return;
+    mobileReviewPreviousFocus = document.activeElement;
     mobileReviewBody.appendChild(reviewPanel);
     mobileReviewModal.classList.remove('hidden');
+    window.requestAnimationFrame(() => mobileReviewClose?.focus({ preventScroll: true }));
   }
 
   function handleMobileReviewAction() {
@@ -1716,6 +1789,10 @@
     if (!mobileReviewModal || !reviewPanel || !reviewPanelHome) return;
     mobileReviewModal.classList.add('hidden');
     reviewPanelHome.insertBefore(reviewPanel, reviewPanelNextSibling);
+    if (mobileReviewPreviousFocus instanceof HTMLElement) {
+      mobileReviewPreviousFocus.focus({ preventScroll: true });
+    }
+    mobileReviewPreviousFocus = null;
   }
 
   function showIdentityCandidates(candidates, target) {
@@ -1843,6 +1920,9 @@
           restaurantSelectMobile.innerHTML = '<option>無餐廳</option>';
         }
         restaurantInfo.textContent = '尚未爬取任何餐廳菜單';
+        if (globalRestaurantName) globalRestaurantName.textContent = '尚無可用餐廳';
+        if (toolbarRestaurantMeta) toolbarRestaurantMeta.textContent = '0 項';
+        if (mobileRestaurantCount) mobileRestaurantCount.textContent = '0 項';
         restaurantInfo.style.background = '#fef2f2';
         restaurantInfo.style.color = '#991b1b';
         return;
@@ -1871,6 +1951,9 @@
       const active = data.restaurants.find(r => r.active);
       if (active) {
         restaurantInfo.textContent = `當前使用 ${active.name} 的菜單 (共 ${active.itemCount} 項菜品)`;
+        if (globalRestaurantName) globalRestaurantName.textContent = active.name;
+        if (toolbarRestaurantMeta) toolbarRestaurantMeta.textContent = `${active.itemCount} 項`;
+        if (mobileRestaurantCount) mobileRestaurantCount.textContent = `${active.itemCount} 項`;
         restaurantInfo.style.background = '#f0fdf4';
         restaurantInfo.style.color = '#166534';
         await loadRestaurantReview(active.name);
@@ -1884,6 +1967,9 @@
         restaurantSelectMobile.innerHTML = '<option>載入失敗</option>';
       }
       restaurantInfo.textContent = '無法連接到後端服務';
+      if (globalRestaurantName) globalRestaurantName.textContent = '餐廳資料讀取失敗';
+      if (toolbarRestaurantMeta) toolbarRestaurantMeta.textContent = 'ERROR';
+      if (mobileRestaurantCount) mobileRestaurantCount.textContent = 'ERROR';
       restaurantInfo.style.background = '#fef2f2';
       restaurantInfo.style.color = '#991b1b';
     }

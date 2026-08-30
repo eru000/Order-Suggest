@@ -44,6 +44,69 @@ OLLAMA_BIN = os.getenv("OLLAMA_BIN", "ollama")
 API_BASE_URL = os.getenv("API_BASE_URL", "").rstrip("/")
 API_KEY = os.getenv("API_KEY", "")
 VISION_MODEL = os.getenv("VISION_MODEL", "ornith-35b")
+VISION_JSON_TOOL_NAME = "submit_menu_json"
+
+
+def _vision_json_tool() -> Dict[str, Any]:
+    """Schema shared by overview, tile OCR, verification, and the legacy endpoint."""
+    menu_item = {
+        "type": "object",
+        "properties": {
+            "name": {"type": "string"},
+            "price": {"type": ["number", "string", "null"]},
+        },
+        "required": ["name", "price"],
+        "additionalProperties": True,
+    }
+    return {
+        "type": "function",
+        "function": {
+            "name": VISION_JSON_TOOL_NAME,
+            "description": "回傳提示要求的菜單 OCR JSON，不執行其他動作",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "restaurant_name": {"type": ["string", "null"]},
+                    "brand_candidates": {"type": "array", "items": {"type": "string"}},
+                    "source_type": {"type": "string"},
+                    "menu_type": {"type": "string"},
+                    "layout": {"type": "string"},
+                    "warnings": {"type": "array", "items": {"type": "string"}},
+                    "categories": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"type": "string"},
+                                "items": {"type": "array", "items": menu_item},
+                            },
+                            "required": ["name", "items"],
+                            "additionalProperties": True,
+                        },
+                    },
+                    "menu_items": {"type": "array", "items": menu_item},
+                },
+                "additionalProperties": True,
+            },
+        },
+    }
+
+
+def _extract_json_fragment(text: Any) -> Optional[str]:
+    """Return the first complete JSON object/array embedded in model reasoning."""
+    if not isinstance(text, str):
+        return None
+    decoder = json.JSONDecoder()
+    for index, char in enumerate(text):
+        if char not in "[{":
+            continue
+        try:
+            value, _ = decoder.raw_decode(text[index:])
+        except json.JSONDecodeError:
+            continue
+        if isinstance(value, (dict, list)):
+            return json.dumps(value, ensure_ascii=False)
+    return None
 
 
 def _float_env(name: str, default: float) -> float:
@@ -185,6 +248,7 @@ def _api_chat(
     timeout: float = 180.0,
     temperature: Optional[float] = None,
     allow_reasoning_fallback: bool = False,
+    json_mode: bool = False,
 ) -> str:
     url = API_BASE_URL
     if not url.endswith("/chat/completions"):
@@ -196,59 +260,93 @@ def _api_chat(
         # 辨識類呼叫要 temperature=0，不能套用對話用的預設值
         "temperature": _float_env("API_TEMPERATURE", 0.7) if temperature is None else temperature,
     }
+    if json_mode:
+        # 學校端的 vLLM 圖片路徑會忽略 tool_choice="none"，仍把「鍋燒類」等
+        # 分類誤判成函式名稱。指定唯一合法函式後，結構化答案會穩定放在它的
+        # arguments；這比依賴經常為空的 message.content 更可靠。
+        payload.update({
+            "tools": [_vision_json_tool()],
+            "tool_choice": {
+                "type": "function",
+                "function": {"name": VISION_JSON_TOOL_NAME},
+            },
+        })
     data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
-    req = request.Request(
-        url,
-        data=data,
-        headers={
-            "Authorization": f"Bearer {API_KEY}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
+    max_attempts = 2 if json_mode else 1
+    last_finish_reason: Any = None
+    last_tool_names: List[str] = []
+
+    for attempt in range(max_attempts):
+        req = request.Request(
+            url,
+            data=data,
+            headers={
+                "Authorization": f"Bearer {API_KEY}",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+
+        try:
+            with request.urlopen(req, timeout=timeout) as resp:
+                body = resp.read().decode("utf-8")
+        except error.HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")
+            raise RuntimeError(f"model API request failed: HTTP {exc.code} {detail}") from exc
+
+        obj = json.loads(body)
+        choices = obj.get("choices") or []
+        if not choices:
+            raise RuntimeError(f"model API returned no choices: {body[:500]}")
+        choice = choices[0]
+        message = choice.get("message") or {}
+        tool_calls = message.get("tool_calls") or []
+        for call in tool_calls:
+            if not isinstance(call, dict) or not isinstance(call.get("function"), dict):
+                continue
+            function = call["function"]
+            if function.get("name") != VISION_JSON_TOOL_NAME:
+                continue
+            arguments = function.get("arguments")
+            if isinstance(arguments, str) and arguments.strip():
+                return arguments.strip()
+            if isinstance(arguments, (dict, list)):
+                return json.dumps(arguments, ensure_ascii=False)
+
+        content = message.get("content")
+        if isinstance(content, str) and content.strip():
+            return content.strip()
+
+        # Ornith thinking model 有時把答案留在 reasoning_content。只有裡面真的
+        # 有完整 JSON 才救援，避免把未完成的思考文字交給菜單解析器。
+        reasoning_json = _extract_json_fragment(message.get("reasoning_content"))
+        if allow_reasoning_fallback and reasoning_json:
+            print(f"[API] {model} 的 content 是空的，改用 reasoning_content（finish_reason="
+                  f"{choice.get('finish_reason')}）")
+            return reasoning_json
+
+        last_finish_reason = choice.get("finish_reason")
+        last_tool_names = [
+            str(call.get("function", {}).get("name") or "")[:80]
+            for call in tool_calls
+            if isinstance(call, dict) and isinstance(call.get("function"), dict)
+        ]
+        if attempt + 1 < max_attempts:
+            detail = (
+                f"，誤判工具：{', '.join(filter(None, last_tool_names))}"
+                if last_tool_names
+                else ""
+            )
+            print(f"[API] {model} 回傳空 content{detail}，以 JSON 模式重試一次")
+
+    tool_detail = (
+        f", tool_calls={','.join(filter(None, last_tool_names))}"
+        if last_tool_names
+        else ""
     )
-
-    try:
-        with request.urlopen(req, timeout=timeout) as resp:
-            body = resp.read().decode("utf-8")
-    except error.HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"model API request failed: HTTP {exc.code} {detail}") from exc
-
-    obj = json.loads(body)
-    choices = obj.get("choices") or []
-    if not choices:
-        raise RuntimeError(f"model API returned no choices: {body[:500]}")
-    choice = choices[0]
-    message = choice.get("message") or {}
-    content = message.get("content")
-    if isinstance(content, str) and content.strip():
-        return content.strip()
-
-    # Ornith-397B（vibe／nemotron-3-ultra 端點）是 thinking model，推理放在
-    # reasoning_content，content 另外給。實測回一句 {"ok":1} 就燒掉 208 個
-    # completion token——推理吃光預算時 content 會是空的，整個切塊就白跑。
-    #
-    # 只有在推理裡真的看得到 JSON 才拿來用。這點很重要：呼叫端（menu_vision）
-    # 靠這個例外降級到備用模型，實測那次降級救回了 5 個品項。若無條件回傳一段
-    # 解析不出東西的推理文字，等於把那個救援機制關掉，結果反而更差。
-    #
-    # 舊版只檢查「有沒有成對括號」，這個門檻太低：ornith-35b 的思考文字裡有
-    # prompt 回抄的切塊座標 [686, 880, 1558, 2000]，光這個就能讓判斷通過。實測
-    # 四個切塊全中——模型其實把菜單讀對了（鴨肉飯 60、鴨腿飯 80…），但最終
-    # JSON 從沒吐出來，於是這裡回傳一整段英文思考，_extract_json_value 抽到那
-    # 串座標當成菜單，最後 0 個品項。而且因為沒拋例外，降級救援整個被跳過。
-    # 所以現在改成必須真的 parse 得出帶資料的 JSON 才算數。
-    reasoning = message.get("reasoning_content")
-    if allow_reasoning_fallback and isinstance(reasoning, str):
-        payload = _find_json_payload(reasoning)
-        if payload is not None:
-            print(f"[API] {model} 的 content 是空的，改用 reasoning_content 裡的 JSON"
-                  f"（finish_reason={choice.get('finish_reason')}）")
-            return payload
-
     raise RuntimeError(
-        f"model API returned empty content (finish_reason={choice.get('finish_reason')}): "
-        f"{body[:500]}"
+        f"model API returned empty content after {max_attempts} attempt(s) "
+        f"(finish_reason={last_finish_reason}{tool_detail})"
     )
 
 
@@ -355,13 +453,23 @@ def vision_chat(
     urls = [image_url] if isinstance(image_url, str) else list(image_url)
     content.extend({"type": "image_url", "image_url": {"url": url}} for url in urls)
     return _api_chat(
-        [{"role": "user", "content": content}],
+        [
+            {
+                "role": "system",
+                "content": (
+                    "你是菜單 OCR JSON 服務。必須使用指定的 submit_menu_json 函式回傳；"
+                    "只能把完整結果放進函式 arguments，不得把分類或菜名當成函式名稱。"
+                ),
+            },
+            {"role": "user", "content": content},
+        ],
         model or VISION_MODEL,
         timeout=timeout,
         temperature=_float_env("VISION_TEMPERATURE", 0.0) if temperature is None else temperature,
         # 辨識這條路只要 JSON，推理文字裡撈得到就有用。對話那條路不開，
         # 否則使用者會看到模型的思考過程而不是回覆。
         allow_reasoning_fallback=True,
+        json_mode=True,
     )
 
 _MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文紙本菜單、木牌、黑板或螢幕截圖）。

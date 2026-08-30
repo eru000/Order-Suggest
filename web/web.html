@@ -5,130 +5,162 @@
   <meta charset="utf-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
-  <title>點餐助手</title>
-  <link rel="stylesheet" href="/web/web.css?v=20260816-cropper" />
+  <title>點餐建議｜Order Suggest</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23202a56'/%3E%3Crect x='7' y='7' width='18' height='18' fill='%23d8b34e'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/web/web.css?v=20260830-ticket2" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
 <body>
   <div class="app-shell">
-    <aside class="sidebar">
-      <div class="sidebar-brand">
-        <div class="logo-chip">點餐助手</div>
+    <header class="global-nav">
+      <div class="global-brand" aria-label="Order Suggest">
+        <span class="brand-lockup">
+          <strong class="brand-name">點餐建議</strong>
+          <small>ORDER SUGGEST</small>
+        </span>
       </div>
-
-      <!-- 餐廳選擇器 -->
-      <div class="restaurant-selector">
-        <label class="restaurant-label">
-          選擇餐廳
-        </label>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <select id="restaurant-select" class="restaurant-select" style="flex: 1;">
-            <option>載入中...</option>
-          </select>
-          <button id="delete-restaurant-btn" class="ghost-btn" type="button" title="刪除當前餐廳"
-            style="color: #dc2626; flex-shrink: 0;">🗑️</button>
-        </div>
-        <div id="restaurant-info" class="restaurant-info">
-          等待載入餐廳資訊...
-        </div>
+      <div class="global-context" aria-label="目前餐廳狀態">
+        <span>餐廳菜單</span>
+        <strong id="global-restaurant-name">正在讀取目前餐廳</strong>
+        <span id="toolbar-restaurant-meta" class="toolbar-meta">讀取中</span>
       </div>
-
-      <div class="review-panel" id="review-panel">
-        <div class="review-panel-head">
-          <div>
-            <div class="review-title">評價情報</div>
-            <div id="review-updated" class="review-updated">尚未更新</div>
-          </div>
-          <div class="review-head-actions">
-            <button id="change-review-identity-btn" class="ghost-btn review-change" type="button"
-              title="變更評價對應的餐廳分店" hidden>換分店</button>
-          </div>
-        </div>
-        <form id="review-search-form" class="review-search-form" role="search">
-          <label class="review-search-label" for="review-restaurant-input">輸入餐廳名稱</label>
-          <div class="review-search-row">
-            <input id="review-restaurant-input" class="review-search-input" type="search"
-              placeholder="例如：森森燒肉 台中中科店" maxlength="120" autocomplete="off" />
-            <button id="refresh-review-btn" class="ghost-btn review-refresh" type="submit">自動搜尋</button>
-          </div>
-          <div class="review-search-hint">自動搜尋 Google 公開評分、愛食記、RSS 與部落格食記</div>
-        </form>
-        <div id="review-content" class="review-content">
-          <div class="review-empty">選擇餐廳後可查看評價摘要</div>
-        </div>
+      <div class="global-nav-actions">
+        <button id="view-menu-btn" class="nav-btn" type="button" title="查看完整菜單">查看菜單</button>
+        <button id="upload-photo-btn" class="nav-btn" type="button" title="上傳菜單照片辨識">上傳菜單</button>
+        <button id="crawl-menu-btn" class="nav-btn" type="button" title="從 Google 搜尋並建立菜單">爬取菜單</button>
+        <button id="help-btn" class="nav-btn nav-utility" type="button">使用說明</button>
+        <button id="theme-toggle-btn" class="nav-btn nav-utility" type="button" title="切換深色模式">
+          <span id="theme-icon">深色模式</span>
+        </button>
+        <button id="new-chat-btn" class="nav-btn nav-primary" type="button">建立新建議</button>
+        <button id="mobile-nav-btn" class="nav-btn mobile-nav-btn" type="button"
+          aria-controls="management-drawer" aria-expanded="false">管理選單</button>
+        <input id="upload-photo-file" type="file" accept="image/*" hidden />
       </div>
+    </header>
 
-      <div class="sidebar-actions">
-        <button id="new-chat-btn" class="action-btn primary" type="button">＋ 新對話</button>
-      </div>
-      <div class="sidebar-chats" aria-label="對話列表">
-        <div class="chat-search">
-          <input id="chat-search" type="text" placeholder="搜尋對話…" autocomplete="off" />
-        </div>
-        <div class="chat-tools">
-          <button id="export-all-btn" class="ghost-btn" type="button">匯出</button>
-          <button id="import-json-btn" class="ghost-btn" type="button">匯入</button>
-          <input id="import-file" type="file" accept="application/json" hidden />
-        </div>
-        <div id="chat-list" class="chat-list"></div>
-      </div>
-      <div class="sidebar-meta">
-        <div>提示：右鍵或 ⋯ 可打開選單</div>
-        <div>手機：往下滑看輸入框</div>
-      </div>
-    </aside>
+    <section class="mobile-restaurant-bar" aria-label="目前餐廳">
+      <label for="restaurant-select-mobile">餐廳</label>
+      <select id="restaurant-select-mobile" class="restaurant-select-mobile">
+        <option>載入中...</option>
+      </select>
+      <span id="mobile-restaurant-count" class="toolbar-meta">— 項</span>
+    </section>
 
-    <main class="chat-panel">
-      <header class="chat-header">
-        <div class="header-left">
-          <p class="chat-title">點餐助手</p>
-          <!-- 手機版餐廳選擇器 -->
-          <select id="restaurant-select-mobile" class="restaurant-select-mobile">
-            <option>載入中...</option>
-          </select>
+    <div class="workspace">
+      <aside id="management-drawer" class="sidebar" aria-label="管理工具">
+        <div class="drawer-head">
+          <strong>點餐管理</strong>
+          <button id="drawer-close-btn" class="panel-icon-btn" type="button" aria-label="關閉管理選單">×</button>
         </div>
-        <div class="header-actions">
-          <div class="header-actions-left">
-            <button id="theme-toggle-btn" class="ghost-btn" type="button" title="切換深色模式">
-              <span id="theme-icon">深色模式</span>
-            </button>
-            <button id="clear-btn" class="ghost-btn" type="button">清空對話</button>
-            <button id="help-btn" class="ghost-btn" type="button">使用說明</button>
+
+        <section class="console-panel current-restaurant-panel">
+          <div class="panel-header"><span>目前餐廳</span><span class="panel-code">使用中</span></div>
+          <div class="panel-body">
+            <label class="sidebar-field-label" for="restaurant-select">選擇菜單</label>
+            <select id="restaurant-select" class="restaurant-select">
+              <option>載入中...</option>
+            </select>
+            <div id="restaurant-info" class="restaurant-info">等待載入餐廳資訊...</div>
+            <div class="compact-action-row">
+              <button id="mobile-review-btn" class="compact-btn mobile-review-btn" type="button"
+                title="搜尋或查看餐廳評價">評價情報</button>
+              <button id="delete-restaurant-btn" class="compact-btn danger" type="button"
+                title="刪除當前餐廳" aria-label="刪除當前餐廳">刪除餐廳</button>
+            </div>
           </div>
-          <div class="header-actions-right">
-            <button id="mobile-review-btn" class="ghost-btn mobile-review-btn" type="button"
-              title="搜尋或查看餐廳評價">搜尋評價</button>
-            <button id="view-menu-btn" class="ghost-btn" type="button" title="查看完整菜單">查看菜單</button>
-            <button id="upload-photo-btn" class="ghost-btn" type="button" title="上傳菜單照片辨識">📷上傳菜單</button>
-            <button id="crawl-menu-btn" class="ghost-btn" type="button" title="從 Google 搜尋並建立菜單">爬菜單</button>
-            <input id="upload-photo-file" type="file" accept="image/*" hidden />
+        </section>
+
+        <section class="console-panel conversations-panel">
+          <div class="panel-header"><span>最近的點餐單</span><span class="panel-code">本機</span></div>
+          <div class="panel-body conversation-tools">
+            <button class="compact-btn full-width drawer-only-action" type="button"
+              data-proxy-target="new-chat-btn">＋ 建立新建議</button>
+            <label class="visually-hidden" for="chat-search">搜尋對話</label>
+            <input id="chat-search" class="compact-input" type="text" placeholder="搜尋對話…" autocomplete="off" />
+          </div>
+          <div id="chat-list" class="chat-list" aria-label="對話列表"></div>
+        </section>
+
+        <section class="console-panel data-panel">
+          <div class="panel-header"><span>資料與工具</span><span class="panel-code">JSON</span></div>
+          <div class="panel-body data-actions">
+            <button id="export-all-btn" class="compact-btn" type="button">匯出對話</button>
+            <button id="import-json-btn" class="compact-btn" type="button">匯入對話</button>
+            <input id="import-file" type="file" accept="application/json" hidden />
+            <button class="compact-btn drawer-only-action" type="button" data-proxy-target="view-menu-btn">查看菜單</button>
+            <button class="compact-btn drawer-only-action" type="button" data-proxy-target="upload-photo-btn">上傳／辨識</button>
+            <button class="compact-btn drawer-only-action" type="button" data-proxy-target="crawl-menu-btn">爬取菜單</button>
+            <button class="compact-btn drawer-only-action" type="button" data-proxy-target="theme-toggle-btn">切換外觀</button>
+          </div>
+        </section>
+
+        <div class="sidebar-meta">對話資料儲存在這個瀏覽器。右鍵或 ⋯ 可管理單一對話。</div>
+
+        <div class="review-panel-home" hidden>
+          <div class="review-panel" id="review-panel">
+            <div class="review-panel-head">
+              <div>
+                <div class="review-title">評價情報</div>
+                <div id="review-updated" class="review-updated">尚未更新</div>
+              </div>
+              <div class="review-head-actions">
+                <button id="change-review-identity-btn" class="ghost-btn review-change" type="button"
+                  title="變更評價對應的餐廳分店" hidden>換分店</button>
+              </div>
+            </div>
+            <form id="review-search-form" class="review-search-form" role="search">
+              <label class="review-search-label" for="review-restaurant-input">輸入餐廳名稱</label>
+              <div class="review-search-row">
+                <input id="review-restaurant-input" class="review-search-input" type="search"
+                  placeholder="例如：森森燒肉 台中中科店" maxlength="120" autocomplete="off" />
+                <button id="refresh-review-btn" class="ghost-btn review-refresh" type="submit">自動搜尋</button>
+              </div>
+              <div class="review-search-hint">搜尋 Google 公開評分、愛食記、RSS 與部落格食記</div>
+            </form>
+            <div id="review-content" class="review-content">
+              <div class="review-empty">選擇餐廳後可查看評價摘要</div>
+            </div>
           </div>
         </div>
-      </header>
+      </aside>
 
-      <section class="chat-body">
-        <div class="chat-bar"></div>
+      <button id="drawer-scrim" class="drawer-scrim" type="button" aria-label="關閉管理選單" tabindex="-1"></button>
 
-        <div id="chat-box" class="conversation" aria-live="polite"></div>
-
-        <div id="loading" class="message bot hidden">
-          <div class="avatar">AI</div>
-          <div class="bubble loading">
-            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <main class="chat-panel">
+        <header class="chat-header">
+          <div class="header-left">
+            <p class="chat-title">建立點餐建議</p>
           </div>
-        </div>
-      </section>
-
-      <footer class="chat-footer">
-        <div class="input-area">
-          <div class="input-wrapper">
-            <textarea id="input" class="chat-input" placeholder="輸入訊息…" rows="1"></textarea>
-            <button id="send-btn" class="send-btn" type="button">送出</button>
+          <div class="header-actions">
+            <span id="assistant-status" class="assistant-status"><span class="state-dot" aria-hidden="true"></span> 等待需求</span>
+            <button id="clear-btn" class="compact-btn" type="button">清空對話</button>
           </div>
-        </div>
-      </footer>
-    </main>
+        </header>
+
+        <section class="chat-body">
+          <div id="chat-box" class="conversation" aria-live="polite"></div>
+          <div id="loading" class="message bot hidden">
+            <div class="avatar">AI</div>
+            <div class="bubble loading">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="chat-footer">
+          <div class="composer-label"><span>輸入或調整點餐需求</span><span>ENTER 送出 · SHIFT+ENTER 換行</span></div>
+          <div class="input-area">
+            <div class="input-wrapper">
+              <label class="visually-hidden" for="input">輸入點餐需求</label>
+              <textarea id="input" class="chat-input" placeholder="輸入人數、預算、忌口或想吃的餐點…" rows="1"></textarea>
+              <button id="send-btn" class="send-btn" type="button">送出</button>
+            </div>
+          </div>
+        </footer>
+      </main>
+    </div>
   </div>
 
   <div id="chat-menu" class="chat-menu hidden" role="menu">
@@ -279,7 +311,7 @@
   <script src="https://cdn.jsdelivr.net/npm/cropperjs@2.1.1/dist/cropper.min.js"
           integrity="sha256-J/Kdrjxvp6X2EmkB9NH4y7w2dWGWBGqn6X0urhQTGXk="
           crossorigin="anonymous"></script>
-  <script src="/web/web.js?v=20260816-cropper"></script>
+  <script src="/web/web.js?v=20260830-ticket2"></script>
 </body>
 
 </html>
