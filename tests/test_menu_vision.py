@@ -97,6 +97,25 @@ class MenuVisionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "沒有辨識到"):
             menu_vision.analyze_menu_image(b"x", "image/png", vision_func=lambda *args, **kwargs: "{}")
 
+    def test_unparsable_reply_is_not_reported_as_an_empty_photo(self):
+        """解析失敗與「照片裡沒有菜單」不能共用同一句話。
+
+        兩者的修法相反：一個要去看模型到底吐了什麼，一個要換張照片。這個專案
+        已經在「解析把讀好的東西扔掉、看起來卻像模型爛」上吃過一次虧。
+        """
+        value, ok = menu_vision._extract_json_document("模型今天只想聊天，沒有給 JSON")
+        self.assertEqual(value, {})
+        self.assertFalse(ok)
+
+        # 字面上的 {} 是解析成功的空物件，不能被當成解析失敗
+        value, ok = menu_vision._extract_json_document("{}")
+        self.assertEqual(value, {})
+        self.assertTrue(ok)
+
+        value, ok = menu_vision._extract_json_document('```json\n{"categories": []}\n```')
+        self.assertEqual(value, {"categories": []})
+        self.assertTrue(ok)
+
     def test_accepts_common_alternate_model_schemas(self):
         dict_categories = menu_vision.normalize_vision_result({
             "categories": {
@@ -334,10 +353,14 @@ class ThinkingModelResponseTests(unittest.TestCase):
             def __enter__(self): return self
             def __exit__(self, *a): return False
 
-        with mock.patch.object(
-            ollama_fuc.request, "urlopen",
-            return_value=FakeResponse(self._reply(message).encode("utf-8")),
-        ):
+        # API_BASE_URL 在 import 當下就從環境變數定案。開發機有 .env 所以看不出
+        # 問題，CI 沒有 .env 時它是空字串，_api_chat 組出來的網址變成
+        # 「/chat/completions」，request.Request 在 urlopen 被 mock 到之前就先
+        # 因為缺少 scheme 而拋 ValueError。
+        with mock.patch.object(ollama_fuc, "API_BASE_URL", "https://api.invalid/v1"),             mock.patch.object(
+                ollama_fuc.request, "urlopen",
+                return_value=FakeResponse(self._reply(message).encode("utf-8")),
+            ):
             return ollama_fuc._api_chat([{"role": "user", "content": "x"}], "m", **kwargs)
 
     def test_uses_reasoning_content_when_it_carries_the_json(self):
