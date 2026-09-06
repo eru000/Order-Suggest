@@ -368,7 +368,9 @@ class ThinkingModelResponseTests(unittest.TestCase):
             {"content": "", "reasoning_content": '想一下…最後給 {"categories":[]}'},
             allow_reasoning_fallback=True,
         )
-        self.assertIn('{"categories":[]}', text)
+        # 比對解析後的值而不是原始字串：抽取那一段現在會把 JSON 解析後重新
+        # 序列化，逗號後多一個空格就會讓字面比對失敗，但那不是行為變更。
+        self.assertEqual(json.loads(text), {"categories": []})
 
     def test_still_raises_when_reasoning_has_no_json(self):
         """沒有 JSON 就要照樣拋錯——呼叫端靠這個例外降級到備用模型。"""
