@@ -73,8 +73,10 @@ CI 另外會跑 ruff 與 mypy，但**範圍只有指定的那幾個檔案，不�
   **不是**獨立取樣，不能拿來估變異數。改 model / prompt / 圖片才會真的重算。
 - **`.env` 在 `import ollama_fuc` 當下就被讀進來**（`_load_env_file()`，不是
   python-dotenv）。測試裡動 `os.environ` 要注意這個時序。
-- **`USE_LLM_CLASSIFICATION` 必須維持 false。** 程式碼裡的預設值是 true，而它
-  會對每個菜單品項各打一次 LLM——85 項的菜單會讓單次對話慢到 57 秒。
+- **逐品項呼叫 LLM 的分類路徑已經不存在了。** `USE_LLM_CLASSIFICATION` 與
+  `classify_item()` 在 `15892a0 修改程式架構1` 那次重構就從程式碼消失，現在
+  `menu_semantics.py` 是純規則標註。舊文件把它寫成「必須維持 false，否則對話
+  慢到 57 秒」的地雷，那個地雷已經拆掉了——看到殘留的設定不用理會。
 - **爬蟲與評論搜尋用不同機制**：`crawl_menu.py` 走 CDP 接本機 Chrome；
   `restaurant_reviews.py` 用 `chromium.launch()`，需要先
   `playwright install chromium`，沒裝會靜默退回 RSS 而不是報錯。

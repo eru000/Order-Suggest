@@ -5,14 +5,12 @@ recommend() 實際會做什麼」釘住。對方的版本只回傳主餐、也�
 所以這幾項最容易在合併時無聲消失。
 
 固定行為的做法：
-- USE_LLM_CLASSIFICATION=false 走關鍵字分類，不打網路
 - 每一類品項刻意低於 recommend() 內部洗牌門檻（主食 >5、其他 >3 才洗牌），
   比固定隨機種子穩固
 """
 
 import contextlib
 import io
-import os
 import sys
 import unittest
 from pathlib import Path
@@ -45,16 +43,6 @@ def names_by_reason(result: Dict[str, Any], reason: str) -> List[str]:
 
 
 class RecommendBaselineTest(unittest.TestCase):
-    def setUp(self):
-        self._prev = os.environ.get("USE_LLM_CLASSIFICATION")
-        os.environ["USE_LLM_CLASSIFICATION"] = "false"
-
-    def tearDown(self):
-        if self._prev is None:
-            os.environ.pop("USE_LLM_CLASSIFICATION", None)
-        else:
-            os.environ["USE_LLM_CLASSIFICATION"] = self._prev
-
     # --- 加料偵測（對方完全沒有這個概念）---
 
     def test_addon_below_40_percent_of_median_is_forced_to_side(self):

@@ -168,17 +168,14 @@ python src/migrate_legacy_data.py
 走的是 `POST /api/chat/stream`（SSE）。前端拿不到串流時會自動退回
 `POST /api/chat`，所以舊瀏覽器或這支端點掛掉都不會讓功能不可用。
 
-### ⚠️ 兩個會讓延遲暴增／消失的陷阱
+### ⚠️ 一個會讓延遲暴增／消失的陷阱
 
-**1. `USE_LLM_CLASSIFICATION` 預設是 `true`，而且逐品項呼叫 LLM。**
+**（已解除）`USE_LLM_CLASSIFICATION` 的逐品項 LLM 呼叫。**
 
-程式碼裡的預設值是開啟（[src/ollama_fuc.py:491](src/ollama_fuc.py#L491)），
-而 `classify_item()` 是**每個菜單品項各呼叫一次**。85 品項的菜單就是最多
-85 次 LLM 呼叫，實測會讓單次對話衝到 57 秒。
-
-本機 `.env` 有設 `false`，`render.yaml` 也有設 —— 但只要在**沒設這個變數的環境**
-跑（例如自己手動 `uvicorn` 又沒載入 `.env`），就會踩到。部署到任何新平台時，
-這個變數一定要顯式設成 `false`。
+這一條留著只是為了說明它不再適用。`classify_item()` 與這個環境變數在
+`15892a0 修改程式架構1` 那次重構已經整個移除，現在品項語意由
+`menu_semantics.py` 以純規則標註，不打網路。部署到新平台時**不需要**再特別
+設定這個變數。
 
 **2. 回覆「變很快」通常代表 LLM 根本沒被呼叫。**
 
@@ -254,5 +251,4 @@ python src/migrate_legacy_data.py
 - [ ] 筆電電源設定改成不休眠
 - [ ] 確認金鑰還沒到期（`GET /health` 通不代表金鑰有效，要實際發一次對話；
       **秒回 = 金鑰失效**，正常應該要等 10–30 秒）
-- [ ] 確認 `USE_LLM_CLASSIFICATION=false` 有生效，否則對話會慢到快一分鐘
 - [ ] 備案的備案：Cloudflare Tunnel 先裝好，區網掛了 30 秒內能切換

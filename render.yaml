@@ -42,8 +42,6 @@ services:
         value: "false"
       - key: USE_LLM_EXTRACTION
         value: "false"
-      - key: USE_LLM_CLASSIFICATION
-        value: "false"
       - key: SEMANTIC_RECOMMENDER_ENABLED
         value: "true"
       - key: SEMANTIC_SHADOW_MODE
