@@ -82,9 +82,15 @@ def _float_env(name: str, default: float) -> float:
         return default
 
 
-def _extract_json_value(text: str) -> Any:
+def _extract_json_document(text: str) -> Tuple[Any, bool]:
+    """回傳 (解析結果, 是否真的解析到 JSON)。
+
+    第二個值不能用「結果是不是空的」來推——模型回一個字面上的 ``{}`` 是解析
+    成功的空物件，跟「整段回應裡找不到 JSON」是兩件事，修法也完全不同：前者
+    要改 prompt，後者要看模型到底吐了什麼。
+    """
     try:
-        return json.loads(text)
+        return json.loads(text), True
     except (TypeError, json.JSONDecodeError):
         pass
     fenced = re.sub(r"^\s*```(?:json)?\s*|\s*```\s*$", "", text or "", flags=re.I | re.S)
@@ -93,10 +99,21 @@ def _extract_json_value(text: str) -> Any:
         if char not in "[{":
             continue
         try:
-            return decoder.raw_decode(fenced[index:])[0]
+            return decoder.raw_decode(fenced[index:])[0], True
         except json.JSONDecodeError:
             continue
-    return {}
+    # 這個專案在「解析把讀好的東西扔掉、看起來卻像模型爛」上吃過一次大虧
+    # （normalize_vision_result 的靜默 continue），所以這裡一定要留下痕跡。
+    emit(
+        "menu_vision.json_unparsed",
+        textLength=len(text or ""),
+        preview=(text or "")[:200],
+    )
+    return {}, False
+
+
+def _extract_json_value(text: str) -> Any:
+    return _extract_json_document(text)[0]
 
 
 def _clean_price(value: Any) -> Optional[float]:
@@ -637,9 +654,14 @@ def analyze_menu_image(
         response = _call_vision(vision_func, prompt, image_url, model=verify_model, temperature=0.0)
 
     ocr_ms = round((time.perf_counter() - ocr_started) * 1000, 1)
-    result = normalize_vision_result(_extract_json_value(response), restaurant_hint)
+    parsed, parsed_ok = _extract_json_document(response)
+    result = normalize_vision_result(parsed, restaurant_hint)
     categories = result["categories"]
     if not categories:
+        # 解析失敗與「照片裡真的沒有菜單」原本共用同一句話，但一個要查模型輸出、
+        # 一個要換張照片，對使用者和對開發者的意義都不同。
+        if not parsed_ok:
+            raise ValueError("模型回應無法解析成菜單資料，請再試一次")
         raise ValueError("照片中沒有辨識到可用的菜單或菜色")
 
     detected = str(result.get("detected_restaurant_name") or "").strip()
