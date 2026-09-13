@@ -64,6 +64,13 @@ class LegacyImporter:
         raw = source.read_bytes()
         digest = content_hash(raw)
         if self.imports.contains(digest):
+            if source.name.startswith("menu"):
+                data = json.loads(raw.decode("utf-8"))
+                fallback = source.stem.removeprefix("menu_").replace("_", " ")
+                if source.name == "menu.json":
+                    fallback = os.getenv("DEFAULT_RESTAURANT_NAME", "預設餐廳")
+                restaurant_name, menu = menu_document_to_runtime(data, fallback)
+                self.menus.repair_imported_prices(restaurant_name, menu, digest)
             return False
         data = json.loads(raw.decode("utf-8"))
         if not isinstance(data, dict):

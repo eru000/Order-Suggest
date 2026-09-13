@@ -1173,6 +1173,7 @@ h1, h2, h3,
 .chat-body {
   height: 100%;
   overflow-y: auto;
+  overflow-anchor: none;
   overscroll-behavior: contain;
   /* 上下留出 bar 的高度，內容才會從材質底下經過而不是被切掉。
      兩個高度由 JS 實測後寫回，因為輸入框會隨字數長高。 */

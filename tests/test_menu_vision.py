@@ -17,6 +17,13 @@ import menu_vision  # noqa: E402
 
 
 class MenuVisionTests(unittest.TestCase):
+    @staticmethod
+    def _dense_image_bytes():
+        image = Image.new("RGB", (2000, 1800), "white")
+        buffer = io.BytesIO()
+        image.save(buffer, "JPEG")
+        return buffer.getvalue()
+
     def test_normalizes_categories_prices_and_duplicates(self):
         result = menu_vision.normalize_vision_result(
             {
@@ -331,6 +338,79 @@ class MenuVisionTests(unittest.TestCase):
             menu_vision.apply_manual_correction(result, "把豬肝飯改成豬腳飯")
         self.assertEqual(result["categories"][0]["items"][0]["name"], "排骨飯")
 
+    def test_overview_failure_continues_with_tile_ocr(self):
+        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
+            if "版面與身分" in prompt:
+                raise RuntimeError("overview empty content")
+            if "最終校對員" in prompt:
+                return json.dumps({
+                    "restaurant_name": "測試店",
+                    "categories": [{
+                        "name": "主食",
+                        "items": [{"name": "排骨飯", "price": 90}],
+                    }],
+                }, ensure_ascii=False)
+            return '{"categories":[{"name":"主食","items":[{"name":"排骨飯","price":90}]}]}'
+
+        with mock.patch.dict(os.environ, {"VISION_FAST": "0"}):
+            result = menu_vision.analyze_menu_image(
+                self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
+            )
+
+        self.assertEqual(result["categories"][0]["items"][0]["name"], "排骨飯")
+        self.assertTrue(any("菜單總覽模型" in warning for warning in result["warnings"]))
+
+    def test_partial_tile_and_verifier_failures_keep_draft(self):
+        item_by_tile = {
+            "tile-1": "鍋燒意麵",
+            "tile-3": "什錦炒飯",
+            "tile-4": "當歸冬粉",
+        }
+
+        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
+            if "版面與身分" in prompt:
+                return '{"restaurant_name":"測試店"}'
+            if "最終校對員" in prompt:
+                raise RuntimeError("verify empty content")
+            if "tile-2" in prompt:
+                raise RuntimeError("tile tool_calls")
+            tile_id = next(tile for tile in item_by_tile if tile in prompt)
+            return json.dumps({
+                "categories": [{
+                    "name": "主食",
+                    "items": [{"name": item_by_tile[tile_id], "price": 65}],
+                }]
+            }, ensure_ascii=False)
+
+        with mock.patch.dict(os.environ, {
+            "VISION_FAST": "0",
+            "VISION_MODEL": menu_vision.DEFAULT_OCR_MODEL,
+            "VISION_VERIFY_MODEL": menu_vision.DEFAULT_OCR_MODEL,
+        }):
+            result = menu_vision.analyze_menu_image(
+                self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
+            )
+
+        names = {item["name"] for category in result["categories"] for item in category["items"]}
+        self.assertEqual(names, set(item_by_tile.values()))
+        self.assertLessEqual(result["quality"]["score"], 0.6)
+        self.assertTrue(any("tile-2" in warning for warning in result["warnings"]))
+        self.assertTrue(any("最終校對模型" in warning for warning in result["warnings"]))
+
+    def test_all_tile_failures_raise_service_error(self):
+        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
+            raise RuntimeError("empty content")
+
+        with mock.patch.dict(os.environ, {
+            "VISION_FAST": "1",
+            "VISION_MODEL": menu_vision.DEFAULT_OCR_MODEL,
+            "VISION_VERIFY_MODEL": menu_vision.DEFAULT_OCR_MODEL,
+        }):
+            with self.assertRaisesRegex(RuntimeError, "所有菜單影像區塊"):
+                menu_vision.analyze_menu_image(
+                    self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
+                )
+
 
 if __name__ == "__main__":
     unittest.main()
@@ -343,23 +423,25 @@ class ThinkingModelResponseTests(unittest.TestCase):
     completion token。推理吃光預算時 content 會空，整個切塊白跑。
     """
 
+    class FakeResponse(io.BytesIO):
+        def __enter__(self): return self
+        def __exit__(self, *args): return False
+
     def _reply(self, message):
         return json.dumps({"choices": [{"message": message, "finish_reason": "stop"}]})
 
     def _call(self, message, **kwargs):
         import ollama_fuc
 
-        class FakeResponse(io.BytesIO):
-            def __enter__(self): return self
-            def __exit__(self, *a): return False
-
         # API_BASE_URL 在 import 當下就從環境變數定案。開發機有 .env 所以看不出
         # 問題，CI 沒有 .env 時它是空字串，_api_chat 組出來的網址變成
         # 「/chat/completions」，request.Request 在 urlopen 被 mock 到之前就先
         # 因為缺少 scheme 而拋 ValueError。
-        with mock.patch.object(ollama_fuc, "API_BASE_URL", "https://api.invalid/v1"),             mock.patch.object(
+        with mock.patch.object(
+            ollama_fuc, "API_BASE_URL", "https://api.invalid/v1"
+        ), mock.patch.object(
                 ollama_fuc.request, "urlopen",
-                return_value=FakeResponse(self._reply(message).encode("utf-8")),
+                return_value=self.FakeResponse(self._reply(message).encode("utf-8")),
             ):
             return ollama_fuc._api_chat([{"role": "user", "content": "x"}], "m", **kwargs)
 
@@ -384,3 +466,97 @@ class ThinkingModelResponseTests(unittest.TestCase):
         """對話那條路不開這個後備，否則使用者會看到思考過程而不是回覆。"""
         with self.assertRaisesRegex(RuntimeError, "empty content"):
             self._call({"content": "", "reasoning_content": '思考中 {"a":1}'})
+
+    def test_json_mode_forces_named_tool_and_retries_empty_content_once(self):
+        import ollama_fuc
+
+        first = self._reply({
+            "content": "",
+            "tool_calls": [{
+                "type": "function",
+                "function": {"name": "鍋燒類", "arguments": "{}"},
+            }],
+            "reasoning_content": "仍在逐項辨識",
+        })
+        second = self._reply({
+            "content": "",
+            "tool_calls": [{
+                "type": "function",
+                "function": {
+                    "name": "submit_menu_json",
+                    "arguments": '{"categories":[]}',
+                },
+            }],
+            "reasoning_content": "done",
+        })
+        responses = [
+            self.FakeResponse(first.encode("utf-8")),
+            self.FakeResponse(second.encode("utf-8")),
+        ]
+
+        with mock.patch.object(
+            ollama_fuc.request, "urlopen", side_effect=responses
+        ) as urlopen:
+            text = ollama_fuc._api_chat(
+                [{"role": "user", "content": "x"}],
+                "ornith-35b",
+                allow_reasoning_fallback=True,
+                json_mode=True,
+            )
+
+        self.assertEqual(text, '{"categories":[]}')
+        self.assertEqual(urlopen.call_count, 2)
+        for call in urlopen.call_args_list:
+            payload = json.loads(call.args[0].data.decode("utf-8"))
+            self.assertEqual(
+                payload["tool_choice"]["function"]["name"],
+                "submit_menu_json",
+            )
+            self.assertEqual(
+                payload["tools"][0]["function"]["name"],
+                "submit_menu_json",
+            )
+
+    def test_json_mode_stops_after_one_empty_retry(self):
+        import ollama_fuc
+
+        empty = self._reply({"content": "", "reasoning_content": "沒有完整 JSON"})
+        responses = [
+            self.FakeResponse(empty.encode("utf-8")),
+            self.FakeResponse(empty.encode("utf-8")),
+        ]
+        with mock.patch.object(
+            ollama_fuc.request, "urlopen", side_effect=responses
+        ) as urlopen:
+            with self.assertRaisesRegex(RuntimeError, "after 2 attempt"):
+                ollama_fuc._api_chat(
+                    [{"role": "user", "content": "x"}],
+                    "ornith-35b",
+                    allow_reasoning_fallback=True,
+                    json_mode=True,
+                )
+        self.assertEqual(urlopen.call_count, 2)
+
+    def test_plain_chat_payload_does_not_enable_json_or_tool_constraints(self):
+        import ollama_fuc
+
+        response = self.FakeResponse(self._reply({"content": "一般回答"}).encode("utf-8"))
+        with mock.patch.object(ollama_fuc.request, "urlopen", return_value=response) as urlopen:
+            self.assertEqual(
+                ollama_fuc._api_chat([{"role": "user", "content": "x"}], "m"),
+                "一般回答",
+            )
+        payload = json.loads(urlopen.call_args.args[0].data.decode("utf-8"))
+        self.assertNotIn("tool_choice", payload)
+        self.assertNotIn("tools", payload)
+
+    def test_vision_chat_adds_json_system_instruction(self):
+        import ollama_fuc
+
+        with mock.patch.object(ollama_fuc, "_api_chat", return_value='{"ok":true}') as api_chat:
+            ollama_fuc.vision_chat("讀取菜單", "data:image/jpeg;base64,AA==", model="ornith-35b")
+
+        messages = api_chat.call_args.args[0]
+        self.assertEqual(messages[0]["role"], "system")
+        self.assertIn("submit_menu_json", messages[0]["content"])
+        self.assertTrue(api_chat.call_args.kwargs["json_mode"])

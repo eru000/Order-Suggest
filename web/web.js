@@ -433,24 +433,28 @@
     renderChatList();
     return t;
   };
-  const isNearBottom = () => {
-    const thresholdPx = 24;
-    const distance = chatBox.scrollHeight - chatBox.scrollTop - chatBox.clientHeight;
-    return distance <= thresholdPx;
-  };
-
-  const scrollToBottom = () => { chatBox.scrollTop = chatBox.scrollHeight; };
+  const conversationScroll = window.ConversationScroll.create(chatBox);
+  const isNearBottom = () => conversationScroll.nearBottom();
 
   const appendMessage = (role, text, { persist = true } = {}) => {
-    const shouldAutoScroll = isNearBottom();
+    const shouldAutoScroll = isNearBottom() || conversationScroll.expecting();
     const msgDiv = document.createElement('div');
     msgDiv.className = `message ${role}`;
     msgDiv.innerHTML = role === 'bot'
       ? `<div class="avatar">AI</div><div class="bubble">${formatText(text)}</div>`
       : `<div class="bubble">${formatText(text)}</div>`;
     chatBox.appendChild(msgDiv);
-    // 總是自動滾動到最新訊息
-    setTimeout(() => scrollToBottom(), 50);
+    if (persist) {
+      chatBox.querySelector('.discovery-welcome')?.remove();
+      if (role === 'user') {
+        // Sending arms the next assistant reply, but does not move the message the user
+        // is currently reading. The reply itself becomes the one-time reading anchor.
+        conversationScroll.begin();
+      } else {
+        if (shouldAutoScroll) conversationScroll.reveal(msgDiv);
+        conversationScroll.end();
+      }
+    }
 
     if (persist) {
       const t = getActiveThread() || createThread({ autoSwitch: true });
@@ -471,7 +475,6 @@
       setAssistantStatus('正在產生推薦', 'busy');
       loading.classList.remove('hidden');
       chatBox.appendChild(loading);
-      if (isNearBottom()) scrollToBottom();
     } else {
       setAssistantStatus('等待需求', 'ready');
       loading.classList.add('hidden');
@@ -480,7 +483,8 @@
 
   const redrawConversation = ({ keepScrollIfReading = true } = {}) => {
     if (!chatBox) return;
-    const shouldAutoScroll = keepScrollIfReading ? isNearBottom() : true;
+    const oldTop = conversationScroll.owner.scrollTop;
+    conversationScroll.reset();
 
     const t = getActiveThread();
     const hasMessages = Boolean(t && Array.isArray(t.messages) && t.messages.length);
@@ -490,18 +494,125 @@
 
     if (!hasMessages) {
       // 沒有訊息時顯示歡迎訊息
-      chatBox.innerHTML = '';
+      chatBox.innerHTML = '<div class="discovery-welcome"><h2>還沒想好吃什麼？</h2>'
+        + '<p>先選一家餐廳，再按下方「幫我選」。<br>回答一兩個小問題，一起找一道現在想吃的。</p></div>';
       return;
     }
 
     chatBox.innerHTML = '';
     for (const m of (t.messages || [])) {
       if (!m || !m.role) continue;
-      appendMessage(m.role, m.text, { persist: false });
+      if (m.decision) drawDecision(m.decision, t);
+      else appendMessage(m.role, m.text, { persist: false });
     }
 
-    if (shouldAutoScroll) scrollToBottom();
+    if (keepScrollIfReading) conversationScroll.owner.scrollTop = oldTop;
+    else conversationScroll.reveal(chatBox.lastElementChild, true);
   };
+
+  function drawDecision(view, thread) {
+    const host = document.createElement('div');
+    host.className = 'discovery-message';
+    host.appendChild(window.MealDiscovery.render(view, (payload, label) => {
+      sendDecision(payload, label, view.revision);
+    }, { disabled: !thread.decisionReady || thread.decisionBusy || thread.decision?.revision !== view.revision }));
+    chatBox.appendChild(host);
+    return host;
+  }
+
+  function updateDecisionControls(thread) {
+    for (const node of chatBox.querySelectorAll('.discovery-view')) {
+      const enabled = Boolean(thread.decisionReady && !thread.decisionBusy
+        && node.dataset.decisionRevision === thread.decision?.revision);
+      node.querySelectorAll('button').forEach(btn => { btn.disabled = !enabled; });
+      node.querySelectorAll('summary').forEach(summary => {
+        if (enabled) summary.removeAttribute('aria-disabled');
+        else summary.setAttribute('aria-disabled', 'true');
+      });
+      const status = node.querySelector('.discovery-snapshot-status');
+      if (status) status.textContent = enabled ? ''
+        : thread.decisionBusy && node.dataset.decisionRevision === thread.decision?.revision
+          ? '正在更新選項…' : '先前的選餐紀錄';
+    }
+  }
+
+  function rememberDecision(view, thread, persist = true) {
+    thread.decision = view;
+    thread.decisionReady = true;
+    if (view && persist) {
+      thread.messages.push({ role: 'bot', text: window.MealDiscovery.toText(view), decision: view });
+      thread.lastUpdatedAt = nowTs();
+    }
+    saveState();
+    if (getActiveThread() === thread) {
+      if (view && persist) {
+        const node = drawDecision(view, thread);
+        conversationScroll.reveal(node);
+        conversationScroll.end();
+      }
+      updateDecisionControls(thread);
+      renderChatList();
+    }
+  }
+
+  async function restoreDecision(thread = getActiveThread()) {
+    if (!thread) return;
+    const sessionId = thread.sessionId;
+    thread.decisionReady = false;
+    try {
+      const res = await fetch('/api/decision?session_id=' + encodeURIComponent(sessionId));
+      if (!res.ok) throw new Error('選餐狀態讀取失敗');
+      const data = await res.json();
+      if (thread.sessionId !== sessionId || thread.decisionBusy) return;
+      const view = data.decision || null;
+      const missing = view && !thread.messages.some(m => m.decision?.revision === view.revision);
+      rememberDecision(view, thread, missing);
+    } catch (error) {
+      if (getActiveThread() === thread && thread.decision) {
+        showToast({ message: '選餐紀錄暫時無法同步，可以按「幫我選」重新開始。' });
+      }
+    }
+  }
+
+  async function sendDecision(payload, label, revision) {
+    const thread = getActiveThread() || createThread({ autoSwitch: true });
+    if (thread.decisionBusy || input.disabled) return;
+    if (payload.action !== 'start' && revision && revision !== thread.decision?.revision) return;
+    const sessionId = thread.sessionId;
+    thread.decisionBusy = true;
+    appendMessage('user', label || payload.text || '幫我選一餐');
+    chatBox.querySelector('.discovery-welcome')?.remove();
+    input.disabled = true;
+    sendBtn.disabled = true;
+    chatBox.querySelectorAll('.discovery-view button').forEach(btn => { btn.disabled = true; });
+    setAssistantStatus('正在幫你挑選', 'busy');
+    try {
+      const res = await fetch('/api/decision', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId, revision, ...payload }),
+      });
+      const data = await res.json();
+      if (thread.sessionId !== sessionId) return;
+      if (!res.ok) {
+        if (Object.prototype.hasOwnProperty.call(data, 'decision')) {
+          rememberDecision(data.decision, thread, Boolean(data.decision));
+        }
+        throw new Error(data.detail || '暫時無法選餐，請再試一次');
+      }
+      rememberDecision(data.decision, thread);
+    } catch (error) {
+      showToast({ message: error.message || '連線中斷，請再試一次' });
+    } finally {
+      thread.decisionBusy = false;
+      conversationScroll.end();
+      input.disabled = false;
+      sendBtn.disabled = false;
+      if (getActiveThread() === thread) {
+        updateDecisionControls(thread);
+        setAssistantStatus(thread.decision?.type === 'selection' ? '這餐選好了' : '一起選餐', 'ready');
+      }
+    }
+  }
 
   const ensureBasics = () => {
     if (!chatBox || !input || !sendBtn) {
@@ -518,8 +629,9 @@
     msgDiv.innerHTML = '<div class="avatar">AI</div>'
       + '<div class="bubble"><div class="rec-card hidden"></div><div class="rec-prose"></div></div>';
     chatBox.appendChild(msgDiv);
-    setTimeout(() => scrollToBottom(), 50);
+    conversationScroll.reveal(msgDiv);
     return {
+      element: msgDiv,
       card: msgDiv.querySelector('.rec-card'),
       prose: msgDiv.querySelector('.rec-prose'),
       remove: () => msgDiv.remove(),
@@ -595,7 +707,7 @@
       paintHandle = requestAnimationFrame(() => {
         paintHandle = 0;
         live.prose.innerHTML = formatStreamingText(prose);
-        if (isNearBottom()) scrollToBottom();
+        conversationScroll.refresh();
       });
     };
 
@@ -621,7 +733,11 @@
             renderRecCard(live.card, ev);
             recText = recToPlainText(ev);
             live.prose.innerHTML = '<span class="rec-waiting">AI 正在補充說明…</span>';
-            if (isNearBottom()) scrollToBottom();
+            conversationScroll.refresh();
+          } else if (ev.type === 'decision') {
+            live.remove();
+            rememberDecision(ev.decision, getActiveThread());
+            return true;
           } else if (ev.type === 'delta') {
             showLoading(false);
             if (!prose) live.prose.innerHTML = '';
@@ -640,6 +756,7 @@
     // 串流結束，補一次完整排版：中途被藏起來的未配對 ** 這時可能已經湊成對。
     cancelAnimationFrame(paintHandle);
     if (prose) live.prose.innerHTML = formatText(prose);
+    conversationScroll.end();
 
     if (!recText && !prose.trim()) {
       live.prose.innerHTML = formatText('[發生錯誤] 回覆內容為空');
@@ -660,7 +777,8 @@
       });
       const data = await res.json();
       showLoading(false);
-      appendMessage('bot', data.reply || '[發生錯誤] 回覆內容為空');
+      if (data.decision) rememberDecision(data.decision, getActiveThread());
+      else appendMessage('bot', data.reply || '[發生錯誤] 回覆內容為空');
     } catch (e) {
       showLoading(false);
       const t = getActiveThread();
@@ -677,7 +795,7 @@
 
   const send = async () => {
     const text = input.value.trim();
-    if (!text) return;
+    if (!text || input.disabled) return;
 
     if (!getActiveThread()) {
       createThread({ autoSwitch: true });
@@ -710,6 +828,8 @@
       t.messages = [];
       t.title = '新對話';
       t.sessionId = sidFactory();
+      t.decision = null;
+      t.decisionReady = false;
       t.lastUpdatedAt = nowTs();
       t.flags = t.flags && typeof t.flags === 'object' ? t.flags : {};
       t.flags.cleared = true;
@@ -786,10 +906,22 @@
   if (!ensureBasics()) return;
 
   loadState();
+  for (const thread of threads) {
+    thread.decisionReady = false;
+    thread.decisionBusy = false;
+  }
   if (!threads.length) createThread({ autoSwitch: true });
   if (!getActiveThread() && threads[0]) activeThreadId = threads[0].id;
   renderChatList();
   redrawConversation({ keepScrollIfReading: false });
+  document.getElementById('start-discovery-btn')?.addEventListener('click', () => {
+    const thread = getActiveThread();
+    if (thread?.decision && thread.decisionReady) {
+      sendDecision({ action: 'reset' }, '開始新的一餐', thread.decision.revision);
+    } else {
+      sendDecision({ action: 'start' }, '不知道吃什麼，幫我選');
+    }
+  });
 
   sendBtn?.addEventListener('click', send);
   input?.addEventListener('keydown', (e) => {
@@ -1904,9 +2036,12 @@
 
   async function loadRestaurants() {
     try {
+      const requestThread = getActiveThread();
       const sessionId = getActiveSessionId();
       const response = await fetch(`/api/restaurants?session_id=${encodeURIComponent(sessionId)}`);
       const data = await response.json();
+      if (getActiveThread() !== requestThread || requestThread.sessionId !== sessionId) return;
+      restoreDecision(requestThread);
 
       // 清空兩個選擇器
       restaurantSelect.innerHTML = '';

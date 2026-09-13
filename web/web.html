@@ -7,7 +7,7 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
   <title>點餐建議｜Order Suggest</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23202a56'/%3E%3Crect x='7' y='7' width='18' height='18' fill='%23d8b34e'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="/web/web.css?v=20260830-ticket2" />
+  <link rel="stylesheet" href="/web/web.css?v=20260913-scroll2" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 
@@ -131,7 +131,7 @@
       <main class="chat-panel">
         <header class="chat-header">
           <div class="header-left">
-            <p class="chat-title">建立點餐建議</p>
+            <p class="chat-title">今天，吃點什麼？</p>
           </div>
           <div class="header-actions">
             <span id="assistant-status" class="assistant-status"><span class="state-dot" aria-hidden="true"></span> 等待需求</span>
@@ -150,11 +150,15 @@
         </section>
 
         <footer class="chat-footer">
+          <div class="discovery-entry-row">
+            <button id="start-discovery-btn" class="discovery-entry" type="button">不知道吃什麼，幫我選</button>
+            <span>從這家店的菜單開始</span>
+          </div>
           <div class="composer-label"><span>輸入或調整點餐需求</span><span>ENTER 送出 · SHIFT+ENTER 換行</span></div>
           <div class="input-area">
             <div class="input-wrapper">
               <label class="visually-hidden" for="input">輸入點餐需求</label>
-              <textarea id="input" class="chat-input" placeholder="輸入人數、預算、忌口或想吃的餐點…" rows="1"></textarea>
+              <textarea id="input" class="chat-input" placeholder="例如：不知道吃什麼，150 元內…" rows="1"></textarea>
               <button id="send-btn" class="send-btn" type="button">送出</button>
             </div>
           </div>
@@ -307,11 +311,14 @@
     </div>
   </div>
 
+  <link rel="stylesheet" href="/web/decision.css?v=20260913">
   <script src="/web/format.js?v=20260809-2"></script>
   <script src="https://cdn.jsdelivr.net/npm/cropperjs@2.1.1/dist/cropper.min.js"
           integrity="sha256-J/Kdrjxvp6X2EmkB9NH4y7w2dWGWBGqn6X0urhQTGXk="
           crossorigin="anonymous"></script>
-  <script src="/web/web.js?v=20260830-ticket2"></script>
+  <script src="/web/conversation-scroll.js?v=20260913-2"></script>
+  <script src="/web/decision.js?v=20260913"></script>
+  <script src="/web/web.js?v=20260913-discovery2"></script>
 </body>
 
 </html>

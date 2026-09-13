@@ -27,6 +27,18 @@ from .models import (
 )
 
 
+def menu_price(value: Any) -> Decimal | None:
+    """Accept a single explicit price, never the first number of a range."""
+    if value is None or isinstance(value, bool):
+        return None
+    raw = str(value).strip().replace(",", "")
+    match = re.fullmatch(r"(?:(?:NT|TWD)\s*)?\$?\s*(\d+(?:\.\d+)?)\s*(?:元)?", raw, re.I)
+    if not match:
+        return None
+    price = Decimal(match.group(1))
+    return price if price.is_finite() and price >= 0 else None
+
+
 def normalize_name(value: str) -> str:
     return re.sub(r"\W+", "", str(value or "")).casefold()
 
@@ -97,13 +109,7 @@ class MenuRepository:
                     semantic = dict(item.get("semantic") or {})
                     raw_spice = semantic.get("spice")
                     spice: dict[str, Any] = dict(raw_spice) if isinstance(raw_spice, dict) else {}
-                    price = item.get("price")
-                    try:
-                        price_value = (
-                            Decimal(str(price)) if price is not None and str(price) else None
-                        )
-                    except Exception:
-                        price_value = None
+                    price_value = menu_price(item.get("price"))
                     session.add(
                         MenuItemRecord(
                             category_id=category_row.id,
@@ -120,6 +126,37 @@ class MenuRepository:
                             position=item_position,
                         )
                     )
+
+    def repair_imported_prices(self, restaurant_name: str, menu: dict[str, Any], digest: str) -> int:
+        """Backfill null prices only in an unchanged, active legacy import."""
+        source_categories = menu.get("restaurants", {}).get(restaurant_name, {}).get("categories", {})
+        changed = 0
+        with self.database.session() as session:
+            restaurant = session.scalar(
+                select(RestaurantRecord).where(RestaurantRecord.name == restaurant_name)
+            )
+            if restaurant is None:
+                return 0
+            version = session.scalar(
+                select(MenuVersionRecord).where(
+                    MenuVersionRecord.restaurant_id == restaurant.id,
+                    MenuVersionRecord.is_active.is_(True),
+                    MenuVersionRecord.source == "legacy_json",
+                    MenuVersionRecord.source_hash == digest,
+                )
+            )
+            if version is None:
+                return 0
+            for category in version.categories:
+                incoming = source_categories.get(category.name, {}).get("items", [])
+                for row in category.items:
+                    matches = [item for item in incoming if item.get("name") == row.name]
+                    if row.price is None and len(matches) == 1:
+                        price = menu_price(matches[0].get("price"))
+                        if price is not None:
+                            row.price = price
+                            changed += 1
+        return changed
 
     def load(self, restaurant_name: str) -> dict[str, Any] | None:
         with self.database.session() as session:
@@ -339,8 +376,13 @@ class SQLAlchemySessionRepository:
             if remaining <= 0:
                 session.delete(row)
                 return None
+            preferences = dict(row.preference_state or {})
+            # Reserved storage key keeps discovery separate from user preferences,
+            # without requiring a schema change for existing PostgreSQL deployments.
+            decision = preferences.pop("_meal_decision", {})
             payload: dict[str, Any] = {
-                "prefs": dict(row.preference_state or {}),
+                "prefs": preferences,
+                "decision": decision,
                 "active_restaurant": row.active_restaurant,
                 "history": [],
             }
@@ -370,6 +412,10 @@ class SQLAlchemySessionRepository:
                 row = SessionRecord(session_id=session_id, expires_at=expires)
                 session.add(row)
             row.preference_state = dict(payload.get("prefs") or {})
+            if payload.get("decision"):
+                row.preference_state = {
+                    **row.preference_state, "_meal_decision": payload["decision"],
+                }
             row.active_restaurant = payload.get("active_restaurant")
             row.expires_at = expires
             existing = int(

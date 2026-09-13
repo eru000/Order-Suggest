@@ -1,11 +1,11 @@
 import os, sys, json, re, threading, time, uuid
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 import base64
 from fastapi import Depends, FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import asyncio
 
 # 確保可以從 src/ 匯入模組
@@ -62,6 +62,7 @@ from menu_library import load_menu_library
 from application_services import build_menu_catalog, conversation_repository, database_ready
 from runtime_cache import DistributedLock, ExpiringJsonStore
 from conversation_service import ConversationService
+from decision_service import StaleDecision
 from menu_ingestion_service import MenuIngestionService
 from pending_analysis_service import PendingAnalysisService
 from observability import configure_logging, emit
@@ -272,6 +273,20 @@ class ChatReq(BaseModel):
 
 class ChatResp(BaseModel):
     reply: str
+    decision: Optional[Dict[str, Any]] = None
+
+
+class DecisionReq(BaseModel):
+    sessionId: str = Field(pattern=r"^[A-Za-z0-9_-]{8,160}$")
+    action: Literal[
+        "start", "message", "answer", "recommend", "replace", "reject_all",
+        "choose", "reconsider", "reset", "review", "relax_budget", "relax_type", "decide",
+    ] = "message"
+    text: str = Field(default="", max_length=2000)
+    revision: Optional[str] = Field(default=None, max_length=64)
+    value: Optional[str] = Field(default=None, max_length=100)
+    itemId: Optional[str] = Field(default=None, max_length=64)
+    reason: Literal["another", "price", "type", "recent", "light", "portion"] = "another"
 
 class CrawlMenuReq(BaseModel):
     restaurantName: str
@@ -693,8 +708,41 @@ def correct_menu_from_photo(analysis_id: str, req: VisionCorrectionReq):
 @app.post("/api/chat", response_model=ChatResp)
 def api_chat(req: ChatReq):
     try:
+        decision = CONVERSATIONS.discovery(req.sessionId, req.text)
+        if decision:
+            return {
+                "reply": "\n".join(filter(None, [decision["message"], decision.get("answer")])),
+                "decision": decision,
+            }
         return {"reply": CONVERSATIONS.chat(req.sessionId, req.text)}
     except LookupError as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
+@app.get("/api/decision")
+def get_decision(session_id: str):
+    try:
+        return JSONResponse(
+            content={"decision": CONVERSATIONS.decisions.current(session_id)},
+            headers={"Cache-Control": "no-store"},
+        )
+    except (ValueError, LookupError) as exc:
+        raise HTTPException(409, str(exc)) from exc
+
+
+@app.post("/api/decision")
+def update_decision(req: DecisionReq):
+    try:
+        decision = CONVERSATIONS.decisions.handle(
+            req.sessionId, action=req.action, text=req.text, revision=req.revision,
+            value=req.value, item_id=req.itemId, reason=req.reason,
+        )
+        return {"decision": decision}
+    except StaleDecision as exc:
+        return JSONResponse(status_code=409, content={
+            "detail": str(exc), "decision": CONVERSATIONS.decisions.current(req.sessionId),
+        })
+    except (ValueError, LookupError) as exc:
         raise HTTPException(409, str(exc)) from exc
 
 
@@ -865,6 +913,7 @@ def switch_restaurant(restaurant_name: str, session_id: str):
     state = _session(session_id)
     with state.lock:
         state.active_restaurant = restaurant_name
+        state.decision = {}
     SESSIONS.save(session_id)
     
     return {

@@ -14,6 +14,7 @@ SESSION_ID_PATTERN = re.compile(r"^[A-Za-z0-9_-]{8,160}$")
 @dataclass
 class SessionState:
     prefs: Preferences = field(default_factory=lambda: cast(Preferences, {}))
+    decision: dict[str, Any] = field(default_factory=dict)
     history: list[ConversationTurn] = field(default_factory=list)
     active_restaurant: str | None = None
     touched_at: float = field(default_factory=time.time)
@@ -50,6 +51,7 @@ class SessionStore:
                 loaded = self._repository.load(key) if self._repository else None
                 state = SessionState(
                     prefs=cast(Preferences, dict((loaded or {}).get("prefs") or {})),
+                    decision=dict((loaded or {}).get("decision") or {}),
                     history=list((loaded or {}).get("history") or []),
                     active_restaurant=(loaded or {}).get("active_restaurant") or default_restaurant,
                 )
@@ -70,6 +72,7 @@ class SessionStore:
             with state.lock:
                 payload = {
                     "prefs": state.prefs,
+                    "decision": state.decision,
                     "history": state.history,
                     "active_restaurant": state.active_restaurant,
                 }
@@ -83,11 +86,13 @@ class SessionStore:
                 with state.lock:
                     if state.active_restaurant == restaurant_name:
                         state.active_restaurant = fallback_restaurant
+                        state.decision = {}
                         if self._repository:
                             self._repository.save(
                                 session_id,
                                 {
                                     "prefs": state.prefs,
+                                    "decision": state.decision,
                                     "history": state.history,
                                     "active_restaurant": state.active_restaurant,
                                 },

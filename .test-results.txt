@@ -1,0 +1,79 @@
+
+============================================================
+[路徑設定]
+============================================================
+SRC_DIR      = C:\Users\eric7\OneDrive\Desktop\pjt\src
+PROJECT_ROOT = C:\Users\eric7\OneDrive\Desktop\pjt
+WEB_DIR      = C:\Users\eric7\OneDrive\Desktop\pjt\web
+LOG_DIR      = C:\Users\eric7\OneDrive\Desktop\pjt\logs
+當前工作目錄  = C:\Users\eric7\OneDrive\Desktop\pjt
+============================================================
+
+[WARN] 找不到菜單檔案 (menu.json)。已嘗試的路徑: ['C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\db\\menu.json', 'C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\menu.json']
+ 載入餐廳菜單：奔頂牛排 東海 (8 項)
+ 載入餐廳菜單：森森燒肉 台中中科店 (81 項)
+ 預設活動餐廳：森森燒肉 台中中科店
+[event] {"timestamp": "2026-09-13T11:11:18.673154+00:00", "event": "recommendation.completed", "durationMs": 0.05, "itemCount": 0, "noCandidates": true, "budgetViolation": false, "semanticPreferences": false}
+[event] {"timestamp": "2026-09-13T11:11:18.673340+00:00", "event": "recommendation.completed", "durationMs": 0.04, "itemCount": 0, "noCandidates": true, "budgetViolation": false, "semanticPreferences": false}
+[event] {"timestamp": "2026-09-13T11:11:18.673442+00:00", "event": "recommendation.completed", "durationMs": 0.03, "itemCount": 0, "noCandidates": true, "budgetViolation": false, "semanticPreferences": false}
+[event] {"timestamp": "2026-09-13T11:11:18.673972+00:00", "event": "recommendation.completed", "durationMs": 0.45, "itemCount": 0, "noCandidates": true, "budgetViolation": false, "semanticPreferences": true}
+[WARN] 找不到菜單檔案 (menu.json)。已嘗試的路徑: ['C:\\Users\\eric7\\AppData\\Local\\Temp\\tmp51z809jp\\db\\menu.json', 'C:\\Users\\eric7\\AppData\\Local\\Temp\\tmp51z809jp\\menu.json']
+ 載入餐廳菜單：A (1 項)
+ 載入餐廳菜單：B (1 項)
+ 預設活動餐廳：B
+[event] {"timestamp": "2026-09-13T11:11:20.000357+00:00", "event": "menu_vision.analyzed", "model": "ornith-35b", "modelFallback": false, "prepareMs": 530.7, "ocrMs": 0.0, "totalMs": 531.2, "imageSize": [3600, 3240], "itemCount": 2, "priceCoverage": 1.0, "qualityScore": 0.775}
+[Vision] 主要 OCR 模型 broken-model 無法使用，本張圖片已改由 backup-model 辨識: model API request failed: HTTP 500
+[event] {"timestamp": "2026-09-13T11:11:22.084558+00:00", "event": "menu_vision.analyzed", "model": "backup-model", "modelFallback": true, "prepareMs": 656.5, "ocrMs": 0.1, "totalMs": 656.9, "imageSize": [3600, 3200], "itemCount": 1, "priceCoverage": 1.0, "qualityScore": 0.7}
+[event] {"timestamp": "2026-09-13T11:11:22.740169+00:00", "event": "menu_vision.analyzed", "model": "ornith-35b", "modelFallback": false, "prepareMs": 637.0, "ocrMs": 0.0, "totalMs": 637.4, "imageSize": [3600, 3240], "itemCount": 1, "priceCoverage": 1.0, "qualityScore": 0.762}
+[event] {"timestamp": "2026-09-13T11:11:24.177606+00:00", "event": "menu_vision.json_unparsed", "textLength": 17, "preview": "\u6a21\u578b\u4eca\u5929\u53ea\u60f3\u804a\u5929\uff0c\u6c92\u6709\u7d66 JSON"}
+[API] ornith-35b 回傳空 content，誤判工具：鍋燒類，以 JSON 模式重試一次
+[API] ornith-35b 回傳空 content，以 JSON 模式重試一次
+[API] m 的 content 是空的，改用 reasoning_content（finish_reason=stop）
+[event] {"timestamp": "2026-09-13T11:11:25.123505+00:00", "event": "recommendation.shadow_comparison", "semanticItems": ["\u9999\u8fa3\u9eb5"], "legacyItems": ["\u6e05\u6e6f\u9eb5"], "semanticEmpty": false, "legacyEmpty": false}
+.....................................................F.........FE..................................................................................................................
+======================================================================
+ERROR: test_partial_tile_and_verifier_failures_keep_draft (test_menu_vision.MenuVisionTests.test_partial_tile_and_verifier_failures_keep_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\eric7\OneDrive\Desktop\pjt\tests\test_menu_vision.py", line 390, in test_partial_tile_and_verifier_failures_keep_draft
+    result = menu_vision.analyze_menu_image(
+        self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
+    )
+  File "C:\Users\eric7\OneDrive\Desktop\pjt\src\menu_vision.py", line 639, in analyze_menu_image
+    response = _call_vision(
+        vision_func,
+    ...<3 lines>...
+        temperature=_float_env("VISION_TEMPERATURE", 0.0),
+    )
+  File "C:\Users\eric7\OneDrive\Desktop\pjt\src\menu_vision.py", line 332, in _call_vision
+    return vision_func(prompt, image_url=image_url, model=model, timeout=timeout, temperature=temperature)
+  File "C:\Users\eric7\OneDrive\Desktop\pjt\tests\test_menu_vision.py", line 377, in fake_vision
+    tile_id = next(tile for tile in item_by_tile if tile in prompt)
+StopIteration
+
+======================================================================
+FAIL: test_all_tile_failures_raise_service_error (test_menu_vision.MenuVisionTests.test_all_tile_failures_raise_service_error)
+----------------------------------------------------------------------
+RuntimeError: empty content
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\eric7\OneDrive\Desktop\pjt\tests\test_menu_vision.py", line 409, in test_all_tile_failures_raise_service_error
+    with self.assertRaisesRegex(RuntimeError, "所有菜單影像區塊"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "所有菜單影像區塊" does not match "empty content"
+
+======================================================================
+FAIL: test_overview_failure_continues_with_tile_ocr (test_menu_vision.MenuVisionTests.test_overview_failure_continues_with_tile_ocr)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\eric7\OneDrive\Desktop\pjt\tests\test_menu_vision.py", line 361, in test_overview_failure_continues_with_tile_ocr
+    self.assertTrue(any("菜單總覽模型" in warning for warning in result["warnings"]))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 179 tests in 9.498s
+
+FAILED (failures=2, errors=1)

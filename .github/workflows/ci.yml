@@ -28,11 +28,13 @@ jobs:
         run: |
           node --check web/format.js
           node --check web/web.js
+          node --check web/decision.js
+          node --check web/conversation-scroll.js
       - name: Unit tests with coverage
         run: |
           coverage run -m unittest discover -s tests -p "test_*.py" -t tests
           coverage report --fail-under=60
       - name: Ruff
-        run: ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py
+        run: ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py src/decision_catalog.py src/decision_preferences.py src/decision_service.py src/conversation_service.py
       - name: Mypy
         run: mypy src/recommendation.py src/security.py src/session_store.py src/persistence.py
