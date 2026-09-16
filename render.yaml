@@ -33,10 +33,12 @@ services:
         value: "true"
       - key: API_MODEL
         value: vibe
+      # 跟 src/menu_vision.py 的預設值一致。8b1a89c 實測 ornith-35b 準確度相同、
+      # 快 36%；mistral-small-4 是 gpt-oss-120b 的 alias，不是另一個模型。
       - key: VISION_MODEL
-        value: llama4scout
+        value: ornith-35b
       - key: VISION_VERIFY_MODEL
-        value: mistral-small-4
+        value: ornith-35b
       # Google 菜單爬蟲需要 Windows Chrome + CDP，只在本機啟用。
       - key: CRAWLER_ENABLED
         value: "false"

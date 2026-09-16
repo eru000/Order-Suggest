@@ -73,6 +73,10 @@ src/debug_*.png
 # 列在這裡才不會被誤加進版控。
 .chrome_debug_profile/
 
+# ── 手動備份與本機測試輸出 ──────────────────────────
+**/data/*.db.bak
+.test-results.txt
+
 # ── 作業系統與編輯器雜物 ────────────────────────────
 Thumbs.db
 desktop.ini

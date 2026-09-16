@@ -16,7 +16,7 @@ OpenAI 相容 API（api.ithu.tw）。
 
 所以：
 
-1. **改完一定要跑測試。** 130 個測試 3 秒跑完，沒有不跑的理由。
+1. **改完一定要跑測試。** 240 多個測試 6 秒跑完，沒有不跑的理由。
 2. **說「原因是 X」之前先證明 X。** 加 log、寫最小重現、或跑 evals。
 3. **報告時分清楚哪些真的跑過、哪些是推測。** 是推測就明講是推測。
 4. **測試綠燈不等於功能正確**——見下一節。
@@ -48,6 +48,7 @@ Windows + PowerShell。Python 一律用專案的 venv，不要用系統的。
 
 ```powershell
 # 測試：用 unittest，沒有裝 pytest。-t 必須給 tests，給 . 會 ImportError
+# 先裝 requirements-dev.txt，少了 httpx 的話 test_decision_api 會整個匯入失敗
 .venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -t tests
 
 # 啟動
