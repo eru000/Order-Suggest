@@ -8,7 +8,7 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from conversation_service import ConversationService
-from decision_catalog import menu_choices
+from decision_catalog import dish_type, eligible, menu_choices
 from decision_service import DecisionService
 from persistence import SQLiteSessionRepository
 from session_store import SessionStore
@@ -225,10 +225,10 @@ class DiscoveryImprovementTest(unittest.TestCase):
 class MenuWordingTest(unittest.TestCase):
     """店家寫在括號裡的註記，跟寫在品名裡的是同一件事，不該漏掉。"""
 
-    def rows(self, *names):
+    def rows(self, *names, category="主餐"):
         return {
             row["name"]: row
-            for row in menu_choices({"categories": [{"name": "主餐", "items": [
+            for row in menu_choices({"categories": [{"name": category, "items": [
                 {"name": name, "price": 60} for name in names
             ]}]})[0]
         }
@@ -244,6 +244,41 @@ class MenuWordingTest(unittest.TestCase):
         rows = self.rows("麻辣拌麵(大辣)", "咖哩飯(小辣)", "牛肉麵(加蛋)")
         for name in rows:
             self.assertIsNone(rows[name]["portion"], name)
+
+    def test_oolong_tea_is_not_noodles(self):
+        self.assertIsNone(dish_type("熟梨山烏龍"))
+        self.assertIsNone(dish_type("烏龍茶"))
+        self.assertEqual(dish_type("炒烏龍"), "麵")
+        self.assertEqual(dish_type("鍋燒烏龍麵"), "麵")
+
+    def test_hot_pots_by_name_suffix_or_category(self):
+        self.assertEqual(dish_type("人參布袋鵝鍋"), "鍋物")
+        self.assertEqual(dish_type("蟹黃豆腐煲"), "鍋物")
+        self.assertEqual(dish_type("招牌雞", "經典鍋物"), "鍋物")
+        self.assertEqual(dish_type("鍋貼"), "餃子")
+
+    def test_only_soups_with_a_named_meat_count_as_a_meal(self):
+        # 分類叫「主餐」會讓整類都被標成主餐；斗六當歸鴨的實際分類是「其他」。
+        rows = self.rows(
+            "當歸鴨肉湯", "當歸松阪豬肉湯", "當歸清湯", "當歸米血湯", "鴨肉飯", category="其他"
+        )
+        self.assertEqual(rows["當歸鴨肉湯"]["dishType"], "湯品")
+        self.assertEqual(rows["當歸鴨肉湯"]["texture"], "湯的")
+        self.assertEqual(rows["當歸松阪豬肉湯"]["protein"], "豬肉")
+        self.assertNotIn("當歸清湯", rows)
+        self.assertNotIn("當歸米血湯", rows)
+
+    def test_market_price_zero_is_unknown_not_free(self):
+        menu = {"categories": [{"name": "主餐", "items": [
+            {"name": "時價魚排飯", "price": 0},
+            {"name": "雞肉飯", "price": 80},
+        ]}]}
+        rows = {row["name"]: row for row in menu_choices(menu)[0]}
+        self.assertIsNone(rows["時價魚排飯"]["price"])
+        within_budget = eligible(list(rows.values()), {"budget": 100}, None)
+        self.assertEqual([row["name"] for row in within_budget], ["雞肉飯"])
+        picked = DecisionService._pick(eligible(list(rows.values()), {}, None), [])
+        self.assertEqual(picked[0]["name"], "雞肉飯")
 
 
 class DiversityTest(unittest.TestCase):

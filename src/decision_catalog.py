@@ -18,19 +18,27 @@ def _bracketed(term: str) -> str:
     return rf"[（(]\s*{term}\s*[）)]"
 
 
+_DISH_TYPES = (
+    # 只寫「烏龍」會把烏龍茶、熟梨山烏龍（茶）判成麵。
+    ("麵", r"麵|麺|烏龍麵|炒烏龍|米粉|冬粉|河粉|粄條|板條"),
+    ("飯", r"飯|粥"),
+    ("餃子", r"水餃|煎餃|鍋貼|蒸餃"),
+    # 人參布袋鵝鍋、蟹黃豆腐煲：品名以鍋／煲結尾就是鍋物；分類「經典鍋物」也算。
+    ("鍋物", r"火鍋|涮涮鍋|鍋燒|鍋物|鍋$|煲$"),
+    ("排餐", r"牛排|豬排|雞排|魚排|牛小排|排餐|香煎鯖魚"),
+    ("輕食", r"漢堡|吐司|三明治|貝果|帕尼尼"),
+)
+
+
 def dish_type(name: str, category: str = "") -> str | None:
     # Item name wins over broad category labels (e.g. 飯麵類).
     for value in (name, category):
-        for label, terms in (
-            ("麵", ("麵", "麺", "烏龍", "米粉", "冬粉", "河粉", "粄條", "板條")),
-            ("飯", ("飯", "粥")),
-            ("餃子", ("水餃", "煎餃", "鍋貼", "蒸餃")),
-            ("鍋物", ("火鍋", "涮涮鍋", "鍋燒", "小火鍋")),
-            ("排餐", ("牛排", "豬排", "雞排", "魚排", "牛小排", "排餐", "香煎鯖魚")),
-            ("輕食", ("漢堡", "吐司", "三明治", "貝果", "帕尼尼")),
-        ):
-            if any(term in value for term in terms):
+        for label, pattern in _DISH_TYPES:
+            if re.search(pattern, value):
                 return label
+    # 當歸鴨肉湯能當一餐，當歸清湯、米血湯是配湯。品名看得出主要肉類才算。
+    if name.endswith("湯") and protein_direction(name):
+        return "湯品"
     return None
 
 
@@ -47,7 +55,7 @@ def protein_direction(name: str) -> str | None:
         return "蔬食"
     found = [label for label, pattern in (
         ("牛肉", r"牛"), ("豬肉", r"豬"), ("雞肉", r"雞"), ("羊肉", r"羊"),
-        ("魚類", r"魚|鯖"), ("蝦蟹", r"蝦|蟹"),
+        ("鴨肉", r"鴨"), ("鵝肉", r"鵝"), ("魚類", r"魚|鯖"), ("蝦蟹", r"蝦|蟹"),
     ) if re.search(pattern, name)]
     return found[0] if len(found) == 1 else None
 
@@ -65,7 +73,9 @@ def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
         ):
             continue
         price = item["price"]
-        if price is not None and not math.isfinite(price):
+        # 專案慣例 price == 0 代表時價（main.normalize_menu 會補「時價」標籤）。
+        # 當成 0 元會讓時價品項永遠在預算內，還因為最便宜被排到第一個推薦。
+        if price is not None and (not math.isfinite(price) or price <= 0):
             price = None
         identity = json.dumps([item["category"], name, price], ensure_ascii=False)
         item_id = hashlib.sha256(identity.encode()).hexdigest()[:20]
@@ -73,7 +83,7 @@ def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
         # 括號註記（香排骨麵(乾)）跟品名關鍵字一樣是店家明寫的，不是推測。
         if re.search(r"乾麵|乾拌|拌麵|炒麵|炒飯|燴飯|" + _bracketed("乾"), name):
             texture = "乾的"
-        elif re.search(r"湯麵|湯飯|湯餃|鍋燒|粥|" + _bracketed("湯"), name):
+        elif kind == "湯品" or re.search(r"湯麵|湯飯|湯餃|鍋燒|粥|" + _bracketed("湯"), name):
             texture = "湯的"
         rows[item_id] = {
             "id": item_id,
