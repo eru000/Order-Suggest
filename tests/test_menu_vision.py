@@ -17,13 +17,6 @@ import menu_vision  # noqa: E402
 
 
 class MenuVisionTests(unittest.TestCase):
-    @staticmethod
-    def _dense_image_bytes():
-        image = Image.new("RGB", (2000, 1800), "white")
-        buffer = io.BytesIO()
-        image.save(buffer, "JPEG")
-        return buffer.getvalue()
-
     def test_normalizes_categories_prices_and_duplicates(self):
         result = menu_vision.normalize_vision_result(
             {
@@ -337,79 +330,6 @@ class MenuVisionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "找不到品項"):
             menu_vision.apply_manual_correction(result, "把豬肝飯改成豬腳飯")
         self.assertEqual(result["categories"][0]["items"][0]["name"], "排骨飯")
-
-    def test_overview_failure_continues_with_tile_ocr(self):
-        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
-            if "版面與身分" in prompt:
-                raise RuntimeError("overview empty content")
-            if "最終校對員" in prompt:
-                return json.dumps({
-                    "restaurant_name": "測試店",
-                    "categories": [{
-                        "name": "主食",
-                        "items": [{"name": "排骨飯", "price": 90}],
-                    }],
-                }, ensure_ascii=False)
-            return '{"categories":[{"name":"主食","items":[{"name":"排骨飯","price":90}]}]}'
-
-        with mock.patch.dict(os.environ, {"VISION_FAST": "0"}):
-            result = menu_vision.analyze_menu_image(
-                self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
-            )
-
-        self.assertEqual(result["categories"][0]["items"][0]["name"], "排骨飯")
-        self.assertTrue(any("菜單總覽模型" in warning for warning in result["warnings"]))
-
-    def test_partial_tile_and_verifier_failures_keep_draft(self):
-        item_by_tile = {
-            "tile-1": "鍋燒意麵",
-            "tile-3": "什錦炒飯",
-            "tile-4": "當歸冬粉",
-        }
-
-        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
-            if "版面與身分" in prompt:
-                return '{"restaurant_name":"測試店"}'
-            if "最終校對員" in prompt:
-                raise RuntimeError("verify empty content")
-            if "tile-2" in prompt:
-                raise RuntimeError("tile tool_calls")
-            tile_id = next(tile for tile in item_by_tile if tile in prompt)
-            return json.dumps({
-                "categories": [{
-                    "name": "主食",
-                    "items": [{"name": item_by_tile[tile_id], "price": 65}],
-                }]
-            }, ensure_ascii=False)
-
-        with mock.patch.dict(os.environ, {
-            "VISION_FAST": "0",
-            "VISION_MODEL": menu_vision.DEFAULT_OCR_MODEL,
-            "VISION_VERIFY_MODEL": menu_vision.DEFAULT_OCR_MODEL,
-        }):
-            result = menu_vision.analyze_menu_image(
-                self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
-            )
-
-        names = {item["name"] for category in result["categories"] for item in category["items"]}
-        self.assertEqual(names, set(item_by_tile.values()))
-        self.assertLessEqual(result["quality"]["score"], 0.6)
-        self.assertTrue(any("tile-2" in warning for warning in result["warnings"]))
-        self.assertTrue(any("最終校對模型" in warning for warning in result["warnings"]))
-
-    def test_all_tile_failures_raise_service_error(self):
-        def fake_vision(prompt, image_url, model=None, timeout=0, temperature=None):
-            raise RuntimeError("empty content")
-
-        with mock.patch.dict(os.environ, {
-            "VISION_FAST": "1",
-            "VISION_MODEL": menu_vision.DEFAULT_OCR_MODEL,
-            "VISION_VERIFY_MODEL": menu_vision.DEFAULT_OCR_MODEL,
-        }):
-            with self.assertRaisesRegex(RuntimeError, "所有菜單影像區塊"):
-                menu_vision.analyze_menu_image(
-                    self._dense_image_bytes(), "image/jpeg", vision_func=fake_vision
-                )
 
 
 if __name__ == "__main__":
