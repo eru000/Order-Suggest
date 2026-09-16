@@ -50,8 +50,9 @@ def menu_signals(item: dict[str, Any]) -> dict[str, str | None]:
     # Only explicit menu wording: soup is not assumed light, rice is not assumed large.
     light = bool(re.search(r"清爽|清淡|少油|低油", evidence))
     rich = bool(re.search(r"重口味|濃郁|油炸|酥炸|炸雞|炸豬排|炸排骨", evidence))
-    large = bool(re.search(r"大份|大碗|加大|份量多", evidence))
-    small = bool(re.search(r"小份|小碗|迷你|少量", evidence))
+    # 括號註記（鴨肉飯(大)）是店家明寫的份量，跟「大份」同級；(大辣) 這種不算。
+    large = bool(re.search(r"大份|大碗|加大|份量多|[（(]\s*大\s*[）)]", evidence))
+    small = bool(re.search(r"小份|小碗|迷你|少量|[（(]\s*小\s*[）)]", evidence))
     return {
         "taste": ("light" if light else "rich") if light != rich else None,
         "portion": ("large" if large else "small") if large != small else None,

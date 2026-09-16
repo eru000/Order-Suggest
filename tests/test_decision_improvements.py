@@ -222,5 +222,65 @@ class DiscoveryImprovementTest(unittest.TestCase):
                          "可以幫我換成麵嗎？這個會辣嗎？")
 
 
+class MenuWordingTest(unittest.TestCase):
+    """店家寫在括號裡的註記，跟寫在品名裡的是同一件事，不該漏掉。"""
+
+    def rows(self, *names):
+        return {
+            row["name"]: row
+            for row in menu_choices({"categories": [{"name": "主餐", "items": [
+                {"name": name, "price": 60} for name in names
+            ]}]})[0]
+        }
+
+    def test_bracketed_texture_and_portion_are_read(self):
+        rows = self.rows("香排骨麵(乾)", "鴨肉飯(大)", "鴨肉飯(小)", "湯麵（湯）")
+        self.assertEqual(rows["香排骨麵(乾)"]["texture"], "乾的")
+        self.assertEqual(rows["湯麵（湯）"]["texture"], "湯的")
+        self.assertEqual(rows["鴨肉飯(大)"]["portion"], "large")
+        self.assertEqual(rows["鴨肉飯(小)"]["portion"], "small")
+
+    def test_bracketed_note_that_is_not_a_size_stays_unknown(self):
+        rows = self.rows("麻辣拌麵(大辣)", "咖哩飯(小辣)", "牛肉麵(加蛋)")
+        for name in rows:
+            self.assertIsNone(rows[name]["portion"], name)
+
+
+class DiversityTest(unittest.TestCase):
+    """同一道菜的修飾版不該佔滿三個推薦位。"""
+
+    def setUp(self):
+        self.sessions = SessionStore()
+        self.menus = {"測試": {"categories": [{"name": "排餐", "items": [
+            {"name": "Prime霜降牛小排", "price": None},
+            {"name": "Prime玫瑰霜降牛小排", "price": None},
+            {"name": "Prime霜降牛小排切厚切", "price": None},
+            {"name": "原木煙燻牛小排", "price": None},
+            {"name": "果香壺漬牛小排", "price": None},
+        ]}]}}
+        self.service = DecisionService(self.sessions, self.menus, "測試")
+        self.sid = "diversity_session"
+
+    def test_variants_of_one_dish_do_not_fill_every_slot(self):
+        view = self.service.handle(self.sid, action="start")
+        if view["type"] == "question":
+            view = self.service.handle(
+                self.sid, action="recommend", revision=view["revision"]
+            )
+        names = [item["name"] for item in view["items"]]
+        self.assertEqual(len(names), 3)
+        self.assertEqual(len([n for n in names if "霜降牛小排" in n]), 1, names)
+
+    def test_unpriced_menu_says_so_instead_of_blaming_the_conditions(self):
+        view = self.service.handle(self.sid, action="start", text="預算 500 元以內")
+        if view["type"] == "question":
+            view = self.service.handle(
+                self.sid, action="recommend", revision=view["revision"]
+            )
+        self.assertEqual(view["type"], "no_match")
+        self.assertIn("沒有標示價格", view["message"])
+        self.assertTrue(view["canRelaxBudget"])
+
+
 if __name__ == "__main__":
     unittest.main()

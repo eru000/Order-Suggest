@@ -39,6 +39,30 @@ def starts_discovery(text: str) -> bool:
     return bool(START_PATTERN.search(text))
 
 
+def _longest_common_run(one: str, other: str) -> int:
+    best = 0
+    previous = [0] * (len(other) + 1)
+    for index in range(1, len(one) + 1):
+        current = [0] * (len(other) + 1)
+        for other_index in range(1, len(other) + 1):
+            if one[index - 1] == other[other_index - 1]:
+                current[other_index] = previous[other_index - 1] + 1
+                best = max(best, current[other_index])
+        previous = current
+    return best
+
+
+def _related_family(one: str, other: str) -> bool:
+    """同一道菜的修飾版。「玫瑰霜降牛小排」和「霜降牛小排切厚切」互不包含，
+    但共用「霜降牛小排」這段核心；「雞肉飯」和「雞肉湯麵」只共用兩個字，不算。"""
+    if not one or not other:
+        return False
+    if one in other or other in one:
+        return True
+    shared = _longest_common_run(one, other)
+    return shared >= 4 and shared / min(len(one), len(other)) >= 0.6
+
+
 def _option(value: str, label: str) -> dict[str, str]:
     return {"value": value, "label": label}
 
@@ -351,6 +375,18 @@ class DecisionService:
                         if exhausted
                         else "目前沒有符合這些條件的餐點。你可以調整條件，或換一家餐廳。"
                     )
+                    # 整份菜單都沒標價時，預算會濾掉全部餐點。說成「條件太嚴」會害
+                    # 使用者一直放寬其他條件，但那些條件根本不是原因。
+                    if (
+                        rows
+                        and not exhausted
+                        and any(k in d["prefs"] for k in ("budget", "cheaperThan"))
+                        and not any(row["price"] is not None for row in rows)
+                    ):
+                        message = (
+                            "這份菜單沒有標示價格，沒辦法用預算篩選。"
+                            "可以移除價格上限改用其他條件，或先確認菜單價格。"
+                        )
                     if not rows:
                         message = "這份菜單沒有可辨識的主餐，請先查看或修正菜單，也可以換一家餐廳。"
                     view = self._view(
@@ -607,13 +643,19 @@ class DecisionService:
             ),
         )
         picked = [r for item_id in keep_ids for r in rows if r["id"] == item_id][:3]
-        for prefer_diversity in (True, False):
+        # 三輪逐步放寬。同一道菜的修飾版（霜降牛小排／玫瑰霜降牛小排／霜降牛小排切厚切）
+        # family 字串不相等，光靠 dishType 擋不掉，會推出三個看起來一樣的選項。
+        for avoid_type, avoid_similar in ((True, True), (False, True), (False, False)):
             for row in rows:
                 if len(picked) >= 3:
                     return picked
                 if any(r["id"] == row["id"] or r["family"] == row["family"] for r in picked):
                     continue
-                if prefer_diversity and any(r["dishType"] == row["dishType"] for r in picked):
+                if avoid_type and any(r["dishType"] == row["dishType"] for r in picked):
+                    continue
+                if avoid_similar and any(
+                    _related_family(r["family"], row["family"]) for r in picked
+                ):
                     continue
                 picked.append(row)
         return picked

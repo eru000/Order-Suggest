@@ -13,6 +13,11 @@ from menu_semantics import annotate_item
 from recommendation import _flatten_menu
 
 
+def _bracketed(term: str) -> str:
+    """只認整個括號就是這個字的寫法：(大) 算份量，(大辣) 不算。"""
+    return rf"[（(]\s*{term}\s*[）)]"
+
+
 def dish_type(name: str, category: str = "") -> str | None:
     # Item name wins over broad category labels (e.g. 飯麵類).
     for value in (name, category):
@@ -65,9 +70,10 @@ def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
         identity = json.dumps([item["category"], name, price], ensure_ascii=False)
         item_id = hashlib.sha256(identity.encode()).hexdigest()[:20]
         texture = None
-        if any(term in name for term in ("乾麵", "乾拌", "拌麵", "炒麵", "炒飯", "燴飯")):
+        # 括號註記（香排骨麵(乾)）跟品名關鍵字一樣是店家明寫的，不是推測。
+        if re.search(r"乾麵|乾拌|拌麵|炒麵|炒飯|燴飯|" + _bracketed("乾"), name):
             texture = "乾的"
-        elif any(term in name for term in ("湯麵", "湯飯", "湯餃", "鍋燒", "粥")):
+        elif re.search(r"湯麵|湯飯|湯餃|鍋燒|粥|" + _bracketed("湯"), name):
             texture = "湯的"
         rows[item_id] = {
             "id": item_id,
