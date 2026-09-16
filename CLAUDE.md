@@ -60,8 +60,8 @@ CI 另外會跑 ruff 與 mypy，但**範圍只有指定的那幾個檔案，不�
 
 ```powershell
 .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.venv\Scripts\python.exe -m ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py
-.venv\Scripts\python.exe -m mypy src/recommendation.py src/security.py src/session_store.py src/persistence.py
+.venv\Scripts\python.exe -m ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py src/decision_catalog.py src/decision_preferences.py src/decision_service.py src/conversation_service.py
+.venv\Scripts\python.exe -m mypy src/recommendation.py src/security.py src/session_store.py src/persistence.py src/decision_catalog.py src/decision_preferences.py src/decision_service.py src/conversation_service.py
 ```
 
 中文輸出在 cp950 主控台會噴 `UnicodeEncodeError`，自己寫的 script 開頭要

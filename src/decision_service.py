@@ -226,9 +226,15 @@ class DecisionService:
                 self._apply_text(d, text) if text.strip() and text_action != "answer" else False
             )
             if action == "relax_budget":
-                d["prefs"].pop("budget", None)
-                d["prefs"].pop("cheaperThan", None)
-                notice = "已依你的選擇移除價格上限，其他條件保留。"
+                # cheaperThan 是「太貴了」推出來的暫時條件，budget 是使用者自己講的。
+                # 兩個一起刪會讓「50 元以內」無聲消失，畫面卻說其他條件保留。
+                if d["prefs"].pop("cheaperThan", None) is not None and "budget" in d["prefs"]:
+                    notice = (
+                        f"不再限定比剛才更便宜，每份 $ {d['prefs']['budget']:g} 內的預算保留。"
+                    )
+                else:
+                    d["prefs"].pop("budget", None)
+                    notice = "已依你的選擇移除價格上限，其他條件保留。"
             elif action == "relax_type":
                 for key in ("dishType", "texture", "protein", "rejectedTypes"):
                     d["prefs"].pop(key, None)
@@ -387,6 +393,17 @@ class DecisionService:
                             "這份菜單沒有標示價格，沒辦法用預算篩選。"
                             "可以移除價格上限改用其他條件，或先確認菜單價格。"
                         )
+                    cheaper_than = d["prefs"].get("cheaperThan")
+                    if cheaper_than is not None and not exhausted and eligible(
+                        rows,
+                        {k: v for k, v in d["prefs"].items() if k != "cheaperThan"},
+                        rate,
+                    ):
+                        # 在最便宜的那道按「太貴了」：不是條件太嚴，是沒有更便宜的了。
+                        message = (
+                            f"沒有比 $ {cheaper_than:g} 更便宜、又符合其他條件的餐點了。"
+                            "可以不再限定更便宜，繼續看其他選項。"
+                        )
                     if not rows:
                         message = "這份菜單沒有可辨識的主餐，請先查看或修正菜單，也可以換一家餐廳。"
                     view = self._view(
@@ -395,6 +412,9 @@ class DecisionService:
                         message,
                         exhausted=exhausted,
                         canRelaxBudget=any(k in d["prefs"] for k in ("budget", "cheaperThan")),
+                        relaxBudgetLabel=(
+                            "不用更便宜了" if cheaper_than is not None else "移除價格上限"
+                        ),
                         canRelaxType=any(
                             k in d["prefs"]
                             for k in ("dishType", "texture", "protein", "rejectedTypes")
@@ -674,7 +694,7 @@ class DecisionService:
         if row["likes"]:
             reasons.append("品名符合你提到的喜好")
         if not reasons:
-            reasons.append(f"{row['dishType'] or row['category']}，給你一個選擇方向")
+            reasons.append(f"從菜單的「{row['dishType'] or row['category']}」裡挑的")
         return {
             key: row[key] for key in ("id", "name", "price", "total", "dishType", "warnings")
         } | {

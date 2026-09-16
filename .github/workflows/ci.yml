@@ -37,4 +37,4 @@ jobs:
       - name: Ruff
         run: ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py src/decision_catalog.py src/decision_preferences.py src/decision_service.py src/conversation_service.py
       - name: Mypy
-        run: mypy src/recommendation.py src/security.py src/session_store.py src/persistence.py
+        run: mypy src/recommendation.py src/security.py src/session_store.py src/persistence.py src/decision_catalog.py src/decision_preferences.py src/decision_service.py src/conversation_service.py

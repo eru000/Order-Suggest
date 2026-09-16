@@ -42,8 +42,11 @@ window.MealDiscovery = (() => {
         options.appendChild(button(option.label, { action: 'answer', value: option.value }));
       }
       root.appendChild(options);
-      root.appendChild(button('直接推薦', { action: 'recommend' }, true));
-      root.appendChild(button('幫我決定一道', { action: 'decide' }));
+      // 直接掛在 root 底下沒有 gap，兩顆按鈕在手機上會黏在一起。
+      const shortcuts = element('div', 'discovery-footer-actions');
+      shortcuts.appendChild(button('直接推薦', { action: 'recommend' }, true));
+      shortcuts.appendChild(button('幫我決定一道', { action: 'decide' }));
+      root.appendChild(shortcuts);
     }
 
     if (view.items?.length) {
@@ -111,7 +114,9 @@ window.MealDiscovery = (() => {
     }
     if (view.type === 'no_match') {
       if (view.exhausted) actions.appendChild(button('重新看略過的餐點', { action: 'review' }));
-      if (view.canRelaxBudget) actions.appendChild(button('移除價格上限', { action: 'relax_budget' }));
+      if (view.canRelaxBudget) {
+        actions.appendChild(button(view.relaxBudgetLabel || '移除價格上限', { action: 'relax_budget' }));
+      }
       if (view.canRelaxType) actions.appendChild(button('放寬餐點類型', { action: 'relax_type' }));
       root.appendChild(element('p', 'discovery-hint', '也可以在下方輸入新的條件，或從上方切換餐廳。'));
     }

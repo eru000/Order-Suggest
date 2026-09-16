@@ -81,7 +81,8 @@ def is_information_question(text: str) -> bool:
 
 
 def split_message(text: str) -> tuple[str, str]:
-    commands, questions = [], []
+    commands: list[str] = []
+    questions: list[str] = []
     for part in re.split(r"[，,。；;！？!?\n]+", text):
         part = part.strip()
         if not part:

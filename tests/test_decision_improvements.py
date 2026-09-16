@@ -317,5 +317,56 @@ class DiversityTest(unittest.TestCase):
         self.assertTrue(view["canRelaxBudget"])
 
 
+class TooExpensiveOnCheapestTest(unittest.TestCase):
+    """在最便宜的那道按「太貴了」：說清楚沒有更便宜的，放寬時保留使用者自己的預算。"""
+
+    def setUp(self):
+        self.sessions = SessionStore()
+        self.menus = {"測試": {"categories": [{"name": "主餐", "items": [
+            {"name": "鴨油排飯", "price": 20},
+            {"name": "鴨肉飯", "price": 40},
+            {"name": "炒麵", "price": 45},
+            {"name": "鴨腿飯", "price": 80},
+        ]}]}}
+        self.service = DecisionService(self.sessions, self.menus, "測試")
+        self.sid = "too_expensive_session"
+        self.view = None
+
+    def step(self, action="message", **kwargs):
+        self.view = self.service.handle(
+            self.sid, action=action, revision=self.view["revision"] if self.view else None, **kwargs
+        )
+        return self.view
+
+    def test_no_cheaper_option_explains_and_keeps_user_budget(self):
+        self.step("start", text="預算50元")
+        if self.view["type"] == "question":
+            self.step("recommend")
+        cheapest = min(self.view["items"], key=lambda item: item["total"])
+        self.assertEqual(cheapest["name"], "鴨油排飯")
+        self.step("replace", item_id=cheapest["id"], reason="price")
+
+        self.assertEqual(self.view["type"], "no_match")
+        self.assertIn("沒有比 $ 20 更便宜", self.view["message"])
+        self.assertEqual(self.view["relaxBudgetLabel"], "不用更便宜了")
+
+        self.step("relax_budget")
+        prefs = self.sessions.get(self.sid).decision["prefs"]
+        self.assertEqual(prefs["budget"], 50)
+        self.assertNotIn("cheaperThan", prefs)
+        names = [item["name"] for item in self.view["items"]]
+        self.assertTrue(names)
+        self.assertNotIn("鴨腿飯", names)
+        self.assertNotIn("鴨油排飯", names)
+        self.assertIn("預算保留", self.view["message"])
+
+    def test_relax_without_cheaper_constraint_still_removes_budget(self):
+        self.step("start", text="預算10元")
+        self.assertEqual(self.view["type"], "no_match")
+        self.assertEqual(self.view["relaxBudgetLabel"], "移除價格上限")
+        self.step("relax_budget")
+        self.assertNotIn("budget", self.sessions.get(self.sid).decision["prefs"])
+
+
 if __name__ == "__main__":
     unittest.main()
