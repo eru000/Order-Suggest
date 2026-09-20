@@ -9,6 +9,7 @@ from typing import Any
 
 from menu_semantics import annotate_item, is_alcohol
 from observability import emit
+from table_menu import compose_table, is_shared_table
 
 UNKNOWN_PRICE = float("inf")
 
@@ -458,6 +459,45 @@ def _recommend_impl(
             )
             subtotal += price or 0.0
             count -= 1
+
+    # 合菜／熱炒／燒肉店：一桌人點一桌菜，不是一人一道主餐。照單點的規則走會
+    # 推出一桌火鍋加壽司、沒有青菜也沒有主食，預算還用不到兩成。
+    # 用整份菜單判斷店型，不能用篩選後的候選：同一家店在推薦與選餐兩邊必須
+    # 得到一樣的答案，否則「不吃牛」之類的條件會把一家店變成另一種店。
+    if is_shared_table(
+        len(all_items),
+        sum(
+            1
+            for item in all_items
+            if str((item.get("semantic") or {}).get("role") or "") == "main"
+        ),
+    ):
+        table = compose_table(
+            [*groups["main"], *groups["side"], *groups["other"]],
+            people,
+            food_budget,
+        )
+        for row in table:
+            price = row.get("price")
+            selected.append(
+                {
+                    "name": row["name"],
+                    "price": price,
+                    "category": row["category"],
+                    "reason": f"一桌菜的{row['bucket']}",
+                    "type": row["bucket"],
+                    "uncertain": bool(row.get("dietUncertain")),
+                }
+            )
+            subtotal += price or 0.0
+        if need_drink:
+            take("drink", _target_count(people, policy.people_per_drink), "搭配飲品")
+        notes = "" if table else "預算不足或沒有符合條件且價格明確的品項"
+        return {
+            "items": selected[: max(limit, len(selected))],
+            "notes": notes,
+            "meta": _meta(prefs, budget, people, need_drink, service_rate, subtotal),
+        }
 
     take("main", _target_count(people, policy.people_per_main), "主餐推薦")
     take("side", _target_count(people, policy.people_per_side), "搭配配菜")

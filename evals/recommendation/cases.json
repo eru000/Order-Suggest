@@ -4,23 +4,24 @@
     "restaurant": "menu_*.json 裡的餐廳名稱",
     "text": "使用者輸入的需求",
     "expectMains": "至少要有幾道主餐（沒寫就是 1）",
-    "allowAlcohol": "true 代表這次可以推酒（使用者自己要酒）"
+    "allowAlcohol": "true 代表這次可以推酒（使用者自己要酒）",
+    "sharedTable": "true 代表這家是合菜／熱炒／燒肉店，改用一桌菜的檢查"
   },
   "cases": [
     {
       "restaurant": "大肥鵝",
       "text": "四個人 預算3000",
-      "expectMains": 0
+      "sharedTable": true
     },
     {
       "restaurant": "大肥鵝",
       "text": "兩個人 預算1000 要飲料",
-      "expectMains": 0
+      "sharedTable": true
     },
     {
       "restaurant": "大肥鵝",
       "text": "六個人 預算5000 不吃牛",
-      "expectMains": 0
+      "sharedTable": true
     },
     {
       "restaurant": "斗六當歸鴨",
@@ -36,12 +37,24 @@
     },
     {
       "restaurant": "森森燒肉 台中中科店",
-      "text": "兩個人 預算1500"
+      "text": "兩個人 預算1500",
+      "sharedTable": true
     },
     {
       "restaurant": "森森燒肉 台中中科店",
-      "text": "一個人 預算300 不吃牛"
+      "text": "一個人 預算300 不吃牛",
+      "sharedTable": true
+    },
+    {
+      "restaurant": "森森燒肉 台中中科店",
+      "text": "四個人 預算2000",
+      "sharedTable": true
+    },
+    {
+      "restaurant": "大肥鵝",
+      "text": "兩個人 預算1200",
+      "sharedTable": true
     }
   ],
-  "_已知限制": "大肥鵝是合菜／熱炒店，菜名沒有飯麵排等字樣，規則判不出「主餐」，所以這幾個案例的 expectMains 是 0。要支援這種店得先決定多人共食怎麼推。"
+  "_已知限制": "大肥鵝、森森燒肉是合菜／燒肉店，走的是一桌菜的組合規則（table_menu.py），檢查項目跟單點不同：看青菜、湯鍋、道數與預算使用率，不看主餐數。"
 }

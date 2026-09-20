@@ -30,6 +30,7 @@ if str(SRC) not in sys.path:
 from preference_engine import parse_preferences  # noqa: E402
 from recommendation import recommend  # noqa: E402
 from storage.importer import menu_document_to_runtime  # noqa: E402
+from table_menu import table_size  # noqa: E402
 
 
 def load_menus() -> dict[str, dict]:
@@ -87,9 +88,29 @@ def check(case: dict, menu: dict) -> list[str]:
         if unknown:
             failures.append("有預算時推了價格未知的品項：" + "、".join(unknown))
 
-    mains = [r for r in items if r.get("type") == "main"]
-    if len(mains) < int(case.get("expectMains", 1)):
-        failures.append(f"主餐只有 {len(mains)} 道（至少要 {case.get('expectMains', 1)} 道）")
+    if case.get("sharedTable"):
+        # 合菜店：一桌人點一桌菜。道數照台灣的點法抓人數 + 1，而且一桌不能
+        # 沒有青菜或湯鍋——原本的單點規則推出來的是一桌火鍋加壽司。
+        people = int(prefs.get("people") or 1)
+        food = [r for r in items if r.get("type") not in {"drink", "dessert"}]
+        buckets = {r.get("type") for r in food}
+        # 預算已經花掉七成以上就不算道數不足——是錢不夠，不是規則挑得不好。
+        budget_spent = budget is not None and subtotal >= budget * 0.7
+        if len(food) < min(table_size(people), 5) and not budget_spent:
+            failures.append(f"一桌只有 {len(food)} 道（{people} 個人）")
+        if not buckets & {"青菜"}:
+            failures.append("一桌沒有青菜")
+        if not buckets & {"湯鍋", "主食"}:
+            failures.append("一桌沒有湯鍋也沒有主食")
+        if budget is not None and subtotal < budget * 0.5:
+            failures.append(f"小計 {subtotal:g} 只用掉預算 {budget:g} 的一半不到")
+        for bucket in buckets:
+            if sum(1 for r in food if r.get("type") == bucket) > 2:
+                failures.append(f"同一類超過兩道：{bucket}")
+    else:
+        mains = [r for r in items if r.get("type") == "main"]
+        if len(mains) < int(case.get("expectMains", 1)):
+            failures.append(f"主餐只有 {len(mains)} 道（至少要 {case.get('expectMains', 1)} 道）")
 
     drinks_as_food = [
         r["name"] for r in items

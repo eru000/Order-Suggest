@@ -11,6 +11,7 @@ from typing import Any
 from decision_preferences import SOFT_LABELS, menu_signals
 from menu_semantics import annotate_item
 from recommendation import _flatten_menu
+from table_menu import is_shared_table
 
 
 def _bracketed(term: str) -> str:
@@ -60,10 +61,23 @@ def protein_direction(name: str) -> str | None:
     return found[0] if len(found) == 1 else None
 
 
+def shared_table_menu(menu: dict[str, Any]) -> bool:
+    """這份菜單是合菜／燒肉店嗎？判斷基準跟 recommendation 那邊同一套。"""
+    flattened = [annotate_item(raw, raw["category"]) for raw in _flatten_menu(menu)]
+    return is_shared_table(
+        len(flattened),
+        sum(1 for item in flattened if item["semantic"].get("role") == "main"),
+    )
+
+
 def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
     rows: dict[str, dict[str, Any]] = {}
-    for raw in _flatten_menu(menu):
-        item = annotate_item(raw, raw["category"])
+    flattened = [annotate_item(raw, raw["category"]) for raw in _flatten_menu(menu)]
+    shared = is_shared_table(
+        len(flattened),
+        sum(1 for item in flattened if item["semantic"].get("role") == "main"),
+    )
+    for item in flattened:
         semantic = item["semantic"]
         name = item["name"]
         kind = dish_type(name, item["category"])
@@ -99,8 +113,12 @@ def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
             **menu_signals(item),
         }
     items = list(rows.values())
-    if any(row["main"] for row in items):
-        items = [row for row in items if row["main"]]
+    # 合菜／燒肉店只留「主餐」會把整份菜單砍光（大肥鵝 135 道只剩 1 道），
+    # 那些店本來就沒有一人一道的主餐概念，整桌的菜都是候選。
+    # 判斷基準是整份菜單，跟 recommendation 那邊一致，不能用篩選後的清單。
+    if not shared:
+        if any(row["main"] for row in items):
+            items = [row for row in items if row["main"]]
     fingerprint = hashlib.sha256(
         json.dumps([menu, items], ensure_ascii=False, sort_keys=True, default=str).encode()
     ).hexdigest()[:20]

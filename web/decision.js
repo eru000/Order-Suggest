@@ -51,14 +51,18 @@ window.MealDiscovery = (() => {
 
     if (view.items?.length) {
       if (view.type !== 'selection') {
-        root.appendChild(element('p', 'discovery-hint', view.focused
-          ? '先給你一道首選，按「就吃這個」才會記下選擇。'
-          : '以下選項擇一，挑一道現在想吃的。'));
+        // 合菜店給的是一整桌，不是擇一。
+        root.appendChild(element('p', 'discovery-hint', view.sharedTable
+          ? '這是一整桌，不是擇一。哪一道不想吃就按「換一道」。'
+          : view.focused
+            ? '先給你一道首選，按「就吃這個」才會記下選擇。'
+            : '以下選項擇一，挑一道現在想吃的。'));
       }
       const cards = element('div', 'discovery-candidates' + (view.items.length === 1 ? ' single' : ''));
       for (const item of view.items) {
         const card = element('section', 'discovery-candidate');
-        card.appendChild(element('span', 'discovery-kind', item.dishType || '菜單上的選項'));
+        card.appendChild(element('span', 'discovery-kind',
+          item.bucket || item.dishType || '菜單上的選項'));
         card.appendChild(element('h3', '', item.name));
         card.appendChild(element('p', 'discovery-price', money(item.total)));
         card.appendChild(element('p', 'discovery-reason', item.reason));
@@ -67,7 +71,10 @@ window.MealDiscovery = (() => {
           card.appendChild(element('p', 'discovery-warning', warning));
         }
         if (view.type !== 'selection') {
-          card.appendChild(button('就吃這個', { action: 'choose', itemId: item.id }, true));
+          // 一桌菜沒有「就吃這個」：整桌都要點，只能換掉其中一道。
+          if (!view.sharedTable) {
+            card.appendChild(button('就吃這個', { action: 'choose', itemId: item.id }, true));
+          }
           if (!view.focused) {
             const details = element('details', 'discovery-replace');
             const summary = element('summary', '', '換一道');

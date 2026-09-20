@@ -9,7 +9,7 @@ import uuid
 from collections import Counter
 from typing import Any
 
-from decision_catalog import eligible, menu_choices, service_rate
+from decision_catalog import eligible, menu_choices, service_rate, shared_table_menu
 from decision_preferences import (
     PERSISTENT_FIELDS,
     SOFT_LABELS,
@@ -23,6 +23,7 @@ from preference_engine import (
     merge_preference_delta,
     parse_preferences,
 )
+from table_menu import compose_table
 
 MAX_QUESTIONS = 2
 START_PATTERN = re.compile(
@@ -70,7 +71,11 @@ def _option(value: str, label: str) -> dict[str, str]:
 def _constraints(prefs: dict[str, Any]) -> list[str]:
     labels = []
     if prefs.get("budget") is not None:
-        labels.append(f"每份 $ {prefs['budget']:g} 內")
+        # people 只有合菜模式會設；那時預算是整桌的，不是一個人一道的。
+        scope = "整桌" if prefs.get("people") else "每份"
+        labels.append(f"{scope} $ {prefs['budget']:g} 內")
+    if prefs.get("people"):
+        labels.append(f"{int(prefs['people'])} 個人")
     for field in ("dishType", "texture", "protein", "spiceLevel"):
         if prefs.get(field):
             labels.append(str(prefs[field]))
@@ -153,6 +158,7 @@ class DecisionService:
         state, menu = self._context(session_id)
         with state.lock:
             rows, fingerprint = menu_choices(menu)
+            shared = shared_table_menu(menu)
             old = state.decision
             valid = bool(
                 old
@@ -223,7 +229,9 @@ class DecisionService:
             # Every path consumes the same preference delta exactly once, before filtering
             # or confirming. Exact option answers are handled by _answer instead.
             changed = (
-                self._apply_text(d, text) if text.strip() and text_action != "answer" else False
+                self._apply_text(d, text, shared=shared)
+                if text.strip() and text_action != "answer"
+                else False
             )
             if action == "relax_budget":
                 # cheaperThan 是「太貴了」推出來的暫時條件，budget 是使用者自己講的。
@@ -343,7 +351,11 @@ class DecisionService:
             }
             guide_with_evidence = new_wish_gap and not bypass_questions
             question = None
-            if (
+            if shared:
+                # 合菜／燒肉店沒有「一人一道主餐」，問飯還是麵沒有意義。改問人數，
+                # 然後直接給一桌菜。
+                question = self._people_question(d) if not bypass_questions else None
+            elif (
                 ((not force and len(available) > 3)
                  or (guide_with_evidence and len(available) > 1))
                 and (d.get("question") or len(d["asked"]) < MAX_QUESTIONS)
@@ -360,20 +372,35 @@ class DecisionService:
                 shortlist_id = d.pop("shortlistId", None)
                 if shortlist_id:
                     keep_ids = [shortlist_id]
-                cards = [
-                    self._card(row, d["prefs"], rate) for row in self._pick(available, keep_ids)
-                ]
-                if d.get("focused"):
-                    cards = cards[:1]
+                if shared:
+                    people = int(d["prefs"].get("people") or 2)
+                    table = compose_table(available, people, d["prefs"].get("budget"))
+                    cards = [self._card(row, d["prefs"], rate) for row in table]
+                else:
+                    cards = [
+                        self._card(row, d["prefs"], rate)
+                        for row in self._pick(available, keep_ids)
+                    ]
+                    if d.get("focused"):
+                        cards = cards[:1]
                 d["displayed"] = cards
                 d["phase"] = "recommendation" if cards else "no_match"
                 if cards:
                     message = notice or "挑了幾個不同的選項，選一道你現在想吃的。"
-                    if len(cards) == 1:
+                    if shared:
+                        people = int(d["prefs"].get("people") or 2)
+                        total = sum(
+                            card["total"] for card in cards if card.get("total") is not None
+                        )
+                        message = notice or (
+                            f"{people} 個人這樣點，共 {len(cards)} 道，小計 $ {total:g}。"
+                            "哪一道不想吃就換掉。"
+                        )
+                    elif len(cards) == 1:
                         message = notice or "目前有這一道符合已知條件，可以先看看。"
-                    if d.get("focused"):
+                    elif d.get("focused"):
                         message = notice or "我會先選這一道。願意的話就吃這個，也可以再換一個。"
-                    view = self._view(d, "recommendation", message, items=cards)
+                    view = self._view(d, "recommendation", message, items=cards, sharedTable=shared)
                 else:
                     exhausted = bool(candidates)
                     message = (
@@ -581,11 +608,25 @@ class DecisionService:
             if question["field"] == "comparison":
                 d["shortlistId"] = value
                 d["focused"] = True
+            elif question["field"] == "people":
+                d["prefs"]["people"] = int(value)
             else:
                 d["prefs"][question["field"]] = (
                     float(value) if question["field"] == "budget" else value
                 )
         d["question"] = None
+
+    @staticmethod
+    def _people_question(d):
+        """合菜店唯一要問的事：幾個人。道數與每道的預算都由它決定。"""
+        if d["prefs"].get("people") or "people" in d["asked"]:
+            return None
+        return {
+            "field": "people",
+            "title": "幾個人一起吃？",
+            "options": [*[_option(str(count), f"{count} 個人") for count in (2, 3, 4, 6)],
+                        _option("skip", "先抓兩個人")],
+        }
 
     @staticmethod
     def _next_question(d, rows, *, allow_comparison=False):
@@ -706,6 +747,9 @@ class DecisionService:
                 if rate is None
                 else f"含 {rate * 100:g}% 服務費"
             ),
+            # 合菜店的菜沒有飯麵排的字樣，dishType 是空的；一桌菜改顯示「青菜」
+            # 「湯鍋」這種角色，使用者才看得出這桌的組成。
+            **({"bucket": row["bucket"]} if row.get("bucket") else {}),
         }
 
     @staticmethod
@@ -739,7 +783,7 @@ class DecisionService:
         return "message", None, None
 
     @staticmethod
-    def _apply_text(d, text):
+    def _apply_text(d, text, shared=False):
         prefs = d["prefs"]
         before = copy.deepcopy(prefs)
         persistent_before = copy.deepcopy(d.get("persistentPrefs", {}))
@@ -760,7 +804,14 @@ class DecisionService:
             or (op.get("action") == "clear" and op.get("field") == "all")
         ]
         merge_preference_delta(persistent, fixed_delta)
-        if prefs.get("people", 1) > 1 and prefs.get("budgetBasis") == "total" and "budget" in delta:
+        # 單點流程一人一道，所以總預算要除以人數；合菜店點的是一整桌，
+        # 「六個人 預算3000」就是這桌 3000，除下去會變成只敢點 500 的一桌。
+        if (
+            not shared
+            and prefs.get("people", 1) > 1
+            and prefs.get("budgetBasis") == "total"
+            and "budget" in delta
+        ):
             prefs["budget"] /= prefs["people"]
         if re.search(r"預算不限|不限預算|不設上限|取消預算", text):
             prefs.pop("budget", None)
