@@ -34,6 +34,10 @@ jobs:
         run: |
           coverage run -m unittest discover -s tests -p "test_*.py" -t tests
           coverage report --fail-under=60
+      # 推薦結果的合理性檢查。不打 API（recommend() 是純本機計算），
+      # 所以可以進 CI：抓「沒要酒卻配酒」「時價當成 0 元」這類看得見的錯。
+      - name: Recommendation eval
+        run: python evals/recommendation/run_eval.py
       - name: Ruff
         run: ruff check src/recommendation.py src/security.py src/session_store.py src/persistence.py src/menu_library.py src/decision_catalog.py src/decision_preferences.py src/decision_service.py src/conversation_service.py
       - name: Mypy

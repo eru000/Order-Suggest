@@ -4,7 +4,9 @@ import copy
 import re
 from typing import Any
 
-SEMANTIC_SCHEMA_VERSION = 2
+# 3：烈酒改判為 drink。annotate_item 會沿用已存的標註，所以改了規則就得升版，
+# 否則資料庫裡既有菜單（每道菜都存著當初算好的 semantic）永遠套不到新規則。
+SEMANTIC_SCHEMA_VERSION = 3
 
 ROLE_TERMS: dict[str, tuple[str, ...]] = {
     "drink": (
@@ -22,8 +24,28 @@ ROLE_TERMS: dict[str, tuple[str, ...]] = {
         "啤酒",
         "紅酒",
         "白酒",
+        # 烈酒的品名多半只有品牌年份（蘇格登15年），靠品名抓不到；_role 比對的是
+        # 「分類 品名」，所以認分類名（烈酒區、調酒區）才擋得住整櫃酒。
+        # 不能只寫「酒」：酒蒸海鮮石鍋燒、全酒麻油雞鍋、紹興醉雞都是菜。
+        "烈酒",
+        "威士忌",
+        "白蘭地",
+        "伏特加",
+        "琴酒",
+        "清酒",
+        "梅酒",
+        "高粱",
+        "調酒",
+        "雞尾酒",
+        "沙瓦",
+        "香檳",
         "beer",
         "wine",
+        "whisky",
+        "whiskey",
+        "vodka",
+        "cocktail",  # sake 不能列：日文的鮭魚也是 sake，酒蒸料理的英文譯名也有
+        "champagne",
     ),
     "side": ("薯條", "雞塊", "沙拉", "蔬菜棒", "小菜", "加料"),
     "dessert": ("冰淇淋", "蛋糕", "甜點", "派", "可頌", "甜甜圈", "蛋撻", "大福", "布丁"),
@@ -38,6 +60,12 @@ ROLE_TERMS: dict[str, tuple[str, ...]] = {
         "燉飯",
         "麵",
         "飯",
+        # 只寫「排餐」的話，牛排館整份菜單一道主餐都認不出來。
+        "牛排",
+        "豬排",
+        "雞排",
+        "魚排",
+        "牛小排",
         "排餐",
         "主餐",
         "獨享餐",
@@ -110,10 +138,31 @@ def _dietary(name: str, explicit: Any) -> tuple[list[str], list[str]]:
     return flags, conflicts
 
 
+ALCOHOL_TERMS = (
+    "啤酒", "紅酒", "白酒", "烈酒", "威士忌", "白蘭地", "伏特加", "琴酒",
+    "清酒", "梅酒", "高粱", "調酒", "雞尾酒", "沙瓦", "香檳",
+    "beer", "wine", "whisky", "whiskey", "vodka", "cocktail", "champagne",
+)
+
+
+def is_alcohol(name: str, category: str = "") -> bool:
+    """只看菜單寫了什麼，不做推斷。沒要酒卻配酒是使用者一眼看得出來的錯。"""
+    value = f"{category} {name}".casefold()
+    return any(_term_hit(term.casefold(), value) for term in ALCOHOL_TERMS)
+
+
+def _term_hit(term: str, value: str) -> bool:
+    # 英文關鍵字要整個字比對：「酒蒸海鮮石鍋燒 (Sake-Steamed…)」是鍋物，
+    # 不是清酒，但 "sake" 出現在英文譯名裡，用子字串比對就會判成飲料。
+    if term.isascii():
+        return re.search(rf"(?<![a-z]){re.escape(term)}(?![a-z])", value) is not None
+    return term in value
+
+
 def _role(name: str, category: str) -> tuple[str, float]:
     value = f"{category} {name}".casefold()
     for role, terms in ROLE_TERMS.items():
-        if any(term.casefold() in value for term in terms):
+        if any(_term_hit(term.casefold(), value) for term in terms):
             return role, 0.8
     return "other", 0.25
 
@@ -176,6 +225,14 @@ def annotate_item(item: dict[str, Any], category: str = "") -> dict[str, Any]:
         "confidence": confidence,
         "source": "explicit" if value.get("role") or value.get("allergens") else "deterministic_v1",
     }
+    if isinstance(existing, dict):
+        # 升版是為了套用新的規則，不是為了把已經確認過的事實扔掉。規則推不出
+        # 「這道確定不含花生」，重算會讓確認過的成分退回「不明」。
+        old_allergens = existing.get("allergens")
+        if isinstance(old_allergens, dict) and old_allergens.get("known"):
+            value["semantic"]["allergens"] = copy.deepcopy(old_allergens)
+        if existing.get("source") == "explicit" and existing.get("role"):
+            value["semantic"]["role"] = existing["role"]
     return value
 
 

@@ -23,12 +23,14 @@ OpenAI 相容 API（api.ithu.tw）。
 
 ## 測試涵蓋不到的東西
 
-`tests/` 把所有 vision 與 LLM 呼叫都 mock 掉了。測試全過**不代表**：
+`tests/` 把所有 vision 與 LLM 呼叫都 mock 掉了，而且用的是人工編的小菜單。
+測試全過**不代表**：
 
 - 菜單辨識準不準
 - AI 回覆的文字品質好不好
+- 推薦出來的東西合不合理
 
-這兩件事只能實跑。辨識準確度用 `evals/menu_ocr/`（會真的打 API 燒配額，
+這幾件事只能實跑。辨識準確度用 `evals/menu_ocr/`（會真的打 API 燒配額，
 刻意不進 CI）：
 
 ```powershell
@@ -41,6 +43,22 @@ OpenAI 相容 API（api.ithu.tw）。
 
 `--debug` 是分辨「切塊根本沒讀到」與「切塊讀到了但最終校對刪掉」的唯一方法。
 兩者最終結果一樣，修法完全相反。
+
+推薦合不合理用 `evals/recommendation/`。`recommend()` 是純本機計算，**不打 API**，
+所以這支有進 CI，改推薦規則或 `menu_semantics.py` 的標註規則都該跑：
+
+```powershell
+.venv\Scripts\python.exe evals\recommendation\run_eval.py            # 有案例失敗會回傳 exit 1
+.venv\Scripts\python.exe evals\recommendation\run_eval.py --verbose  # 通過的也列出推薦品項
+```
+
+這支抓到過的實例：大肥鵝「四個人 預算3000」推一瓶 $2090 的威士忌當菜、時價
+品項當成 $0 免費入選——兩個都在 246 個測試全綠的情況下存在。案例用的是專案
+根目錄的 `menu_*.json`，不經資料庫，所以在誰的機器上跑結果都一樣。
+
+**改 `menu_semantics.py` 的分類規則就要把 `SEMANTIC_SCHEMA_VERSION` 加一。**
+標註結果會存進資料庫，`annotate_item` 看到版本夠新就整個沿用，不升版的話既有
+菜單永遠套不到新規則——改完規則跑 eval 沒反應，通常就是忘了這件事。
 
 ## 怎麼跑
 

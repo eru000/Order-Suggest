@@ -7,7 +7,7 @@ import statistics
 from dataclasses import dataclass
 from typing import Any
 
-from menu_semantics import annotate_item
+from menu_semantics import annotate_item, is_alcohol
 from observability import emit
 
 UNKNOWN_PRICE = float("inf")
@@ -24,16 +24,18 @@ class RecommendationPolicy:
 
 
 def _price(value: Any) -> float | None:
+    """price == 0 是專案的時價慣例（main.normalize_menu 會補「時價」標籤），
+    當成 0 元會讓時價品項免費入選、還永遠在預算內。一律視為價格未知。"""
     if value is None or isinstance(value, bool):
         return None
     if isinstance(value, (int, float)):
         number = float(value)
-        return number if number >= 0 else None
+        return number if number > 0 else None
     match = re.search(r"\d+(?:\.\d+)?", str(value).replace(",", ""))
     if not match:
         return None
     number = float(match.group())
-    return number if number >= 0 else None
+    return number if number > 0 else None
 
 
 def _flatten_menu(menu: dict[str, Any]) -> list[dict[str, Any]]:
@@ -356,7 +358,12 @@ def _recommend_impl(
         addon_names = {
             item["name"]
             for item in candidates
-            if item["price"] is not None and median_price > 0 and item["price"] < median_price * 0.4
+            # 便宜的「加飯」仍要改判配菜（見 test_addon_below_40_percent...），
+            # 但飲料和甜點不該因為便宜就變配菜：熱炒店的中位數很高，照價格一刀切
+            # 會讓 $40 的汽水、$80 的冰淇淋都變成配菜，飲料那一欄就只剩啤酒可選。
+            if item["price"] is not None and median_price > 0
+            and item["price"] < median_price * 0.4
+            and str((item.get("semantic") or {}).get("role") or "") not in {"drink", "dessert"}
         }
 
     groups: dict[str, list[dict[str, Any]]] = {
@@ -391,13 +398,26 @@ def _recommend_impl(
                 if item_spice is None
                 else max(0.0, 1.0 - abs(int(item_spice) - int(spice_target)) / 5)
             )
-        item = {**item, "kind": kind, "preferred": preferred, "preferenceScore": score}
+        item = {
+            **item,
+            "kind": kind,
+            "preferred": preferred,
+            "preferenceScore": score,
+            "alcohol": is_alcohol(str(item["name"]), str(item.get("category") or "")),
+        }
         groups[kind].append(item)
+
+    wants_alcohol = any(
+        is_alcohol(str(term))
+        for term in (*prefs.get("likes", []), prefs.get("preferredDish") or "")
+    )
 
     def sort_key(item: dict[str, Any]):
         return (
             # 成分確定的一律排在不確定的前面——安全性優先於偏好分數。
             bool(item.get("dietUncertain")),
+            # 沒點名要酒就把酒排到最後：預設要配飲料時不該自動配一杯酒。
+            bool(item.get("alcohol")) and not wants_alcohol,
             -float(item.get("preferenceScore") or 0),
             item["price"] is None,
             item["price"] if item["price"] is not None else UNKNOWN_PRICE,
