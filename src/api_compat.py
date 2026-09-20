@@ -526,9 +526,12 @@ async def crawl_restaurant_menu(req: CrawlMenuReq):
         CRAWLER_LOCK.release()
 
 
+# 拍照辨識是一般使用者的主要流程（到餐廳、拍菜單、問要點什麼），要金鑰等於
+# 整個功能只有自己人能用。濫用由限流擋；會動到既有資料的爬蟲與刪除菜單維持
+# 只有管理者能呼叫。
 @app.post(
     "/api/upload-menu-photo",
-    dependencies=[Depends(require_admin_key), Depends(rate_limit("menu-vision", 10, 600))],
+    dependencies=[Depends(rate_limit("menu-vision", 10, 600))],
 )
 async def upload_menu_photo(
     file: UploadFile = File(...),
@@ -594,7 +597,7 @@ async def upload_menu_photo(
 
 @app.post(
     "/api/menu/vision",
-    dependencies=[Depends(require_admin_key), Depends(rate_limit("menu-vision", 10, 600))],
+    dependencies=[Depends(rate_limit("menu-vision", 10, 600))],
 )
 async def create_menu_from_photo(
     restaurant_name: str = Form(default=""),
@@ -641,7 +644,7 @@ def _restore_pending_analysis(analysis_id: str, result: Dict[str, Any], session_
 
 @app.post(
     "/api/menu/vision/{analysis_id}/confirm",
-    dependencies=[Depends(require_admin_key), Depends(rate_limit("menu-vision-confirm", 30, 60))],
+    dependencies=[Depends(rate_limit("menu-vision-confirm", 30, 60))],
 )
 def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
     """使用者確認後才把待確認結果寫成菜單。"""
@@ -688,7 +691,7 @@ def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
 
 @app.post(
     "/api/menu/vision/{analysis_id}/correct",
-    dependencies=[Depends(require_admin_key), Depends(rate_limit("menu-vision-correct", 20, 60))],
+    dependencies=[Depends(rate_limit("menu-vision-correct", 20, 60))],
 )
 def correct_menu_from_photo(analysis_id: str, req: VisionCorrectionReq):
     """修正待確認結果，不動到已存檔的菜單。"""

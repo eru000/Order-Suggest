@@ -1453,7 +1453,7 @@
       form.append('image', uploadFile);
       form.append('restaurant_name', visionNameEl.value.trim());
       form.append('session_id', getActiveSessionId());
-      const res = await adminFetch('/api/menu/vision', {
+      const res = await fetch('/api/menu/vision', {
         method: 'POST',
         body: form,
         signal: visionAbort.signal,
@@ -1478,7 +1478,7 @@
     visionSubmitBtn.disabled = true;
     visionSubmitBtn.textContent = '存檔中…';
     try {
-      const res = await adminFetch(`/api/menu/vision/${visionAnalysisId}/confirm`, {
+      const res = await fetch(`/api/menu/vision/${visionAnalysisId}/confirm`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1515,7 +1515,7 @@
     if (!instruction || !visionAnalysisId) return;
     visionCorrectBtn.disabled = true;
     try {
-      const res = await adminFetch(`/api/menu/vision/${visionAnalysisId}/correct`, {
+      const res = await fetch(`/api/menu/vision/${visionAnalysisId}/correct`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ instruction, sessionId: getActiveSessionId() }),
