@@ -4,72 +4,29 @@ import copy
 import re
 from typing import Any
 
+from menu_vocabulary import (
+    ALCOHOL_TERMS,
+    ANIMAL_PRODUCT_TERMS,
+    DESSERT_TERMS,
+    DRINK_TERMS,
+    MAIN_TERMS,
+    MEAT_TERMS,
+    SEAFOOD_TERMS,
+    SIDE_TERMS,
+    VEGETARIAN_INGREDIENTS,
+    VEGETARIAN_MARKERS,
+    any_term,
+)
+
 # 3：烈酒改判為 drink。annotate_item 會沿用已存的標註，所以改了規則就得升版，
 # 否則資料庫裡既有菜單（每道菜都存著當初算好的 semantic）永遠套不到新規則。
 SEMANTIC_SCHEMA_VERSION = 3
 
 ROLE_TERMS: dict[str, tuple[str, ...]] = {
-    "drink": (
-        "茶",
-        "飲料",
-        "飲品",
-        "果汁",
-        "咖啡",
-        "奶茶",
-        "可樂",
-        "汽水",
-        "豆漿",
-        "拿鐵",
-        "氣泡",
-        "啤酒",
-        "紅酒",
-        "白酒",
-        # 烈酒的品名多半只有品牌年份（蘇格登15年），靠品名抓不到；_role 比對的是
-        # 「分類 品名」，所以認分類名（烈酒區、調酒區）才擋得住整櫃酒。
-        # 不能只寫「酒」：酒蒸海鮮石鍋燒、全酒麻油雞鍋、紹興醉雞都是菜。
-        "烈酒",
-        "威士忌",
-        "白蘭地",
-        "伏特加",
-        "琴酒",
-        "清酒",
-        "梅酒",
-        "高粱",
-        "調酒",
-        "雞尾酒",
-        "沙瓦",
-        "香檳",
-        "beer",
-        "wine",
-        "whisky",
-        "whiskey",
-        "vodka",
-        "cocktail",  # sake 不能列：日文的鮭魚也是 sake，酒蒸料理的英文譯名也有
-        "champagne",
-    ),
-    "side": ("薯條", "雞塊", "沙拉", "蔬菜棒", "小菜", "加料"),
-    "dessert": ("冰淇淋", "蛋糕", "甜點", "派", "可頌", "甜甜圈", "蛋撻", "大福", "布丁"),
-    "main": (
-        "堡",
-        "burger",
-        "吐司",
-        "貝果",
-        "三明治",
-        "套餐",
-        "義大利麵",
-        "燉飯",
-        "麵",
-        "飯",
-        # 只寫「排餐」的話，牛排館整份菜單一道主餐都認不出來。
-        "牛排",
-        "豬排",
-        "雞排",
-        "魚排",
-        "牛小排",
-        "排餐",
-        "主餐",
-        "獨享餐",
-    ),
+    "drink": DRINK_TERMS,
+    "side": SIDE_TERMS,
+    "dessert": DESSERT_TERMS,
+    "main": MAIN_TERMS,
 }
 
 SPICE_TERMS: tuple[tuple[int, tuple[str, ...]], ...] = (
@@ -91,25 +48,6 @@ ALLERGEN_TERMS: dict[str, tuple[str, ...]] = {
 }
 
 
-VEGETARIAN_MARKERS = ("素", "蔬食")
-VEGETARIAN_INGREDIENTS = (
-    "青菜",
-    "蔬菜",
-    "豆腐",
-    "豆干",
-    "豆皮",
-    "菇",
-    "海帶",
-    "紫菜",
-    "地瓜",
-    "玉米",
-    "筍",
-)
-MEAT_TERMS = (
-    "雞", "豬", "牛", "鴨", "鵝", "羊", "肉", "培根", "火腿", "香腸", "貢丸", "排骨",
-    "魚", "蝦", "蟹", "海鮮", "花枝", "小卷", "魷魚", "蛤", "蚵", "干貝",
-)
-ANIMAL_PRODUCT_TERMS = ("蛋", "奶", "起司", "乳酪", "優格", "蜂蜜", "美乃滋")
 
 
 def _dietary(name: str, explicit: Any) -> tuple[list[str], list[str]]:
@@ -123,7 +61,9 @@ def _dietary(name: str, explicit: Any) -> tuple[list[str], list[str]]:
     if isinstance(explicit, list) and explicit:
         return [str(value) for value in explicit], []
     has_marker = any(term in name for term in VEGETARIAN_MARKERS)
-    has_meat = any(term in name for term in MEAT_TERMS)
+    # 海鮮也是葷的：字表拆成肉類與海鮮兩份之後，這裡要兩份都看，
+    # 否則「鮮蝦炒飯」會被判成素食。
+    has_meat = any(term in name for term in (*MEAT_TERMS, *SEAFOOD_TERMS))
     has_animal = any(term in name for term in ANIMAL_PRODUCT_TERMS)
     flags: list[str] = []
     conflicts: list[str] = []
@@ -138,31 +78,20 @@ def _dietary(name: str, explicit: Any) -> tuple[list[str], list[str]]:
     return flags, conflicts
 
 
-ALCOHOL_TERMS = (
-    "啤酒", "紅酒", "白酒", "烈酒", "威士忌", "白蘭地", "伏特加", "琴酒",
-    "清酒", "梅酒", "高粱", "調酒", "雞尾酒", "沙瓦", "香檳",
-    "beer", "wine", "whisky", "whiskey", "vodka", "cocktail", "champagne",
-)
-
-
 def is_alcohol(name: str, category: str = "") -> bool:
     """只看菜單寫了什麼，不做推斷。沒要酒卻配酒是使用者一眼看得出來的錯。"""
-    value = f"{category} {name}".casefold()
-    return any(_term_hit(term.casefold(), value) for term in ALCOHOL_TERMS)
+    return any_term(ALCOHOL_TERMS, f"{category} {name}")
 
 
-def _term_hit(term: str, value: str) -> bool:
-    # 英文關鍵字要整個字比對：「酒蒸海鮮石鍋燒 (Sake-Steamed…)」是鍋物，
-    # 不是清酒，但 "sake" 出現在英文譯名裡，用子字串比對就會判成飲料。
-    if term.isascii():
-        return re.search(rf"(?<![a-z]){re.escape(term)}(?![a-z])", value) is not None
-    return term in value
+def role_of(name: str, category: str = "") -> str:
+    """這道菜在一餐裡是什麼角色。推薦器沒有標註可用時也走這裡，不要再寫一份。"""
+    return _role(name, category)[0]
 
 
 def _role(name: str, category: str) -> tuple[str, float]:
-    value = f"{category} {name}".casefold()
+    value = f"{category} {name}"
     for role, terms in ROLE_TERMS.items():
-        if any(_term_hit(term.casefold(), value) for term in terms):
+        if any_term(terms, value):
             return role, 0.8
     return "other", 0.25
 

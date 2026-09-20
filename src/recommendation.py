@@ -7,7 +7,7 @@ import statistics
 from dataclasses import dataclass
 from typing import Any
 
-from menu_semantics import annotate_item, is_alcohol
+from menu_semantics import annotate_item, is_alcohol, role_of
 from observability import emit
 from table_menu import compose_table, is_shared_table
 
@@ -78,85 +78,6 @@ def _flatten_menu(menu: dict[str, Any]) -> list[dict[str, Any]]:
                         }
                     )
     return rows
-
-
-def _classify(name: str) -> str:
-    value = name.casefold()
-    if any(
-        word in value
-        for word in (
-            "茶",
-            "飲料",
-            "飲品",
-            "果汁",
-            "咖啡",
-            "奶茶",
-            "可樂",
-            "汽水",
-            "豆漿",
-            "拿鐵",
-            "摩卡",
-            "雪碧",
-            "芬達",
-            "氣泡",
-            "啤酒",
-            "紅酒",
-            "白酒",
-            "酒",
-            "beer",
-            "wine",
-        )
-    ):
-        return "drink"
-    if any(
-        word in value
-        for word in (
-            "薯條",
-            "雞塊",
-            "魚圈",
-            "蝦塊",
-            "沙拉",
-            "蔬菜棒",
-            "小菜",
-            "加料",
-        )
-    ):
-        return "side"
-    if any(
-        word in value
-        for word in (
-            "冰淇淋",
-            "蛋糕",
-            "甜點",
-            "派",
-            "可頌",
-            "甜甜圈",
-            "蛋撻",
-            "大福",
-            "布丁",
-        )
-    ):
-        return "dessert"
-    if any(
-        word in value
-        for word in (
-            "堡",
-            "burger",
-            "吐司",
-            "貝果",
-            "三明治",
-            "套餐",
-            "義大利麵",
-            "燉飯",
-            "麵",
-            "飯",
-            "排餐",
-            "主餐",
-            "獨享餐",
-        )
-    ):
-        return "main"
-    return "other"
 
 
 _VARIANT_WORDS: tuple[tuple[str, tuple[str, ...]], ...] = (
@@ -384,7 +305,8 @@ def _recommend_impl(
         kind = (
             "side"
             if item["name"] in addon_names
-            else (semantic_role if semantic_role in groups else _classify(item["name"]))
+            else (semantic_role if semantic_role in groups
+                  else role_of(item["name"], str(item.get("category") or "")))
         )
         preferred = _preferred(item, preferred_dish)
         score = 1.0 if preferred else 0.0

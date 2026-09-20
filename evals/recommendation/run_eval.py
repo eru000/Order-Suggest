@@ -27,6 +27,7 @@ SRC = PROJECT_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
+from menu_semantics import is_alcohol  # noqa: E402
 from preference_engine import parse_preferences  # noqa: E402
 from recommendation import recommend  # noqa: E402
 from storage.importer import menu_document_to_runtime  # noqa: E402
@@ -46,18 +47,13 @@ def load_menus() -> dict[str, dict]:
             print(f"[略過] 讀不到 {path.name}：{exc}")
     return menus
 
-# 品名／分類出現這些字就是酒。沒要酒卻推酒，是使用者一眼看得出來的錯。
-ALCOHOL_TERMS = (
-    "啤酒", "紅酒", "白酒", "烈酒", "威士忌", "白蘭地", "伏特加", "琴酒",
-    "清酒", "梅酒", "高粱", "調酒", "雞尾酒", "沙瓦", "香檳",
-    "beer", "wine", "whisky", "whiskey", "vodka", "sake", "cocktail", "champagne",
-)
 WANTS_ALCOHOL = ("酒", "beer", "wine")
 
 
 def _is_alcohol(name: str, category: str) -> bool:
-    value = f"{category} {name}".casefold()
-    return any(term.casefold() in value for term in ALCOHOL_TERMS)
+    # 故意用產品程式碼的同一支函式：字表只有一份，evals 才不會跟著長歪。
+    # 這支 eval 檢查的是「推薦結果合不合理」，不是「字表抄對了沒」。
+    return is_alcohol(name, category)
 
 
 def check(case: dict, menu: dict) -> list[str]:

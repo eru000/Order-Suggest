@@ -13,6 +13,16 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from menu_vocabulary import (
+    AMBIGUOUS_VEGETABLE_TERMS,
+    DESSERT_TERMS,
+    MEAT_TERMS,
+    SEAFOOD_TERMS,
+    VEGETABLE_TERMS,
+    any_term,
+    pattern_of,
+)
+
 # 桶的順序就是判斷順序：先判鍋湯，否則「酸白菜肉鍋」會被青菜的「白菜」搶走；
 # 主食要排在肉類前面，否則「鴨肉飯」會被判成肉類。
 BUCKET_RULES: tuple[tuple[str, str], ...] = (
@@ -20,22 +30,18 @@ BUCKET_RULES: tuple[tuple[str, str], ...] = (
     ("湯鍋", r"鍋$|煲$|火鍋|湯$|羹$|鍋物"),
     ("主食", r"飯|麵|粥|米粉|冬粉|粄條|炒飯|炒麵"),
     ("青菜", r""),  # 見 _is_vegetable：葷素同名的字要另外判斷
-    ("海鮮", r"蝦|蟹|魚|蛤|蚵|花枝|軟絲|小卷|魷魚|干貝|鮑魚|刺身|壽司|生魚|海鮮|中卷"),
-    ("肉類", r"牛|豬|雞|鴨|鵝|羊|肉|排骨|燒臘|叉燒|松阪|腸"),
-    ("點心", r"冰淇淋|甜點|蛋糕|布丁|水果|果盤|西瓜|鳳梨"),
+    ("海鮮", pattern_of(SEAFOOD_TERMS)),
+    ("肉類", pattern_of(MEAT_TERMS) + r"|燒臘"),
+    ("點心", pattern_of(DESSERT_TERMS) + r"|水果|果盤|西瓜|鳳梨"),
 )
-
-# 寫了這些字就是青菜，不管旁邊有沒有肉（鵝油高麗菜是青菜）。
-VEGETABLE_TERMS = r"時蔬|青菜|野菜|蔬菜|沙拉|高麗菜|花椰|地瓜葉|水蓮|空心菜|豆苗|玉米筍"
-# 這些葷素都有：清炒蘆筍是青菜，蘆筍牛肉、控肉桂竹筍是肉。
-AMBIGUOUS_VEGETABLE_TERMS = r"蘆筍|竹筍|桂竹|菇|筍"
-MEAT_TERMS = r"牛|豬|雞|鴨|鵝|羊|肉|排骨|叉燒|松阪|腸|蝦|蟹|魚|花枝|小卷|魷魚|干貝"
 
 
 def _is_vegetable(value: str) -> bool:
-    if re.search(VEGETABLE_TERMS, value):
+    if any_term(VEGETABLE_TERMS, value):
         return True
-    return bool(re.search(AMBIGUOUS_VEGETABLE_TERMS, value)) and not re.search(MEAT_TERMS, value)
+    return any_term(AMBIGUOUS_VEGETABLE_TERMS, value) and not any_term(
+        (*MEAT_TERMS, *SEAFOOD_TERMS), value
+    )
 
 # 一桌至少要有的東西。青菜排第一是因為最常被漏掉。
 REQUIRED_BUCKETS = ("青菜", "湯鍋", "主食")
