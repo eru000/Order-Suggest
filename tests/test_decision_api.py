@@ -9,12 +9,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 import back
 from conversation_service import ConversationService
+from security import RATE_LIMITER
 from session_store import SessionStore
 from test_decision_service import menu
 
 
 class DecisionAPITest(unittest.TestCase):
     def setUp(self):
+        # 限流器是跨測試共用的全域狀態，不清的話整批跑時會被前面的測試用掉額度。
+        RATE_LIMITER.reset()
         self.sessions = SessionStore()
         self.menus = {"測試": menu(), "第二家": menu()}
         service = ConversationService(self.sessions, self.menus, "測試", lambda *args: None)

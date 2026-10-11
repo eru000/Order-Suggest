@@ -1,0 +1,17 @@
+{
+  "name": "點餐建議 Order Suggest",
+  "short_name": "點餐建議",
+  "description": "拍一張菜單，幫你決定要點什麼。",
+  "lang": "zh-TW",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F2F2F7",
+  "theme_color": "#202a56",
+  "icons": [
+    { "src": "/web/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/web/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/web/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -2379,5 +2379,16 @@
   window.addEventListener('resize', syncChromeHeights);
   syncChromeHeights();
 
+  // 註冊 service worker，讓手機可以把這個網站加到主畫面當 App 開。
+  // 瀏覽器只在 https 或 localhost 允許註冊，區網的 http://192.168.x.x 會被擋，
+  // 那是預期內的——網頁本身照常運作，只是不能安裝。
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(err => {
+        console.info('[點餐助手] 這個網址不支援安裝到主畫面：', err.message);
+      });
+    });
+  }
+
   console.info('[點餐助手] UI ready');
 })();

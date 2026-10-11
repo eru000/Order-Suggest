@@ -356,6 +356,20 @@ def index():
         headers={"Cache-Control": "no-cache"},
     )
 
+@app.get("/sw.js")
+def service_worker():
+    """Service worker 必須從網站根目錄送出。
+
+    瀏覽器只讓 worker 控制自己所在目錄以下的路徑，放在 /web/sw.js 的話 scope
+    就只有 /web，首頁不在裡面，加到主畫面後開起來仍然是一般分頁。
+    """
+    return FileResponse(
+        os.path.join(WEB_DIR, "sw.js"),
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache"},
+    )
+
+
 @app.get("/api/current-menu")
 def get_current_menu(session_id: str):
     """
@@ -708,7 +722,13 @@ def correct_menu_from_photo(analysis_id: str, req: VisionCorrectionReq):
         raise HTTPException(422, str(exc)) from exc
 
 
-@app.post("/api/chat", response_model=ChatResp)
+# 這兩支每次都可能呼叫學校的 LLM。網址一旦公開（tunnel 或雲端），沒有限流
+# 等於把 API 額度開放給所有人。兩支共用同一個 scope，換端點繞不過去。
+@app.post(
+    "/api/chat",
+    response_model=ChatResp,
+    dependencies=[Depends(rate_limit("chat", 20, 60))],
+)
 def api_chat(req: ChatReq):
     try:
         decision = CONVERSATIONS.discovery(req.sessionId, req.text)
@@ -733,7 +753,8 @@ def get_decision(session_id: str):
         raise HTTPException(409, str(exc)) from exc
 
 
-@app.post("/api/decision")
+# 選餐本身是本機計算，不打 LLM，所以上限放寬——但還是要有，免得被灌爆 session。
+@app.post("/api/decision", dependencies=[Depends(rate_limit("decision", 90, 60))])
 def update_decision(req: DecisionReq):
     try:
         decision = CONVERSATIONS.decisions.handle(
@@ -749,7 +770,7 @@ def update_decision(req: DecisionReq):
         raise HTTPException(409, str(exc)) from exc
 
 
-@app.post("/api/chat/stream")
+@app.post("/api/chat/stream", dependencies=[Depends(rate_limit("chat", 20, 60))])
 def api_chat_stream(req: ChatReq):
     """SSE 串流版對話。
 
@@ -825,7 +846,10 @@ def get_restaurant_review(
         }
     return load_review_cache(PROJECT_ROOT, target)
 
-@app.post("/api/restaurant-review/identify")
+@app.post(
+    "/api/restaurant-review/identify",
+    dependencies=[Depends(rate_limit("review", 10, 300))],
+)
 async def identify_restaurant_review(req: RestaurantReviewIdentifyReq):
     """搜尋可能的餐廳分店，交由使用者確認後才更新評價。"""
     restaurant_name = (req.restaurant_name or "").strip()
@@ -849,7 +873,11 @@ async def identify_restaurant_review(req: RestaurantReviewIdentifyReq):
         print(f"[評價] 店家辨識失敗: {e}")
         raise HTTPException(500, f"店家辨識失敗: {str(e)}")
 
-@app.post("/api/restaurant-review/refresh")
+# 評論更新會開瀏覽器去爬，比 LLM 還貴，限得更緊。
+@app.post(
+    "/api/restaurant-review/refresh",
+    dependencies=[Depends(rate_limit("review", 10, 300))],
+)
 async def refresh_restaurant_review(req: RestaurantReviewRefreshReq):
     """手動更新餐廳評價情報，完成後寫入本機 JSON 快取。"""
     restaurant_name = (req.restaurant_name or "").strip()

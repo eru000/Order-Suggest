@@ -25,6 +25,13 @@ class ProtectedRouteTest(unittest.TestCase):
         ("POST", "/api/menu/vision"),
         ("POST", "/api/menu/vision/{analysis_id}/confirm"),
         ("POST", "/api/menu/vision/{analysis_id}/correct"),
+        # 每次都可能打學校的 LLM，網址公開時沒限流等於把額度送人。
+        ("POST", "/api/chat"),
+        ("POST", "/api/chat/stream"),
+        # 會開瀏覽器去爬，比 LLM 還貴。
+        ("POST", "/api/restaurant-review/identify"),
+        ("POST", "/api/restaurant-review/refresh"),
+        ("POST", "/api/decision"),
     }
 
     def _dependencies(self):

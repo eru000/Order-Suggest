@@ -32,6 +32,12 @@ class SlidingWindowRateLimiter:
         self._hits: dict[tuple[str, str], deque[float]] = defaultdict(deque)
         self._lock = threading.Lock()
 
+    def reset(self) -> None:
+        """清掉所有計數。測試共用同一個 limiter，不清的話前一個測試打的次數
+        會算到下一個頭上——單獨跑會過、整批跑會 429。"""
+        with self._lock:
+            self._hits.clear()
+
     def check(self, scope: str, client_key: str, limit: int, window_seconds: int) -> int:
         """Return zero when allowed, otherwise seconds until the next request."""
         now = self._clock()
