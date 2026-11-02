@@ -43,6 +43,8 @@ DEFAULT_MODEL = (
 OLLAMA_BIN = os.getenv("OLLAMA_BIN", "ollama")
 API_BASE_URL = os.getenv("API_BASE_URL", "").rstrip("/")
 API_KEY = os.getenv("API_KEY", "")
+# The API gateway rejects urllib's default User-Agent with Cloudflare error 1010.
+API_USER_AGENT = "MealRecommendationApp/1.0"
 VISION_MODEL = os.getenv("VISION_MODEL", "ornith-35b")
 VISION_JSON_TOOL_NAME = "submit_menu_json"
 
@@ -283,6 +285,7 @@ def _api_chat(
             headers={
                 "Authorization": f"Bearer {API_KEY}",
                 "Content-Type": "application/json",
+                "User-Agent": API_USER_AGENT,
             },
             method="POST",
         )
@@ -391,6 +394,7 @@ def _api_chat_stream(
         headers={
             "Authorization": f"Bearer {API_KEY}",
             "Content-Type": "application/json",
+            "User-Agent": API_USER_AGENT,
         },
         method="POST",
     )
