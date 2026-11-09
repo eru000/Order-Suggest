@@ -2,6 +2,13 @@
 
 (() => {
   const { escapeHtml, formatText, formatStreamingText } = window.OrderSuggestFormat;
+
+  const renderMenuSpice = ({ chiliCount, spiceLevel }) => {
+    const labels = [];
+    if (Number.isInteger(chiliCount) && chiliCount > 0) labels.push(`${chiliCount} 個辣椒`);
+    if (Number.isInteger(spiceLevel)) labels.push(spiceLevel === 0 ? '不辣' : `辣度 ${spiceLevel}`);
+    return labels.length ? `<small class="menu-spice-label">${labels.join('、')}</small>` : '';
+  };
   const STORAGE_KEY = 'ordering_assistant_threads_v1';
   const ACTIVE_KEY = 'ordering_assistant_active_thread_v1';
   const ADMIN_KEY_STORAGE = 'ordering_assistant_admin_key_v1';
@@ -1412,7 +1419,7 @@
         rows.push(
           `<div class="vision-item" style="--i:${delayIndex}">` +
           `<span class="vision-item-no">${counter}</span>` +
-          `<span class="vision-item-name">${escapeHtml(item.name)}</span>` +
+          `<span class="vision-item-name">${escapeHtml(item.name)}${renderMenuSpice(item)}</span>` +
           `<span class="vision-item-price${hasPrice ? '' : ' missing'}">${priceText}</span>` +
           `</div>`
         );
@@ -2355,7 +2362,7 @@
           const price = item.price ? `$${item.price}` : '時價';
           html += `
             <div class="menu-item">
-              <span class="menu-item-name">${name}</span>
+              <span class="menu-item-name">${name}${renderMenuSpice(item)}</span>
               <span class="menu-item-price">${escapeHtml(price)}</span>
             </div>
           `;

@@ -705,6 +705,7 @@ class DecisionService:
         rows = sorted(
             rows,
             key=lambda r: (
+                r["spiceUncertain"],
                 -r.get("softScore", 0),
                 bool(r["warnings"]),
                 -r["likes"],

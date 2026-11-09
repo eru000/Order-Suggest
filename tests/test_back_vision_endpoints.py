@@ -312,6 +312,20 @@ class VisionEndpointTests(unittest.TestCase):
         self.assertIn("/api/upload-menu-photo", paths)
         self.assertIn("/api/menu/vision", paths)
 
+    def test_legacy_photo_upload_preserves_chili_icons(self):
+        catalog = {}
+        result = {"menu_items": [{"dish": "五更腸旺", "price": "380", "chili_count": 2}]}
+        with mock.patch("ollama_fuc.extract_menu_from_image", return_value=result), \
+                mock.patch.object(back, "RESTAURANT_MENUS", catalog), \
+                mock.patch.object(back, "SESSIONS", back.SessionStore()):
+            response = asyncio.run(back.upload_menu_photo(jpeg_upload(), "筷子餐廳", SESSION_ID))
+
+        self.assertTrue(response["success"])
+        menu = catalog["筷子餐廳"]["restaurants"]["筷子餐廳"]
+        self.assertEqual(menu["categories"]["全部菜色"]["items"], [
+            {"name": "五更腸旺", "price": 380, "chiliCount": 2}
+        ])
+
 
 if __name__ == "__main__":
     unittest.main()

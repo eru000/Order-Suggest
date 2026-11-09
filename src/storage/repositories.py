@@ -179,11 +179,19 @@ class MenuRepository:
             for category in version.categories:
                 items = []
                 for item in category.items:
+                    semantic = item.semantic_profile or {}
+                    spice = semantic.get("spice")
+                    spice_labels = {
+                        key: spice[key]
+                        for key in ("chiliCount", "spiceLevel")
+                        if isinstance(spice, dict) and key in spice
+                    }
                     items.append(
                         {
                             "name": item.name,
                             "price": float(item.price) if item.price is not None else None,
-                            "semantic": item.semantic_profile or {},
+                            "semantic": semantic,
+                            **spice_labels,
                         }
                     )
                 categories[category.name] = {"items": items}

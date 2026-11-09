@@ -47,6 +47,16 @@ API_KEY = os.getenv("API_KEY", "")
 API_USER_AGENT = "MealRecommendationApp/1.0"
 VISION_MODEL = os.getenv("VISION_MODEL", "ornith-35b")
 VISION_JSON_TOOL_NAME = "submit_menu_json"
+SPICE_OCR_RULE = (
+    "逐項檢查菜名或價格左右的小辣椒圖示。只數同一品項旁明確可見的辣椒，"
+    "即使菜名沒有「辣」字也要填 chili_count（1 至 5）。圖例上的辣椒、紅字、素食、"
+    "人氣、星號、裝飾，以及其他品項旁的圖示都不要計入。不要把圖示寫進菜名。"
+    "若菜單文字或圖例明確標出該品項的辣度，填 spice_level：不辣 0、微辣／小辣 2、"
+    "中辣 3、大辣 4、特辣 5。只有明寫不辣，或圖例明說沒有圖示代表不辣且該列清楚可讀，"
+    "才填 0。只有圖示而沒有對照說明時，保留數量即可。辣度看不清楚或沒有標示時，"
+    "相應欄位省略或填 null。不可依菜名、食材或做法猜辣度。若同一品項有多種尺寸，"
+    "各尺寸沿用菜單對該品項的辣度標示。"
+)
 
 
 def _vision_json_tool() -> Dict[str, Any]:
@@ -56,6 +66,14 @@ def _vision_json_tool() -> Dict[str, Any]:
         "properties": {
             "name": {"type": "string"},
             "price": {"type": ["number", "string", "null"]},
+            "chili_count": {
+                "type": ["integer", "null"], "minimum": 1, "maximum": 5,
+                "description": "菜名旁明確印出的辣椒圖示數量",
+            },
+            "spice_level": {
+                "type": ["integer", "null"], "minimum": 0, "maximum": 5,
+                "description": "菜單文字或圖例明確標出的辣度",
+            },
         },
         "required": ["name", "price"],
         "additionalProperties": True,
@@ -481,7 +499,7 @@ _MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文
 {
   "restaurant_name": "餐廳名稱或null",
   "menu_items": [
-    {"dish": "菜名", "price": "價格數字"},
+    {"dish": "菜名", "price": "價格數字", "chili_count": null, "spice_level": null},
     {"dish": "菜名2", "price": null}
   ]
 }
@@ -489,7 +507,8 @@ _MENU_EXTRACT_PROMPT = """這是一張餐廳菜單照片（可能是繁體中文
 - restaurant_name：如果圖片中能看出餐廳名稱請填入，否則填 null
 - price 只填數字字串（例如 "150"），看不到價格填 null
 - 無法辨識的項目請略過，不要猜測
-- 只回傳 JSON，不要說明文字"""
+- 只回傳 JSON，不要說明文字
+""" + SPICE_OCR_RULE
 
 
 def extract_menu_from_image(

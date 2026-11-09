@@ -7,7 +7,14 @@ import statistics
 from dataclasses import dataclass
 from typing import Any
 
-from menu_semantics import annotate_item, is_alcohol, role_of
+from menu_semantics import (
+    annotate_item,
+    is_alcohol,
+    role_of,
+    spice_confirmation_note,
+    spice_exceeds_limit,
+    strict_spice_limit,
+)
 from observability import emit
 from table_menu import compose_table, is_shared_table
 
@@ -152,6 +159,7 @@ def _meta(
         "people": people,
         "needDrink": need_drink,
         "spiceLevel": prefs.get("spiceLevel"),
+        "spiceMaximum": strict_spice_limit(prefs),
         "cuisine": prefs.get("cuisine"),
         "serviceRate": service_rate,
         "estimatedSubtotal": round(subtotal, 2),
@@ -219,8 +227,7 @@ def _recommend_impl(
     spice_profile: dict[str, Any] = (
         dict(raw_spice_profile) if semantic_enabled and isinstance(raw_spice_profile, dict) else {}
     )
-    if prefs.get("spiceLevel") == "不辣" and not spice_profile:
-        excludes.append("辣")
+    spice_limit = strict_spice_limit(prefs)
     allergies = (
         {str(value) for value in prefs.get("allergens", []) if str(value).strip()}
         if semantic_enabled
@@ -253,19 +260,20 @@ def _recommend_impl(
         uncertain = bool(allergies and not allergen_data.get("known")) or bool(
             dietary and not dietary.issubset(flags)
         )
-        item = {**item, "dietUncertain": uncertain}
         raw_spice = semantic.get("spice")
+        if spice_limit is not None and not semantic_enabled:
+            # The legacy/shadow ranking still needs to enforce explicit menu restrictions.
+            raw_spice = annotate_item(item, item["category"])["semantic"].get("spice")
         spice_data: dict[str, Any] = dict(raw_spice) if isinstance(raw_spice, dict) else {}
-        if spice_profile.get("strict"):
-            maximum = spice_profile.get("maximum")
-            item_minimum = spice_data.get("min")
-            if (
-                maximum is not None
-                and item_minimum is not None
-                and int(item_minimum) > int(maximum)
-            ):
-                continue
-        candidates.append(item)
+        if spice_exceeds_limit(spice_data, spice_limit):
+            continue
+        spice_note = spice_confirmation_note(spice_data, spice_limit)
+        candidates.append({
+            **item,
+            "dietUncertain": uncertain,
+            "spiceUncertain": bool(spice_note),
+            "spiceNote": spice_note,
+        })
     if not candidates:
         return {
             "items": [],
@@ -347,39 +355,49 @@ def _recommend_impl(
             item["name"],
         )
 
+    def certainty_rank(item: dict[str, Any]) -> tuple[bool, bool]:
+        return item["dietUncertain"], item["spiceUncertain"]
+
     for kind in list(groups):
         groups[kind].sort(key=sort_key)
         groups[kind] = _interleave_variants(groups[kind])
+        if spice_limit is not None:
+            groups[kind].sort(key=certainty_rank)
 
     food_budget = budget / (1 + service_rate) if budget is not None else None
     selected: list[dict[str, Any]] = []
     subtotal = 0.0
 
-    def take(kind: str, count: int, reason: str, generous: bool = False) -> None:
+    def add_item(item: dict[str, Any], kind: str, reason: str) -> None:
         nonlocal subtotal
+        if item["spiceNote"]:
+            reason += "。" + item["spiceNote"]
+        selected.append({
+            "name": item["name"],
+            "price": item["price"],
+            "category": item["category"],
+            "reason": reason,
+            "type": kind,
+            "uncertain": item["dietUncertain"],
+        })
+        subtotal += item["price"] or 0.0
+
+    def take(kind: str, count: int, reason: str, generous: bool = False) -> None:
         rows = groups[kind]
         if generous:
             # 由便宜往貴取，三個人六百塊的預算只會點到兩百出頭，AI 每次都得說
             # 「離預算還很遠」。補位這一段改成先挑吃得實在的，仍受 food_budget
             # 卡關，所以預算緊的時候會自然退回便宜品項。
             rows = sorted(rows, key=lambda item: -(item["price"] or 0))
+            if spice_limit is not None:
+                rows.sort(key=certainty_rank)
         for item in rows:
             if count <= 0 or len(selected) >= limit:
                 break
             price = item["price"]
             if food_budget is not None and (price is None or subtotal + price > food_budget + 1e-9):
                 continue
-            selected.append(
-                {
-                    "name": item["name"],
-                    "price": price,
-                    "category": item["category"],
-                    "reason": reason,
-                    "type": kind,
-                    "uncertain": bool(item.get("dietUncertain")),
-                }
-            )
-            subtotal += price or 0.0
+            add_item(item, kind, reason)
             count -= 1
 
     # 合菜／熱炒／燒肉店：一桌人點一桌菜，不是一人一道主餐。照單點的規則走會
@@ -400,18 +418,7 @@ def _recommend_impl(
             food_budget,
         )
         for row in table:
-            price = row.get("price")
-            selected.append(
-                {
-                    "name": row["name"],
-                    "price": price,
-                    "category": row["category"],
-                    "reason": f"一桌菜的{row['bucket']}",
-                    "type": row["bucket"],
-                    "uncertain": bool(row.get("dietUncertain")),
-                }
-            )
-            subtotal += price or 0.0
+            add_item(row, row["bucket"], f"一桌菜的{row['bucket']}")
         if need_drink:
             take("drink", _target_count(people, policy.people_per_drink), "搭配飲品")
         notes = "" if table else "預算不足或沒有符合條件且價格明確的品項"

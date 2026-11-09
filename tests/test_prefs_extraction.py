@@ -121,6 +121,13 @@ class ExcludesTest(unittest.TestCase):
 
 
 class CombinedTest(unittest.TestCase):
+    def test_avoid_beef_and_no_spice_are_separate(self):
+        for text in ("避開牛也不吃辣", "不吃牛也不吃辣"):
+            with self.subTest(text=text):
+                result = prefs(text)
+                self.assertEqual(result.get("excludes"), ["牛"])
+                self.assertEqual(result.get("spiceLevel"), "不辣")
+
     def test_realistic_sentence(self):
         result = prefs("四個人 800 元 想吃日式 不要生食")
         self.assertEqual(result.get("budget"), 800.0)

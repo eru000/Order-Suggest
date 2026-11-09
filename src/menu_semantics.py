@@ -18,9 +18,9 @@ from menu_vocabulary import (
     any_term,
 )
 
-# 3：烈酒改判為 drink。annotate_item 會沿用已存的標註，所以改了規則就得升版，
+# 4：讀取品項的辣椒圖示與辣度標示。annotate_item 會沿用已存的標註，所以改了規則就得升版，
 # 否則資料庫裡既有菜單（每道菜都存著當初算好的 semantic）永遠套不到新規則。
-SEMANTIC_SCHEMA_VERSION = 3
+SEMANTIC_SCHEMA_VERSION = 4
 
 ROLE_TERMS: dict[str, tuple[str, ...]] = {
     "drink": DRINK_TERMS,
@@ -32,8 +32,8 @@ ROLE_TERMS: dict[str, tuple[str, ...]] = {
 SPICE_TERMS: tuple[tuple[int, tuple[str, ...]], ...] = (
     (5, ("特辣", "超辣", "爆辣", "魔鬼辣")),
     (4, ("大辣", "麻辣", "重辣")),
-    (3, ("中辣", "辣子", "辣雞", "香辣")),
-    (2, ("小辣", "微辣", "辣椒", "辣醬")),
+    (3, ("中辣", "辣子", "辣雞", "香辣", "酸辣", "辣炒")),
+    (2, ("小辣", "微辣", "辣椒", "辣醬", "辣味", "辣粉")),
 )
 
 ALLERGEN_TERMS: dict[str, tuple[str, ...]] = {
@@ -96,13 +96,27 @@ def _role(name: str, category: str) -> tuple[str, float]:
     return "other", 0.25
 
 
+def _marked_spice(item: dict[str, Any]) -> dict[str, Any] | None:
+    evidence = {}
+    count = item.get("chiliCount")
+    level = item.get("spiceLevel")
+    if type(count) is int and 1 <= count <= 5:
+        evidence["chiliCount"] = count
+    if type(level) is int and 0 <= level <= 5 and (level or not evidence):
+        evidence["spiceLevel"] = level
+    if not evidence:
+        return None
+    effective = evidence.get("spiceLevel", evidence.get("chiliCount"))
+    return {**evidence, "min": effective, "max": effective, "adjustable": False, "known": True}
+
+
 def _spice(name: str, tags: list[str]) -> dict[str, Any]:
     value = f"{name} {' '.join(tags)}"
     explicit = re.search(r"辣度\s*([0-5])", value)
     if explicit:
         level = int(explicit.group(1))
         return {"min": level, "max": level, "adjustable": False, "known": True}
-    if "不辣" in value or "無辣" in value:
+    if re.search(r"(?<!甜)不辣|無辣", value):
         return {"min": 0, "max": 0, "adjustable": False, "known": True}
     for level, terms in SPICE_TERMS:
         if any(term in value for term in terms):
@@ -115,6 +129,29 @@ def _spice(name: str, tags: list[str]) -> dict[str, Any]:
             }
     # 沒有辣味線索不是安全保證，保留 unknown；推薦器會依限制強度處理。
     return {"min": None, "max": None, "adjustable": False, "known": False}
+
+
+def strict_spice_limit(prefs: dict[str, Any]) -> int | None:
+    profile = prefs.get("spiceProfile")
+    if isinstance(profile, dict) and profile:
+        maximum = profile.get("maximum")
+        return maximum if profile.get("strict") and type(maximum) is int else None
+    return 0 if prefs.get("spiceLevel") == "不辣" else None
+
+
+def spice_exceeds_limit(spice: dict[str, Any], maximum: int | None) -> bool:
+    minimum = spice.get("min")
+    return maximum is not None and type(minimum) is int and minimum > maximum
+
+
+def spice_confirmation_note(spice: dict[str, Any], maximum: int | None) -> str | None:
+    if maximum is None:
+        return None
+    if not spice.get("known"):
+        return "辣度未標示，請向店家確認"
+    if spice.get("adjustable"):
+        return "點餐時請告知店家需要的辣度"
+    return None
 
 
 def _allergens(name: str, explicit: Any) -> dict[str, Any]:
@@ -131,9 +168,11 @@ def _allergens(name: str, explicit: Any) -> dict[str, Any]:
 def annotate_item(item: dict[str, Any], category: str = "") -> dict[str, Any]:
     value = copy.deepcopy(item)
     existing = value.get("semantic")
+    marked_spice = _marked_spice(value)
     if (
         isinstance(existing, dict)
         and int(existing.get("schemaVersion") or 0) >= SEMANTIC_SCHEMA_VERSION
+        and (marked_spice is None or existing.get("spice") == marked_spice)
     ):
         return value
     name = str(value.get("name") or "").strip()
@@ -145,7 +184,7 @@ def annotate_item(item: dict[str, Any], category: str = "") -> dict[str, Any]:
     value["semantic"] = {
         "schemaVersion": SEMANTIC_SCHEMA_VERSION,
         "role": str(value.get("role") or role),
-        "spice": _spice(name, tags),
+        "spice": marked_spice or _spice(name, tags),
         "allergens": _allergens(name, value.get("allergens")),
         "dietaryFlags": dietary_flags,
         "dietaryConflicts": dietary_conflicts,
@@ -160,6 +199,9 @@ def annotate_item(item: dict[str, Any], category: str = "") -> dict[str, Any]:
         old_allergens = existing.get("allergens")
         if isinstance(old_allergens, dict) and old_allergens.get("known"):
             value["semantic"]["allergens"] = copy.deepcopy(old_allergens)
+        old_spice = existing.get("spice")
+        if marked_spice is None and isinstance(old_spice, dict) and old_spice.get("known"):
+            value["semantic"]["spice"] = copy.deepcopy(old_spice)
         if existing.get("source") == "explicit" and existing.get("role"):
             value["semantic"]["role"] = existing["role"]
     return value

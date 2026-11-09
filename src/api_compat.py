@@ -53,6 +53,7 @@ from menu_vision import (
     MAX_IMAGE_BYTES,
     analyze_menu_image,
     apply_manual_correction,
+    normalize_vision_result,
     to_persisted_document,
 )
 from security import rate_limit, require_admin_key
@@ -565,28 +566,20 @@ async def upload_menu_photo(
         data_url = f"data:{content_type};base64,{base64.b64encode(image_bytes).decode()}"
 
         from ollama_fuc import extract_menu_from_image
-        data = extract_menu_from_image(data_url, restaurantName)
+        data = normalize_vision_result(extract_menu_from_image(data_url, restaurantName))
 
-        items = data.get("menu_items", [])
+        items = [item for category in data["categories"] for item in category["items"]]
         if not items:
             return {"success": False, "message": "VLM 無法從圖片辨識出菜品，請確認照片清晰度"}
 
         # VLM 辨識到餐廳名稱就用它，否則保留時間戳名稱
-        finalName = data.get("restaurant_name") or restaurantName
+        finalName = data["restaurant_name"] or restaurantName
 
         crawled_menu: Menu = {
             "restaurants": {
                 finalName: {
                     "name": finalName,
-                    "categories": {
-                        "全部菜色": {
-                            "items": [
-                                {"name": item.get("name", ""), "price": item.get("price")}
-                                for item in items
-                                if item.get("name")
-                            ]
-                        }
-                    }
+                    "categories": {"全部菜色": {"items": items}},
                 }
             }
         }

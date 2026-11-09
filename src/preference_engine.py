@@ -180,7 +180,9 @@ LIKE_CUES = re.compile(r"(?<![不別沒])(?:想吃|愛吃|要吃|想喝|想點|�
 
 # 只削掉動詞開頭與語尾助詞。不碰數量詞是刻意的：「三杯雞」削掉「三杯」會變成
 # 「雞」，比漏抓還糟——漏抓只是少加分，錯抓會推薦到完全不相干的品項。
-_DISLIKE_LEADING = re.compile(r"^(?:不要|不吃|不敢吃|不想吃|不愛吃|不喜歡|忌口|別吃|別)+")
+_DISLIKE_CUES = r"不要(?!避開)|不(?:敢|想|愛)?吃|不喜歡|忌口|(?<!不用|不必|取消|不要)避開"
+_DISLIKE_LEADING = re.compile(rf"^(?:{_DISLIKE_CUES}|別吃|別)+")
+_DISLIKE_JOIN = re.compile(rf"(?:而且|也|還|且)\s*(?={_DISLIKE_CUES})")
 _LIKE_LEADING = re.compile(r"^[吃喝點來]+")
 _LIKE_TRAILING = re.compile(r"[的嗎呢啊喔吧了]+$")
 
@@ -278,21 +280,18 @@ def parse_preferences(
                     )
 
     spice_noise = {"辣", "太辣", "很辣", "超辣", "大辣", "中辣", "小辣", "微辣", "重辣", "飲料"}
-    for cue in ("不要", "不吃", "不敢吃", "不想吃", "不愛吃", "不喜歡", "忌口"):
-        for match in re.finditer(cue, source):
-            segment = source[match.end() :]
-            for raw in _split_terms(segment):
-                # 「我不吃麵、不吃粥」切出來的第二段是「不吃粥」——觸發詞跟著
-                # 被切進來了。留著的話 AI 會把「不吃粥」當成一道菜名唸出來。
-                term = _DISLIKE_LEADING.sub("", raw).strip()
-                if not term or term in spice_noise or "過敏" in term:
-                    continue
-                if term in parsed.dislikes:
-                    continue
-                parsed.dislikes.append(term)
-                parsed.operations.append(
-                    PreferenceOperation(action="add", field="dislikes", value=term)
-                )
+    for match in re.finditer(_DISLIKE_CUES, source):
+        # 「避開牛也不吃辣」的兩個限制要分開讀，不能把後半句當成食材名稱。
+        segment = _DISLIKE_JOIN.split(source[match.end() :], maxsplit=1)[0]
+        for raw in _split_terms(segment):
+            # 「我不吃麵、不吃粥」的第二段還帶著觸發詞，去掉後才是食材。
+            term = _DISLIKE_LEADING.sub("", raw).strip()
+            if not term or term in spice_noise or "過敏" in term or term in parsed.dislikes:
+                continue
+            parsed.dislikes.append(term)
+            parsed.operations.append(
+                PreferenceOperation(action="add", field="dislikes", value=term)
+            )
 
     # recommendation.py 一直有讀 prefs["likes"] 並加分，但兩邊都沒有人產生它，
     # 所以「我要當歸的」跟「有什麼推薦？」以前會給出一模一樣的結果。
@@ -340,8 +339,8 @@ def parse_preferences(
     # LLM is a bounded ambiguity fallback, never a per-item classifier.
     if llm_extractor and not parsed.operations and len(source) >= 4:
         try:
-            raw = llm_extractor(source)
-            candidate = json.loads(raw) if isinstance(raw, str) else raw
+            response = llm_extractor(source)
+            candidate = json.loads(response) if isinstance(response, str) else response
             llm_value = ParsedPreferences.model_validate(candidate)
             parsed = llm_value
         except (ValidationError, ValueError, TypeError, json.JSONDecodeError):
