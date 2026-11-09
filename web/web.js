@@ -76,6 +76,7 @@
   const toastHostEl = document.getElementById('toast-host');
   const input = document.getElementById('input');
   const sendBtn = document.getElementById('send-btn');
+  const startDiscoveryBtn = document.getElementById('start-discovery-btn');
   const loading = document.getElementById('loading');
   const toolbarRestaurantMeta = document.getElementById('toolbar-restaurant-meta');
   const mobileRestaurantCount = document.getElementById('mobile-restaurant-count');
@@ -92,6 +93,9 @@
   let lastUndo = null;
   let searchQuery = '';
   let drawerReturnFocus = null;
+  let restaurantRequest = 0;
+  let restaurantSwitch = null;
+  let restaurantSyncing = true;
 
   const setAssistantStatus = (text, state = 'ready') => {
     if (!assistantStatus) return;
@@ -377,6 +381,7 @@
       activeThreadId = (threads[0] && threads[0].id) || null;
       if (!activeThreadId) createThread({ autoSwitch: true });
       redrawConversation({ keepScrollIfReading: false });
+      loadRestaurants();
     }
     saveState();
     renderChatList();
@@ -515,14 +520,15 @@
     host.className = 'discovery-message';
     host.appendChild(window.MealDiscovery.render(view, (payload, label) => {
       sendDecision(payload, label, view.revision);
-    }, { disabled: !thread.decisionReady || thread.decisionBusy || thread.decision?.revision !== view.revision }));
+    }, { disabled: restaurantSyncing || !thread.decisionReady || thread.decisionBusy
+      || thread.decision?.revision !== view.revision }));
     chatBox.appendChild(host);
     return host;
   }
 
   function updateDecisionControls(thread) {
     for (const node of chatBox.querySelectorAll('.discovery-view')) {
-      const enabled = Boolean(thread.decisionReady && !thread.decisionBusy
+      const enabled = Boolean(!restaurantSyncing && thread.decisionReady && !thread.decisionBusy
         && node.dataset.decisionRevision === thread.decision?.revision);
       node.querySelectorAll('button').forEach(btn => { btn.disabled = !enabled; });
       node.querySelectorAll('summary').forEach(summary => {
@@ -537,6 +543,7 @@
   }
 
   function rememberDecision(view, thread, persist = true) {
+    if (!thread || (view?.restaurant && thread.restaurantName && view.restaurant !== thread.restaurantName)) return;
     thread.decision = view;
     thread.decisionReady = true;
     if (view && persist) {
@@ -555,26 +562,25 @@
     }
   }
 
-  async function restoreDecision(thread = getActiveThread()) {
-    if (!thread) return;
+  async function restoreDecision(thread, isCurrent) {
     const sessionId = thread.sessionId;
-    thread.decisionReady = false;
     try {
       const res = await fetch('/api/decision?session_id=' + encodeURIComponent(sessionId));
       if (!res.ok) throw new Error('選餐狀態讀取失敗');
       const data = await res.json();
-      if (thread.sessionId !== sessionId || thread.decisionBusy) return;
+      if (!isCurrent() || thread.decisionBusy) return;
       const view = data.decision || null;
       const missing = view && !thread.messages.some(m => m.decision?.revision === view.revision);
       rememberDecision(view, thread, missing);
     } catch (error) {
-      if (getActiveThread() === thread && thread.decision) {
+      if (isCurrent() && thread.decision) {
         showToast({ message: '選餐紀錄暫時無法同步，可以按「幫我選」重新開始。' });
       }
     }
   }
 
   async function sendDecision(payload, label, revision) {
+    if (restaurantSyncing) return;
     const thread = getActiveThread() || createThread({ autoSwitch: true });
     if (thread.decisionBusy || input.disabled) return;
     if (payload.action !== 'start' && revision && revision !== thread.decision?.revision) return;
@@ -736,7 +742,7 @@
             conversationScroll.refresh();
           } else if (ev.type === 'decision') {
             live.remove();
-            rememberDecision(ev.decision, getActiveThread());
+            rememberDecision(ev.decision, threads.find(t => t.sessionId === sessionId));
             return true;
           } else if (ev.type === 'delta') {
             showLoading(false);
@@ -777,7 +783,7 @@
       });
       const data = await res.json();
       showLoading(false);
-      if (data.decision) rememberDecision(data.decision, getActiveThread());
+      if (data.decision) rememberDecision(data.decision, threads.find(t => t.sessionId === sessionId));
       else appendMessage('bot', data.reply || '[發生錯誤] 回覆內容為空');
     } catch (e) {
       showLoading(false);
@@ -796,6 +802,10 @@
   const send = async () => {
     const text = input.value.trim();
     if (!text || input.disabled) return;
+    if (restaurantSyncing) {
+      showToast({ message: '正在同步餐廳菜單，請稍候再送出。' });
+      return;
+    }
 
     if (!getActiveThread()) {
       createThread({ autoSwitch: true });
@@ -822,14 +832,17 @@
   };
 
   const clearActiveChat = ({ notice = '' } = {}) => {
+    if (restaurantSyncing) return;
     showLoading(false);
     const t = getActiveThread();
+    const restaurantName = t?.restaurantName;
     if (t) {
       t.messages = [];
       t.title = '新對話';
       t.sessionId = sidFactory();
       t.decision = null;
       t.decisionReady = false;
+      t.decisionBusy = false;
       t.lastUpdatedAt = nowTs();
       t.flags = t.flags && typeof t.flags === 'object' ? t.flags : {};
       t.flags.cleared = true;
@@ -841,15 +854,21 @@
     if (notice) appendMessage('bot', notice);
     input.value = '';
     input.disabled = false;
+    if (restaurantName) switchRestaurant(restaurantName);
+    else loadRestaurants();
   };
 
   const newChat = ({ notice = '已建立新對話' } = {}) => {
+    if (restaurantSyncing) return;
+    const restaurantName = getActiveThread()?.restaurantName;
     showLoading(false);
     createThread({ autoSwitch: true });
     chatBox.innerHTML = '';
     if (notice) appendMessage('bot', notice);
     input.value = '';
     input.disabled = false;
+    if (restaurantName) switchRestaurant(restaurantName);
+    else loadRestaurants();
     input.focus();
   };
 
@@ -914,7 +933,7 @@
   if (!getActiveThread() && threads[0]) activeThreadId = threads[0].id;
   renderChatList();
   redrawConversation({ keepScrollIfReading: false });
-  document.getElementById('start-discovery-btn')?.addEventListener('click', () => {
+  startDiscoveryBtn?.addEventListener('click', () => {
     const thread = getActiveThread();
     if (thread?.decision && thread.decisionReady) {
       sendDecision({ action: 'reset' }, '開始新的一餐', thread.decision.revision);
@@ -2035,13 +2054,26 @@
   }
 
   async function loadRestaurants() {
+    const thread = getActiveThread();
+    if (!thread) return;
+    const sessionId = thread.sessionId;
+    const request = ++restaurantRequest;
+    const isCurrent = () => request === restaurantRequest
+      && getActiveThread() === thread && thread.sessionId === sessionId;
+    setRestaurantSyncing(true);
+    thread.decisionReady = false;
+    updateDecisionControls(thread);
+
     try {
-      const requestThread = getActiveThread();
-      const sessionId = getActiveSessionId();
+      // A chat can be opened while a restaurant change is still being saved.
+      if (restaurantSwitch) await restaurantSwitch;
+      if (!isCurrent()) return;
       const response = await fetch(`/api/restaurants?session_id=${encodeURIComponent(sessionId)}`);
       const data = await response.json();
-      if (getActiveThread() !== requestThread || requestThread.sessionId !== sessionId) return;
-      restoreDecision(requestThread);
+      if (!isCurrent()) return;
+      if (!response.ok) throw new Error(data.detail || '無法讀取餐廳列表');
+      const active = data.restaurants?.find(r => r.active);
+      thread.restaurantName = active?.name || '';
 
       // 清空兩個選擇器
       restaurantSelect.innerHTML = '';
@@ -2083,7 +2115,6 @@
       });
 
       // 更新資訊顯示
-      const active = data.restaurants.find(r => r.active);
       if (active) {
         restaurantInfo.textContent = `當前使用 ${active.name} 的菜單 (共 ${active.itemCount} 項菜品)`;
         if (globalRestaurantName) globalRestaurantName.textContent = active.name;
@@ -2091,11 +2122,18 @@
         if (mobileRestaurantCount) mobileRestaurantCount.textContent = `${active.itemCount} 項`;
         restaurantInfo.style.background = '#f0fdf4';
         restaurantInfo.style.color = '#166534';
-        await loadRestaurantReview(active.name);
+        loadRestaurantReview(active.name);
+        await restoreDecision(thread, isCurrent);
+      } else {
+        restaurantSelect.selectedIndex = -1;
+        if (restaurantSelectMobile) restaurantSelectMobile.selectedIndex = -1;
+        restaurantInfo.textContent = '請先選擇餐廳';
+        if (globalRestaurantName) globalRestaurantName.textContent = '尚未選擇餐廳';
       }
 
       console.log('已載入餐廳列表:', data.restaurants.length);
     } catch (err) {
+      if (!isCurrent()) return;
       console.error('載入餐廳列表失敗:', err);
       restaurantSelect.innerHTML = '<option>載入失敗</option>';
       if (restaurantSelectMobile) {
@@ -2107,34 +2145,54 @@
       if (mobileRestaurantCount) mobileRestaurantCount.textContent = 'ERROR';
       restaurantInfo.style.background = '#fef2f2';
       restaurantInfo.style.color = '#991b1b';
+    } finally {
+      if (isCurrent()) {
+        setRestaurantSyncing(false);
+        updateDecisionControls(thread);
+      }
     }
   }
 
-  async function switchRestaurant(name) {
-    try {
-      const sessionId = getActiveSessionId();
-      const response = await fetch(`/api/switch-restaurant?restaurant_name=${encodeURIComponent(name)}&session_id=${encodeURIComponent(sessionId)}`, {
-        method: 'POST'
-      });
-      const data = await response.json();
-
-      if (data.success) {
-        showToast({ message: `${data.message}`, timeoutMs: 2000 });
-        await loadRestaurants(); // 重新載入更新資訊與評價快取
-      } else {
-        showToast(`切換失敗: ${data.message}`, 3000);
-      }
-    } catch (err) {
-      console.error('切換餐廳失敗:', err);
-      showToast('切換餐廳時發生錯誤', 3000);
+  function setRestaurantSyncing(syncing) {
+    restaurantSyncing = syncing;
+    for (const control of [restaurantSelect, restaurantSelectMobile, startDiscoveryBtn, newChatBtn, clearBtn]) {
+      if (control) control.disabled = syncing;
     }
+  }
+
+  function switchRestaurant(name, { notify = false } = {}) {
+    const thread = getActiveThread();
+    if (!thread || restaurantSyncing) return;
+    const sessionId = thread.sessionId;
+    restaurantSwitch = (async () => {
+      try {
+        const response = await fetch(`/api/switch-restaurant?restaurant_name=${encodeURIComponent(name)}&session_id=${encodeURIComponent(sessionId)}`, {
+          method: 'POST'
+        });
+        const data = await response.json();
+        if (!response.ok || !data.success) throw new Error(data.detail || data.message || '無法切換餐廳');
+        if (thread.sessionId !== sessionId) return;
+        thread.restaurantName = data.activeRestaurant;
+        thread.decision = null;
+        thread.decisionReady = false;
+        saveState();
+        if (notify && getActiveThread() === thread) {
+          showToast({ message: data.message, timeoutMs: 2000 });
+        }
+      } catch (err) {
+        if (getActiveThread() === thread && thread.sessionId === sessionId) {
+          showToast({ message: `切換餐廳失敗：${err.message}` });
+        }
+      }
+    })().finally(() => { restaurantSwitch = null; });
+    return loadRestaurants();
   }
 
   // 電腦版選擇器事件
   restaurantSelect?.addEventListener('change', (e) => {
     const selectedName = e.target.value;
     if (selectedName && selectedName !== '載入中...' && selectedName !== '無可用餐廳') {
-      switchRestaurant(selectedName);
+      switchRestaurant(selectedName, { notify: true });
     }
   });
 
@@ -2142,7 +2200,7 @@
   restaurantSelectMobile?.addEventListener('change', (e) => {
     const selectedName = e.target.value;
     if (selectedName && selectedName !== '載入中...' && selectedName !== '無餐廳') {
-      switchRestaurant(selectedName);
+      switchRestaurant(selectedName, { notify: true });
     }
   });
 

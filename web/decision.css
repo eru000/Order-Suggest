@@ -8,7 +8,7 @@
 }
 .discovery-entry { background: var(--accent-subtle); border-color: var(--accent-border); color: var(--accent-text); font-weight: 600; }
 .discovery-button.primary { background: var(--accent-solid); border-color: var(--accent-solid); color: white; font-weight: 600; }
-.discovery-button:disabled { cursor: default; opacity: .5; }
+.discovery-entry:disabled, .discovery-button:disabled { cursor: default; opacity: .5; }
 .discovery-entry:focus-visible, .discovery-button:focus-visible, .discovery-replace summary:focus-visible {
   outline: 3px solid var(--accent-tint); outline-offset: 3px;
 }

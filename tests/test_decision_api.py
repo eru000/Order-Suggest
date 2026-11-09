@@ -57,14 +57,24 @@ class DecisionAPITest(unittest.TestCase):
         self.assertEqual(self.post(action="invent").status_code, 422)
         self.assertEqual(self.post(action="choose", itemId="invented").status_code, 409)
 
-    def test_switch_clears_old_decision_and_rejects_old_buttons(self):
+    def test_switch_uses_only_new_restaurant_menu_and_rejects_old_buttons(self):
+        # The legacy loader shares one menu document between its restaurant keys.
+        menus = {"restaurants": {
+            "測試": {"categories": {"主餐": {"items": [{"name": "牛肉飯", "price": 100}]}}},
+            "第二家": {"categories": {"主餐": {"items": [{"name": "蔬菜麵", "price": 80}]}}},
+        }}
+        self.menus.update({name: menus for name in menus["restaurants"]})
         view = self.post(action="start").json()["decision"]
+        self.assertEqual([item["name"] for item in view["items"]], ["牛肉飯"])
         response = self.client.post("/api/switch-restaurant", params={
             "restaurant_name": "第二家", "session_id": self.sid,
         })
         self.assertEqual(response.status_code, 200)
         self.assertIsNone(self.client.get("/api/decision", params={"session_id": self.sid}).json()["decision"])
         self.assertEqual(self.post(action="recommend", revision=view["revision"]).status_code, 409)
+        new_view = self.post(action="start").json()["decision"]
+        self.assertEqual(new_view["restaurant"], "第二家")
+        self.assertEqual([item["name"] for item in new_view["items"]], ["蔬菜麵"])
 
     def test_sync_and_stream_transport_include_structured_discovery(self):
         sync = self.client.post("/api/chat", json={"sessionId": self.sid, "text": "不知道吃什麼"})

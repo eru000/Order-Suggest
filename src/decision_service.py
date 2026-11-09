@@ -7,6 +7,7 @@ import re
 import time
 import uuid
 from collections import Counter
+from contextlib import contextmanager
 from typing import Any
 
 from decision_catalog import eligible, menu_choices, service_rate, shared_table_menu
@@ -99,16 +100,29 @@ class DecisionService:
         self.menus = menus
         self.default_restaurant = default_restaurant
 
-    def _context(self, session_id):
+    @contextmanager
+    def _locked_context(self, session_id):
         state = self.sessions.get(session_id, self.default_restaurant)
-        menu = self.menus.get(state.active_restaurant or "")
-        if menu is None:
-            raise LookupError("請先選擇餐廳或上傳菜單，再開始選餐。")
-        return state, menu
+        with state.lock:
+            restaurant = state.active_restaurant or ""
+            menu = self.menus.get(restaurant)
+            if menu is None:
+                raise LookupError("請先選擇餐廳或上傳菜單，再開始選餐。")
+            restaurants = menu.get("restaurants")
+            if isinstance(restaurants, dict):
+                if restaurant not in restaurants:
+                    raise LookupError("目前餐廳沒有可用的菜單，請重新選擇餐廳或上傳菜單。")
+                if len(restaurants) > 1:
+                    menu = {**menu, "restaurants": {restaurant: restaurants[restaurant]}}
+            previous = state.decision
+            yield state, menu
+            changed = state.decision is not previous
+        # SessionStore.save acquires the store lock before the state lock.
+        if changed:
+            self.sessions.save(session_id)
 
     def current(self, session_id: str) -> dict[str, Any] | None:
-        state, menu = self._context(session_id)
-        with state.lock:
+        with self._locked_context(session_id) as (state, menu):
             if not state.decision:
                 return None
             _, fingerprint = menu_choices(menu)
@@ -117,7 +131,6 @@ class DecisionService:
                 or state.decision.get("menuVersion") != fingerprint
             ):
                 state.decision = {}
-                self.sessions.save(session_id)
                 return None
             return copy.deepcopy(state.decision.get("view"))
 
@@ -155,8 +168,7 @@ class DecisionService:
         item_id: str | None = None,
         reason: str = "another",
     ) -> dict[str, Any]:
-        state, menu = self._context(session_id)
-        with state.lock:
+        with self._locked_context(session_id) as (state, menu):
             rows, fingerprint = menu_choices(menu)
             shared = shared_table_menu(menu)
             old = state.decision
@@ -291,7 +303,7 @@ class DecisionService:
             elif action == "choose":
                 self._displayed(d, item_id)
                 if item_id in {r["id"] for r in eligible(rows, d["prefs"], rate)}:
-                    return self._choose(state, session_id, d, item_id, text)
+                    return self._choose(state, d, item_id, text)
                 force = True
                 notice = "這道不符合你剛補充的限制，先改列符合條件的餐點。"
             if text.strip() and textual_action:
@@ -300,7 +312,7 @@ class DecisionService:
                     self._answer(d, value)
                 elif text_action == "choose":
                     if item_id in {r["id"] for r in eligible(rows, d["prefs"], rate)}:
-                        return self._choose(state, session_id, d, item_id, text)
+                        return self._choose(state, d, item_id, text)
                     force = True
                     notice = "這道不符合你剛補充的限制，先改列符合條件的餐點。"
                 elif text_action == "reject_all":
@@ -460,7 +472,7 @@ class DecisionService:
                 "relax_type": "放寬餐點類型",
                 "reconsider": "再看看其他選項",
             }.get(action, "調整需求")
-            return self._save(state, session_id, d, view, text or label)
+            return self._record(state, d, view, text or label)
 
     @staticmethod
     def _new(restaurant, fingerprint, prefs):
@@ -538,19 +550,18 @@ class DecisionService:
         d["prefs"].update(wishes or {})
         return notice
 
-    def _choose(self, state, session_id, d, item_id, text):
+    def _choose(self, state, d, item_id, text):
         selected = self._displayed(d, item_id)
         d["displayed"] = [selected]
         d["phase"] = "selection"
-        return self._save(
+        return self._record(
             state,
-            session_id,
             d,
             self._view(d, "selection", "這餐就吃這個。", items=[selected]),
             text or f"就吃這個：{selected['name']}",
         )
 
-    def _save(self, state, session_id, d, view, user_text):
+    def _record(self, state, d, view, user_text):
         d["interactions"] = d.get("interactions", 0) + 1
         d["revision"] = uuid.uuid4().hex
         view["revision"] = d["revision"]
@@ -567,7 +578,6 @@ class DecisionService:
                 {"role": "assistant", "content": view["message"], "meta": {"decision": view}},
             ]
         )
-        self.sessions.save(session_id)
         emit(
             "decision.step", mealId=d.get("mealId"), phase=d["phase"],
             questionCount=len(d["asked"]), interactions=d["interactions"],
