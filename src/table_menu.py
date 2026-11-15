@@ -125,9 +125,13 @@ def compose_table(
             return False
         if per_dish is not None:
             # 挑最接近「每道平均預算」的，才不會湊出一桌小菜或一桌大菜。
-            options.sort(key=lambda row: (abs((row["price"] or 0) - per_dish), row["name"]))
+            options.sort(key=lambda row: (
+                row.get("spiceUncertain", False), abs((row["price"] or 0) - per_dish), row["name"],
+            ))
         else:
-            options.sort(key=lambda row: (row.get("price") is None, row.get("price") or 0))
+            options.sort(key=lambda row: (
+                row.get("spiceUncertain", False), row.get("price") is None, row.get("price") or 0,
+            ))
         picked.append(options[0])
         spent += options[0].get("price") or 0.0
         return True

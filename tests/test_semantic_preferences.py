@@ -62,6 +62,44 @@ class StructuredPreferenceTest(unittest.TestCase):
             )
         self.assertEqual(result["items"][0]["name"], "清湯麵")
 
+    def test_no_spice_excludes_menu_labels_even_with_legacy_ranking(self):
+        catalog = {"categories": [{"name": "家常料理", "items": [
+            {"name": "五更腸旺", "price": 380, "tags": ["辣度3"]},
+            {"name": "紫香茄腸煲", "price": 420, "tags": ["辣度2"]},
+            {"name": "清蒸魚", "price": 440, "tags": ["不辣"]},
+            {"name": "乾煎魚", "price": 200},
+        ]}]}
+        for enabled, shadow, prefs in (
+            ("true", "false", parse_preferences("不吃辣")),
+            ("false", "false", parse_preferences("不吃辣")),
+            ("true", "true", parse_preferences("不吃辣")),
+            ("true", "false", {"spiceLevel": "不辣"}),
+        ):
+            with self.subTest(enabled=enabled, shadow=shadow, prefs=prefs), mock.patch.dict(
+                "os.environ", {
+                    "SEMANTIC_RECOMMENDER_ENABLED": enabled,
+                    "SEMANTIC_SHADOW_MODE": shadow,
+                },
+            ):
+                rows = recommend(catalog, prefs)["items"]
+                self.assertEqual([row["name"] for row in rows], ["清蒸魚", "乾煎魚"])
+                self.assertNotIn("辣度未標示", rows[0]["reason"])
+                self.assertIn("辣度未標示", rows[1]["reason"])
+
+    def test_shared_table_prefers_confirmed_no_spice_within_the_same_kind(self):
+        catalog = {"categories": [{"name": "家常料理", "items": [
+            {"name": "清炒高麗菜", "price": 420, "tags": ["不辣"]},
+            {"name": "炒時蔬", "price": 300},
+            {"name": "五更腸旺", "price": 380, "tags": ["辣度3"]},
+            {"name": "紫香茄腸煲", "price": 420, "tags": ["辣度2"]},
+            *[{"name": f"紅茶{n}", "price": 50} for n in range(26)],
+        ]}]}
+        prefs = {**parse_preferences("不吃辣"), "people": 4, "needDrink": False}
+        rows = recommend(catalog, prefs)["items"]
+        self.assertEqual([row["name"] for row in rows], ["清炒高麗菜", "炒時蔬"])
+        self.assertEqual(rows[0]["type"], "青菜")
+        self.assertIn("辣度未標示", rows[1]["reason"])
+
     def test_allergy_excludes_matches_and_demotes_unknown(self):
         """確定含過敏原的排除；成分不明的保留但標記並排在後面。
 

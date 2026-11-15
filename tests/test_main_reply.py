@@ -111,6 +111,29 @@ class MenuPromptTest(unittest.TestCase):
         self.assertEqual(main._format_menu_for_prompt("菜單"), "")
         self.assertEqual(main._format_menu_for_prompt({}), "")
 
+    def test_strict_spice_recommendation_keeps_full_menu_for_lookup_only(self):
+        catalog = self.menu([
+            {"name": "五更腸旺", "price": 380, "chiliCount": 2},
+            {"name": "清蒸魚", "price": 440, "spiceLevel": 0},
+        ])
+        recommendation = main.prepare_recommendation([], "不吃辣", catalog, {})
+        self.assertEqual([row["name"] for row in recommendation["items"]], ["清蒸魚"])
+        self.assertEqual(recommendation["meta"]["spiceMaximum"], 0)
+        system, user = main._build_recommendation_prompt(recommendation, "有五更腸旺嗎？", catalog)
+        self.assertIn("推薦只能採用系統已篩選的候選餐點", system["content"])
+        self.assertIn("完整菜單僅供查詢", system["content"])
+        self.assertNotIn("可以直接改推薦", user["content"])
+        self.assertIn("五更腸旺 $380（菜單標示 2 個辣椒）（超過目前辣度限制）", user["content"])
+
+    def test_interactive_question_receives_the_marked_spice_of_a_menu_item(self):
+        catalog = self.menu([{"name": "紫香茄腸煲", "price": 420, "chiliCount": 1}])
+        decision_context = {"preferences": {"spiceLevel": "不辣"}}
+        system, user = main._build_recommendation_prompt(
+            {}, "紫香茄腸煲會辣嗎？", catalog, decision_context,
+        )
+        self.assertIn("不能說成符合使用者的限制", system["content"])
+        self.assertIn("紫香茄腸煲 $420（菜單標示 1 個辣椒）（超過目前辣度限制）", user["content"])
+
 
 class ReplyFallbackTest(unittest.TestCase):
     """LLM 掛掉不能讓對話中斷。"""

@@ -9,7 +9,12 @@ import re
 from typing import Any
 
 from decision_preferences import SOFT_LABELS, menu_signals
-from menu_semantics import annotate_item
+from menu_semantics import (
+    annotate_item,
+    spice_confirmation_note,
+    spice_exceeds_limit,
+    strict_spice_limit,
+)
 from recommendation import _flatten_menu
 from table_menu import is_shared_table
 
@@ -142,6 +147,7 @@ def eligible(
     rate: float | None,
 ) -> list[dict[str, Any]]:
     result = []
+    maximum_spice = strict_spice_limit(prefs)
     for row in rows:
         name = row["name"]
         semantic = row["semantic"]
@@ -167,15 +173,11 @@ def eligible(
         if dietary and not dietary.issubset(set(semantic.get("dietaryFlags", []))):
             warnings.append("飲食限制尚待店家確認")
         spice = semantic.get("spice", {})
-        profile = prefs.get("spiceProfile") or {}
-        maximum = profile.get("maximum")
-        if profile.get("strict") and maximum is not None:
-            if spice.get("min") is not None and spice["min"] > maximum:
-                continue
-            if not spice.get("known"):
-                warnings.append("辣度未標示，請向店家確認")
-            elif spice.get("adjustable"):
-                warnings.append("點餐時請告知店家需要的辣度")
+        if spice_exceeds_limit(spice, maximum_spice):
+            continue
+        spice_note = spice_confirmation_note(spice, maximum_spice)
+        if spice_note:
+            warnings.append(spice_note)
         price = row["price"]
         total = round(price * (1 + (rate or 0)), 2) if price is not None else None
         budget = prefs.get("budget")
@@ -188,6 +190,8 @@ def eligible(
         likes = sum(str(term) in name for term in prefs.get("likes", []))
         soft_score = 0
         evidence = []
+        if maximum_spice == 0 and spice.get("known") and spice.get("max") == 0:
+            evidence.append("菜單標示不辣")
         for field, labels in SOFT_LABELS.items():
             wanted = prefs.get(field)
             if wanted not in labels:
@@ -208,5 +212,6 @@ def eligible(
                 warnings.append("菜單未標示口味，無法確認是否符合" if field == "taste"
                                 else "菜單未標示份量，無法確認大小")
         result.append({**row, "total": total, "warnings": warnings, "likes": likes,
-                       "softScore": soft_score, "evidence": evidence})
+                       "softScore": soft_score, "evidence": evidence,
+                       "spiceUncertain": bool(spice_note)})
     return result

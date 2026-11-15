@@ -23,7 +23,7 @@ except ImportError:
     pass
 
 from observability import emit
-from ollama_fuc import vision_chat
+from ollama_fuc import SPICE_OCR_RULE, vision_chat
 
 
 ALLOWED_IMAGE_TYPES = {"image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"}
@@ -73,6 +73,7 @@ VERIFY_MATCH_THRESHOLD = 0.72
 # 會低於上面的門檻，於是同一道菜的錯字版與更正版被雙雙保留。價格一致時放寬
 # 到這個值，讓「修錯字」不會被誤判成「刪一項又加一項」。
 VERIFY_SAME_PRICE_THRESHOLD = 0.5
+CHILI_ICON = re.compile("🌶\ufe0f?")
 
 
 def _float_env(name: str, default: float) -> float:
@@ -126,6 +127,23 @@ def _clean_price(value: Any) -> Optional[float]:
         return None
     match = re.search(r"(?:NT\$?|\$)?\s*(\d{1,6}(?:\.\d+)?)", text, flags=re.I)
     return float(match.group(1)) if match else None
+
+
+def _spice_number(value: Any, *, minimum: int = 0) -> int | None:
+    if isinstance(value, str) and re.fullmatch(r"[0-5]", value.strip()):
+        value = int(value.strip())
+    if isinstance(value, int) and not isinstance(value, bool) and minimum <= value <= 5:
+        return value
+    return None
+
+
+def _merge_spice_evidence(item: dict[str, Any], source: dict[str, Any]) -> None:
+    if "chiliCount" in source:
+        item.setdefault("chiliCount", source["chiliCount"])
+    if "spiceLevel" in source and not item.get("spiceLevel"):
+        item["spiceLevel"] = source["spiceLevel"]
+    if "chiliCount" in item and item.get("spiceLevel") == 0:
+        del item["spiceLevel"]
 
 
 def _coerce_category(raw_category: Any) -> Optional[Dict[str, Any]]:
@@ -187,7 +205,7 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
         raw_categories = [{"name": "菜單", "items": fallback}]
 
     categories: List[Dict[str, Any]] = []
-    seen = set()
+    seen: dict[str, dict[str, Any]] = {}
     for raw_category in raw_categories:
         raw_category = _coerce_category(raw_category)
         if raw_category is None:
@@ -208,6 +226,8 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
             if raw_item is None:
                 continue
             name = str(raw_item.get("name") or raw_item.get("dish") or raw_item.get("item_name") or raw_item.get("title") or "").strip()
+            inline_chilis = len(CHILI_ICON.findall(name))
+            name = CHILI_ICON.sub("", name).strip()
             key = re.sub(r"\s+", "", name).casefold()
             price = raw_item.get("price")
             if price is None:
@@ -217,15 +237,26 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
             # 「蛋 20」。舊的 len(name) < 2 一律丟掉，而且不留 warning，所以那兩
             # 塊牌子不管模型有沒有讀到都不會出現在結果裡。但一個字又沒有價格的
             # 多半是 OCR 撿到的雜訊，所以只在有價格時放行。
-            if not name or key in seen:
+            if not name or (len(name) < 2 and clean_price is None):
                 continue
-            if len(name) < 2 and clean_price is None:
-                continue
-            seen.add(key)
             item: Dict[str, Any] = {"name": name[:160], "price": clean_price}
             description = str(raw_item.get("description") or "").strip()
             if description:
                 item["description"] = description[:300]
+            chili_count = _spice_number(
+                raw_item.get("chili_count", raw_item.get("chiliCount")), minimum=1
+            )
+            chili_count = chili_count or _spice_number(inline_chilis, minimum=1)
+            spice_level = _spice_number(raw_item.get("spice_level", raw_item.get("spiceLevel")))
+            if chili_count is not None:
+                item["chiliCount"] = chili_count
+            if spice_level is not None and (spice_level != 0 or chili_count is None):
+                item["spiceLevel"] = spice_level
+            if key in seen:
+                if seen[key]["price"] == clean_price:
+                    _merge_spice_evidence(seen[key], item)
+                continue
+            seen[key] = item
             items.append(item)
         if items:
             categories.append({"name": category_name, "items": items})
@@ -369,11 +400,10 @@ def _tile_prompt(
     )
     # schema 刻意不用 `name` 當 key——閘道會把帶 name 的輸出 JSON 轉成 tool_calls，
     # content 變成空的，整個切塊白跑。詳見 _to_wire_categories 的說明。
-    schema = (
-        '{{"restaurant_name":"","categories":[{{"title":"分類","items":[{{"dish":"完整品名","price":230}}]}}]}}'
-        if ask_identity
-        else '{{"categories":[{{"title":"分類","items":[{{"dish":"完整品名","price":230}}]}}]}}'
-    )
+    item_schema = {"dish": "完整品名", "price": 230, "chili_count": None, "spice_level": None}
+    schema: dict[str, Any] = {"categories": [{"title": "分類", "items": [item_schema]}]}
+    if ask_identity:
+        schema = {"restaurant_name": "", **schema}
     where = (
         "這是整張菜單的完整照片。"
         if tile_id == "full"
@@ -383,9 +413,10 @@ def _tile_prompt(
 全圖初步資訊：{json.dumps(overview, ensure_ascii=False)}
 逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。
 被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。
+{SPICE_OCR_RULE}
 共用價格框：價格若寫在括號或圓角框裡，標著大／小（或大碗小碗、L／S），而且那個框在版面上涵蓋整欄或一整組品項，代表那一組的每一項都同時有這兩種價格，而不是上面幾項算一種、下面幾項算另一種。遇到這種情形要為每個尺寸各輸出一項，品名後面加上（大）或（小）——例如同一欄的「乾麵」要輸出「乾麵（大）」55 與「乾麵（小）」45 兩項。
 配料與加點若自己掛一塊牌子、或自己佔一行並帶著自己的價格（例如吊牌上的「麵 20元」「蛋 20元」），那就是品項，品名只有一兩個字也一樣要列。但附在分類標題或某一項旁邊的加價說明（例如「（加蛋10元）」「加大+10」）是註解不是品項，不要列。{identity_rule}
-只回傳 JSON：{schema}"""
+只回傳 JSON：{json.dumps(schema, ensure_ascii=False)}"""
 
 
 def _menu_item_refs(result: Dict[str, Any]) -> List[Tuple[str, Dict[str, Any]]]:
@@ -407,7 +438,13 @@ def format_menu_preview(result: Dict[str, Any], max_items: int = 40) -> str:
     for index, (category, item) in enumerate(refs[:max_items], 1):
         price = item.get("price")
         price_text = f"${float(price):.0f}" if isinstance(price, (int, float)) else "價格不明"
-        lines.append(f"{index}. [{category}] {item['name']} — {price_text}")
+        markers = []
+        if "chiliCount" in item:
+            markers.append(f"{item['chiliCount']} 個辣椒")
+        if "spiceLevel" in item:
+            markers.append("不辣" if item["spiceLevel"] == 0 else f"辣度 {item['spiceLevel']}")
+        spice_text = f"（{'、'.join(markers)}）" if markers else ""
+        lines.append(f"{index}. [{category}] {item['name']} — {price_text}{spice_text}")
     if len(refs) > max_items:
         lines.append(f"…另有 {len(refs) - max_items} 項")
     return "\n".join(lines) or "（沒有可顯示品項）"
@@ -424,8 +461,9 @@ def looks_like_manual_correction(text: str) -> bool:
 def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[str, Any]:
     """Apply one deterministic correction to a pending menu analysis.
 
-    Primary syntax: ``改 3 菜名 豬腳飯`` or ``改 3 價格 90``. Older
-    natural-language forms remain compatible. No model mutates persisted data.
+    Primary syntax uses a preview number and a field, e.g. ``改 3 菜名 豬腳飯``,
+    ``改 3 價格 90``, ``改 3 辣椒 2``, or ``改 3 辣度 2``. Older natural-language
+    forms remain compatible. No model mutates persisted data.
     """
     text = (instruction or "").strip()
     if not text:
@@ -434,20 +472,32 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
     if not refs:
         raise ValueError("目前沒有可修正的菜單項目")
     numbered_match = re.match(
-        r"^\s*(?:改|修改|更正|修正)?\s*第?\s*(\d+)\s*項?\s*(菜名|名稱|品名|價格|價錢)\s*(?:改成|改為|為|成|[:：=])?\s*(.+?)\s*$",
+        r"^\s*(?:改|修改|更正|修正)?\s*第?\s*(\d+)\s*項?\s*(菜名|名稱|品名|價格|價錢|辣度|辣椒)"
+        r"\s*(?:改成|改為|為|成|[:：=])?\s*(.+?)\s*$",
         text,
     )
     if numbered_match:
         selector = numbered_match.group(1)
         field = numbered_match.group(2)
         raw_value = numbered_match.group(3).strip()
-        operation = "price" if field in {"價格", "價錢"} else "rename"
-        if operation == "price":
+        if field in {"價格", "價錢"}:
+            operation = "price"
             price_value = re.fullmatch(r"\$?\s*(\d{1,6}(?:\.\d+)?)\s*(?:元)?", raw_value)
             if not price_value:
                 raise ValueError("價格必須是數字，例如：改 3 價格 90")
             new_value = float(price_value.group(1))
+        elif field == "辣度":
+            operation = "spice"
+            new_value = 0 if raw_value == "不辣" else _spice_number(raw_value)
+            if new_value is None and raw_value not in {"不明", "未知"}:
+                raise ValueError("辣度請填 0 至 5 或「不明」，例如「改 3 辣度 2」。")
+        elif field == "辣椒":
+            operation = "chiliCount"
+            new_value = _spice_number(raw_value)
+            if new_value is None:
+                raise ValueError("辣椒數量請填 0 至 5。填 0 會移除辣椒圖示標記。")
         else:
+            operation = "rename"
             new_value = raw_value
     else:
         text = re.sub(r"^\s*(?:修改|更正|修正|改名|改價)\s*[：:]?\s*", "", text)
@@ -509,6 +559,26 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
         target["price"] = new_value
         change = {"type": "price", "item": old_name, "from": old_value, "to": new_value}
         message = f"已把「{old_name}」價格改為 ${new_value:.0f}"
+    elif operation == "spice":
+        old_value = target.pop("spiceLevel", None)
+        if not new_value:
+            target.pop("chiliCount", None)
+        if new_value is not None:
+            target["spiceLevel"] = new_value
+        change = {"type": "spice", "item": old_name, "from": old_value, "to": new_value}
+        label = "不明" if new_value is None else "不辣" if new_value == 0 else str(new_value)
+        message = f"已把「{old_name}」辣度改為{label}"
+    elif operation == "chiliCount":
+        old_value = target.pop("chiliCount", None)
+        if new_value:
+            target["chiliCount"] = new_value
+            if target.get("spiceLevel") == 0:
+                target.pop("spiceLevel")
+        change = {"type": "chiliCount", "item": old_name, "from": old_value, "to": new_value}
+        message = (
+            f"已把「{old_name}」改為 {new_value} 個辣椒" if new_value
+            else f"已移除「{old_name}」的辣椒圖示標記"
+        )
     else:
         new_name = re.sub(r"^[「『'\"\s]+|[」』'\"\s。！]+$", "", str(new_value)).strip()
         if len(new_name) < 2 or len(new_name) > 160:
@@ -530,10 +600,11 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
         quality["priceCoverage"] = round(priced / len(refs), 3) if refs else 0.0
         quality["humanReviewed"] = True
         quality["manualCorrectionCount"] = len(corrections) if isinstance(corrections, list) else 1
-    for conflict in result.get("conflicts", []):
-        if isinstance(conflict, dict) and old_name in conflict.get("candidates", []):
-            conflict["resolved"] = True
-            conflict["resolvedBy"] = "human"
+    if operation in {"price", "rename"}:
+        for conflict in result.get("conflicts", []):
+            if isinstance(conflict, dict) and old_name in conflict.get("candidates", []):
+                conflict["resolved"] = True
+                conflict["resolvedBy"] = "human"
     return {"message": message, "change": change, "result": result}
 
 
@@ -553,8 +624,9 @@ def _legacy_analyze(
         retry = normalize_vision_result(_extract_json_value(_call_vision(
             vision_func,
             # 用 dish 不用 name：閘道看到 name 會把輸出轉成 tool_calls。
-            '讀取圖片中可見的菜名與價格，只回傳 JSON：'
-            '{"menu_items":[{"dish":"品名","price":0}]}',
+            f"讀取圖片中可見的菜名與價格。{SPICE_OCR_RULE}"
+            '只回傳 JSON：{"menu_items":[{"dish":"品名","price":0,'
+            '"chili_count":null,"spice_level":null}]}',
             url,
             model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
         )), restaurant_hint)
@@ -562,11 +634,19 @@ def _legacy_analyze(
     draft = json.dumps({"restaurant_name": first["detected_restaurant_name"], "categories": first["categories"]}, ensure_ascii=False)
     verified = normalize_vision_result(_extract_json_value(_call_vision(
         vision_func,
-        f"對照同一張圖片校正下列菜單，只回傳完整 JSON，不得新增看不見的品項：{draft}",
+        f"對照同一張圖片校正下列菜單。{SPICE_OCR_RULE}"
+        f"只回傳完整 JSON，不得新增看不見的品項：{draft}",
         url,
         model=os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL),
     )), restaurant_hint)
-    return verified if verified["categories"] else first
+    if not verified["categories"]:
+        return first
+    draft_items = {item["name"]: item for _, item in _menu_item_refs(first)}
+    for _, item in _menu_item_refs(verified):
+        original = draft_items.get(item["name"])
+        if original:
+            _merge_spice_evidence(item, original)
+    return verified
 
 
 def analyze_menu_image(

@@ -2181,6 +2181,11 @@ h1, h2, h3,
   font-weight: 500;
 }
 
+.menu-spice-label {
+  margin-inline-start: 0.5em;
+  color: var(--fg-muted);
+}
+
 .menu-item-price {
   font-size: 15px;
   color: var(--primary);

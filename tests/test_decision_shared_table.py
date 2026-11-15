@@ -75,6 +75,27 @@ class SharedTableDecisionTest(unittest.TestCase):
         self.assertNotIn(dropped["name"], names)
         self.assertEqual(len(names), 5)
 
+    def test_no_spice_excludes_chili_icons_from_recommendations_and_replacements(self):
+        categories = self.menus["熱炒店"]["categories"]
+        categories[0]["items"].append({"name": "清炒高麗菜", "price": 180, "spiceLevel": 0})
+        categories[1]["items"].append({"name": "紫香茄腸煲", "price": 420, "chiliCount": 1})
+        categories[1]["items"].append({"name": "鮮蝦粉絲煲", "price": 420, "chiliCount": 1})
+        categories[4]["items"].append({"name": "五更腸旺", "price": 380, "chiliCount": 2})
+
+        view = self.step("start", text="四個人，預算2000，不吃辣")
+        self.assertTrue(view["sharedTable"])
+        self.assertEqual(view["items"][0]["name"], "清炒高麗菜")
+        self.assertIn("菜單標示不辣", view["items"][0]["reason"])
+        self.assertTrue(any("辣度未標示，請向店家確認" in item["warnings"] for item in view["items"]))
+        spicy = {"五更腸旺", "紫香茄腸煲", "鮮蝦粉絲煲"}
+        self.assertTrue(spicy.isdisjoint(item["name"] for item in view["items"]))
+
+        for action in ("replace", "reject_all", "review"):
+            kwargs = {"item_id": self.view["items"][0]["id"]} if action == "replace" else {}
+            view = self.step(action, **kwargs)
+            self.assertEqual(view["type"], "recommendation")
+            self.assertTrue(spicy.isdisjoint(item["name"] for item in view["items"]))
+
 
 if __name__ == "__main__":
     unittest.main()

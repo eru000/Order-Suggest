@@ -144,8 +144,10 @@ class MenuVisionTests(unittest.TestCase):
 
     def test_second_pass_verification_replaces_inaccurate_draft(self):
         responses = iter([
-            '{"restaurant_name":"麥當勞","categories":[{"name":"主餐","items":[{"name":"大麥克克","price":99}]}]}',
-            '{"restaurant_name":"麥當勞","categories":[{"name":"主餐","items":[{"name":"大麥克","price":80},{"name":"麥香雞","price":49}]}]}',
+            '{"restaurant_name":"麥當勞","categories":[{"name":"主餐","items":'
+            '[{"name":"大麥克克","price":99},{"name":"麥香雞","price":50,"chili_count":1}]}]}',
+            '{"restaurant_name":"麥當勞","categories":[{"name":"主餐","items":'
+            '[{"name":"大麥克","price":80},{"name":"麥香雞","price":49,"spice_level":2}]}]}',
         ])
 
         result = menu_vision.analyze_menu_image(
@@ -157,6 +159,8 @@ class MenuVisionTests(unittest.TestCase):
             [item["name"] for item in result["categories"][0]["items"]],
             ["大麥克", "麥香雞"],
         )
+        self.assertEqual(result["categories"][0]["items"][1]["chiliCount"], 1)
+        self.assertEqual(result["categories"][0]["items"][1]["spiceLevel"], 2)
 
     def test_persisted_document_retains_categories(self):
         document = menu_vision.to_persisted_document({
@@ -251,6 +255,38 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(result["quality"]["priceCoverage"], 1.0)
         self.assertEqual(result["conflicts"], [])
 
+    def test_analyze_preserves_printed_chili_evidence_per_item(self):
+        buffer = io.BytesIO()
+        Image.new("RGB", (128, 128), "white").save(buffer, "PNG")
+
+        def fake_vision(prompt, **kwargs):
+            self.assertIn("辣椒圖示", prompt)
+            self.assertIn("chili_count", prompt)
+            self.assertIn("spice_level", prompt)
+            return json.dumps({"categories": [{"title": "主餐", "items": [
+                {"dish": "五更腸旺", "price": 380, "chili_count": 2},
+                {"dish": "紫香茄腸煲", "price": 420, "spice_level": 0},
+                {"dish": "紫香茄腸煲 🌶️", "price": 420, "spice_level": 0},
+                {"dish": "炒高麗菜", "price": 200, "chili_count": None, "spice_level": None},
+                {"dish": "番茄炒蛋", "price": 220, "chili_count": False, "spice_level": "0"},
+                {"dish": "鮮蝦粉絲煲", "price": 420, "chili_count": 9, "spice_level": True},
+                {"dish": "麻辣肚絲", "price": 360, "chili_count": "1", "spice_level": 4},
+            ]}]}, ensure_ascii=False)
+
+        result = menu_vision.analyze_menu_image(buffer.getvalue(), "image/png", vision_func=fake_vision)
+        expected = [
+            {"name": "五更腸旺", "price": 380, "chiliCount": 2},
+            {"name": "紫香茄腸煲", "price": 420, "chiliCount": 1},
+            {"name": "炒高麗菜", "price": 200},
+            {"name": "番茄炒蛋", "price": 220, "spiceLevel": 0},
+            {"name": "鮮蝦粉絲煲", "price": 420},
+            {"name": "麻辣肚絲", "price": 360, "chiliCount": 1, "spiceLevel": 4},
+        ]
+        self.assertEqual(result["categories"][0]["items"], expected)
+        self.assertEqual(menu_vision.to_persisted_document(result)["menu_items"], [
+            {**item, "category": "主餐"} for item in expected
+        ])
+
     def test_falls_back_to_verify_model_when_ocr_model_is_unavailable(self):
         """主要 OCR 模型掛掉要能降級，而且不能假裝成高信心結果。"""
         image = Image.new("RGB", (900, 800), "white")
@@ -309,6 +345,22 @@ class MenuVisionTests(unittest.TestCase):
         self.assertEqual(result["categories"][0]["items"][1]["name"], "豬腳飯")
         menu_vision.apply_manual_correction(result, "改 2 價格 95")
         self.assertEqual(result["categories"][0]["items"][1]["price"], 95)
+
+    def test_human_can_review_exact_chili_count_and_explicit_spice_level(self):
+        item = {"name": "五更腸旺", "price": 380, "chiliCount": 1}
+        result = {"categories": [{"name": "主餐", "items": [item]}]}
+        menu_vision.apply_manual_correction(result, "改 1 辣椒 2")
+        self.assertIn("2 個辣椒", menu_vision.format_menu_preview(result))
+        menu_vision.apply_manual_correction(result, "改 1 辣度 3")
+        self.assertEqual((item["chiliCount"], item["spiceLevel"]), (2, 3))
+        with self.assertRaisesRegex(ValueError, "辣度請填"):
+            menu_vision.apply_manual_correction(result, "改 1 辣度 6")
+        self.assertEqual(item["spiceLevel"], 3)
+        menu_vision.apply_manual_correction(result, "改 1 辣椒 0")
+        self.assertNotIn("chiliCount", item)
+        self.assertEqual(item["spiceLevel"], 3)
+        menu_vision.apply_manual_correction(result, "改 1 辣度 不明")
+        self.assertNotIn("spiceLevel", item)
 
     def test_natural_correction_with_plain_change_word_is_detected(self):
         self.assertTrue(menu_vision.looks_like_manual_correction("特製炒醬麵 改特製炸醬麵"))
@@ -436,6 +488,10 @@ class ThinkingModelResponseTests(unittest.TestCase):
                 payload["tools"][0]["function"]["name"],
                 "submit_menu_json",
             )
+            tool_properties = payload["tools"][0]["function"]["parameters"]["properties"]
+            dish_properties = tool_properties["menu_items"]["items"]["properties"]
+            self.assertEqual(dish_properties["chili_count"]["minimum"], 1)
+            self.assertEqual(dish_properties["spice_level"]["minimum"], 0)
 
     def test_json_mode_stops_after_one_empty_retry(self):
         import ollama_fuc
