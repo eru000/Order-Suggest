@@ -7,6 +7,7 @@ from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 import asyncio
+from contextlib import suppress
 
 # 確保可以從 src/ 匯入模組
 SRC_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -113,7 +114,27 @@ async def _request_timing(request, call_next):
     時間。對 /api/chat/stream 這種邊生成邊送的端點，只看前者會嚴重低估。
     """
     started = time.perf_counter()
-    response = await call_next(request)
+    try:
+        response = await call_next(request)
+    except asyncio.CancelledError:
+        # 進行中的請求被取消有兩種原因，處理方式不同：
+        #   1. 使用者關掉分頁或中斷連線——正常結束。原本會讓 uvicorn 印出整頁
+        #      traceback，demo 時看起來像系統壞掉。回 499 讓它安靜收尾。
+        #   2. 伺服器關閉（--reload 重啟）——必須把取消往上拋，吞掉會拖住關閉。
+        duration_ms = round((time.perf_counter() - started) * 1000, 1)
+        client_gone = False
+        with suppress(Exception):
+            client_gone = await request.is_disconnected()
+        emit(
+            "http.cancelled",
+            method=request.method,
+            path=request.url.path,
+            durationMs=duration_ms,
+            clientGone=client_gone,
+        )
+        if client_gone:
+            return JSONResponse(status_code=499, content={"detail": "用戶端已中斷連線"})
+        raise
     ttfb_ms = round((time.perf_counter() - started) * 1000, 1)
 
     def _record(duration_ms: float) -> None:
