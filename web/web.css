@@ -4114,7 +4114,9 @@ textarea:focus-visible,
     border-right: 0;
   }
 
-  .global-nav-actions .nav-btn:not(.mobile-nav-btn) {
+  /* 上傳菜單是手機上的主要動作（到餐廳、拍菜單），不該藏進管理選單裡，
+     所以跟「管理選單」一樣留在工具列上。 */
+  .global-nav-actions .nav-btn:not(.mobile-nav-btn):not(#upload-photo-btn) {
     display: none;
   }
 
@@ -4919,16 +4921,24 @@ textarea:focus-visible,
     padding: 0;
   }
 
+  /* 手機上改成底部彈出式：高度跟著內容走，不要固定滿版。
+     原本寫死 100dvh，但「選一張照片」這一步內容只有一個拖曳區加一個輸入框，
+     撐滿整個畫面會在中間留下一大片空白，看起來像還沒載入完。
+     內容多的時候（裁切、辨識結果）會自己長高，最多 92% 畫面高後開始捲動。 */
+  .vision-modal,
+  .menu-modal {
+    align-items: end;
+  }
+
   .menu-modal-content,
   .vision-sheet {
     width: 100vw;
     max-width: none;
-    height: 100vh;
-    height: 100dvh;
-    max-height: none;
-    border-width: 0;
-    border-radius: 0;
-    box-shadow: none;
+    height: auto;
+    max-height: 92dvh;
+    border-width: 1px 0 0;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -8px 28px rgba(15, 23, 42, 0.18);
   }
 
   .menu-modal-header,
@@ -5533,7 +5543,7 @@ textarea:focus-visible,
     min-width: 0;
   }
 
-  .global-nav-actions > .nav-btn:not(.nav-primary):not(.mobile-nav-btn) {
+  .global-nav-actions > .nav-btn:not(.nav-primary):not(.mobile-nav-btn):not(#upload-photo-btn) {
     display: none;
   }
 
