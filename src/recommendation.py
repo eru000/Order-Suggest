@@ -394,10 +394,23 @@ def _recommend_impl(
             if str((item.get("semantic") or {}).get("role") or "") == "main"
         ),
     ):
+        # 飲料的錢要先留下來。compose_table 拿到整個 food_budget 就會把它花在
+        # 菜上（「兩個人 預算1000 要飲料」湊到 $880，只剩 $29），接著下面的
+        # take("drink") 因為加上去會超支，一杯都點不到——使用者明明說了要飲料。
+        # 留的金額就是 take() 接下來會挑的那幾杯，上限壓在食物預算的四分之一，
+        # 免得一桌菜為了留飲料錢變寒酸。
+        drink_count = _target_count(people, policy.people_per_drink) if need_drink else 0
+        drink_reserve = 0.0
+        if drink_count and food_budget is not None:
+            priced = [row for row in groups["drink"] if row.get("price") is not None]
+            drink_reserve = min(
+                sum(row["price"] for row in priced[:drink_count]),
+                food_budget * 0.25,
+            )
         table = compose_table(
             [*groups["main"], *groups["side"], *groups["other"]],
             people,
-            food_budget,
+            None if food_budget is None else food_budget - drink_reserve,
         )
         for row in table:
             price = row.get("price")
@@ -412,8 +425,12 @@ def _recommend_impl(
                 }
             )
             subtotal += price or 0.0
-        if need_drink:
-            take("drink", _target_count(people, policy.people_per_drink), "搭配飲品")
+        if drink_count:
+            # top_k 是「一桌幾道菜」的上限，不該連飲料的位子也一起吃掉：六個人
+            # 的一桌正好湊滿 top_k 時，take() 的 len(selected) >= limit 會立刻
+            # 跳出，就算預算還有剩也點不到飲料。下面的回傳本來就允許超過 limit。
+            limit = max(limit, len(selected) + drink_count)
+            take("drink", drink_count, "搭配飲品")
         notes = "" if table else "預算不足或沒有符合條件且價格明確的品項"
         return {
             "items": selected[: max(limit, len(selected))],

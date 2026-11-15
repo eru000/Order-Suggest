@@ -27,9 +27,9 @@ SRC = PROJECT_ROOT / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from menu_semantics import is_alcohol  # noqa: E402
+from menu_semantics import annotate_item, is_alcohol  # noqa: E402
 from preference_engine import parse_preferences  # noqa: E402
-from recommendation import recommend  # noqa: E402
+from recommendation import _flatten_menu, recommend  # noqa: E402
 from storage.importer import menu_document_to_runtime  # noqa: E402
 from table_menu import table_size  # noqa: E402
 
@@ -48,6 +48,25 @@ def load_menus() -> dict[str, dict]:
     return menus
 
 WANTS_ALCOHOL = ("酒", "beer", "wine")
+WANTS_DRINK = ("要飲料", "加飲料", "配飲料", "想喝")
+
+
+def _priced_drinks(menu: dict) -> list[str]:
+    """菜單上「有標價、而且不是酒」的飲料。
+
+    沒標價的飲料在有預算時本來就不該推（時價不是 0 元），而沒點名要酒的時候
+    推一杯威士忌也不算滿足「要飲料」。所以只有這份清單非空時，
+    「要飲料卻沒給飲料」才算錯——森森燒肉的十項飲料全都沒標價，不該被判失敗。
+    """
+    names = []
+    for item in _flatten_menu(menu):
+        annotated = annotate_item(item, str(item.get("category") or ""))
+        role = str((annotated.get("semantic") or {}).get("role") or "")
+        name = str(annotated.get("name") or "")
+        category = str(annotated.get("category") or "")
+        if role == "drink" and annotated.get("price") is not None and not _is_alcohol(name, category):
+            names.append(name)
+    return names
 
 
 def _is_alcohol(name: str, category: str) -> bool:
@@ -118,6 +137,17 @@ def check(case: dict, menu: dict) -> list[str]:
     names = [r["name"] for r in items]
     if len(names) != len(set(names)):
         failures.append("同一道菜重複推薦")
+
+    # 使用者說了要飲料就該給飲料。合菜分支曾經把整個食物預算花在菜上，
+    # 剩下的錢買不起最便宜的汽水，結果「要飲料」與不講的輸出一模一樣，
+    # 而上面那些規則一條都抓不到。
+    if any(term in text for term in WANTS_DRINK):
+        available = _priced_drinks(menu)
+        if available and not any(r.get("type") == "drink" for r in items):
+            failures.append(
+                "要求飲料卻沒推飲料（菜單上有 %d 項標價飲料，例如 %s）"
+                % (len(available), "、".join(available[:3]))
+            )
 
     return failures
 
