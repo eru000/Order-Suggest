@@ -16,7 +16,7 @@ from menu_semantics import (
     strict_spice_limit,
 )
 from observability import emit
-from table_menu import compose_table, is_shared_table
+from table_menu import absent_required_buckets, compose_table, is_shared_table
 
 UNKNOWN_PRICE = float("inf")
 
@@ -425,8 +425,12 @@ def _recommend_impl(
                 sum(row["price"] for row in priced[:drink_count]),
                 food_budget * 0.25,
             )
+        table_pool = [*groups["main"], *groups["side"], *groups["other"]]
+        # 哪一個必備類是「菜單上就沒有」而不是「排不進預算」。沒有這個區分的話，
+        # 燒肉店的一桌沒有湯看起來就像規則出了錯。
+        absent = absent_required_buckets(table_pool)
         table = compose_table(
-            [*groups["main"], *groups["side"], *groups["other"]],
+            table_pool,
             people,
             None if food_budget is None else food_budget - drink_reserve,
         )
@@ -438,10 +442,19 @@ def _recommend_impl(
             # 跳出，就算預算還有剩也點不到飲料。下面的回傳本來就允許超過 limit。
             limit = max(limit, len(selected) + drink_count)
             take("drink", drink_count, "搭配飲品")
-        notes = "" if table else "預算不足或沒有符合條件且價格明確的品項"
+        if not table:
+            notes = "預算不足或沒有符合條件且價格明確的品項"
+        elif absent:
+            label = "、".join(absent)
+            notes = f"這家店的菜單上沒有{label}類的品項，這一桌因此沒有{label}"
+        else:
+            notes = ""
         return {
             "items": selected[: max(limit, len(selected))],
             "notes": notes,
+            # 被跳過的必備類。評測與前端都需要分辨「規則挑得不好」與
+            # 「菜單上就沒有這類菜」，不能只看最後那一桌少了什麼。
+            "relaxedBuckets": absent,
             "meta": _meta(prefs, budget, people, need_drink, service_rate, subtotal),
         }
 
@@ -466,6 +479,9 @@ def _recommend_impl(
     return {
         "items": selected[:limit],
         "notes": notes,
+        # 單點路徑沒有「必備類別」的概念，永遠是空的。放在這裡只是讓兩條
+        # 路徑的回傳形狀一致，呼叫端不必分情況處理。
+        "relaxedBuckets": [],
         "meta": _meta(prefs, budget, people, need_drink, service_rate, subtotal),
     }
 

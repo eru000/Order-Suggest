@@ -49,6 +49,23 @@ REQUIRED_BUCKETS = ("青菜", "湯鍋", "主食")
 FILL_BUCKETS = ("肉類", "海鮮", "湯鍋", "青菜", "主食", "點心", "其他")
 
 
+def absent_required_buckets(rows: list[dict[str, Any]]) -> list[str]:
+    """必備類別裡，候選中完全沒有品項的那幾類。
+
+    「這一桌沒有湯」有兩種原因：菜單上根本沒有湯品（燒肉店就是這樣），或是
+    有湯但預算排不進去。使用者該看到的說明完全不同，而原本的程式兩種都只是
+    安靜跳過，結果看起來一樣——口試委員就是把前者讀成「規則的例外處理」。
+
+    這裡只回報前者：候選中一項都沒有。實測四份菜單，森森燒肉的湯鍋是 0 項、
+    大肥鵝的主食是 0 項，兩者都屬於這一類。
+    """
+    present = {
+        bucket_of(str(row.get("name") or ""), str(row.get("category") or ""))
+        for row in rows
+    }
+    return [bucket for bucket in REQUIRED_BUCKETS if bucket not in present]
+
+
 def bucket_of(name: str, category: str = "") -> str:
     # 品名與分類分開比對：「鍋$」這種字尾規則接上分類字串就永遠對不到，
     # 「東北酸白菜肉鍋」會因為後面多一個空白掉進肉類。

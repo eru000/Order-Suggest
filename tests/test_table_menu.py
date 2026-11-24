@@ -6,7 +6,13 @@ SRC = Path(__file__).resolve().parents[1] / "src"
 if str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
-from table_menu import bucket_of, compose_table, is_shared_table, table_size  # noqa: E402
+from table_menu import (  # noqa: E402
+    absent_required_buckets,
+    bucket_of,
+    compose_table,
+    is_shared_table,
+    table_size,
+)
 
 
 def rows(*specs):
@@ -33,6 +39,45 @@ class BucketTest(unittest.TestCase):
         self.assertEqual(bucket_of("清炒蘆筍"), "青菜")
         self.assertEqual(bucket_of("蘆筍牛肉"), "肉類")
         self.assertEqual(bucket_of("控肉桂竹筍"), "肉類")
+
+
+class AbsentRequiredBucketTest(unittest.TestCase):
+    """「菜單上沒有這類菜」要跟「排不進預算」分開回報。
+
+    口試委員指出表4.6 裡森森燒肉的三組推薦都沒有湯鍋，質疑是規則的例外。
+    實際原因是燒肉店菜單上一項湯品都沒有，但原本的程式只是安靜跳過，
+    兩種情形的輸出一模一樣，看不出差別。
+    """
+
+    def test_yakiniku_menu_has_no_soup_bucket(self):
+        pool = rows(
+            ("香菇", 60, "蔬菜"),
+            ("玉子鮭魚石鍋飯", 180, "主食"),
+            ("霜降牛小排", 320, "牛肉"),
+        )
+        self.assertEqual(absent_required_buckets(pool), ["湯鍋"])
+
+    def test_goose_menu_has_no_staple_bucket(self):
+        pool = rows(
+            ("鵝油高麗菜", 120, "蔬菜"),
+            ("蟹黃豆腐煲", 330, "鍋物"),
+            ("燒臘雙拼盤", 480, "肉類"),
+        )
+        self.assertEqual(absent_required_buckets(pool), ["主食"])
+
+    def test_nothing_absent_when_all_three_present(self):
+        pool = rows(
+            ("清炒蘆筍", 120, "蔬菜"),
+            ("當歸清湯", 60, "湯品"),
+            ("鴨肉飯", 50, "主食"),
+        )
+        self.assertEqual(absent_required_buckets(pool), [])
+
+    def test_unpriced_items_still_count_as_present(self):
+        # 時價的湯品不會被推薦，但「菜單上有湯」這件事不變；
+        # 混在一起的話，有湯的店會被說成沒有湯。
+        pool = [{"name": "時價鮮魚湯", "price": None, "category": "湯品", "family": "湯"}]
+        self.assertNotIn("湯鍋", absent_required_buckets(pool))
 
 
 class SharedTableTest(unittest.TestCase):
