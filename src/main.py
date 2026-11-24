@@ -318,6 +318,24 @@ def _fallback_format(rec: Dict[str, object]) -> str:
             extra = "，當聚餐主角最適合"
         return base + extra
 
+    # 推薦引擎實際產生的 type 是 main / side / drink / dessert / other（單點路徑）
+    # 與青菜、湯鍋、主食、肉類、海鮮、點心、其他（合菜路徑的桶名）。下面的
+    # sections 只預先放了五種，對不上的 type 會被 setdefault 新增，但舊版的
+    # order 清單是寫死的，於是那些 section 一個都不會被印出來——合菜情境推了
+    # 六道菜只列出一杯飲料，小計卻照六道算，金額對、清單不對。
+    SECTION_TITLES = {
+        "side": "🥬 配菜",
+        "dessert": "🍧 甜點 / 收尾",
+        "other": "🍽️ 其他推薦",
+        "青菜": "🥬 青菜",
+        "湯鍋": "🍲 湯鍋",
+        "主食": "🍚 主食",
+        "肉類": "🥩 肉類",
+        "海鮮": "🦐 海鮮",
+        "點心": "🍧 點心",
+        "其他": "🍽️ 其他推薦",
+    }
+
     sections = {
         "core": {
             "title": "🥘 核心主鍋 / 主菜",
@@ -354,7 +372,10 @@ def _fallback_format(rec: Dict[str, object]) -> str:
             "reason": enrich_reason(item),
         }
         section_key = classify_section(item)
-        sections.setdefault(section_key, {"title": "其他", "items": []})["items"].append(entry)
+        sections.setdefault(
+            section_key,
+            {"title": SECTION_TITLES.get(section_key, f"🍽️ {section_key}"), "items": []},
+        )["items"].append(entry)
 
     service_fee = round(subtotal * 0.1, 1)
     total = subtotal + service_fee
@@ -373,7 +394,13 @@ def _fallback_format(rec: Dict[str, object]) -> str:
     lines.append(f"收到！{intro}。")
     lines.append(f"我幫你排出 **{combo_name()}**，每一道都有簡單理由：")
 
-    order = ["core", "main", "veggie", "drink", "sweet"]
+    # 固定清單以外的 section 要補進來，否則就是上面講的那個漏品項的 bug。
+    # 飲料與甜點排最後：合菜的桶名是動態補上的，若沿用舊的固定順序，
+    # 一杯汽水會被印在整桌菜的前面。
+    tail = ["drink", "sweet"]
+    order = ["core", "main", "veggie"]
+    order += [key for key in sections if key not in order and key not in tail]
+    order += tail
     for key in order:
         sec = sections.get(key)
         if not sec or not sec["items"]:

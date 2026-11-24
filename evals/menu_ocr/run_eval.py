@@ -827,7 +827,10 @@ def main() -> int:
     print()
 
     def _run(case: dict[str, Any]) -> dict[str, Any]:
-        return run_case(case, args.threshold, args.debug, recordings.get(case["name"]) if args.replay else None)
+        return run_case(
+            case, args.threshold, args.debug,
+            recordings.get(case["name"]) if args.replay else None,
+        )
 
     if args.jobs > 1:
         with ThreadPoolExecutor(max_workers=args.jobs) as pool:

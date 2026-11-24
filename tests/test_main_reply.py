@@ -28,6 +28,51 @@ def item(name, price, type_="main", category="主餐", reason="符合你的條�
     return {"name": name, "price": price, "category": category, "reason": reason, "type": type_}
 
 
+class FallbackListsEveryItemTest(unittest.TestCase):
+    """模板必須把每一道推薦的菜都列出來。
+
+    舊版的 section 順序是寫死的 ["core", "main", "veggie", "drink", "sweet"]，
+    但推薦引擎實際產生的 type 是 main/side/drink/dessert/other（單點）與
+    青菜、湯鍋、主食、肉類、海鮮（合菜桶名）。對不上的整個品項不會被印出來：
+    大肥鵝「四個人 預算3000」推六道菜，模板只列出一杯飲料，小計卻照六道算。
+    金額對、清單不對，而且 287 個測試全綠——因為沒有人檢查回覆文字。
+    """
+
+    def test_shared_table_buckets_are_all_listed(self):
+        items = [
+            item("章魚沙拉", 380, "青菜", "生冷美饌"),
+            item("蟹黃豆腐煲", 330, "湯鍋", "明火好味"),
+            item("燒臘雙拼盤", 480, "肉類", "潮粵燒臘"),
+            item("菠蘿果律蝦球", 450, "海鮮", "明火好味"),
+            item("七喜汽水", 40, "drink", "瓶裝飲料"),
+        ]
+        text = main._fallback_format(rec(items, people=4, budget=3000, needDrink=True))
+        for row in items:
+            self.assertIn(row["name"], text, f"模板漏掉了 {row['name']}")
+
+    def test_single_order_side_and_dessert_are_listed(self):
+        items = [
+            item("鴨肉飯", 50, "main", "主食"),
+            item("滷地瓜葉", 30, "side", "小菜"),
+            item("花生湯", 35, "dessert", "甜品"),
+            item("滷蛋", 15, "other", "加點"),
+        ]
+        text = main._fallback_format(rec(items, people=1, budget=200))
+        for row in items:
+            self.assertIn(row["name"], text, f"模板漏掉了 {row['name']}")
+
+    def test_food_is_listed_before_drinks(self):
+        items = [
+            item("七喜汽水", 40, "drink", "瓶裝飲料"),
+            item("章魚沙拉", 380, "青菜", "生冷美饌"),
+        ]
+        text = main._fallback_format(rec(items, people=4, budget=3000, needDrink=True))
+        self.assertLess(
+            text.index("章魚沙拉"), text.index("七喜汽水"),
+            "整桌菜要排在飲料前面，不然一杯汽水會印在最上面",
+        )
+
+
 class FallbackTemplateTest(unittest.TestCase):
     """_fallback_format：LLM 失敗時的備援文案。"""
 
