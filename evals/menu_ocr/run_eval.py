@@ -230,6 +230,31 @@ def _price_equal(left: Any, right: Any) -> bool:
         return False
 
 
+def _edit_distance(left: str, right: str) -> int:
+    """Levenshtein 距離，字元錯誤率的分子。
+
+    專案沒裝 python-Levenshtein，為了一個指標多一個依賴不值得；
+    菜名只有十幾個字，純 Python 的 DP 完全夠快。
+    """
+    if left == right:
+        return 0
+    if not left:
+        return len(right)
+    if not right:
+        return len(left)
+    previous = list(range(len(right) + 1))
+    for i, lchar in enumerate(left, 1):
+        current = [i]
+        for j, rchar in enumerate(right, 1):
+            current.append(min(
+                previous[j] + 1,                      # 刪除
+                current[j - 1] + 1,                   # 插入
+                previous[j - 1] + (lchar != rchar),   # 替換
+            ))
+        previous = current
+    return previous[-1]
+
+
 def score_case(case: dict[str, Any], result: dict[str, Any], threshold: float) -> dict[str, Any]:
     expected_items = case["expected"]["items"]
     predicted_items = _flatten_result(result)
@@ -248,6 +273,28 @@ def score_case(case: dict[str, Any], result: dict[str, Any], threshold: float) -
     unpriced = [m for m in matches if m["expectedPrice"] is None]
     price_invented = sum(1 for m in unpriced if m["predictedPrice"] is not None)
 
+    # 字元錯誤率。配對門檻是 0.72，所以「大魯肉飯」讀成「魯肉飯」仍算命中，
+    # 召回率 100% 並不代表每個字都對；這個指標才看得出差多少。
+    #
+    # 分兩個數字報，因為混在一起會得到誤導的結論。實測 long-4600 這份紀錄：
+    # 用原始字串算是 1.85%，但那 12 個編輯距離全部來自六個品項的全角括號（）
+    # 被讀成半角 ()，正規化後真正認錯的字是 0 個。只報原始字串會把標點寬度
+    # 說成辨識錯誤，只報正規化後又隱藏了下游用品名做子字串比對時要處理的差異。
+    cer_edits = sum(_edit_distance(_name_key(m["expected"]), _name_key(m["predicted"]))
+                    for m in matches)
+    cer_chars = sum(len(_name_key(m["expected"])) for m in matches)
+    raw_edits = sum(_edit_distance(m["expected"], m["predicted"]) for m in matches)
+    raw_chars = sum(len(m["expected"]) for m in matches)
+    # 嚴格版：漏抓算整串刪除、幻覺算整串插入。放寬門檻會讓上面那個 CER
+    # 假性變好（本來配不上的錯字項被納進分母），嚴格版不會。
+    strict_edits = (
+        cer_edits
+        + sum(len(_name_key(str(item["name"]))) for item in matching["missed"])
+        + sum(len(_name_key(str(item["name"]))) for item in matching["spurious"])
+    )
+    strict_chars = cer_chars + sum(len(_name_key(str(item["name"])))
+                                   for item in matching["missed"])
+
     expected_name = str(case["expected"].get("restaurant_name") or "").strip()
     detected_name = str(result.get("detected_restaurant_name") or "").strip()
     name_ok: bool | None = None
@@ -260,7 +307,17 @@ def score_case(case: dict[str, Any], result: dict[str, Any], threshold: float) -
         "matchedCount": matched_count,
         "recall": round(recall, 3),
         "precision": round(precision, 3),
+        "exactNameCount": exact_names,
         "exactNameRate": round(exact_names / matched_count, 3) if matched_count else 0.0,
+        "cer": round(cer_edits / cer_chars, 4) if cer_chars else None,
+        "cerEdits": cer_edits,
+        "cerChars": cer_chars,
+        "cerRaw": round(raw_edits / raw_chars, 4) if raw_chars else None,
+        "cerRawEdits": raw_edits,
+        "cerRawChars": raw_chars,
+        "cerStrict": round(strict_edits / strict_chars, 4) if strict_chars else None,
+        "cerStrictEdits": strict_edits,
+        "cerStrictChars": strict_chars,
         "pricedExpected": len(priced),
         "priceAccuracy": round(price_correct / len(priced), 3) if priced else None,
         "priceInvented": price_invented,
@@ -422,12 +479,25 @@ def aggregate(rows: list[dict[str, Any]]) -> dict[str, Any]:
     price_correct = sum(
         round((row["priceAccuracy"] or 0) * row["pricedExpected"]) for row in good
     )
+    exact_names = sum(row.get("exactNameCount", 0) for row in good)
+    cer_edits = sum(row.get("cerEdits", 0) for row in good)
+    cer_chars = sum(row.get("cerChars", 0) for row in good)
+    raw_edits = sum(row.get("cerRawEdits", 0) for row in good)
+    raw_chars = sum(row.get("cerRawChars", 0) for row in good)
+    strict_edits = sum(row.get("cerStrictEdits", 0) for row in good)
+    strict_chars = sum(row.get("cerStrictChars", 0) for row in good)
     return {
         "caseCount": len(rows),
         "okCount": len(good),
         # 用品項總數加總而不是各案例平均，避免品項少的照片被放大權重。
         "recall": round(total_matched / total_expected, 3) if total_expected else 0.0,
         "precision": round(total_matched / total_predicted, 3) if total_predicted else 0.0,
+        # 完全文字匹配率與字元錯誤率：召回率看的是「這道菜有沒有被認出來」，
+        # 這兩個看的是「認出來的字對不對」。評審指出前者 100% 不代表後者沒問題。
+        "exactNameRate": round(exact_names / total_matched, 3) if total_matched else 0.0,
+        "cer": round(cer_edits / cer_chars, 4) if cer_chars else None,
+        "cerRaw": round(raw_edits / raw_chars, 4) if raw_chars else None,
+        "cerStrict": round(strict_edits / strict_chars, 4) if strict_chars else None,
         "priceAccuracy": round(price_correct / priced, 3) if priced else None,
         "priceInvented": sum(row["priceInvented"] for row in good),
         "restaurantNameOkCount": sum(1 for row in good if row["restaurantNameOk"]),
@@ -482,6 +552,13 @@ def print_report(run: dict[str, Any], verbose: bool) -> None:
             f"{_pct(summary['priceAccuracy']):>8}"
             f"{summary['totalDurationSec']:>7.1f}"
             f"  {summary['restaurantNameOkCount']}/{summary['restaurantNameChecked']}"
+        )
+    if summary.get("okCount"):
+        print(
+            f"\n完全文字匹配率 {_pct(summary.get('exactNameRate')).strip()}"
+            f"　字元錯誤率 {_pct(summary.get('cer')).strip()}"
+            f"（含漏抓與幻覺 {_pct(summary.get('cerStrict')).strip()}；"
+            f"含標點與全半角差異 {_pct(summary.get('cerRaw')).strip()}）"
         )
     if summary.get("priceInvented"):
         print(f"\n⚠ 有 {summary['priceInvented']} 個品項菜單沒印價格，模型自己編了一個數字")
@@ -545,6 +622,38 @@ def rescore(label: str, threshold: float) -> dict[str, Any]:
     run["summary"] = aggregate(run["cases"])
     run["label"] = f"{run['label']}(重算)"
     return run
+
+
+def sweep(label: str, thresholds: list[float]) -> None:
+    """掃不同的配對門檻重算同一份紀錄，不打 API。
+
+    評審問「0.72 這個門檻憑什麼」。單看一個門檻下的 100% 召回率答不了，
+    要把門檻放寬與收緊的兩端一起列出來：放寬會讓召回率上升但字元錯誤率跟著
+    上升，收緊則相反。兩條走勢放在一起，才看得出 0.72 落在什麼位置。
+    """
+    print()
+    print("=" * 72)
+    print(f"  配對門檻敏感度：{label}（重算存檔，不打 API）")
+    print("=" * 72)
+    print(f"{'門檻':>6}{'配對數':>8}{'召回':>8}{'精確':>8}"
+          f"{'完全匹配':>11}{'字元錯誤':>11}{'嚴格CER':>10}{'含標點':>9}")
+    print("-" * 72)
+    for threshold in thresholds:
+        run = rescore(label, threshold)
+        summary = run["summary"]
+        matched = sum(row.get("matchedCount", 0) for row in run["cases"] if row.get("ok"))
+        mark = "  ←目前採用" if abs(threshold - DEFAULT_MATCH_THRESHOLD) < 1e-9 else ""
+        print(
+            f"{threshold:>6.2f}{matched:>8d}"
+            f"{_pct(summary.get('recall')):>8}"
+            f"{_pct(summary.get('precision')):>8}"
+            f"{_pct(summary.get('exactNameRate')):>11}"
+            f"{_pct(summary.get('cer')):>11}"
+            f"{_pct(summary.get('cerStrict')):>10}"
+            f"{_pct(summary.get('cerRaw')):>9}{mark}"
+        )
+    print("-" * 72)
+    print()
 
 
 def compare_runs(label_a: str, label_b: str) -> None:
@@ -616,6 +725,9 @@ def main() -> int:
     parser.add_argument("--compare", nargs=2, metavar=("A", "B"), help="比較兩次執行紀錄")
     parser.add_argument("--rescore", metavar="LABEL",
                         help="用現在的計分規則重算舊紀錄，不打 API")
+    parser.add_argument("--sweep", metavar="LABEL",
+                        help="掃 0.50 到 1.00 的配對門檻重算同一份紀錄，看指標隨門檻"
+                             "怎麼變，不打 API。用來說明門檻的選擇依據")
     parser.add_argument("--replay", metavar="LABEL",
                         help="用某次 --debug 錄下的模型回應重跑整條 pipeline，不打 API。"
                              "模型輸出固定住，改動解析／合併邏輯才能乾淨地 A/B")
@@ -623,6 +735,15 @@ def main() -> int:
 
     if args.compare:
         compare_runs(*args.compare)
+        return 0
+
+    if args.sweep:
+        steps = {round(0.50 + 0.05 * i, 2) for i in range(11)}
+        try:
+            sweep(args.sweep, sorted(steps | {DEFAULT_MATCH_THRESHOLD}))
+        except CaseError as exc:
+            print(f"✗ {exc}")
+            return 2
         return 0
 
     if args.rescore:
