@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-import re
 from collections.abc import MutableMapping
 from typing import Any
+
+from menu_price import price_value
 
 
 UNNAMED_MENU_NAME = "未命名菜單"
@@ -19,15 +20,8 @@ class MenuIngestionService:
 
     @staticmethod
     def normalize_price(value: Any) -> float | None:
-        if isinstance(value, bool):
-            return None
-        if isinstance(value, (int, float)):
-            return float(value) if float(value) >= 0 else None
-        text = str(value or "").strip().replace(",", "")
-        if not text or any(marker in text for marker in ("未提供", "未標示", "時價")):
-            return None
-        match = re.search(r"(?:NT\$|NTD|\$)?\s*(\d+(?:\.\d+)?)", text, re.IGNORECASE)
-        return float(match.group(1)) if match else None
+        """與照片辨識共用 menu_price 的規則：範圍、多價、看不清都不轉成單價。"""
+        return price_value(value)
 
     @staticmethod
     def is_non_food(name: str) -> bool:

@@ -322,9 +322,12 @@ class VisionEndpointTests(unittest.TestCase):
 
         self.assertTrue(response["success"])
         menu = catalog["筷子餐廳"]["restaurants"]["筷子餐廳"]
-        self.assertEqual(menu["categories"]["全部菜色"]["items"], [
-            {"name": "五更腸旺", "price": 380, "chiliCount": 2}
-        ])
+        items = menu["categories"]["全部菜色"]["items"]
+        self.assertEqual(
+            [{key: value for key, value in item.items() if key != "priceInfo"} for item in items],
+            [{"name": "五更腸旺", "price": 380, "chiliCount": 2}],
+        )
+        self.assertEqual(items[0]["priceInfo"]["status"], "fixed")
 
 
 if __name__ == "__main__":

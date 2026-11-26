@@ -1385,8 +1385,13 @@
     (data.conflicts || []).forEach((conflict) => {
       const names = (conflict.candidates || []).map(escapeHtml).join('」與「');
       if (conflict.type === 'price') {
-        const prices = (conflict.prices || []).join(' / ');
-        problems.push(`「${names}」在重疊區辨識到不同價格：${prices}。`);
+        const prices = (conflict.prices || []).map(escapeHtml).join(' / ');
+        if (conflict.source === 'duplicate_name') {
+          // 同名出現兩次但價格不同：目前只保留第一筆，可能是大小份或重複抄錄
+          problems.push(`「${names}」出現不只一次且價格不同（${prices}），目前只保留第一筆。若是大小份，請改名分開或補上價格。`);
+        } else {
+          problems.push(`「${names}」在重疊區辨識到不同價格：${prices}。`);
+        }
       } else {
         problems.push(`「${names}」可能是同一道菜被認成兩項。`);
       }

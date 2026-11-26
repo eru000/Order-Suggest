@@ -16,6 +16,11 @@ if str(SRC_DIR) not in sys.path:
 import menu_vision  # noqa: E402
 
 
+def _without_price_info(items):
+    """品項現在多帶 priceInfo（menu_price 契約 C1）；比對既有欄位時先拿掉。"""
+    return [{key: value for key, value in item.items() if key != "priceInfo"} for item in items]
+
+
 class MenuVisionTests(unittest.TestCase):
     def test_normalizes_categories_prices_and_duplicates(self):
         result = menu_vision.normalize_vision_result(
@@ -35,10 +40,79 @@ class MenuVisionTests(unittest.TestCase):
         )
         self.assertEqual(result["restaurant_name"], "使用者店名")
         self.assertEqual(result["confidence"], 1.0)
-        self.assertEqual(result["categories"][0]["items"], [
+        self.assertEqual(_without_price_info(result["categories"][0]["items"]), [
             {"name": "牛肉麵", "price": 180.0},
             {"name": "滷肉飯", "price": None},
         ])
+        self.assertEqual(result["categories"][0]["items"][1]["priceInfo"]["status"], "market")
+        # 第二筆「牛肉麵 999」仍只保留第一筆，但不再靜默丟掉：記成待確認的價格衝突
+        self.assertEqual(result["conflicts"], [{
+            "type": "price", "source": "duplicate_name", "candidates": ["牛肉麵"],
+            "prices": ["180", "999"], "resolved": False,
+        }])
+
+    def test_ambiguous_prices_are_not_guessed_into_unit_prices(self):
+        """舊規則抓第一段數字：「1?0」變 1 元、「100～190」變 100 元。
+
+        這類「看似合法的錯價」會直接進入預算判斷（委員5-3）。現在只有明確單價才給
+        數字，其餘保留狀態與原文。
+        """
+        result = menu_vision.normalize_vision_result({"categories": [{"title": "主餐", "items": [
+            {"dish": "燒鵝飯", "price": "1?0"},
+            {"dish": "海鮮鍋", "price": "100～190"},
+            {"dish": "鮮魚湯", "price": "約150"},
+        ]}]})
+        items = result["categories"][0]["items"]
+        self.assertEqual([item["price"] for item in items], [None, None, None])
+        self.assertEqual(
+            [item["priceInfo"]["status"] for item in items], ["unreadable", "range", "range"]
+        )
+        self.assertEqual(items[0]["priceInfo"]["raw"], "1?0")
+
+    def test_labelled_multi_price_is_split_into_variants(self):
+        result = menu_vision.normalize_vision_result({"categories": [{"title": "麵", "items": [
+            {"dish": "乾麵", "price": "大60/小45"},
+            {"dish": "湯麵", "price": "60/45"},
+        ]}]})
+        got = [(item["name"], item["price"], item["priceInfo"]["status"])
+               for item in result["categories"][0]["items"]]
+        self.assertEqual(got, [
+            ("乾麵（大）", 60.0, "fixed"),
+            ("乾麵（小）", 45.0, "fixed"),
+            ("湯麵", None, "multi"),  # 沒有標籤不知道哪個是大份，交給人工
+        ])
+
+    def test_same_name_different_price_is_flagged_not_silently_dropped(self):
+        """實測舊版：「乾麵 45」「乾麵 55」只剩 45，沒有 warning，也沒有衝突。"""
+        result = menu_vision.normalize_vision_result({"categories": [{"title": "麵", "items": [
+            {"dish": "乾麵", "price": 45},
+            {"dish": "乾麵", "price": 55},
+            {"dish": "乾麵", "price": 45},
+        ]}]})
+        self.assertEqual(_without_price_info(result["categories"][0]["items"]), [{"name": "乾麵", "price": 45.0}])
+        self.assertEqual(len(result["conflicts"]), 1)
+        self.assertEqual(result["conflicts"][0]["prices"], ["45", "55"])
+
+    def test_analyze_passes_duplicate_price_conflicts_to_review(self):
+        buffer = io.BytesIO()
+        Image.new("RGB", (64, 64), "white").save(buffer, "PNG")
+
+        def fake_vision(prompt, **kwargs):
+            return json.dumps({"categories": [{"title": "麵", "items": [
+                {"dish": "乾麵", "price": 45}, {"dish": "乾麵", "price": 55},
+            ]}]}, ensure_ascii=False)
+
+        result = menu_vision.analyze_menu_image(buffer.getvalue(), "image/png", vision_func=fake_vision)
+        self.assertEqual(result["quality"]["conflictCount"], 1)
+        self.assertEqual(result["conflicts"][0]["source"], "duplicate_name")
+
+    def test_manual_price_correction_marks_price_info_as_human(self):
+        result = menu_vision.normalize_vision_result(
+            {"categories": [{"title": "主餐", "items": [{"dish": "燒鵝飯", "price": "1?0"}]}]}
+        )
+        corrected = menu_vision.apply_manual_correction(result, "改 1 價格 150")["result"]
+        info = corrected["categories"][0]["items"][0]["priceInfo"]
+        self.assertEqual((info["status"], info["value"], info["reason"]), ("fixed", 150.0, "人工修正"))
 
     def test_single_character_item_survives_when_it_has_a_price(self):
         """加料吊牌常常只有一個字。
@@ -67,7 +141,7 @@ class MenuVisionTests(unittest.TestCase):
             {"categories": [["麵類", [["乾麵", 45], ["大乾麵", "NT$55"], ["時價麵", None]]]]}
         )
         self.assertEqual(result["categories"][0]["name"], "麵類")
-        self.assertEqual(result["categories"][0]["items"], [
+        self.assertEqual(_without_price_info(result["categories"][0]["items"]), [
             {"name": "乾麵", "price": 45.0},
             {"name": "大乾麵", "price": 55.0},
             {"name": "時價麵", "price": None},
@@ -282,10 +356,13 @@ class MenuVisionTests(unittest.TestCase):
             {"name": "鮮蝦粉絲煲", "price": 420},
             {"name": "麻辣肚絲", "price": 360, "chiliCount": 1, "spiceLevel": 4},
         ]
-        self.assertEqual(result["categories"][0]["items"], expected)
-        self.assertEqual(menu_vision.to_persisted_document(result)["menu_items"], [
+        self.assertEqual(_without_price_info(result["categories"][0]["items"]), expected)
+        self.assertEqual(_without_price_info(menu_vision.to_persisted_document(result)["menu_items"]), [
             {**item, "category": "主餐"} for item in expected
         ])
+        self.assertTrue(all(
+            item["priceInfo"]["status"] == "fixed" for item in result["categories"][0]["items"]
+        ))
 
     def test_falls_back_to_verify_model_when_ocr_model_is_unavailable(self):
         """主要 OCR 模型掛掉要能降級，而且不能假裝成高信心結果。"""

@@ -22,6 +22,7 @@ except ImportError:
     # JPEG/PNG/WebP continue to work; requirements.txt installs HEIF support.
     pass
 
+from menu_price import parse_price
 from observability import emit
 from ollama_fuc import SPICE_OCR_RULE, vision_chat
 
@@ -118,15 +119,8 @@ def _extract_json_value(text: str) -> Any:
 
 
 def _clean_price(value: Any) -> Optional[float]:
-    if value is None or isinstance(value, bool):
-        return None
-    if isinstance(value, (int, float)):
-        return float(value) if value >= 0 else None
-    text = str(value).strip().replace(",", "")
-    if not text or any(word in text.casefold() for word in ("時價", "未知", "unknown", "null", "看不清")):
-        return None
-    match = re.search(r"(?:NT\$?|\$)?\s*(\d{1,6}(?:\.\d+)?)", text, flags=re.I)
-    return float(match.group(1)) if match else None
+    """相容舊呼叫端；規則統一在 menu_price.parse_price，只有明確單價才給數字。"""
+    return parse_price(value)["value"]
 
 
 def _spice_number(value: Any, *, minimum: int = 0) -> int | None:
@@ -206,6 +200,10 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
 
     categories: List[Dict[str, Any]] = []
     seen: dict[str, dict[str, Any]] = {}
+    # 同名不同價原本會被靜默丟掉第二筆（期中後實測：「乾麵 45」「乾麵 55」只剩
+    # 45，沒有任何 warning）。仍然只保留第一筆，但記成衝突，確認畫面會列出來，
+    # 存檔前也必須明確接受。
+    conflicts: List[Dict[str, Any]] = []
     for raw_category in raw_categories:
         raw_category = _coerce_category(raw_category)
         if raw_category is None:
@@ -228,36 +226,67 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
             name = str(raw_item.get("name") or raw_item.get("dish") or raw_item.get("item_name") or raw_item.get("title") or "").strip()
             inline_chilis = len(CHILI_ICON.findall(name))
             name = CHILI_ICON.sub("", name).strip()
-            key = re.sub(r"\s+", "", name).casefold()
             price = raw_item.get("price")
             if price is None:
                 price = raw_item.get("amount") if raw_item.get("amount") is not None else raw_item.get("cost")
-            clean_price = _clean_price(price)
+            price_info = parse_price(price)
             # 單字品名在加料吊牌與小攤菜單上很常見——不倒翁的木板就是「麵 20」
             # 「蛋 20」。舊的 len(name) < 2 一律丟掉，而且不留 warning，所以那兩
             # 塊牌子不管模型有沒有讀到都不會出現在結果裡。但一個字又沒有價格的
             # 多半是 OCR 撿到的雜訊，所以只在有價格時放行。
-            if not name or (len(name) < 2 and clean_price is None):
+            if not name or (len(name) < 2 and price_info["value"] is None and not price_info["variants"]):
                 continue
-            item: Dict[str, Any] = {"name": name[:160], "price": clean_price}
+            # 一格多價（「大60/小45」）每個價格都有標籤時，拆成「乾麵（大）」「乾麵（小）」，
+            # 與提示詞要求的輸出和真值標註方式一致；缺標籤就保留一項、價格未知，交給人工。
+            if (
+                price_info["status"] == "multi"
+                and price_info["variants"]
+                and all(variant["label"] for variant in price_info["variants"])
+            ):
+                entries = [
+                    (
+                        f"{name}（{variant['label']}）",
+                        {**price_info, "value": variant["value"], "status": "fixed", "variants": [],
+                         "reason": "由同一格的多個價格拆出"},
+                    )
+                    for variant in price_info["variants"]
+                ]
+            else:
+                entries = [(name, dict(price_info))]
             description = str(raw_item.get("description") or "").strip()
-            if description:
-                item["description"] = description[:300]
             chili_count = _spice_number(
                 raw_item.get("chili_count", raw_item.get("chiliCount")), minimum=1
             )
             chili_count = chili_count or _spice_number(inline_chilis, minimum=1)
             spice_level = _spice_number(raw_item.get("spice_level", raw_item.get("spiceLevel")))
-            if chili_count is not None:
-                item["chiliCount"] = chili_count
-            if spice_level is not None and (spice_level != 0 or chili_count is None):
-                item["spiceLevel"] = spice_level
-            if key in seen:
-                if seen[key]["price"] == clean_price:
-                    _merge_spice_evidence(seen[key], item)
-                continue
-            seen[key] = item
-            items.append(item)
+            for entry_name, entry_info in entries:
+                clean_price = entry_info["value"]
+                item: Dict[str, Any] = {"name": entry_name[:160], "price": clean_price, "priceInfo": entry_info}
+                if description:
+                    item["description"] = description[:300]
+                if chili_count is not None:
+                    item["chiliCount"] = chili_count
+                if spice_level is not None and (spice_level != 0 or chili_count is None):
+                    item["spiceLevel"] = spice_level
+                key = re.sub(r"\s+", "", entry_name).casefold()
+                if key in seen:
+                    existing = seen[key]
+                    if existing["price"] == clean_price:
+                        _merge_spice_evidence(existing, item)
+                    else:
+                        conflicts.append({
+                            "type": "price",
+                            "source": "duplicate_name",
+                            "candidates": [existing["name"]],
+                            "prices": [
+                                f"{value:g}" if isinstance(value, (int, float)) else "未標價"
+                                for value in (existing["price"], clean_price)
+                            ],
+                            "resolved": False,
+                        })
+                    continue
+                seen[key] = item
+                items.append(item)
         if items:
             categories.append({"name": category_name, "items": items})
 
@@ -276,6 +305,7 @@ def normalize_vision_result(raw: Any, restaurant_hint: str = "") -> Dict[str, An
         # replaces this with the programmatically derived quality score.
         "confidence": legacy_confidence,
         "categories": categories,
+        "conflicts": conflicts,
         "warnings": [str(value)[:200] for value in raw.get("warnings", []) if str(value).strip()][:8]
         if isinstance(raw.get("warnings"), list)
         else [],
@@ -557,6 +587,7 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
     if operation == "price":
         old_value = target.get("price")
         target["price"] = new_value
+        target["priceInfo"] = {**parse_price(new_value), "raw": str(instruction).strip()[:80], "reason": "人工修正"}
         change = {"type": "price", "item": old_name, "from": old_value, "to": new_value}
         message = f"已把「{old_name}」價格改為 ${new_value:.0f}"
     elif operation == "spice":
@@ -697,7 +728,7 @@ def analyze_menu_image(
         detected = result.get("detected_restaurant_name", "")
         result.update({
             "quality": {"score": round(coverage * 0.7 + 0.2, 3), "priceCoverage": coverage, "itemCount": item_count},
-            "conflicts": [],
+            "conflicts": result.get("conflicts", []),
             "identity": {"userHint": restaurant_hint, "detectedName": detected, "candidates": [detected] if detected else []},
             "identityConflict": _names_conflict(restaurant_hint, detected),
             "models": {"ocr": os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL), "verify": os.getenv("VISION_VERIFY_MODEL", DEFAULT_VERIFY_MODEL)},
@@ -785,14 +816,13 @@ def analyze_menu_image(
             "score": quality_score,
             "priceCoverage": coverage,
             "itemCount": item_count,
-            # 沒有切塊就沒有重疊區，這兩個計數永遠是 0。欄位保留是因為前端與
-            # 待確認流程的回應 schema 還在讀。
-            "conflictCount": 0,
+            # 沒有切塊就沒有重疊區；衝突目前只來自同名不同價。
+            "conflictCount": len(result.get("conflicts", [])),
             "modelFallback": bool(ocr_fallback_warning),
             "verifyDroppedCount": 0,
             "verifyInventedCount": 0,
         },
-        "conflicts": [],
+        "conflicts": result.get("conflicts", []),
         "identity": {
             "userHint": restaurant_hint.strip(),
             "detectedName": detected[:120],
