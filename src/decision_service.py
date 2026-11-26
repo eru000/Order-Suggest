@@ -24,7 +24,7 @@ from preference_engine import (
     merge_preference_delta,
     parse_preferences,
 )
-from table_menu import compose_table
+from table_menu import compose_table, describe_unmet, diagnose_table
 
 MAX_QUESTIONS = 2
 START_PATTERN = re.compile(
@@ -384,9 +384,12 @@ class DecisionService:
                 shortlist_id = d.pop("shortlistId", None)
                 if shortlist_id:
                     keep_ids = [shortlist_id]
+                unmet: list[dict[str, Any]] = []
                 if shared:
                     people = int(d["prefs"].get("people") or 2)
                     table = compose_table(available, people, d["prefs"].get("budget"))
+                    # 與 recommendation.recommend 共用同一套未達原因（規劃 4.1）
+                    unmet = diagnose_table(rows, available, table, people, d["prefs"].get("budget"))
                     cards = [self._card(row, d["prefs"], rate) for row in table]
                 else:
                     cards = [
@@ -404,15 +407,19 @@ class DecisionService:
                         total = sum(
                             card["total"] for card in cards if card.get("total") is not None
                         )
+                        explain = describe_unmet(unmet)
                         message = notice or (
                             f"{people} 個人這樣點，共 {len(cards)} 道，小計 $ {total:g}。"
-                            "哪一道不想吃就換掉。"
+                            + (f"{explain}。" if explain else "")
+                            + "哪一道不想吃就換掉。"
                         )
                     elif len(cards) == 1:
                         message = notice or "目前有這一道符合已知條件，可以先看看。"
                     elif d.get("focused"):
                         message = notice or "我會先選這一道。願意的話就吃這個，也可以再換一個。"
-                    view = self._view(d, "recommendation", message, items=cards, sharedTable=shared)
+                    view = self._view(
+                        d, "recommendation", message, items=cards, sharedTable=shared, unmet=unmet
+                    )
                 else:
                     exhausted = bool(candidates)
                     message = (

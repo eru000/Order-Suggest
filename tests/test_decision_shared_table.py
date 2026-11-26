@@ -42,6 +42,20 @@ class SharedTableDecisionTest(unittest.TestCase):
         )
         return self.view
 
+    def test_unmet_reasons_match_recommendation_path(self):
+        """互動選餐與一般推薦對同一份菜單、同一個條件，給出相同的未達原因（規劃 4.1）。"""
+        from recommendation import recommend
+
+        self.step("start", text="四個人 不吃鍋")
+        if self.view["type"] == "question":
+            self.step("answer", value="4")
+        decision = {entry["constraint"]: entry["cause"] for entry in self.view["unmet"]}
+        direct = recommend(shared_menu(), {"people": 4, "excludes": ["鍋"]}, top_k=10)
+        self.assertEqual(decision, {entry["constraint"]: entry["cause"] for entry in direct["unmet"]})
+        self.assertEqual(decision["湯鍋"], "excluded_by_user")
+        self.assertIn("被你的條件排除", self.view["message"])
+        self.assertNotIn("菜單上沒有湯鍋", self.view["message"])
+
     def test_asks_people_instead_of_dish_type(self):
         self.step("start", text="不知道吃什麼")
         self.assertEqual(self.view["type"], "question")

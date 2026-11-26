@@ -16,7 +16,7 @@ from menu_semantics import (
     strict_spice_limit,
 )
 from observability import emit
-from table_menu import absent_required_buckets, compose_table, is_shared_table
+from table_menu import compose_table, describe_unmet, diagnose_table, is_shared_table
 
 UNKNOWN_PRICE = float("inf")
 
@@ -165,6 +165,15 @@ def _meta(
         "estimatedSubtotal": round(subtotal, 2),
         "estimatedTotal": round(subtotal * (1 + service_rate), 2),
     }
+
+
+def _table_role(item: dict[str, Any]) -> str:
+    """與 _recommend_impl 分組相同的角色判斷（不含依價格改判的加點）。"""
+    raw_semantic = item.get("semantic")
+    role = str((raw_semantic or {}).get("role") or "") if isinstance(raw_semantic, dict) else ""
+    if role in {"main", "side", "drink", "dessert", "other"}:
+        return role
+    return role_of(str(item.get("name") or ""), str(item.get("category") or ""))
 
 
 def _recommend_impl(
@@ -426,14 +435,16 @@ def _recommend_impl(
                 food_budget * 0.25,
             )
         table_pool = [*groups["main"], *groups["side"], *groups["other"]]
-        # 哪一個必備類是「菜單上就沒有」而不是「排不進預算」。沒有這個區分的話，
-        # 燒肉店的一桌沒有湯看起來就像規則出了錯。
-        absent = absent_required_buckets(table_pool)
-        table = compose_table(
-            table_pool,
-            people,
-            None if food_budget is None else food_budget - drink_reserve,
-        )
+        # 診斷要拿「套用使用者條件之前」的同一批菜比對。以前直接看 table_pool，
+        # 使用者說「不吃鍋」也會被講成「這家店的菜單上沒有湯鍋」。
+        menu_table_rows = [
+            item for item in all_items
+            if _table_role(item) not in {"drink", "dessert"}
+        ]
+        table_budget = None if food_budget is None else food_budget - drink_reserve
+        table = compose_table(table_pool, people, table_budget)
+        unmet = diagnose_table(menu_table_rows, table_pool, table, people, table_budget)
+        absent = [entry["constraint"] for entry in unmet if entry["constraint"] != "道數"]
         for row in table:
             add_item(row, row["bucket"], f"一桌菜的{row['bucket']}")
         if drink_count:
@@ -444,17 +455,17 @@ def _recommend_impl(
             take("drink", drink_count, "搭配飲品")
         if not table:
             notes = "預算不足或沒有符合條件且價格明確的品項"
-        elif absent:
-            label = "、".join(absent)
-            notes = f"這家店的菜單上沒有{label}類的品項，這一桌因此沒有{label}"
         else:
-            notes = ""
+            notes = describe_unmet(unmet)
         return {
             "items": selected[: max(limit, len(selected))],
             "notes": notes,
             # 被跳過的必備類。評測與前端都需要分辨「規則挑得不好」與
             # 「菜單上就沒有這類菜」，不能只看最後那一桌少了什麼。
             "relaxedBuckets": absent,
+            # 每一項未達成的條件與原因（absent_in_menu / excluded_by_user /
+            # price_unknown / over_budget / search_not_found），與互動選餐共用。
+            "unmet": unmet,
             "meta": _meta(prefs, budget, people, need_drink, service_rate, subtotal),
         }
 
@@ -482,6 +493,7 @@ def _recommend_impl(
         # 單點路徑沒有「必備類別」的概念，永遠是空的。放在這裡只是讓兩條
         # 路徑的回傳形狀一致，呼叫端不必分情況處理。
         "relaxedBuckets": [],
+        "unmet": [],
         "meta": _meta(prefs, budget, people, need_drink, service_rate, subtotal),
     }
 

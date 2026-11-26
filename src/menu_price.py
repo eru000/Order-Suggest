@@ -24,7 +24,6 @@ import re
 import unicodedata
 from typing import Any, TypedDict
 
-
 PRICE_STATUSES = ("fixed", "market", "range", "multi", "unreadable", "missing")
 
 
@@ -63,7 +62,9 @@ _LABEL_JUNK = re.compile(r"[\s/、,，;；|:：()（）\[\]【】$元+]|NT|NTD",
 
 def _info(raw: str | None, status: str, reason: str, value: float | None = None,
           variants: list[PriceVariant] | None = None) -> PriceInfo:
-    return {"raw": raw, "value": value, "status": status, "variants": variants or [], "reason": reason}
+    return {
+        "raw": raw, "value": value, "status": status, "variants": variants or [], "reason": reason,
+    }
 
 
 def _number_info(value: float, raw: str | None) -> PriceInfo:
@@ -85,7 +86,8 @@ def _parse_text(raw: str) -> PriceInfo:
         return _info(raw, "missing", "沒有價格")
     if any(word in folded for word in _MARKET_WORDS):
         return _info(raw, "market", "時價或市價")
-    if any(char in text for char in _UNCERTAIN_CHARS) or any(w in folded for w in _UNREADABLE_WORDS):
+    uncertain = any(char in text for char in _UNCERTAIN_CHARS)
+    if uncertain or any(word in folded for word in _UNREADABLE_WORDS):
         return _info(raw, "unreadable", "價格含無法辨識的字元")
 
     scrubbed = _QUANTITY.sub(" ", _THOUSANDS.sub("", text))
@@ -106,13 +108,14 @@ def _parse_text(raw: str) -> PriceInfo:
 
     starts = [0] + [m.end() for m in matches[:-1]]
     ends = [m.start() for m in matches[1:]] + [len(scrubbed)]
-    before = [_clean_label(scrubbed[s:m.start()]) for s, m in zip(starts, matches)]
-    after = [_clean_label(scrubbed[m.end():e]) for m, e in zip(matches, ends)]
+    before = [_clean_label(scrubbed[s:m.start()]) for s, m in zip(starts, matches, strict=True)]
+    after = [_clean_label(scrubbed[m.end():e]) for m, e in zip(matches, ends, strict=True)]
     # 「大60/小45」標籤在數字前；「60(大)/45(小)」標籤在數字後。看第一個數字前面
     # 有沒有字決定整串用哪一種，不能逐項混用，否則第二項會撿到第一項的標籤。
     labels = before if before[0] else after
     variants: list[PriceVariant] = [
-        {"label": label, "value": float(match.group())} for label, match in zip(labels, matches)
+        {"label": label, "value": float(match.group())}
+        for label, match in zip(labels, matches, strict=True)
     ]
     return _info(raw, "multi", "同一品項有多個價格，需拆成規格", variants=variants)
 
