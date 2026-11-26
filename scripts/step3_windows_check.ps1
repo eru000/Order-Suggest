@@ -2,6 +2,11 @@
 # 執行：powershell -ExecutionPolicy Bypass -File scripts\step3_windows_check.ps1
 # 結果同時寫入 evals\results\step3\windows-check.txt，Claude 會從那裡讀。
 $ErrorActionPreference = "Continue"
+# Python 以 UTF-8 輸出；不設定的話 PowerShell 會用 Big5 解讀，中文全變亂碼。
+# stderr 被包成 RemoteException 只是 PowerShell 的顯示方式，不是錯誤。
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+$env:PYTHONIOENCODING = "utf-8"
 Set-Location (Split-Path -Parent $PSScriptRoot)
 $out = "evals\results\step3\windows-check.txt"
 New-Item -ItemType Directory -Force (Split-Path $out) | Out-Null
