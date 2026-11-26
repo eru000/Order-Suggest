@@ -71,6 +71,37 @@ class StorageV2Test(unittest.TestCase):
                 self.assertEqual(known_mild, 0)
                 self.assertIsNone(unknown_level)
 
+    def test_confirmed_vision_menu_keeps_model_output_and_corrections(self):
+        """確認入庫後要留得下「模型原本讀成什麼、人工改了什麼」（期末規劃 3.5）。
+
+        以前只寫入最終品項，人工修正紀錄、衝突與品質在確認那一刻就消失。
+        """
+        with tempfile.TemporaryDirectory() as directory:
+            database, menus, _, _ = self.build_importer(directory)
+            ingestion = MenuIngestionService(MenuCatalog(menus))
+            ingestion.register_vision({
+                "restaurant_name": "軌跡店",
+                "categories": [{"name": "主餐", "items": [{"name": "燒鵝飯", "price": 150}]}],
+                "modelCategories": [{"name": "主餐", "items": [{"name": "燒鵝飯", "price": None}]}],
+                "manualCorrections": [{"type": "price", "item": "燒鵝飯", "from": None, "to": 150}],
+                "conflicts": [],
+                "quality": {"score": 0.8, "needsReviewCount": 1},
+            })
+            with database.session() as session:
+                stored = session.execute(text("SELECT quality FROM menu_versions")).scalar_one()
+            trail = json.loads(stored) if isinstance(stored, str) else stored
+            self.assertEqual(trail["source"], "user_photo_vlm")
+            self.assertEqual(trail["manualCorrections"][0]["to"], 150)
+            self.assertIsNone(trail["modelCategories"][0]["items"][0]["price"])
+            self.assertEqual(trail["quality"]["needsReviewCount"], 1)
+
+    def test_stored_price_never_takes_first_number_of_ambiguous_text(self):
+        from storage.repositories import menu_price
+
+        self.assertEqual(str(menu_price("$149.00")), "149.0")
+        for raw in ("100～190", "1?0", "大60/小45", "時價", "約150"):
+            self.assertIsNone(menu_price(raw), raw)
+
     def test_importer_supports_both_menu_shapes_and_is_idempotent(self):
         with tempfile.TemporaryDirectory() as directory:
             _, menus, _, importer = self.build_importer(directory)

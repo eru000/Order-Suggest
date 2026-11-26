@@ -1148,6 +1148,7 @@ def main() -> int:
         "visionLongSide": os.getenv("VISION_LONG_SIDE", "3600"),
         "visionTiles": os.getenv("VISION_TILES", "0"),
         "visionTemperature": os.getenv("VISION_TEMPERATURE", "0.0"),
+        "visionPriceText": os.getenv("VISION_PRICE_TEXT", "0"),
     }
 
     recordings: dict[str, dict[str, dict[str, Any]]] = {}
@@ -1218,6 +1219,7 @@ def main() -> int:
         visionLongSide=os.getenv("VISION_LONG_SIDE", str(vision_module.TARGET_LONG_SIDE)),
         visionTiles=os.getenv("VISION_TILES", "0"),
         visionTemperature=os.getenv("VISION_TEMPERATURE", "0.0"),
+        visionPriceText=os.getenv("VISION_PRICE_TEXT", "0"),
     )
 
     if not args.replay and not os.getenv("API_KEY"):

@@ -694,10 +694,11 @@ def confirm_menu_from_photo(analysis_id: str, req: VisionConfirmReq):
         needs_acceptance = bool(
             result.get("identityConflict")
             or result.get("conflicts")
+            or int(quality.get("needsReviewCount") or 0) > 0
             or float(quality.get("score") or 0) < 0.75
         )
         if needs_acceptance and not req.accept_conflicts:
-            raise HTTPException(409, "店名、辨識衝突或品質需要人工檢查，請確認摘要後明確接受再送出")
+            raise HTTPException(409, "店名、辨識衝突、待確認價格或資料完整度需要人工檢查，請確認摘要後明確接受再送出")
         result["restaurant_name"] = restaurant_name
         summary = _register_vision_menu(result)
     except HTTPException:

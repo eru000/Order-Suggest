@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import base64
+import copy
 import io
 import json
 import os
@@ -414,6 +415,43 @@ def _names_conflict(hint: str, detected: str) -> bool:
     return left not in right and right not in left and SequenceMatcher(None, left, right).ratio() < 0.72
 
 
+def _price_text_enabled() -> bool:
+    """VISION_PRICE_TEXT=1：要求模型照抄價格原文，看不清的位數用 ? 代替（規劃 3.3）。
+
+    預設關閉。這會改變模型輸出，必須先在 dev 評測比較過才開成預設。
+    """
+    return os.getenv("VISION_PRICE_TEXT", "0").strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _price_rule() -> str:
+    if _price_text_enabled():
+        return (
+            "price 照抄印刷的價格文字（例如 \"230\"、\"時價\"、\"NT$1,200\"）。"
+            "某一位數字看不清，就用 ? 代替那一位（例如 \"1?0\"）；整個價格都看不到才用 null。"
+            "絕對不要猜數字，也不要自己補成看起來合理的價格。"
+        )
+    return "看不清價格用 null；不要猜數字。"
+
+
+def review_counts(result: Dict[str, Any]) -> Dict[str, int]:
+    """需要人看一眼的品項數（規劃 3.6）。
+
+    價格看不清、是範圍、或一格多價沒拆開的品項，加上未處理的同名不同價衝突。
+    沒有價格（missing）不算：確認畫面本來就會顯示「價格不明」。
+    """
+    flagged = 0
+    for category in result.get("categories", []) or []:
+        for item in category.get("items", []) if isinstance(category, dict) else []:
+            info = item.get("priceInfo") if isinstance(item, dict) else None
+            if isinstance(info, dict) and info.get("status") in {"unreadable", "range", "multi"}:
+                flagged += 1
+    open_conflicts = sum(
+        1 for conflict in result.get("conflicts", []) or []
+        if isinstance(conflict, dict) and not conflict.get("resolved")
+    )
+    return {"needsReviewCount": flagged + open_conflicts, "ambiguousPriceCount": flagged}
+
+
 def _tile_prompt(
     tile_id: str,
     box: Sequence[int],
@@ -430,7 +468,12 @@ def _tile_prompt(
     )
     # schema 刻意不用 `name` 當 key——閘道會把帶 name 的輸出 JSON 轉成 tool_calls，
     # content 變成空的，整個切塊白跑。詳見 _to_wire_categories 的說明。
-    item_schema = {"dish": "完整品名", "price": 230, "chili_count": None, "spice_level": None}
+    item_schema = {
+        "dish": "完整品名",
+        "price": "230" if _price_text_enabled() else 230,
+        "chili_count": None,
+        "spice_level": None,
+    }
     schema: dict[str, Any] = {"categories": [{"title": "分類", "items": [item_schema]}]}
     if ask_identity:
         schema = {"restaurant_name": "", **schema}
@@ -442,7 +485,7 @@ def _tile_prompt(
     return f"""你是繁體中文菜單 OCR 專家。{where}
 全圖初步資訊：{json.dumps(overview, ensure_ascii=False)}
 逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。
-被手寫線劃過的印刷品項仍要保留。看不清價格用 null；不要猜數字。
+被手寫線劃過的印刷品項仍要保留。{_price_rule()}
 {SPICE_OCR_RULE}
 共用價格框：價格若寫在括號或圓角框裡，標著大／小（或大碗小碗、L／S），而且那個框在版面上涵蓋整欄或一整組品項，代表那一組的每一項都同時有這兩種價格，而不是上面幾項算一種、下面幾項算另一種。遇到這種情形要為每個尺寸各輸出一項，品名後面加上（大）或（小）——例如同一欄的「乾麵」要輸出「乾麵（大）」55 與「乾麵（小）」45 兩項。
 配料與加點若自己掛一塊牌子、或自己佔一行並帶著自己的價格（例如吊牌上的「麵 20元」「蛋 20元」），那就是品項，品名只有一兩個字也一樣要列。但附在分類標題或某一項旁邊的加價說明（例如「（加蛋10元）」「加大+10」）是註解不是品項，不要列。{identity_rule}
@@ -630,6 +673,7 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
         quality["itemCount"] = len(refs)
         quality["priceCoverage"] = round(priced / len(refs), 3) if refs else 0.0
         quality["humanReviewed"] = True
+        quality.update(review_counts(result))
         quality["manualCorrectionCount"] = len(corrections) if isinstance(corrections, list) else 1
     if operation in {"price", "rename"}:
         for conflict in result.get("conflicts", []):
@@ -727,6 +771,7 @@ def analyze_menu_image(
         coverage = round(priced / item_count, 3) if item_count else 0.0
         detected = result.get("detected_restaurant_name", "")
         result.update({
+            "modelCategories": copy.deepcopy(result["categories"]),
             "quality": {"score": round(coverage * 0.7 + 0.2, 3), "priceCoverage": coverage, "itemCount": item_count},
             "conflicts": result.get("conflicts", []),
             "identity": {"userHint": restaurant_hint, "detectedName": detected, "candidates": [detected] if detected else []},
@@ -735,6 +780,7 @@ def analyze_menu_image(
             "sourceBlocks": [{"id": "full", "box": [0, 0, 0, 0]}],
         })
         result["confidence"] = result["quality"]["score"]
+        result["quality"].update(review_counts(result))
         return result
 
     requested_ocr_model = os.getenv("VISION_MODEL", DEFAULT_OCR_MODEL)
@@ -811,6 +857,9 @@ def analyze_menu_image(
         "source_type": str(result.get("source_type") or "menu"),
         "confidence": quality_score,
         "categories": categories,
+        # 模型原始的結構化結果。人工修正只改 categories；確認入庫時兩者一起保存，
+        # 才量得到「人工改了什麼」（規劃 3.5、第 7 項人工成本）。
+        "modelCategories": copy.deepcopy(categories),
         "warnings": warnings[:8],
         "quality": {
             "score": quality_score,
@@ -821,6 +870,7 @@ def analyze_menu_image(
             "modelFallback": bool(ocr_fallback_warning),
             "verifyDroppedCount": 0,
             "verifyInventedCount": 0,
+            **review_counts({"categories": categories, "conflicts": result.get("conflicts", [])}),
         },
         "conflicts": result.get("conflicts", []),
         "identity": {
@@ -854,6 +904,8 @@ def to_persisted_document(result: Dict[str, Any], confirmed_at: Optional[str] = 
         "models": result.get("models", {}),
         "sourceBlocks": result.get("sourceBlocks", []),
         "manualCorrections": result.get("manualCorrections", []),
+        "modelCategories": result.get("modelCategories", []),
+        "conflicts": result.get("conflicts", []),
         "warnings": result.get("warnings", []),
         "menu_items": menu_items,
     }

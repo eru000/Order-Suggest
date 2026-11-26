@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import MutableMapping
+from datetime import datetime, timezone
 from typing import Any
 
 from menu_price import price_value
@@ -55,8 +56,22 @@ class MenuIngestionService:
         item_count = sum(len(value["items"]) for value in category_map.values())
         if not item_count:
             raise ValueError("沒有可新增的菜單項目")
+        # 確認軌跡：模型原始輸出、人工修正、衝突與品質。以前確認後只剩最終品項，
+        # 無法回頭量「人工改了什麼、花多少成本」（規劃 3.5）。
+        ingestion = {
+            "source": "user_photo_vlm",
+            "confirmedAt": datetime.now(timezone.utc).isoformat(),
+            "quality": result.get("quality", {}),
+            "models": result.get("models", {}),
+            "conflicts": result.get("conflicts", []),
+            "manualCorrections": result.get("manualCorrections", []),
+            "modelCategories": result.get("modelCategories", []),
+            "confirmedCategories": result.get("categories", []),
+        }
         runtime_menu: dict[str, Any] = {
-            "restaurants": {restaurant_name: {"name": restaurant_name, "categories": category_map}}
+            "restaurants": {
+                restaurant_name: {"name": restaurant_name, "categories": category_map, "ingestion": ingestion}
+            }
         }
         self.catalog[restaurant_name] = runtime_menu
         return {

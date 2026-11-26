@@ -114,6 +114,49 @@ class MenuVisionTests(unittest.TestCase):
         info = corrected["categories"][0]["items"][0]["priceInfo"]
         self.assertEqual((info["status"], info["value"], info["reason"]), ("fixed", 150.0, "人工修正"))
 
+    def test_price_text_prompt_is_opt_in(self):
+        """3.3：要求模型照抄價格原文、看不清的位數用 ?。改變模型行為，預設關閉。"""
+        with mock.patch.dict(os.environ, {"VISION_PRICE_TEXT": ""}):
+            default_prompt = menu_vision._tile_prompt("full", [0, 0, 10, 10], {})
+        with mock.patch.dict(os.environ, {"VISION_PRICE_TEXT": "1"}):
+            price_text_prompt = menu_vision._tile_prompt("full", [0, 0, 10, 10], {})
+        self.assertIn("看不清價格用 null", default_prompt)
+        self.assertIn('"price": 230', default_prompt)
+        self.assertIn("1?0", price_text_prompt)
+        self.assertIn('"price": "230"', price_text_prompt)
+
+    def test_review_counts_flag_ambiguous_prices_and_open_conflicts(self):
+        result = menu_vision.normalize_vision_result({"categories": [{"title": "主餐", "items": [
+            {"dish": "燒鵝飯", "price": "1?0"},
+            {"dish": "海鮮鍋", "price": "100～190"},
+            {"dish": "湯麵", "price": "60/45"},
+            {"dish": "滷肉飯", "price": None},
+            {"dish": "雞腿飯", "price": "時價"},
+            {"dish": "乾麵", "price": 45},
+            {"dish": "乾麵", "price": 55},
+        ]}]})
+        self.assertEqual(menu_vision.review_counts(result), {"needsReviewCount": 4, "ambiguousPriceCount": 3})
+        result["conflicts"][0]["resolved"] = True
+        self.assertEqual(menu_vision.review_counts(result)["needsReviewCount"], 3)
+
+    def test_model_output_is_kept_when_human_corrects(self):
+        buffer = io.BytesIO()
+        Image.new("RGB", (64, 64), "white").save(buffer, "PNG")
+
+        def fake_vision(prompt, **kwargs):
+            return json.dumps({"categories": [{"title": "主餐", "items": [
+                {"dish": "燒鵝飯", "price": "1?0"}, {"dish": "叉燒飯", "price": 90},
+            ]}]}, ensure_ascii=False)
+
+        result = menu_vision.analyze_menu_image(buffer.getvalue(), "image/png", vision_func=fake_vision)
+        self.assertEqual(result["quality"]["needsReviewCount"], 1)
+        corrected = menu_vision.apply_manual_correction(result, "改 1 價格 150")["result"]
+        self.assertEqual(corrected["categories"][0]["items"][0]["price"], 150)
+        self.assertIsNone(corrected["modelCategories"][0]["items"][0]["price"])
+        self.assertEqual(corrected["quality"]["needsReviewCount"], 0)
+        persisted = menu_vision.to_persisted_document(corrected)
+        self.assertIn("modelCategories", persisted)
+
     def test_single_character_item_survives_when_it_has_a_price(self):
         """加料吊牌常常只有一個字。
 

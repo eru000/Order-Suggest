@@ -97,6 +97,7 @@ class PendingAnalysisService:
             "needsAcceptance": bool(
                 result.get("identityConflict")
                 or result.get("conflicts")
+                or int(quality.get("needsReviewCount") or 0) > 0
                 or float(quality.get("score") or 0) < 0.75
             ),
             "warnings": result.get("warnings", []),

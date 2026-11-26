@@ -9,6 +9,7 @@ from typing import Any
 
 from sqlalchemy import func, select, update
 
+from menu_price import price_value
 from menu_semantics import annotate_menu
 
 from .database import Database
@@ -28,15 +29,21 @@ from .models import (
 
 
 def menu_price(value: Any) -> Decimal | None:
-    """Accept a single explicit price, never the first number of a range."""
-    if value is None or isinstance(value, bool):
+    """Accept a single explicit price, never the first number of a range.
+
+    與照片辨識、爬蟲匯入共用 menu_price.parse_price 的規則。
+    """
+    number = price_value(value)
+    if number is None:
         return None
-    raw = str(value).strip().replace(",", "")
-    match = re.fullmatch(r"(?:(?:NT|TWD)\s*)?\$?\s*(\d+(?:\.\d+)?)\s*(?:元)?", raw, re.I)
-    if not match:
-        return None
-    price = Decimal(match.group(1))
+    price = Decimal(str(number))
     return price if price.is_finite() and price >= 0 else None
+
+
+def _ingestion_trail(menu: dict[str, Any], restaurant_name: str) -> dict[str, Any]:
+    restaurant = (menu.get("restaurants") or {}).get(restaurant_name) or {}
+    trail = restaurant.get("ingestion") if isinstance(restaurant, dict) else None
+    return trail if isinstance(trail, dict) else {}
 
 
 def normalize_name(value: str) -> str:
@@ -92,6 +99,7 @@ class MenuRepository:
                 source_hash=source_hash,
                 schema_version=2,
                 is_active=True,
+                quality=_ingestion_trail(annotated, restaurant_name),
             )
             session.add(version)
             session.flush()

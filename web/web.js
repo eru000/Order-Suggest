@@ -1347,11 +1347,13 @@
     setVisionStage('pick');
   };
 
+  // 這個分數只看價格欄位填了多少、品項數夠不夠，不代表辨識正確，
+  // 所以叫「資料完整度」，不叫「辨識品質」。
   const qualityChip = (score) => {
-    if (score >= 0.85) return { cls: 'good', text: '辨識品質良好' };
-    if (score >= 0.75) return { cls: 'good', text: '辨識品質尚可' };
-    if (score >= 0.5) return { cls: 'warn', text: '辨識品質偏低' };
-    return { cls: 'bad', text: '辨識品質很低' };
+    if (score >= 0.85) return { cls: 'good', text: '資料完整度高' };
+    if (score >= 0.75) return { cls: 'good', text: '資料完整度尚可' };
+    if (score >= 0.5) return { cls: 'warn', text: '資料完整度偏低' };
+    return { cls: 'bad', text: '資料完整度很低' };
   };
 
   const renderVisionReview = (data, { firstReveal = false } = {}) => {
@@ -1370,6 +1372,10 @@
     ];
     if (data.restaurantNameCandidate) {
       chips.push(`<span class="vision-chip">店名：${escapeHtml(data.restaurantNameCandidate)}</span>`);
+    }
+    const needsReview = Number(quality.needsReviewCount || 0);
+    if (needsReview > 0) {
+      chips.push(`<span class="vision-chip warn">${needsReview} 項待確認</span>`);
     }
     if (quality.modelFallback) {
       chips.push('<span class="vision-chip warn">用了備援模型</span>');
@@ -1418,7 +1424,12 @@
       items.forEach((item) => {
         counter += 1;
         const hasPrice = typeof item.price === 'number';
-        const priceText = hasPrice ? `$${Math.round(item.price)}` : '價格不明';
+        const info = item.priceInfo || {};
+        const reviewPrice = ['unreadable', 'range', 'multi'].includes(info.status);
+        // 看不清、範圍、一格多價不轉成單價；把原文秀出來讓人對照照片修正
+        const priceText = hasPrice
+          ? `$${Math.round(item.price)}`
+          : (reviewPrice ? `待確認：${escapeHtml(String(info.raw || ''))}` : '價格不明');
         // 依序浮現的延遲索引封頂在 6，長菜單不會讓最後幾項等太久
         const delayIndex = Math.min(counter - 1, 6);
         rows.push(
