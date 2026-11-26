@@ -1,0 +1,274 @@
+{
+  "label": "step1-before-xianghong",
+  "startedAt": "2026-11-26T15:30:48",
+  "config": {
+    "visionModel": "ornith-35b",
+    "verifyModel": "ornith-35b",
+    "fast": false,
+    "tileOverlap": 0.12,
+    "tileThreshold": 1600,
+    "matchThreshold": 0.72
+  },
+  "cases": [
+    {
+      "case": "xianghong",
+      "ok": true,
+      "durationSec": 53.5,
+      "models": {
+        "ocrRequested": "ornith-35b",
+        "ocr": "ornith-35b"
+      },
+      "raw": {
+        "detectedRestaurantName": "向宏魯肉飯",
+        "items": [
+          {
+            "name": "魯肉便當",
+            "price": 75.0,
+            "category": "飯類"
+          },
+          {
+            "name": "（外帶）大魯肉飯",
+            "price": 55.0,
+            "category": "飯類"
+          },
+          {
+            "name": "（外帶）小魯肉飯",
+            "price": 45.0,
+            "category": "飯類"
+          },
+          {
+            "name": "（內用）大魯肉飯",
+            "price": 50.0,
+            "category": "飯類"
+          },
+          {
+            "name": "（內用）小魯肉飯",
+            "price": 40.0,
+            "category": "飯類"
+          },
+          {
+            "name": "肉羹飯",
+            "price": 55.0,
+            "category": "飯類"
+          },
+          {
+            "name": "大肉羹飯",
+            "price": 65.0,
+            "category": "飯類"
+          },
+          {
+            "name": "白飯",
+            "price": 15.0,
+            "category": "飯類"
+          },
+          {
+            "name": "乾麵",
+            "price": 45.0,
+            "category": "麵類"
+          },
+          {
+            "name": "大乾麵",
+            "price": 55.0,
+            "category": "麵類"
+          },
+          {
+            "name": "魯肉湯麵",
+            "price": 45.0,
+            "category": "麵類"
+          },
+          {
+            "name": "大魯肉湯麵",
+            "price": 55.0,
+            "category": "麵類"
+          },
+          {
+            "name": "肉羹麵",
+            "price": 55.0,
+            "category": "麵類"
+          },
+          {
+            "name": "大肉羹麵",
+            "price": 65.0,
+            "category": "麵類"
+          },
+          {
+            "name": "魯蛋",
+            "price": 15.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "油豆腐/3塊",
+            "price": 20.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "筍乾",
+            "price": 35.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "燙高麗菜",
+            "price": 35.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "味噌湯",
+            "price": 25.0,
+            "category": "湯類"
+          },
+          {
+            "name": "淡水魚丸湯",
+            "price": 25.0,
+            "category": "湯類"
+          },
+          {
+            "name": "油豆腐湯",
+            "price": 30.0,
+            "category": "湯類"
+          },
+          {
+            "name": "肉羹湯",
+            "price": 40.0,
+            "category": "湯類"
+          },
+          {
+            "name": "75套餐",
+            "price": null,
+            "category": "湯類"
+          },
+          {
+            "name": "85套餐",
+            "price": null,
+            "category": "湯類"
+          }
+        ],
+        "warnings": [],
+        "quality": {
+          "score": 0.954,
+          "priceCoverage": 0.917,
+          "itemCount": 24,
+          "conflictCount": 0,
+          "modelFallback": false,
+          "verifyDroppedCount": 0,
+          "verifyInventedCount": 0
+        },
+        "sourceBlocks": [
+          {
+            "id": "full",
+            "box": [
+              0,
+              0,
+              2088,
+              3600
+            ]
+          }
+        ]
+      },
+      "exchanges": [
+        {
+          "model": "ornith-35b",
+          "imageCount": 1,
+          "promptHead": "你是繁體中文菜單 OCR 專家。這是整張菜單的完整照片。\n全圖初步資訊：{}\n逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。\n被手寫線劃過的印刷品項仍要保留。看不清價格用 nul",
+          "promptSha": "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398",
+          "durationSec": 53.1,
+          "responseChars": 1916,
+          "jsonParsed": true,
+          "endsAbruptly": false,
+          "itemCount": 24,
+          "items": [
+            "魯肉便當",
+            "（外帶）大魯肉飯",
+            "（外帶）小魯肉飯",
+            "（內用）大魯肉飯",
+            "（內用）小魯肉飯",
+            "肉羹飯",
+            "大肉羹飯",
+            "白飯",
+            "乾麵",
+            "大乾麵",
+            "魯肉湯麵",
+            "大魯肉湯麵",
+            "肉羹麵",
+            "大肉羹麵",
+            "魯蛋",
+            "油豆腐/3塊",
+            "筍乾",
+            "燙高麗菜",
+            "味噌湯",
+            "淡水魚丸湯",
+            "油豆腐湯",
+            "肉羹湯",
+            "75套餐",
+            "85套餐"
+          ],
+          "response": "{\"restaurant_name\": \"向宏魯肉飯\", \"categories\": [{\"name\": \"飯類\", \"items\": [{\"name\": \"魯肉便當\", \"price\": 75, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"（外帶）大魯肉飯\", \"price\": 55, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"（外帶）小魯肉飯\", \"price\": 45, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"（內用）大魯肉飯\", \"price\": 50, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"（內用）小魯肉飯\", \"price\": 40, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"肉羹飯\", \"price\": 55, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"大肉羹飯\", \"price\": 65, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"白飯\", \"price\": 15, \"chili_count\": null, \"spice_level\": null}]}, {\"name\": \"麵類\", \"items\": [{\"name\": \"乾麵\", \"price\": 45, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"大乾麵\", \"price\": 55, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魯肉湯麵\", \"price\": 45, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"大魯肉湯麵\", \"price\": 55, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"肉羹麵\", \"price\": 55, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"大肉羹麵\", \"price\": 65, \"chili_count\": null, \"spice_level\": null}]}, {\"name\": \"小菜類\", \"items\": [{\"name\": \"魯蛋\", \"price\": 15, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"油豆腐/3塊\", \"price\": 20, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"筍乾\", \"price\": 35, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"燙高麗菜\", \"price\": 35, \"chili_count\": null, \"spice_level\": null}]}, {\"name\": \"湯類\", \"items\": [{\"name\": \"味噌湯\", \"price\": 25, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"淡水魚丸湯\", \"price\": 25, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"油豆腐湯\", \"price\": 30, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"肉羹湯\", \"price\": 40, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"75套餐\", \"price\": null, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"85套餐\", \"price\": null, \"chili_count\": null, \"spice_level\": null}]}]}"
+        }
+      ],
+      "expectedCount": 24,
+      "predictedCount": 24,
+      "matchedCount": 24,
+      "recall": 1.0,
+      "precision": 1.0,
+      "exactNameCount": 22,
+      "exactNameRate": 0.917,
+      "cer": 0.06,
+      "cerEdits": 6,
+      "cerChars": 100,
+      "cerRaw": 0.0885,
+      "cerRawEdits": 10,
+      "cerRawChars": 113,
+      "cerStrict": 0.06,
+      "cerStrictEdits": 6,
+      "cerStrictChars": 100,
+      "pricedExpected": 24,
+      "priceAccuracy": 0.917,
+      "priceInvented": 0,
+      "restaurantNameExpected": "向宏魯肉飯",
+      "restaurantNameDetected": "向宏魯肉飯",
+      "restaurantNameOk": true,
+      "qualityScoreReported": 0.954,
+      "missed": [],
+      "spurious": [],
+      "reordered": [],
+      "nearMisses": [
+        {
+          "expected": "（限內用）75套餐",
+          "predicted": "75套餐",
+          "similarity": 0.727
+        },
+        {
+          "expected": "（限內用）85套餐",
+          "predicted": "85套餐",
+          "similarity": 0.727
+        }
+      ],
+      "priceErrors": [
+        {
+          "item": "（限內用）75套餐",
+          "expected": 75,
+          "got": null
+        },
+        {
+          "item": "（限內用）85套餐",
+          "expected": 85,
+          "got": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "caseCount": 1,
+    "okCount": 1,
+    "recall": 1.0,
+    "precision": 1.0,
+    "exactNameRate": 0.917,
+    "cer": 0.06,
+    "cerRaw": 0.0885,
+    "cerStrict": 0.06,
+    "priceAccuracy": 0.917,
+    "priceInvented": 0,
+    "restaurantNameOkCount": 1,
+    "restaurantNameChecked": 1,
+    "totalDurationSec": 53.5
+  }
+}

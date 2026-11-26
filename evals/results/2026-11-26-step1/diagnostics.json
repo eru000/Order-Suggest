@@ -1,0 +1,187 @@
+{
+  "sourceRun": "ocr-live.json",
+  "replayRun": "ocr-replay.json",
+  "legacyRun": "ocr-legacy-xianghong.json",
+  "inventory": [
+    {
+      "case": "budaoweng",
+      "truthItems": 8,
+      "input": "missing"
+    },
+    {
+      "case": "douliumen",
+      "truthItems": 35,
+      "input": "missing"
+    },
+    {
+      "case": "guoshao_6col",
+      "truthItems": 64,
+      "input": "missing"
+    },
+    {
+      "case": "web_dalai_noodles_soups",
+      "truthItems": 31,
+      "input": "present"
+    },
+    {
+      "case": "web_fhgh_sets",
+      "truthItems": 5,
+      "input": "present"
+    },
+    {
+      "case": "xianghong",
+      "truthItems": 24,
+      "input": "present"
+    }
+  ],
+  "offlineThresholdSweep": [
+    {
+      "threshold": 0.5,
+      "matchedCount": 60,
+      "expectedCount": 60,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0224
+    },
+    {
+      "threshold": 0.55,
+      "matchedCount": 60,
+      "expectedCount": 60,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0224
+    },
+    {
+      "threshold": 0.6,
+      "matchedCount": 60,
+      "expectedCount": 60,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0224
+    },
+    {
+      "threshold": 0.65,
+      "matchedCount": 60,
+      "expectedCount": 60,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0224
+    },
+    {
+      "threshold": 0.7,
+      "matchedCount": 60,
+      "expectedCount": 60,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0224
+    },
+    {
+      "threshold": 0.72,
+      "matchedCount": 60,
+      "expectedCount": 60,
+      "precision": 1.0,
+      "recall": 1.0,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0224
+    },
+    {
+      "threshold": 0.75,
+      "matchedCount": 58,
+      "expectedCount": 60,
+      "precision": 0.967,
+      "recall": 0.967,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0821
+    },
+    {
+      "threshold": 0.8,
+      "matchedCount": 58,
+      "expectedCount": 60,
+      "precision": 0.967,
+      "recall": 0.967,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0821
+    },
+    {
+      "threshold": 0.85,
+      "matchedCount": 58,
+      "expectedCount": 60,
+      "precision": 0.967,
+      "recall": 0.967,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0821
+    },
+    {
+      "threshold": 0.9,
+      "matchedCount": 58,
+      "expectedCount": 60,
+      "precision": 0.967,
+      "recall": 0.967,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0821
+    },
+    {
+      "threshold": 0.95,
+      "matchedCount": 58,
+      "expectedCount": 60,
+      "precision": 0.967,
+      "recall": 0.967,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0821
+    },
+    {
+      "threshold": 1.0,
+      "matchedCount": 58,
+      "expectedCount": 60,
+      "precision": 0.967,
+      "recall": 0.967,
+      "exactNamePriceCount": 58,
+      "exactNamePriceRate": 0.9667,
+      "cerStrict": 0.0821
+    }
+  ],
+  "xianghongLiveObservations": [
+    {
+      "runner": "legacy",
+      "durationSec": 53.5,
+      "model": "ornith-35b",
+      "returnedTextSha256": "b0800f1caa5e70bfe56b4d8405afb7178ca36fb3f81f54fb32d9fc5255ced26e",
+      "scoredItems": 24,
+      "strictNamePriceCorrect": 22,
+      "cache": "unknown"
+    },
+    {
+      "runner": "v2",
+      "durationSec": 2.2,
+      "model": "ornith-35b",
+      "returnedTextSha256": "b0800f1caa5e70bfe56b4d8405afb7178ca36fb3f81f54fb32d9fc5255ced26e",
+      "scoredItems": 24,
+      "strictNamePriceCorrect": 22,
+      "cache": "unknown"
+    }
+  ],
+  "replay": {
+    "identicalNormalizedOutputs": [
+      "web_dalai_noodles_soups",
+      "web_fhgh_sets",
+      "xianghong"
+    ],
+    "observedHttpRequestAttempts": 0
+  }
+}

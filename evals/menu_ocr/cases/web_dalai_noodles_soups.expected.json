@@ -1,0 +1,143 @@
+{
+  "source": {
+    "url": "https://www.dalaifood.com.tw/images/menu.pdf",
+    "retrieved": "2026-11-26",
+    "pdfPage": 2,
+    "pdfSha256": "9207e633dbb1e0874091526ad11bc746144f7687ce6922aabe91b170a47c4e6b",
+    "render": "pdftoppm -f 2 -l 2 -scale-to 1900 -singlefile -png",
+    "inputSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+    "size": [
+      1900,
+      1343
+    ],
+    "group": "web-pilot-20261126",
+    "truthFrozenAt": "2026-11-26T15:37:27+08:00"
+  },
+  "annotationPolicy": "大來小館雙頁麵湯菜單。抄中文整列品名，同價麵種維持印刷斜線；小中大各自成項，時價為 null。季節、英譯、推薦星號、低消與圖片下重複標示均不另列。店名不計分。",
+  "items": [
+    {
+      "name": "切仔麵/米粉/粿條",
+      "price": 50
+    },
+    {
+      "name": "肉燥乾麵/米粉/粿條",
+      "price": 60
+    },
+    {
+      "name": "什錦麵/米粉/粿條",
+      "price": 130
+    },
+    {
+      "name": "排骨湯/乾麵",
+      "price": 130
+    },
+    {
+      "name": "豬腳湯/乾麵",
+      "price": 130
+    },
+    {
+      "name": "牛肉湯/河粉",
+      "price": 130
+    },
+    {
+      "name": "什錦粥",
+      "price": 130
+    },
+    {
+      "name": "虱目魚肚湯（小）",
+      "price": 90
+    },
+    {
+      "name": "虱目魚肚湯（中）",
+      "price": 180
+    },
+    {
+      "name": "虱目魚肚湯（大）",
+      "price": 270
+    },
+    {
+      "name": "蛤仔湯（小）",
+      "price": 90
+    },
+    {
+      "name": "蛤仔湯（中）",
+      "price": 160
+    },
+    {
+      "name": "蛤仔湯（大）",
+      "price": 240
+    },
+    {
+      "name": "蚵仔湯（小）",
+      "price": 90
+    },
+    {
+      "name": "蚵仔湯（中）",
+      "price": 160
+    },
+    {
+      "name": "蚵仔湯（大）",
+      "price": 240
+    },
+    {
+      "name": "魚片湯（小）",
+      "price": 90
+    },
+    {
+      "name": "魚片湯（中）",
+      "price": 160
+    },
+    {
+      "name": "魚片湯（大）",
+      "price": 240
+    },
+    {
+      "name": "菇蕈湯（小）",
+      "price": 90
+    },
+    {
+      "name": "菇蕈湯（中）",
+      "price": 160
+    },
+    {
+      "name": "菇蕈湯（大）",
+      "price": 240
+    },
+    {
+      "name": "魚丸湯（小）",
+      "price": 50
+    },
+    {
+      "name": "魚丸湯（中）",
+      "price": 100
+    },
+    {
+      "name": "魚丸湯（大）",
+      "price": 150
+    },
+    {
+      "name": "青菜蛋花湯（小）",
+      "price": 50
+    },
+    {
+      "name": "青菜蛋花湯（中）",
+      "price": 100
+    },
+    {
+      "name": "青菜蛋花湯（大）",
+      "price": 150
+    },
+    {
+      "name": "鮮海魚湯",
+      "price": null
+    },
+    {
+      "name": "何首烏養生湯(雞)",
+      "price": 180
+    },
+    {
+      "name": "原味麻油雞湯",
+      "price": 280
+    }
+  ]
+}

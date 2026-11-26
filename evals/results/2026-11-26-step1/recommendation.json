@@ -1,0 +1,2640 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-26T07:31:20.295720+00:00",
+  "version": {
+    "git_commit": "8cb5294c680966f19465854c9eef7b12f12f0099",
+    "git_tracked_dirty": true,
+    "python": "3.14.2",
+    "source_sha256": {
+      "evals/recommendation/run_eval.py": "cc30a2b0c046210e4d84aa193b449c4c464ffadc69f1b9b1f96f22c70c656094",
+      "src/api_compat.py": "e1232110fb2800795cbebeb733c6b81ee36aaa2eeb244f3c632ca6fb9850ebd5",
+      "src/application_services.py": "17808122b9aef572f8d0a8b9fe41d4915bc508128eb6957661402aba8f4c5c2e",
+      "src/back.py": "f1013fb3f878b6b97c644bbb298719f9258f1e72b1ecc1e801b898d91eacb34d",
+      "src/conversation_service.py": "bf6c883ba0c3f636a9c44c9a7e63d69f203c7db7c4932c6985dc1184eb241d87",
+      "src/decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+      "src/decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+      "src/decision_service.py": "77f1994632056e1517f362a406ac48f56c5ea2fa7a75366bcb756c64def97019",
+      "src/main.py": "2bf3bbac7ac4b589c0146748eb4bf9aebe39b5bc575812db9ed3794d57e5ddaa",
+      "src/menu_ingestion_service.py": "80ccb7b39131e2ef623534919cfccd085f1b9c95b1599d173c8df14024af11b7",
+      "src/menu_library.py": "a8b6a8ef709ba4d485c9b1c4ddab34ec811473f32cffab5807e54e383a883d23",
+      "src/menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+      "src/menu_vision.py": "d2de04ce7d25f6af94763796b12e8526fb9593784b191b83796d15dcacf63496",
+      "src/menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b",
+      "src/migrate_legacy_data.py": "536f50cfd3be0402bc1fc41d39f1ea11887ec099e872343aeff6a15c21a7f3a5",
+      "src/observability.py": "0ce6d65c9ba84226fa463445884c6d7fea6c7b6db3bc9a7e8c8f866390bb40f8",
+      "src/ollama_fuc.py": "c05584485caf0a09a990710ba66dc07e14a27ac2d4e0b17b0b325d53835cac20",
+      "src/pending_analysis_service.py": "d265423d068a233fee9f67720943ab07810656f0ab5092412d209f22525a1f5b",
+      "src/persistence.py": "7cbca064fc80f5970437388c3589fd6ca279be27c9ac3af0b0aacbaeb3392dcd",
+      "src/preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+      "src/recommendation.py": "02e80f623bda84df27f7eb0b9b9c292599fdf899b630c16e7bd3f4330a74e186",
+      "src/restaurant_reviews.py": "9fe63ae6ccac849b0c94c56daae7bcc0fb0297ec5ef25a3c5184a8b9ca229827",
+      "src/runtime_cache.py": "8f49262e5b679fefa0482f7d14016591cb2b3fd122d28de84ccef3df1023fbea",
+      "src/security.py": "b755b4e7da249b6480b7e77976ad48af547de0964c68a06ac83b07ca5cb680fb",
+      "src/session_store.py": "f8ef1884429c316e53bd3d6adcb082c157e16e02933bce64114f2452695a459c",
+      "src/storage/__init__.py": "fec80c76bbd10a4b8b681f72e4887ab87148015f5afa48997ec202cca8fd553b",
+      "src/storage/database.py": "5961df6e84cf138698b5431367723e1662f787f97802b2673e01dd870aab53ef",
+      "src/storage/importer.py": "9d7989fd8868bf98777c81cdf0c84495556d59cb567bf9f11df53c794461290b",
+      "src/storage/models.py": "f28f21b72cada046a42078d695888dfe1c89fc83d63fb527c61dee0655a76b6d",
+      "src/storage/repositories.py": "9308e6f828d408f30c1b557d9ad339c9765fcf4eed5666b811eb05ed0e158851",
+      "src/table_menu.py": "a0bb4513954a314aa56e8a37fa4420a5fe24f8abf06406a72f1312c743859107"
+    },
+    "recommendation_environment": {
+      "SEMANTIC_RECOMMENDER_ENABLED": null,
+      "SEMANTIC_SHADOW_MODE": null
+    }
+  },
+  "cases_source": {
+    "path": "C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\evals\\recommendation\\cases.json",
+    "sha256": "29a172f3d4df1dd53e85f63ae01e93135bf049989960b8c8814d9b534605cdd8"
+  },
+  "evaluation_rules": {
+    "budget_tolerance": 1e-09,
+    "budget_check_basis": "sum of known item prices, excluding service fee",
+    "shared_min_food_count": "min(table_size(people), 5)",
+    "shared_dish_count_waived_at_budget_ratio": 0.7,
+    "shared_min_budget_use_ratio": 0.5,
+    "shared_max_items_per_bucket": 2,
+    "shared_required_all": [
+      "青菜"
+    ],
+    "shared_required_any": [
+      "湯鍋",
+      "主食"
+    ],
+    "wants_alcohol_terms": [
+      "酒",
+      "beer",
+      "wine"
+    ],
+    "wants_drink_terms": [
+      "要飲料",
+      "加飲料",
+      "配飲料",
+      "想喝"
+    ]
+  },
+  "menus": {
+    "大肥鵝": {
+      "path": "C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\menu_大肥鵝.json",
+      "file_sha256": "dcd6642490a6628128ce89b72bec60cb41a025db69f1061f8deeb2da86c657da",
+      "runtime_sha256": "7a1ca909c35cfa10a419e4d3ef9b28beecb9e09487e1cc740bd09c65f69cd65d",
+      "runtime_menu": {
+        "restaurants": {
+          "大肥鵝": {
+            "name": "大肥鵝",
+            "categories": {
+              "啤酒區": {
+                "items": [
+                  {
+                    "name": "Tiger老虎啤酒玻璃瓶裝",
+                    "price": 100,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "台灣啤酒500CC",
+                    "price": 120,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "台灣啤酒玻璃瓶裝",
+                    "price": 100,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "金牌啤酒玻璃瓶裝",
+                    "price": 100,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "百威金尊啤酒玻璃瓶裝",
+                    "price": 120,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "百威啤酒水杯裝",
+                    "price": 100,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "海尼根啤酒500CC",
+                    "price": 140,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "海尼根啤酒玻璃瓶裝",
+                    "price": 120,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              },
+              "季節時蔬": {
+                "items": [
+                  {
+                    "name": "鵝油高麗菜",
+                    "price": 220,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "豆腐水蓮菜",
+                    "price": 280,
+                    "tags": [
+                      "素",
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "清炒蘆筍",
+                    "price": 320,
+                    "tags": [
+                      "素",
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "清炒花椰菜",
+                    "price": 250,
+                    "tags": [
+                      "素",
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "季節時蔬",
+                    "price": 0,
+                    "tags": [
+                      "素",
+                      "鹹度1",
+                      "時價"
+                    ]
+                  }
+                ]
+              },
+              "季節限定": {
+                "items": [
+                  {
+                    "name": "熟桂圓紅棗茶",
+                    "price": 320,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "熱柚子茶",
+                    "price": 320,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "熟水果茶",
+                    "price": 320,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              },
+              "手作小菜": {
+                "items": [
+                  {
+                    "name": "黃金泡菜",
+                    "price": 150,
+                    "tags": [
+                      "素",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "滷水花生",
+                    "price": 150,
+                    "tags": [
+                      "素",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "川味口水雞",
+                    "price": 290,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "泰式洋蔥中卷",
+                    "price": 250,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "香辣牛肚絲",
+                    "price": 320,
+                    "tags": [
+                      "辣",
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "甘味冷蛤",
+                    "price": 150,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "洋蔥鱈魚肝",
+                    "price": 200,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "香辣蓮藕片",
+                    "price": 150,
+                    "tags": [
+                      "辣",
+                      "素",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "金沙魚皮",
+                    "price": 200,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "古早味紅糟肉",
+                    "price": 380,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "醋溜花生",
+                    "price": 180,
+                    "tags": [
+                      "素",
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "豉汁蒸鳳爪",
+                    "price": 120,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "豉汁蒸排骨",
+                    "price": 120,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  }
+                ]
+              },
+              "明火好味": {
+                "items": [
+                  {
+                    "name": "炸花枝丸",
+                    "price": 300,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "蟹黃豆腐煲",
+                    "price": 330,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "蒜香墨魚香腸",
+                    "price": 438,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "菠蘿果律蝦球",
+                    "price": 450,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "金蒜豆腐",
+                    "price": 250,
+                    "tags": [
+                      "素",
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "川燙松阪豬",
+                    "price": 350,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "麻油松阪豬",
+                    "price": 390,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "碳烤松阪豬",
+                    "price": 390,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "宮保松阪豬",
+                    "price": 390,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "魚香茄子",
+                    "price": 280,
+                    "tags": [
+                      "辣",
+                      "素",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "薑香麻油雙腰",
+                    "price": 1080,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "黃金軟絲條",
+                    "price": 390,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "宮保軟絲條",
+                    "price": 350,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "蜜製臭豆腐",
+                    "price": 290,
+                    "tags": [
+                      "素",
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "椒鹽酥小卷",
+                    "price": 350,
+                    "tags": [
+                      "辣",
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "蔥爆牛肉",
+                    "price": 420,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "蘆筍牛肉",
+                    "price": 480,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "控肉桂竹筍",
+                    "price": 390,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "鵝油桂竹筍",
+                    "price": 290,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "香煎豬肝",
+                    "price": 260,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "四季肥腸",
+                    "price": 350,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "橙汁排骨",
+                    "price": 350,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "陶盤絲瓜蛤蠣",
+                    "price": 380,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "川味水煮牛",
+                    "price": 680,
+                    "tags": [
+                      "辣",
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "客家小炒",
+                    "price": 350,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  }
+                ]
+              },
+              "水果甜品": {
+                "items": [
+                  {
+                    "name": "什錦水果盤",
+                    "price": 300,
+                    "tags": [
+                      "素",
+                      "鹹度1"
+                    ]
+                  },
+                  {
+                    "name": "西瓜盤",
+                    "price": 180,
+                    "tags": [
+                      "素",
+                      "鹹度1"
+                    ]
+                  },
+                  {
+                    "name": "鳳梨盤",
+                    "price": 180,
+                    "tags": [
+                      "素",
+                      "鹹度1"
+                    ]
+                  },
+                  {
+                    "name": "塔拉木冰淇淋",
+                    "price": 80,
+                    "tags": [
+                      "素",
+                      "鹹度1"
+                    ]
+                  }
+                ]
+              },
+              "海鮮區": {
+                "items": [
+                  {
+                    "name": "螃蟹類",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "龍蝦",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "帝王蟹",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "時令魚",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "蝦類",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "筍殼魚",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "泰國蝦",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "蛤類",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  },
+                  {
+                    "name": "鮑魚",
+                    "price": 0,
+                    "tags": [
+                      "鹹度3",
+                      "時價"
+                    ]
+                  }
+                ]
+              },
+              "潮粵燒臘": {
+                "items": [
+                  {
+                    "name": "燒臘三拼盤",
+                    "price": 680,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "燒臘雙拼盤",
+                    "price": 480,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "脆皮燒肉",
+                    "price": 380,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "蜜汁叉燒",
+                    "price": 380,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "鹽酥鵝頭",
+                    "price": 150,
+                    "tags": [
+                      "鹹度5"
+                    ]
+                  }
+                ]
+              },
+              "烈酒區": {
+                "items": [
+                  {
+                    "name": "摩禮仕匠師嚴選",
+                    "price": 1900,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "愛爾仕威士忌",
+                    "price": 1080,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "皇家禮炮21年",
+                    "price": 3200,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "慕赫12年",
+                    "price": 1800,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "慕赫16年",
+                    "price": 2800,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "約翰走路XR21年",
+                    "price": 2850,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "約翰走路15年雪莉",
+                    "price": 1350,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "約翰走路尊爵",
+                    "price": 2650,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "蘇格登15年",
+                    "price": 2090,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "蘇格登13年",
+                    "price": 1750,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "百富12年",
+                    "price": 1850,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "馬爹利 藍淬燕",
+                    "price": 1750,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "大摩12年",
+                    "price": 1900,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "亞伯樂12年",
+                    "price": 1400,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "格蘭利威12年",
+                    "price": 1300,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "金門高粱58度",
+                    "price": 650,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "精釀陳紹",
+                    "price": 480,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              },
+              "烤炸拼盤": {
+                "items": [
+                  {
+                    "name": "烤物拼盤",
+                    "price": 1280,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "炸物拼盤",
+                    "price": 780,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "烤鹽豬肉",
+                    "price": 380,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "烤牛小排",
+                    "price": 350,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  }
+                ]
+              },
+              "現榨果汁": {
+                "items": [
+                  {
+                    "name": "鳳梨蘋果汁",
+                    "price": 180,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "西瓜汁",
+                    "price": 320,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "檸檬芭樂汁",
+                    "price": 320,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "凍檸茶",
+                    "price": 250,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "綠鑽奶茶",
+                    "price": 250,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              },
+              "瓶裝飲料": {
+                "items": [
+                  {
+                    "name": "法國沛綠雅氣泡水",
+                    "price": 120,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "艾維亞礦泉水",
+                    "price": 100,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "海洋深層水",
+                    "price": 80,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "碳酸水",
+                    "price": 70,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "蔓越莓汁",
+                    "price": 70,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "粒粒橙",
+                    "price": 70,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "烏龍茶",
+                    "price": 70,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "無糖綠茶",
+                    "price": 70,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "蘋果西打",
+                    "price": 60,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "可口可樂",
+                    "price": 40,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "七喜汽水",
+                    "price": 40,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              },
+              "生冷美饌": {
+                "items": [
+                  {
+                    "name": "綜合刺身大拼盤",
+                    "price": 980,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "綜合刺身盛合",
+                    "price": 420,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "鮭魚卵手捲",
+                    "price": 150,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "章魚沙拉",
+                    "price": 380,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "水堅果湖麻蔬果沙拉",
+                    "price": 290,
+                    "tags": [
+                      "素",
+                      "鹹度1"
+                    ]
+                  },
+                  {
+                    "name": "蘆筍蝦手捲",
+                    "price": 130,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "鮑魚和風沙拉",
+                    "price": 160,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "赤燒比目魚壽司",
+                    "price": 100,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "赤燒鮭魚壽司",
+                    "price": 100,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "海膽手捲",
+                    "price": 180,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  }
+                ]
+              },
+              "紅酒/清酒": {
+                "items": [
+                  {
+                    "name": "聖塔典藏卡本內",
+                    "price": 1280,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "南極星白蘇維翁",
+                    "price": 780,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "黃金貝殼特藏",
+                    "price": 580,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "黃尾袋鼠-紅標",
+                    "price": 520,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "黃尾袋鼠-夏多內白酒",
+                    "price": 520,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "百頌堡-紅酒",
+                    "price": 780,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "百頌堡-白酒",
+                    "price": 780,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              },
+              "經典鍋物": {
+                "items": [
+                  {
+                    "name": "人參布袋鵝鍋",
+                    "price": 1180,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "招牌牛三寶鍋",
+                    "price": 1280,
+                    "tags": [
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "魷魚螺肉蒜鍋",
+                    "price": 1080,
+                    "tags": [
+                      "鹹度4"
+                    ]
+                  },
+                  {
+                    "name": "全酒麻油雞鍋",
+                    "price": 1280,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  },
+                  {
+                    "name": "東北酸白菜肉鍋",
+                    "price": 880,
+                    "tags": [
+                      "辣",
+                      "鹹度3"
+                    ]
+                  },
+                  {
+                    "name": "清燉牛肉鍋",
+                    "price": 1280,
+                    "tags": [
+                      "鹹度2"
+                    ]
+                  }
+                ]
+              },
+              "華岡極品茶": {
+                "items": [
+                  {
+                    "name": "熟梨山茶",
+                    "price": 250,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "熟梨山烏龍",
+                    "price": 250,
+                    "tags": [
+                      "素"
+                    ]
+                  },
+                  {
+                    "name": "熟高山紅茶",
+                    "price": 250,
+                    "tags": [
+                      "素"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "奔頂牛排 東海": {
+      "path": "C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\menu_奔頂牛排_東海.json",
+      "file_sha256": "f35d8426c18affb25ddb9a65977b4d8f645c5677a2f8badbe00eceb33b6c9f58",
+      "runtime_sha256": "1315d7babc87f74a0290f665828f311370913c61da4434e2659dff260c9d3251",
+      "runtime_menu": {
+        "restaurants": {
+          "奔頂牛排 東海": {
+            "name": "奔頂牛排 東海",
+            "categories": {
+              "全部菜色": {
+                "items": [
+                  {
+                    "name": "犇頂牛排",
+                    "price": "$300.00"
+                  },
+                  {
+                    "name": "風味鮭魚排",
+                    "price": "$400.00"
+                  },
+                  {
+                    "name": "沙朗牛排",
+                    "price": "$380.00"
+                  },
+                  {
+                    "name": "菲力牛排",
+                    "price": "$450.00"
+                  },
+                  {
+                    "name": "香煎鯖魚",
+                    "price": "$330.00"
+                  },
+                  {
+                    "name": "翼板牛排",
+                    "price": "$440.00"
+                  },
+                  {
+                    "name": "香煎雞排",
+                    "price": "$310.00"
+                  },
+                  {
+                    "name": "帶骨牛小排",
+                    "price": "$470.00"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "斗六當歸鴨": {
+      "path": "C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\menu_斗六當歸鴨.json",
+      "file_sha256": "dba1dba7cc23da3bfc89fa4d5e64b136ad9f71992d1806b3201acf6ee1b27282",
+      "runtime_sha256": "ef37f91a2eeba436c54cd7fcdf145d5dcbdc0920e3fbade445b78174084b426d",
+      "runtime_menu": {
+        "restaurants": {
+          "斗六當歸鴨": {
+            "name": "斗六當歸鴨",
+            "categories": {
+              "其他": {
+                "items": [
+                  {
+                    "name": "當歸清湯",
+                    "price": 20.0
+                  },
+                  {
+                    "name": "當歸米血湯",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "當歸高麗菜湯",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "當歸鴨肉丸湯",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "當歸下水湯",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "當歸腔腸湯",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "當歸鴨肉湯",
+                    "price": 70.0
+                  },
+                  {
+                    "name": "當歸松阪豬肉湯",
+                    "price": 80.0
+                  },
+                  {
+                    "name": "當歸鴨腿湯",
+                    "price": 80.0
+                  },
+                  {
+                    "name": "當歸湯",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "松阪豬肉飯",
+                    "price": 80.0
+                  },
+                  {
+                    "name": "鴨腿飯",
+                    "price": 80.0
+                  },
+                  {
+                    "name": "鴨肉飯(大)",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "鴨肉飯(小)",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "鴨肉香排骨麵",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "香排骨麵(乾)",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "鴨肉炒麵",
+                    "price": 70.0
+                  },
+                  {
+                    "name": "炒麵(油麵)",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "鴨油排飯",
+                    "price": 20.0
+                  },
+                  {
+                    "name": "鴨肉(盤)",
+                    "price": 120.0
+                  },
+                  {
+                    "name": "鴨腿(盤)",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "松阪豬肉(盤)",
+                    "price": 110.0
+                  },
+                  {
+                    "name": "腔腸(盤)",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "下水(乾)",
+                    "price": 60.0
+                  },
+                  {
+                    "name": "米血(乾)",
+                    "price": 40.0
+                  },
+                  {
+                    "name": "滷大腸",
+                    "price": 30.0
+                  },
+                  {
+                    "name": "滷地瓜葉",
+                    "price": 30.0
+                  },
+                  {
+                    "name": "滷高麗菜",
+                    "price": 30.0
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "森森燒肉 台中中科店": {
+      "path": "C:\\Users\\eric7\\OneDrive\\Desktop\\pjt\\menu_森森燒肉_台中中科店.json",
+      "file_sha256": "bc69c906b02e9fb747e7834e1118675868dcdd7db399edcdecb5b1c53c9432b4",
+      "runtime_sha256": "bbae3f826e0344f52b9e6d7b6d2fb1355d2f3f9b840b25e859e4251b6bc833ad",
+      "runtime_menu": {
+        "restaurants": {
+          "森森燒肉 台中中科店": {
+            "name": "森森燒肉 台中中科店",
+            "categories": {
+              "全部菜色": {
+                "items": [
+                  {
+                    "name": "Smoked Beef Short Ribs (原木煙燻牛小排)",
+                    "price": ""
+                  },
+                  {
+                    "name": "A5 Japanese Wagyu Lace Meat (A5日本極和牛 霜降蕾絲)",
+                    "price": ""
+                  },
+                  {
+                    "name": "A5 Japanese Wagyu Lace Meat-Plaid (A5日本極和牛 蕾絲格紋)",
+                    "price": ""
+                  },
+                  {
+                    "name": "A5 Japanese Wagyu Snowflake (A5日本雪花和牛)",
+                    "price": ""
+                  },
+                  {
+                    "name": "A5 Japanese Wagyu Marbled Meat (A5日本和牛霜雨一品)",
+                    "price": ""
+                  },
+                  {
+                    "name": "Prime Chuck Short Ribs (Prime霜降牛小排)",
+                    "price": ""
+                  },
+                  {
+                    "name": "Prime Beef Tongue With Salt & Scallion (鹽蔥極品牛舌)",
+                    "price": ""
+                  },
+                  {
+                    "name": "Thick Cut Beef Tongue With Salt & Scallion (升級 鹽蔥極品厚切牛舌)",
+                    "price": "$399.00"
+                  },
+                  {
+                    "name": "Red Miso Beef (赤味噌中腹)",
+                    "price": ""
+                  },
+                  {
+                    "name": "Seasonal Seafood (嚴選時令海鮮)",
+                    "price": ""
+                  },
+                  {
+                    "name": "Popular Seafood Combo (人氣海鮮組合)",
+                    "price": "$339.00"
+                  },
+                  {
+                    "name": "Premium Seafood Double Layer (森式雙層海鮮)",
+                    "price": "$899.00"
+                  },
+                  {
+                    "name": "Cheese Pineapple Flatbread (芝心起司鳳梨薄餅)",
+                    "price": "$169.00"
+                  },
+                  {
+                    "name": "Mochi Cheese Flatbread (白玉麻糬起司薄餅)",
+                    "price": "$189.00"
+                  },
+                  {
+                    "name": "Mentaiko Cheese Flatbread (和風明太子起司薄餅)",
+                    "price": "$189.00"
+                  },
+                  {
+                    "name": "Salmon Bibimbap With Egg (玉子鮭魚石鍋飯)",
+                    "price": "$149.00"
+                  },
+                  {
+                    "name": "挪威薄鹽鯖魚/隻 (Norwegian Salted Mackerel)",
+                    "price": "$188.00"
+                  },
+                  {
+                    "name": "柳葉魚 8隻 (Spirinchus Lanceolatus)",
+                    "price": "$248.00"
+                  },
+                  {
+                    "name": "智利鮭魚菲力/份 (Chilean Salmon Filet)",
+                    "price": "$358.00"
+                  },
+                  {
+                    "name": "紋甲花枝/份 (Tattooed Flower Branch)",
+                    "price": "$318.00"
+                  },
+                  {
+                    "name": "根島履歷海草蝦/隻 (Black Tiger Shrimp)",
+                    "price": "$158.00"
+                  },
+                  {
+                    "name": "野生海虎蝦/隻 (Wild Black Tiger Shrimp)",
+                    "price": "$419.00"
+                  },
+                  {
+                    "name": "北海道生食級大干貝/顆 (Hokkaido Sashimi Grade Giant Scallops)",
+                    "price": "$268.00"
+                  },
+                  {
+                    "name": "森式雙層海鮮 (Premium Seafood Double Layer)",
+                    "price": "$1,068.00"
+                  },
+                  {
+                    "name": "Prime玫瑰霜降牛小排 (Prime Rose Short Rib)",
+                    "price": ""
+                  },
+                  {
+                    "name": "原木煙燻牛小排 (Smoked Beef Short Ribs)",
+                    "price": ""
+                  },
+                  {
+                    "name": "Prime霜降牛小排 (Prime Chuck Short Ribs)",
+                    "price": ""
+                  },
+                  {
+                    "name": "韓式厚燒帶骨豚肩排 (Korean Style Bone-In Boston Butt)",
+                    "price": ""
+                  },
+                  {
+                    "name": "蒜香霜降松阪豚 (Pork Neck)",
+                    "price": ""
+                  },
+                  {
+                    "name": "醬燒豚肩肉 (Pork Shoulder)",
+                    "price": ""
+                  },
+                  {
+                    "name": "嚴選雞腿肉 (Chicken Thigh)",
+                    "price": ""
+                  },
+                  {
+                    "name": "挪威薄鹽鯖魚/份 (Norwegian Salted Mackerel)",
+                    "price": ""
+                  },
+                  {
+                    "name": "歐式奶油蒜香鮑魚/顆 (Garlic Butter Abalone)",
+                    "price": ""
+                  },
+                  {
+                    "name": "酒蒸海鮮石鍋燒 (Sake-Steamed Seafood Stone Pot)",
+                    "price": "$99.00"
+                  },
+                  {
+                    "name": "芝心起司鳳梨薄餅 (Cheese Pineapple Flatbread)",
+                    "price": ""
+                  },
+                  {
+                    "name": "玉子鮭魚石鍋飯 (Salmon Bibimbap With Egg)",
+                    "price": "$149.00"
+                  },
+                  {
+                    "name": "海鮮石鍋粥 (Seafood Congee)",
+                    "price": "$269.00"
+                  },
+                  {
+                    "name": "水耕時蔬沙拉",
+                    "price": ""
+                  },
+                  {
+                    "name": "法式甜點",
+                    "price": ""
+                  },
+                  {
+                    "name": "精選熟食湯品",
+                    "price": ""
+                  },
+                  {
+                    "name": "飲料",
+                    "price": ""
+                  },
+                  {
+                    "name": "根島生態蝦",
+                    "price": ""
+                  },
+                  {
+                    "name": "可爾必思沙瓦",
+                    "price": ""
+                  },
+                  {
+                    "name": "芒果可爾必思沙瓦",
+                    "price": ""
+                  },
+                  {
+                    "name": "水蜜桃可爾必思沙瓦",
+                    "price": ""
+                  },
+                  {
+                    "name": "Jungle鳳梨可樂達",
+                    "price": ""
+                  },
+                  {
+                    "name": "Mojito莫西多蘇打",
+                    "price": ""
+                  },
+                  {
+                    "name": "Pink Lady粉紅佳人",
+                    "price": ""
+                  },
+                  {
+                    "name": "Caipiroska卡比羅斯卡",
+                    "price": ""
+                  },
+                  {
+                    "name": "Asahi白啤酒",
+                    "price": ""
+                  },
+                  {
+                    "name": "法國可倫堡1664原味啤酒",
+                    "price": ""
+                  },
+                  {
+                    "name": "法國可倫堡1664白啤酒",
+                    "price": ""
+                  },
+                  {
+                    "name": "台灣金牌啤酒",
+                    "price": ""
+                  },
+                  {
+                    "name": "日本角嗨",
+                    "price": ""
+                  },
+                  {
+                    "name": "金賓Highball",
+                    "price": ""
+                  },
+                  {
+                    "name": "鬼殺清酒",
+                    "price": ""
+                  },
+                  {
+                    "name": "A5日本和牛霜雨一品 (Wagyu Marbled Meat)",
+                    "price": "$818.00"
+                  },
+                  {
+                    "name": "A5日本極和牛 霜降蕾絲 (Wagyu Lace Meat)",
+                    "price": "$918.00"
+                  },
+                  {
+                    "name": "Prime霜降牛小排切厚切 (Prime Chuck Short Ribs)",
+                    "price": "$488.00"
+                  },
+                  {
+                    "name": "果香壺漬牛小排 (Fruity Pickled Beef)",
+                    "price": "$438.00"
+                  },
+                  {
+                    "name": "橘香牛角切 (Beef Steak With Pomelo Sauce)",
+                    "price": "$398.00"
+                  },
+                  {
+                    "name": "赤味噌中腹 (Red Miso Beef)",
+                    "price": "$228.00"
+                  },
+                  {
+                    "name": "醬燒牛後腹 (Short Plate)",
+                    "price": "$248.00"
+                  },
+                  {
+                    "name": "鹽蔥牛後腹 (Karubi With Salt & Scallion)",
+                    "price": "$268.00"
+                  },
+                  {
+                    "name": "醬燒牛腹肉 (Karubi)",
+                    "price": "$258.00"
+                  },
+                  {
+                    "name": "鹽蔥牛腹肉 (Karubi With Salt & Scallion)",
+                    "price": "$278.00"
+                  },
+                  {
+                    "name": "森森辣辣椒 (Special Chili)",
+                    "price": ""
+                  },
+                  {
+                    "name": "特調鹽蔥 (Chef's Salt & Scallion)",
+                    "price": ""
+                  },
+                  {
+                    "name": "黑松露醬 (Black Truffle Sauce)",
+                    "price": "$180.00"
+                  },
+                  {
+                    "name": "玉米 (Corn)",
+                    "price": "$90.00"
+                  },
+                  {
+                    "name": "青椒 (Green Pepper)",
+                    "price": "$90.00"
+                  },
+                  {
+                    "name": "香菇 (Mushroom)",
+                    "price": "$90.00"
+                  },
+                  {
+                    "name": "杏鮑菇 (King Oyster Mushroom)",
+                    "price": "$90.00"
+                  },
+                  {
+                    "name": "帶皮玉米筍 (Baby Corn)",
+                    "price": "$100.00"
+                  },
+                  {
+                    "name": "櫛瓜 (Zucchini)",
+                    "price": "$100.00"
+                  },
+                  {
+                    "name": "山藥 (Japanese Yam)",
+                    "price": "$130.00"
+                  },
+                  {
+                    "name": "綜合野菜 (Vegetables Combo)",
+                    "price": "$220.00"
+                  },
+                  {
+                    "name": "普切塔",
+                    "price": ""
+                  },
+                  {
+                    "name": "烤海鮮沙拉",
+                    "price": ""
+                  },
+                  {
+                    "name": "雞腿水果莎莎",
+                    "price": ""
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "menu_load_errors": [],
+  "summary": {
+    "total": 10,
+    "executed": 10,
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "success": true
+  },
+  "cases": [
+    {
+      "case_index": 1,
+      "case_id": "2e3e002fe2b62ec1b81afef041943ee5988e9a682a20eadc88155d02c3cb5693",
+      "input": {
+        "restaurant": "大肥鵝",
+        "text": "四個人 預算3000",
+        "sharedTable": true
+      },
+      "menu_sha256": "7a1ca909c35cfa10a419e4d3ef9b28beecb9e09487e1cc740bd09c65f69cd65d",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 3000.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 4
+          }
+        ],
+        "budget": 3000.0,
+        "budgetBasis": "total",
+        "people": 4,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "章魚沙拉",
+            "price": 380.0,
+            "category": "生冷美饌",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "蟹黃豆腐煲",
+            "price": 330.0,
+            "category": "明火好味",
+            "reason": "一桌菜的湯鍋",
+            "type": "湯鍋",
+            "uncertain": false
+          },
+          {
+            "name": "燒臘雙拼盤",
+            "price": 480.0,
+            "category": "潮粵燒臘",
+            "reason": "一桌菜的肉類",
+            "type": "肉類",
+            "uncertain": false
+          },
+          {
+            "name": "菠蘿果律蝦球",
+            "price": 450.0,
+            "category": "明火好味",
+            "reason": "一桌菜的海鮮",
+            "type": "海鮮",
+            "uncertain": false
+          },
+          {
+            "name": "東北酸白菜肉鍋",
+            "price": 880.0,
+            "category": "經典鍋物",
+            "reason": "一桌菜的湯鍋",
+            "type": "湯鍋",
+            "uncertain": false
+          },
+          {
+            "name": "七喜汽水",
+            "price": 40.0,
+            "category": "瓶裝飲料",
+            "reason": "搭配飲品",
+            "type": "drink",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有主食類的品項，這一桌因此沒有主食",
+        "relaxedBuckets": [
+          "主食"
+        ],
+        "meta": {
+          "budget": 3000.0,
+          "people": 4,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 2560.0,
+          "estimatedTotal": 2816.0
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 2,
+      "case_id": "6d77437869a62a53b246c8ca65dbab434eb4a47c59a3c69434467d7a9702361a",
+      "input": {
+        "restaurant": "大肥鵝",
+        "text": "兩個人 預算1000 要飲料",
+        "sharedTable": true
+      },
+      "menu_sha256": "7a1ca909c35cfa10a419e4d3ef9b28beecb9e09487e1cc740bd09c65f69cd65d",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 1000.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 2
+          },
+          {
+            "action": "set",
+            "field": "needDrink",
+            "value": true
+          }
+        ],
+        "budget": 1000.0,
+        "budgetBasis": "total",
+        "people": 2,
+        "needDrink": true,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": 0.6,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "水堅果湖麻蔬果沙拉",
+            "price": 290.0,
+            "category": "生冷美饌",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "蟹黃豆腐煲",
+            "price": 330.0,
+            "category": "明火好味",
+            "reason": "一桌菜的湯鍋",
+            "type": "湯鍋",
+            "uncertain": false
+          },
+          {
+            "name": "鹽酥鵝頭",
+            "price": 150.0,
+            "category": "潮粵燒臘",
+            "reason": "一桌菜的肉類",
+            "type": "肉類",
+            "uncertain": false
+          },
+          {
+            "name": "七喜汽水",
+            "price": 40.0,
+            "category": "瓶裝飲料",
+            "reason": "搭配飲品",
+            "type": "drink",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有主食類的品項，這一桌因此沒有主食",
+        "relaxedBuckets": [
+          "主食"
+        ],
+        "meta": {
+          "budget": 1000.0,
+          "people": 2,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 810.0,
+          "estimatedTotal": 891.0
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 3,
+      "case_id": "be9c439a9a39d0eef6e64b4ea1d7ccf6569b1ce41449b277666daead6d353c53",
+      "input": {
+        "restaurant": "大肥鵝",
+        "text": "六個人 預算5000 不吃牛",
+        "sharedTable": true
+      },
+      "menu_sha256": "7a1ca909c35cfa10a419e4d3ef9b28beecb9e09487e1cc740bd09c65f69cd65d",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 5000.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 6
+          },
+          {
+            "action": "add",
+            "field": "dislikes",
+            "value": "牛"
+          },
+          {
+            "action": "remove",
+            "field": "likes",
+            "value": "牛"
+          }
+        ],
+        "excludes": [
+          "牛"
+        ],
+        "budget": 5000.0,
+        "budgetBasis": "total",
+        "people": 6,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "章魚沙拉",
+            "price": 380.0,
+            "category": "生冷美饌",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "東北酸白菜肉鍋",
+            "price": 880.0,
+            "category": "經典鍋物",
+            "reason": "一桌菜的湯鍋",
+            "type": "湯鍋",
+            "uncertain": false
+          },
+          {
+            "name": "燒臘三拼盤",
+            "price": 680.0,
+            "category": "潮粵燒臘",
+            "reason": "一桌菜的肉類",
+            "type": "肉類",
+            "uncertain": false
+          },
+          {
+            "name": "菠蘿果律蝦球",
+            "price": 450.0,
+            "category": "明火好味",
+            "reason": "一桌菜的海鮮",
+            "type": "海鮮",
+            "uncertain": false
+          },
+          {
+            "name": "蟹黃豆腐煲",
+            "price": 330.0,
+            "category": "明火好味",
+            "reason": "一桌菜的湯鍋",
+            "type": "湯鍋",
+            "uncertain": false
+          },
+          {
+            "name": "清炒蘆筍",
+            "price": 320.0,
+            "category": "季節時蔬",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "什錦水果盤",
+            "price": 300.0,
+            "category": "水果甜品",
+            "reason": "一桌菜的點心",
+            "type": "點心",
+            "uncertain": false
+          },
+          {
+            "name": "七喜汽水",
+            "price": 40.0,
+            "category": "瓶裝飲料",
+            "reason": "搭配飲品",
+            "type": "drink",
+            "uncertain": false
+          },
+          {
+            "name": "可口可樂",
+            "price": 40.0,
+            "category": "瓶裝飲料",
+            "reason": "搭配飲品",
+            "type": "drink",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有主食類的品項，這一桌因此沒有主食",
+        "relaxedBuckets": [
+          "主食"
+        ],
+        "meta": {
+          "budget": 5000.0,
+          "people": 6,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 3420.0,
+          "estimatedTotal": 3762.0
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 4,
+      "case_id": "5dc55cac2529db738d1dcf48016cd790e3c4c9d458cef6136df5341c9e0e1502",
+      "input": {
+        "restaurant": "斗六當歸鴨",
+        "text": "一個人 預算100"
+      },
+      "menu_sha256": "ef37f91a2eeba436c54cd7fcdf145d5dcbdc0920e3fbade445b78174084b426d",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 100.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 1
+          }
+        ],
+        "budget": 100.0,
+        "budgetBasis": "total",
+        "people": 1,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "炒麵(油麵)",
+            "price": 40.0,
+            "category": "其他",
+            "reason": "主餐推薦",
+            "type": "main",
+            "uncertain": false
+          },
+          {
+            "name": "當歸清湯",
+            "price": 20.0,
+            "category": "其他",
+            "reason": "搭配配菜",
+            "type": "side",
+            "uncertain": false
+          },
+          {
+            "name": "滷地瓜葉",
+            "price": 30.0,
+            "category": "其他",
+            "reason": "額外推薦",
+            "type": "other",
+            "uncertain": false
+          }
+        ],
+        "notes": "",
+        "relaxedBuckets": [],
+        "meta": {
+          "budget": 100.0,
+          "people": 1,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 90.0,
+          "estimatedTotal": 99.0
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 5,
+      "case_id": "ffd5dc7a1a447a380d2539df44bb07efcb74edef64d2a11a8738a7a90545d6e9",
+      "input": {
+        "restaurant": "斗六當歸鴨",
+        "text": "兩個人 預算300 不吃鴨"
+      },
+      "menu_sha256": "ef37f91a2eeba436c54cd7fcdf145d5dcbdc0920e3fbade445b78174084b426d",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 300.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 2
+          },
+          {
+            "action": "add",
+            "field": "dislikes",
+            "value": "鴨"
+          },
+          {
+            "action": "remove",
+            "field": "likes",
+            "value": "鴨"
+          }
+        ],
+        "excludes": [
+          "鴨"
+        ],
+        "budget": 300.0,
+        "budgetBasis": "total",
+        "people": 2,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "炒麵(油麵)",
+            "price": 40.0,
+            "category": "其他",
+            "reason": "主餐推薦",
+            "type": "main",
+            "uncertain": false
+          },
+          {
+            "name": "松阪豬肉(盤)",
+            "price": 110.0,
+            "category": "其他",
+            "reason": "額外推薦",
+            "type": "other",
+            "uncertain": false
+          },
+          {
+            "name": "當歸松阪豬肉湯",
+            "price": 80.0,
+            "category": "其他",
+            "reason": "額外推薦",
+            "type": "other",
+            "uncertain": false
+          },
+          {
+            "name": "當歸湯",
+            "price": 40.0,
+            "category": "其他",
+            "reason": "額外推薦",
+            "type": "other",
+            "uncertain": false
+          }
+        ],
+        "notes": "",
+        "relaxedBuckets": [],
+        "meta": {
+          "budget": 300.0,
+          "people": 2,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 270.0,
+          "estimatedTotal": 297.0
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 6,
+      "case_id": "38e7d3b724a38468341d214a270d04ffb6eb7dc72885e724a2c03b39cdee9131",
+      "input": {
+        "restaurant": "奔頂牛排 東海",
+        "text": "兩個人 預算1000"
+      },
+      "menu_sha256": "1315d7babc87f74a0290f665828f311370913c61da4434e2659dff260c9d3251",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 1000.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 2
+          }
+        ],
+        "budget": 1000.0,
+        "budgetBasis": "total",
+        "people": 2,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "犇頂牛排",
+            "price": 300.0,
+            "category": "全部菜色",
+            "reason": "主餐推薦",
+            "type": "main",
+            "uncertain": false
+          },
+          {
+            "name": "香煎鯖魚",
+            "price": 330.0,
+            "category": "全部菜色",
+            "reason": "額外推薦",
+            "type": "other",
+            "uncertain": false
+          }
+        ],
+        "notes": "",
+        "relaxedBuckets": [],
+        "meta": {
+          "budget": 1000.0,
+          "people": 2,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 630.0,
+          "estimatedTotal": 693.0
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 7,
+      "case_id": "fe04ea897552da12259c52828015c7e8ef9132cc3c33d2df2204c480d5900367",
+      "input": {
+        "restaurant": "森森燒肉 台中中科店",
+        "text": "兩個人 預算1500",
+        "sharedTable": true
+      },
+      "menu_sha256": "bbae3f826e0344f52b9e6d7b6d2fb1355d2f3f9b840b25e859e4251b6bc833ad",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 1500.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 2
+          }
+        ],
+        "budget": 1500.0,
+        "budgetBasis": "total",
+        "people": 2,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "綜合野菜 (Vegetables Combo)",
+            "price": 220.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "海鮮石鍋粥 (Seafood Congee)",
+            "price": 269.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的主食",
+            "type": "主食",
+            "uncertain": false
+          },
+          {
+            "name": "果香壺漬牛小排 (Fruity Pickled Beef)",
+            "price": 438.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的肉類",
+            "type": "肉類",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有湯鍋類的品項，這一桌因此沒有湯鍋",
+        "relaxedBuckets": [
+          "湯鍋"
+        ],
+        "meta": {
+          "budget": 1500.0,
+          "people": 2,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 927.0,
+          "estimatedTotal": 1019.7
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 8,
+      "case_id": "d93fa58e93fc89617e60b5e5a93f93d09a2547019e7967c83b1afb064833964a",
+      "input": {
+        "restaurant": "森森燒肉 台中中科店",
+        "text": "一個人 預算300 不吃牛",
+        "sharedTable": true
+      },
+      "menu_sha256": "bbae3f826e0344f52b9e6d7b6d2fb1355d2f3f9b840b25e859e4251b6bc833ad",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 300.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 1
+          },
+          {
+            "action": "add",
+            "field": "dislikes",
+            "value": "牛"
+          },
+          {
+            "action": "remove",
+            "field": "likes",
+            "value": "牛"
+          }
+        ],
+        "excludes": [
+          "牛"
+        ],
+        "budget": 300.0,
+        "budgetBasis": "total",
+        "people": 1,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "杏鮑菇 (King Oyster Mushroom)",
+            "price": 90.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "Salmon Bibimbap With Egg (玉子鮭魚石鍋飯)",
+            "price": 149.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的主食",
+            "type": "主食",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有湯鍋類的品項，這一桌因此沒有湯鍋",
+        "relaxedBuckets": [
+          "湯鍋"
+        ],
+        "meta": {
+          "budget": 300.0,
+          "people": 1,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 239.0,
+          "estimatedTotal": 262.9
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 9,
+      "case_id": "f392861f1d598cf92cced25ded0e2043d0489a2c5a45edcf7a4925c787e2ea94",
+      "input": {
+        "restaurant": "森森燒肉 台中中科店",
+        "text": "四個人 預算2000",
+        "sharedTable": true
+      },
+      "menu_sha256": "bbae3f826e0344f52b9e6d7b6d2fb1355d2f3f9b840b25e859e4251b6bc833ad",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 2000.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 4
+          }
+        ],
+        "budget": 2000.0,
+        "budgetBasis": "total",
+        "people": 4,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "綜合野菜 (Vegetables Combo)",
+            "price": 220.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "海鮮石鍋粥 (Seafood Congee)",
+            "price": 269.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的主食",
+            "type": "主食",
+            "uncertain": false
+          },
+          {
+            "name": "橘香牛角切 (Beef Steak With Pomelo Sauce)",
+            "price": 398.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的肉類",
+            "type": "肉類",
+            "uncertain": false
+          },
+          {
+            "name": "智利鮭魚菲力/份 (Chilean Salmon Filet)",
+            "price": 358.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的海鮮",
+            "type": "海鮮",
+            "uncertain": false
+          },
+          {
+            "name": "帶皮玉米筍 (Baby Corn)",
+            "price": 100.0,
+            "category": "全部菜色",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有湯鍋類的品項，這一桌因此沒有湯鍋",
+        "relaxedBuckets": [
+          "湯鍋"
+        ],
+        "meta": {
+          "budget": 2000.0,
+          "people": 4,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 1345.0,
+          "estimatedTotal": 1479.5
+        }
+      },
+      "failures": []
+    },
+    {
+      "case_index": 10,
+      "case_id": "97db408abae93800f9c5fffe83097c442c5a70afa349762fb871c66d3a615a96",
+      "input": {
+        "restaurant": "大肥鵝",
+        "text": "兩個人 預算1200",
+        "sharedTable": true
+      },
+      "menu_sha256": "7a1ca909c35cfa10a419e4d3ef9b28beecb9e09487e1cc740bd09c65f69cd65d",
+      "status": "passed",
+      "preferences": {
+        "_operations": [
+          {
+            "action": "set",
+            "field": "budget",
+            "value": {
+              "amount": 1200.0,
+              "basis": "total"
+            }
+          },
+          {
+            "action": "set",
+            "field": "people",
+            "value": 2
+          }
+        ],
+        "budget": 1200.0,
+        "budgetBasis": "total",
+        "people": 2,
+        "weights": {
+          "price": 0.8,
+          "main": 0.5,
+          "variety": 0.4,
+          "drink": -0.8,
+          "spice": 0.2,
+          "category": 0.5,
+          "cuisine": 0.0
+        }
+      },
+      "output": {
+        "items": [
+          {
+            "name": "章魚沙拉",
+            "price": 380.0,
+            "category": "生冷美饌",
+            "reason": "一桌菜的青菜",
+            "type": "青菜",
+            "uncertain": false
+          },
+          {
+            "name": "蟹黃豆腐煲",
+            "price": 330.0,
+            "category": "明火好味",
+            "reason": "一桌菜的湯鍋",
+            "type": "湯鍋",
+            "uncertain": false
+          },
+          {
+            "name": "香辣牛肚絲",
+            "price": 320.0,
+            "category": "手作小菜",
+            "reason": "一桌菜的肉類",
+            "type": "肉類",
+            "uncertain": false
+          },
+          {
+            "name": "七喜汽水",
+            "price": 40.0,
+            "category": "瓶裝飲料",
+            "reason": "搭配飲品",
+            "type": "drink",
+            "uncertain": false
+          }
+        ],
+        "notes": "這家店的菜單上沒有主食類的品項，這一桌因此沒有主食",
+        "relaxedBuckets": [
+          "主食"
+        ],
+        "meta": {
+          "budget": 1200.0,
+          "people": 2,
+          "needDrink": true,
+          "spiceLevel": null,
+          "spiceMaximum": null,
+          "cuisine": null,
+          "serviceRate": 0.1,
+          "estimatedSubtotal": 1070.0,
+          "estimatedTotal": 1177.0
+        }
+      },
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "source": {
+    "url": "https://hotel.fhgh.com.tw/download/0/202/",
+    "retrieved": "2026-11-26",
+    "pdfPage": 2,
+    "pdfSha256": "7cde5bf1739803dc2960807bfe3c7c3470aaa925de39f97efd3eddd8acaa3f6f",
+    "render": "pdftoppm -f 2 -l 2 -scale-to 1900 -singlefile -png",
+    "inputSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+    "size": [
+      1900,
+      1344
+    ],
+    "group": "web-pilot-20261126",
+    "truthFrozenAt": "2026-11-26T15:37:27+08:00"
+  },
+  "annotationPolicy": "名人堂花園大飯店台灣小吃總匯套餐頁。五個可購買套餐依中文標題計分；內含菜色、飲料更換與說明不另列。店名不計分。",
+  "items": [
+    {
+      "name": "一號餐",
+      "price": 180
+    },
+    {
+      "name": "二號餐",
+      "price": 220
+    },
+    {
+      "name": "三號餐",
+      "price": 230
+    },
+    {
+      "name": "四號餐",
+      "price": 230
+    },
+    {
+      "name": "五號餐",
+      "price": 350
+    }
+  ]
+}
