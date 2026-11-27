@@ -85,7 +85,7 @@ class RecommendationEvalRunnerTest(unittest.TestCase):
         self.assertEqual(len(source["file_sha256"]), 64)
         self.assertIn("evals/recommendation/run_eval.py", report["version"]["source_sha256"])
         self.assertEqual(report["evaluation_rules"]["shared_min_budget_use_ratio"], 0.5)
-        self.assertEqual(report["evaluation_rules"]["shared_max_items_per_bucket"], 2)
+        self.assertIn("TablePolicy.caps", report["evaluation_rules"]["shared_max_items_per_bucket"])
 
     def test_failed_and_error_cases_are_executed_and_do_not_stop_later_cases(self):
         case = {"restaurant": "測試店", "text": "預算100元"}

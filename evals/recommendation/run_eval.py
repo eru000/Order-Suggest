@@ -37,7 +37,7 @@ from menu_semantics import annotate_item, is_alcohol  # noqa: E402
 from preference_engine import parse_preferences  # noqa: E402
 from recommendation import _flatten_menu, recommend  # noqa: E402
 from storage.importer import menu_document_to_runtime  # noqa: E402
-from table_menu import table_size  # noqa: E402
+from table_menu import DEFAULT_TABLE_POLICY, FOOD_GROUPS, table_size  # noqa: E402
 
 
 def _json_hash(value: object) -> str:
@@ -79,7 +79,8 @@ BUDGET_TOLERANCE = 1e-9
 SHARED_MIN_FOOD_CAP = 5
 SHARED_BUDGET_SPENT_RATIO = 0.7
 SHARED_MIN_BUDGET_USE_RATIO = 0.5
-SHARED_MAX_PER_BUCKET = 2
+# 必備類別沒出現時，只有這些原因算「說得過去」；search_not_found 是組合沒挑好，仍算失敗。
+SHARED_EXPLAINED_CAUSES = ("absent_in_menu", "excluded_by_user", "price_unknown", "over_budget")
 
 
 def _evaluation_rules() -> dict:
@@ -90,9 +91,13 @@ def _evaluation_rules() -> dict:
         "shared_min_food_count": f"min(table_size(people), {SHARED_MIN_FOOD_CAP})",
         "shared_dish_count_waived_at_budget_ratio": SHARED_BUDGET_SPENT_RATIO,
         "shared_min_budget_use_ratio": SHARED_MIN_BUDGET_USE_RATIO,
-        "shared_max_items_per_bucket": SHARED_MAX_PER_BUCKET,
-        "shared_required_all": ["青菜"],
-        "shared_required_any": ["湯鍋", "主食"],
+        # 期末節點 C：原本的「同類最多兩道」「要有湯鍋或主食」是作者自訂規則，
+        # 改為與產品相同出處的依據（evals/table_rules/set_menus.json 與國健署每日飲食指南）。
+        "shared_max_items_per_bucket": "TablePolicy.caps(people)：套餐中該類最大比例 × 道數",
+        "shared_required_groups": (
+            "TablePolicy.required_groups(people)：青菜、主食、豆魚蛋肉，3 人以上加湯鍋"
+        ),
+        "shared_required_explained_causes": list(SHARED_EXPLAINED_CAUSES),
         "wants_alcohol_terms": list(WANTS_ALCOHOL),
         "wants_drink_terms": list(WANTS_DRINK),
     }
@@ -161,8 +166,8 @@ def check_result(case: dict, menu: dict, prefs: dict, result: dict) -> list[str]
             failures.append("有預算時推了價格未知的品項：" + "、".join(unknown))
 
     if case.get("sharedTable"):
-        # 合菜店：一桌人點一桌菜。道數照台灣的點法抓人數 + 1，而且一桌不能
-        # 沒有青菜或湯鍋——原本的單點規則推出來的是一桌火鍋加壽司。
+        # 合菜店：一桌人點一桌菜。道數與必備類別依公開套餐資料與國健署飲食指南
+        # （table_menu.TablePolicy）——原本的單點規則推出來的是一桌火鍋加壽司。
         people = int(prefs.get("people") or 1)
         food = [r for r in items if r.get("type") not in {"drink", "dessert"}]
         buckets = {r.get("type") for r in food}
@@ -170,15 +175,22 @@ def check_result(case: dict, menu: dict, prefs: dict, result: dict) -> list[str]
         budget_spent = budget is not None and subtotal >= budget * SHARED_BUDGET_SPENT_RATIO
         if len(food) < min(table_size(people), SHARED_MIN_FOOD_CAP) and not budget_spent:
             failures.append(f"一桌只有 {len(food)} 道（{people} 個人）")
-        if not buckets & {"青菜"}:
-            failures.append("一桌沒有青菜")
-        if not buckets & {"湯鍋", "主食"}:
-            failures.append("一桌沒有湯鍋也沒有主食")
+        # 必備類別缺了，只有產品說得出合理原因（菜單沒有、被條件排除、時價、
+        # 預算排不進）才放過；沒說明或 search_not_found 都算失敗。
+        causes = {
+            entry.get("constraint"): entry.get("cause") for entry in result.get("unmet") or []
+        }
+        for group in DEFAULT_TABLE_POLICY.required_groups(people):
+            if buckets & set(FOOD_GROUPS.get(group, (group,))):
+                continue
+            if causes.get(group) not in SHARED_EXPLAINED_CAUSES:
+                failures.append(f"一桌沒有{group}（原因：{causes.get(group) or '未說明'}）")
         if budget is not None and subtotal < budget * SHARED_MIN_BUDGET_USE_RATIO:
             failures.append(f"小計 {subtotal:g} 只用掉預算 {budget:g} 的一半不到")
+        caps = DEFAULT_TABLE_POLICY.caps(people)
         for bucket in buckets:
-            if sum(1 for r in food if r.get("type") == bucket) > SHARED_MAX_PER_BUCKET:
-                failures.append(f"同一類超過兩道：{bucket}")
+            if sum(1 for r in food if r.get("type") == bucket) > caps.get(bucket, 1):
+                failures.append(f"同一類超過上限 {caps.get(bucket, 1)} 道：{bucket}")
     else:
         mains = [r for r in items if r.get("type") == "main"]
         if len(mains) < int(case.get("expectMains", 1)):

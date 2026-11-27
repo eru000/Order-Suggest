@@ -71,13 +71,25 @@ class AbsentRequiredBucketTest(unittest.TestCase):
         )
         self.assertEqual(absent_required_buckets(pool), ["主食"])
 
-    def test_nothing_absent_when_all_three_present(self):
+    def test_nothing_absent_when_all_required_groups_present(self):
+        # 必備類別依國健署「我的餐盤」：蔬菜、全穀雜糧（主食）、豆魚蛋肉，3 人以上再加湯。
         pool = rows(
             ("清炒蘆筍", 120, "蔬菜"),
             ("當歸清湯", 60, "湯品"),
             ("鴨肉飯", 50, "主食"),
+            ("蜜汁叉燒", 380, "燒臘"),
         )
         self.assertEqual(absent_required_buckets(pool), [])
+
+    def test_protein_group_is_reported_when_missing(self):
+        pool = rows(("清炒蘆筍", 120, "蔬菜"), ("當歸清湯", 60, "湯品"), ("鴨肉飯", 50, "主食"))
+        self.assertEqual(absent_required_buckets(pool), ["豆魚蛋肉"])
+
+    def test_soup_is_not_required_for_two_people(self):
+        # 套餐資料：2 人的 3 組都不附湯，3 人以上 15/15 組附湯。
+        pool = rows(("清炒蘆筍", 120, "蔬菜"), ("鴨肉飯", 50, "主食"), ("蜜汁叉燒", 380, "燒臘"))
+        self.assertEqual(absent_required_buckets(pool, people=2), [])
+        self.assertEqual(absent_required_buckets(pool, people=3), ["湯鍋"])
 
     def test_unpriced_items_still_count_as_present(self):
         # 時價的湯品不會被推薦，但「菜單上有湯」這件事不變；
@@ -94,11 +106,15 @@ class SharedTableTest(unittest.TestCase):
         self.assertFalse(is_shared_table(8, 7))     # 奔頂牛排
         self.assertFalse(is_shared_table(20, 0))    # 品項太少，看不出是合菜店
 
-    def test_table_size_is_people_plus_one(self):
-        self.assertEqual(table_size(4), 5)
-        self.assertEqual(table_size(6), 7)
-        self.assertEqual(table_size(1), 3)   # 最少三道，不然湊不成一桌
-        self.assertEqual(table_size(20), 10)  # 上限，免得推一整本菜單
+    def test_table_size_follows_set_menu_regression(self):
+        # 主菜＋湯 = round(1.972 + 1.093 × 人數)，再加一道主食（套餐每人附白飯）。
+        # 對照套餐原始資料：4 人 6–7 道、6 人 8–9 道、10 人 12–13 道（不含小菜）。
+        self.assertEqual(table_size(2), 5)
+        self.assertEqual(table_size(4), 7)
+        self.assertEqual(table_size(6), 10)
+        self.assertEqual(table_size(10), 14)
+        self.assertEqual(table_size(1), 4)    # 資料從 2 人起，1 人外插一格
+        self.assertEqual(table_size(20), 14)  # 超過 10 人資料沒有涵蓋，不外插
 
 
 class ComposeTableTest(unittest.TestCase):
@@ -117,20 +133,44 @@ class ComposeTableTest(unittest.TestCase):
         )
 
     def test_table_has_vegetable_soup_and_staple(self):
-        table = compose_table(self.menu_rows(), people=4, budget=3000)
+        # 4 人 7 道（6 道主菜＋湯、1 道主食）在這份菜單約 $3560，預算給足。
+        table = compose_table(self.menu_rows(), people=4, budget=4000)
         buckets = [row["bucket"] for row in table]
-        self.assertEqual(len(table), 5)
+        self.assertEqual(len(table), table_size(4))
         for required in ("青菜", "湯鍋", "主食"):
             self.assertIn(required, buckets)
+        self.assertTrue({"肉類", "海鮮", "蛋豆腐"} & set(buckets))
 
     def test_stays_within_budget(self):
         table = compose_table(self.menu_rows(), people=6, budget=2500)
         self.assertLessEqual(sum(row["price"] for row in table), 2500)
 
-    def test_at_most_two_dishes_from_one_bucket(self):
+    def test_bucket_caps_follow_set_menu_shares(self):
+        # 同類上限 = 套餐中該類最大比例 × 道數（下限 1）：6 人 9 道主菜，湯鍋最多 1 道。
+        policy = TablePolicy()
+        caps = policy.caps(6)
+        self.assertEqual(caps["湯鍋"], 1)
         table = compose_table(self.menu_rows(), people=6, budget=6000)
         for bucket in {row["bucket"] for row in table}:
-            self.assertLessEqual(sum(1 for row in table if row["bucket"] == bucket), 2)
+            self.assertLessEqual(sum(1 for row in table if row["bucket"] == bucket), caps[bucket])
+
+    def test_fill_order_approaches_set_menu_shares(self):
+        # Sainte-Laguë：必備各一道之後，依「平均比例 ÷ (2×已有道數+1)」挑下一類。
+        menu = rows(
+            ("清炒時蔬", 200, "蔬菜"), ("鵝油高麗菜", 200, "蔬菜"),
+            ("排骨湯", 200, "湯品"), ("酸菜鍋", 200, "鍋物"),
+            ("炒飯", 200, "主食"),
+            ("叉燒", 200, ""), ("滷肉", 200, ""), ("三杯雞", 200, ""),
+            ("中卷", 200, ""), ("蝦球", 200, ""),
+            ("麻婆豆腐", 200, ""), ("菜脯蛋", 200, ""),
+        )
+        table = compose_table(menu, people=4)
+        counts = {}
+        for row in table:
+            counts[row["bucket"]] = counts.get(row["bucket"], 0) + 1
+        self.assertEqual(
+            counts, {"青菜": 1, "主食": 1, "湯鍋": 1, "肉類": 2, "海鮮": 1, "蛋豆腐": 1}
+        )
 
     def test_market_price_items_are_left_out_when_a_budget_is_set(self):
         pool = [*self.menu_rows(), *rows(("時價龍蝦", None, "海鮮區"))]
@@ -168,29 +208,30 @@ class DiagnoseTableTest(unittest.TestCase):
     def test_user_exclusion_is_not_reported_as_absent(self):
         menu = self.menu()
         candidates = [row for row in menu if "鍋" not in row["name"]]
-        table = compose_table(candidates, people=2)
-        unmet = diagnose_table(menu, candidates, table, 2)
+        table = compose_table(candidates, people=3)
+        unmet = diagnose_table(menu, candidates, table, 3)
         self.assertEqual(self.causes(unmet)["湯鍋"], "excluded_by_user")
         self.assertIn("被你的條件排除", describe_unmet(unmet))
         self.assertNotIn("菜單上沒有湯鍋", describe_unmet(unmet))
 
     def test_market_price_soup_under_budget(self):
         menu = [dict(row, price=None) if "鍋" in row["name"] else row for row in self.menu()]
-        table = compose_table(menu, people=2, budget=3000)
-        self.assertEqual(self.causes(diagnose_table(menu, menu, table, 2, 3000))["湯鍋"], "price_unknown")
+        table = compose_table(menu, people=3, budget=3000)
+        self.assertEqual(self.causes(diagnose_table(menu, menu, table, 3, 3000))["湯鍋"], "price_unknown")
 
     def test_soup_that_cannot_fit_the_budget(self):
         menu = self.menu()
-        table = compose_table(menu, people=2, budget=700)
+        table = compose_table(menu, people=3, budget=700)
         self.assertNotIn("酸白菜肉鍋", [row["name"] for row in table])
-        self.assertEqual(self.causes(diagnose_table(menu, menu, table, 2, 700))["湯鍋"], "over_budget")
+        self.assertEqual(self.causes(diagnose_table(menu, menu, table, 3, 700))["湯鍋"], "over_budget")
 
     def test_dish_count_short_because_expensive_required_dish_used_the_budget(self):
-        # 4 人目標 5 道。貪婪先放 880 的鍋，只剩 3 道；但不放鍋的話 5 道只要 1480。
-        menu = self.menu()
-        table = compose_table(menu, people=4, budget=1500)
-        self.assertLess(len(table), 5)
-        unmet = diagnose_table(menu, menu, table, 4, 1500)
+        # 3 人目標 6 道。貪婪先放 880 的鍋，預算 1700 只排得到 4 道；
+        # 但不放鍋的話 6 道只要 1550。
+        menu = [*self.menu(), *rows(("麻婆豆腐", 160, ""), ("滷肉", 150, ""))]
+        table = compose_table(menu, people=3, budget=1700)
+        self.assertLess(len(table), table_size(3))
+        unmet = diagnose_table(menu, menu, table, 3, 1700)
         self.assertEqual(self.causes(unmet)["道數"], "search_not_found")
 
     def test_dish_count_short_because_budget_is_small(self):
@@ -206,29 +247,39 @@ class DiagnoseTableTest(unittest.TestCase):
 
     def test_policy_parameters_are_explicit_and_sourced(self):
         policy = TablePolicy()
-        self.assertEqual(policy.table_size(4), 5)
-        self.assertEqual(TablePolicy(extra_dishes=0).table_size(4), 4)
+        self.assertEqual(policy.table_size(4), 7)
+        self.assertEqual(TablePolicy(staple_dishes=0).table_size(4), 6)
         self.assertTrue(all(source for _, source in policy.sources))
+        # 沒有任何一項還是作者預設
+        self.assertFalse(any("author_default" in source for _, source in policy.sources))
 
     def test_min_table_cost_matches_brute_force_on_small_menus(self):
         """規劃 4.5：在可窮舉的小菜單上確認最低總價計算正確。"""
         names = ["高麗菜", "地瓜葉", "排骨湯", "酸菜鍋", "炒飯", "炒麵", "叉燒", "中卷", "蝦球", "滷肉"]
+        names = [*names, "麻婆豆腐", "菜脯蛋", "三杯雞"]
         policy = TablePolicy()
+        groups = {None: None, "湯鍋": {"湯鍋"}, "主食": {"主食"},
+                  "豆魚蛋肉": {"肉類", "海鮮", "蛋豆腐"}}
         rng = random.Random(20261126)
-        for _ in range(200):
-            menu = rows(*[(name, rng.randrange(50, 900, 10), "") for name in rng.sample(names, 8)])
-            for size in range(1, 6):
-                for must in (None, "湯鍋", "主食"):
-                    best = None
-                    for combo in itertools.combinations(menu, size):
-                        buckets = [bucket_of(row["name"]) for row in combo]
-                        if must and must not in buckets:
-                            continue
-                        if any(buckets.count(b) > policy.bucket_cap for b in set(buckets)):
-                            continue
-                        cost = sum(row["price"] for row in combo)
-                        best = cost if best is None else min(best, cost)
-                    self.assertEqual(min_table_cost(menu, size, policy, must), best)
+        for _ in range(120):
+            menu = rows(*[(name, rng.randrange(50, 900, 10), "") for name in rng.sample(names, 9)])
+            for people in (2, 4, 6):
+                caps = policy.caps(people)
+                for size in range(1, 6):
+                    for must, members in groups.items():
+                        best = None
+                        for combo in itertools.combinations(menu, size):
+                            buckets = [bucket_of(row["name"]) for row in combo]
+                            if members and not members & set(buckets):
+                                continue
+                            if any(buckets.count(b) > caps.get(b, 1) for b in set(buckets)):
+                                continue
+                            cost = sum(row["price"] for row in combo)
+                            best = cost if best is None else min(best, cost)
+                        self.assertEqual(
+                            min_table_cost(menu, size, policy, must, people), best,
+                            (people, size, must),
+                        )
 
 
 if __name__ == "__main__":

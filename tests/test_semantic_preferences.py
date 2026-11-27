@@ -94,7 +94,8 @@ class StructuredPreferenceTest(unittest.TestCase):
             {"name": "紫香茄腸煲", "price": 420, "tags": ["辣度2"]},
             *[{"name": f"紅茶{n}", "price": 50} for n in range(26)],
         ]}]}
-        prefs = {**parse_preferences("不吃辣"), "people": 4, "needDrink": False}
+        # 6 人才容許兩道青菜（套餐資料：4、5 人套餐都只有一道青菜）。
+        prefs = {**parse_preferences("不吃辣"), "people": 6, "needDrink": False}
         rows = recommend(catalog, prefs)["items"]
         self.assertEqual([row["name"] for row in rows], ["清炒高麗菜", "炒時蔬"])
         self.assertEqual(rows[0]["type"], "青菜")

@@ -8,6 +8,7 @@ if str(SRC) not in sys.path:
 
 from decision_service import DecisionService  # noqa: E402
 from session_store import SessionStore  # noqa: E402
+from table_menu import table_size  # noqa: E402
 
 
 def shared_menu():
@@ -66,7 +67,7 @@ class SharedTableDecisionTest(unittest.TestCase):
         self.step("start", text="不知道吃什麼")
         self.step("answer", value="4")
         names = [item["name"] for item in self.view["items"]]
-        self.assertEqual(len(names), 5)  # 人數 + 1
+        self.assertEqual(len(names), table_size(4))  # 套餐迴歸道數 + 主食
         self.assertTrue(self.view["sharedTable"])
         self.assertIn("4 個人這樣點", self.view["message"])
         self.assertTrue(any(name in {"鵝油高麗菜", "清炒花椰菜", "蒜炒地瓜葉"} for name in names))
@@ -87,7 +88,7 @@ class SharedTableDecisionTest(unittest.TestCase):
         self.step("replace", item_id=dropped["id"], reason="another")
         names = [item["name"] for item in self.view["items"]]
         self.assertNotIn(dropped["name"], names)
-        self.assertEqual(len(names), 5)
+        self.assertEqual(len(names), table_size(4))
 
     def test_no_spice_excludes_chili_icons_from_recommendations_and_replacements(self):
         categories = self.menus["熱炒店"]["categories"]

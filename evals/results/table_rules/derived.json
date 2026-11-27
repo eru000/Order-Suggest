@@ -1,0 +1,404 @@
+{
+ "source": "evals/table_rules/set_menus.json",
+ "retrieved": "2026-11-27",
+ "countErrors": [],
+ "sets": 18,
+ "dishCountMain": {
+  "n": 18,
+  "intercept": 1.97196261682243,
+  "slope": 1.0934579439252337,
+  "r2": 0.9750328958466885,
+  "rmse": 0.438301261515768,
+  "maxAbsResidual": 0.9065420560747661,
+  "peopleRange": [
+   2.0,
+   10.0
+  ]
+ },
+ "dishCountTitle": {
+  "n": 18,
+  "intercept": 2.1229709788489926,
+  "slope": 1.1515002459419577,
+  "r2": 0.9079360309027023,
+  "rmse": 0.9184963629064952,
+  "maxAbsResidual": 2.119527791441219,
+  "peopleRange": [
+   2.0,
+   10.0
+  ]
+ },
+ "dishCountPerRestaurant": {
+  "jinzhu": {
+   "n": 7,
+   "intercept": 1.4730538922155691,
+   "slope": 1.1497005988023952,
+   "r2": 0.9943356530182877,
+   "rmse": 0.2265522447238001,
+   "maxAbsResidual": 0.3712574850299397,
+   "peopleRange": [
+    2.0,
+    10.0
+   ]
+  },
+  "kaifun": {
+   "n": 6,
+   "intercept": 1.2615384615384615,
+   "slope": 1.323076923076923,
+   "r2": 0.9809018567639257,
+   "rmse": 0.24806946917841693,
+   "maxAbsResidual": 0.44615384615384635,
+   "peopleRange": [
+    2.0,
+    6.0
+   ]
+  },
+  "siammore": {
+   "n": 5,
+   "intercept": 2.5999999999999996,
+   "slope": 1.0,
+   "r2": 0.970873786407767,
+   "rmse": 0.4898979485566356,
+   "maxAbsResidual": 0.5999999999999996,
+   "peopleRange": [
+    2.0,
+    10.0
+   ]
+  }
+ },
+ "points": [
+  {
+   "restaurant": "siammore",
+   "people": 2,
+   "main": 4.0,
+   "title": 4,
+   "variant": null
+  },
+  {
+   "restaurant": "siammore",
+   "people": 4,
+   "main": 7.0,
+   "title": 7,
+   "variant": null
+  },
+  {
+   "restaurant": "siammore",
+   "people": 6,
+   "main": 9.0,
+   "title": 9,
+   "variant": null
+  },
+  {
+   "restaurant": "siammore",
+   "people": 8,
+   "main": 11.0,
+   "title": 12,
+   "variant": null
+  },
+  {
+   "restaurant": "siammore",
+   "people": 10,
+   "main": 12.0,
+   "title": 13,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 2,
+   "main": 4.0,
+   "title": 4,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 3,
+   "main": 5.0,
+   "title": 5,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 4,
+   "main": 6.0,
+   "title": 6,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 5,
+   "main": 7.0,
+   "title": 7,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 6,
+   "main": 8.0,
+   "title": 8,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 8,
+   "main": 11.0,
+   "title": 11,
+   "variant": null
+  },
+  {
+   "restaurant": "jinzhu",
+   "people": 10,
+   "main": 13.0,
+   "title": 13,
+   "variant": null
+  },
+  {
+   "restaurant": "kaifun",
+   "people": 2,
+   "main": 4.0,
+   "title": 4,
+   "variant": null
+  },
+  {
+   "restaurant": "kaifun",
+   "people": 3,
+   "main": 5.0,
+   "title": 6,
+   "variant": null
+  },
+  {
+   "restaurant": "kaifun",
+   "people": 3,
+   "main": 5.0,
+   "title": 5,
+   "variant": "無辣"
+  },
+  {
+   "restaurant": "kaifun",
+   "people": 4,
+   "main": 7.0,
+   "title": 8,
+   "variant": null
+  },
+  {
+   "restaurant": "kaifun",
+   "people": 5,
+   "main": 8.0,
+   "title": 10,
+   "variant": null
+  },
+  {
+   "restaurant": "kaifun",
+   "people": 6,
+   "main": 9.0,
+   "title": 11,
+   "variant": null
+  }
+ ],
+ "coverage": {
+  "青菜": 18,
+  "豆魚蛋肉": 18,
+  "主食(每人白飯)": 18,
+  "湯鍋(2人)": [
+   0,
+   3
+  ],
+  "湯鍋(3人以上)": [
+   15,
+   15
+  ],
+  "total": 18
+ },
+ "shares": {
+  "主食": {
+   "mean": 0.006944444444444444,
+   "max": 0.125,
+   "maxCountAtSize": [
+    1.0,
+    8.0,
+    "jinzhu",
+    6
+   ]
+  },
+  "海鮮": {
+   "mean": 0.14740750504639394,
+   "max": 0.3703703703703704,
+   "maxCountAtSize": [
+    3.3333333333333335,
+    9.0,
+    "siammore",
+    6
+   ]
+  },
+  "湯鍋": {
+   "mean": 0.11627045793712461,
+   "max": 0.2,
+   "maxCountAtSize": [
+    1.0,
+    5.0,
+    "jinzhu",
+    3
+   ]
+  },
+  "肉類": {
+   "mean": 0.4072010037287815,
+   "max": 0.5714285714285714,
+   "maxCountAtSize": [
+    4.0,
+    7.0,
+    "kaifun",
+    4
+   ]
+  },
+  "蛋豆腐": {
+   "mean": 0.14369211035877705,
+   "max": 0.25,
+   "maxCountAtSize": [
+    1.0,
+    4.0,
+    "jinzhu",
+    2
+   ]
+  },
+  "青菜": {
+   "mean": 0.1784844784844785,
+   "max": 0.25,
+   "maxCountAtSize": [
+    1.0,
+    4.0,
+    "siammore",
+    2
+   ]
+  }
+ },
+ "classifier": {
+  "dishes": 106,
+  "correct": 81,
+  "accuracy": 0.7641509433962265,
+  "wrong": [
+   {
+    "name": "三個臭皮匠",
+    "label": "蛋豆腐",
+    "predicted": "其他"
+   },
+   {
+    "name": "三杯豆腐煲",
+    "label": "蛋豆腐",
+    "predicted": "湯鍋"
+   },
+   {
+    "name": "乾煸四季豆",
+    "label": "青菜",
+    "predicted": "其他"
+   },
+   {
+    "name": "古早味蒸扁鱈(經典蒜蓉醬)",
+    "label": "海鮮",
+    "predicted": "其他"
+   },
+   {
+    "name": "古早味蒸扁鱈(蔭冬瓜樹子)",
+    "label": "海鮮",
+    "predicted": "其他"
+   },
+   {
+    "name": "塔香茄腸煲",
+    "label": "肉類",
+    "predicted": "湯鍋"
+   },
+   {
+    "name": "大口霸王骨(6支)",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "夫妻肺片",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "扒飯打拋豬",
+    "label": "肉類",
+    "predicted": "主食"
+   },
+   {
+    "name": "梅干鹹燒白",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "檸香蒸扁鱈",
+    "label": "海鮮",
+    "predicted": "其他"
+   },
+   {
+    "name": "泰北鄉村茄",
+    "label": "青菜",
+    "predicted": "其他"
+   },
+   {
+    "name": "泰香炒野蓮",
+    "label": "青菜",
+    "predicted": "其他"
+   },
+   {
+    "name": "泰香炒野蓮（大）",
+    "label": "青菜",
+    "predicted": "其他"
+   },
+   {
+    "name": "真珠小炒",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "秘醬炙烤肋排（10塊）",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "秘醬炙烤肋排（12塊）",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "翻滾吧！火辣三寶",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "蛋酥白菜魯",
+    "label": "青菜",
+    "predicted": "蛋豆腐"
+   },
+   {
+    "name": "蟹黃鮮蝦豆腐煲",
+    "label": "蛋豆腐",
+    "predicted": "湯鍋"
+   },
+   {
+    "name": "金沙鮮炒四季豆",
+    "label": "青菜",
+    "predicted": "其他"
+   },
+   {
+    "name": "金湯海鮮豆腐煲",
+    "label": "蛋豆腐",
+    "predicted": "湯鍋"
+   },
+   {
+    "name": "金牌蒜香骨",
+    "label": "肉類",
+    "predicted": "其他"
+   },
+   {
+    "name": "鐵漢柔情",
+    "label": "蛋豆腐",
+    "predicted": "其他"
+   },
+   {
+    "name": "黃金美人腿",
+    "label": "青菜",
+    "predicted": "其他"
+   }
+  ]
+ }
+}

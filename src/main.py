@@ -319,7 +319,7 @@ def _fallback_format(rec: Dict[str, object]) -> str:
         return base + extra
 
     # 推薦引擎實際產生的 type 是 main / side / drink / dessert / other（單點路徑）
-    # 與青菜、湯鍋、主食、肉類、海鮮、點心、其他（合菜路徑的桶名）。下面的
+    # 與青菜、湯鍋、主食、肉類、海鮮、蛋豆腐、點心、其他（合菜路徑的桶名）。下面的
     # sections 只預先放了五種，對不上的 type 會被 setdefault 新增，但舊版的
     # order 清單是寫死的，於是那些 section 一個都不會被印出來——合菜情境推了
     # 六道菜只列出一杯飲料，小計卻照六道算，金額對、清單不對。
@@ -332,6 +332,7 @@ def _fallback_format(rec: Dict[str, object]) -> str:
         "主食": "🍚 主食",
         "肉類": "🥩 肉類",
         "海鮮": "🦐 海鮮",
+        "蛋豆腐": "🥚 蛋豆腐",
         "點心": "🍧 點心",
         "其他": "🍽️ 其他推薦",
     }
