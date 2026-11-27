@@ -491,3 +491,31 @@ src/table_menu.py 的一桌菜規則原本全部是作者自訂（TablePolicy.so
 • 單元測試 413 項全部通過（新增 tests/test_reply_guard.py 11 項：三種失敗、推導金額、名稱寫法、第六項 10 則與模板的判定、非串流與串流的降級、開放問答不套用）。
 • src/reply_guard.py 通過 ruff 與 mypy。
 • 開放問答評分表 open-questions-for-raters.csv 重新產生後與原檔逐位元組相同。
+
+2026-11-27｜節點 F　凍結（tag freeze-final）
+
+一、凍結的設定（holdout 一次性測試期間不得更改；之後若再改，結果一律標「事後」）
+• 辨識：模型 ornith-35b（含校對模型）、整圖不切塊、長邊 3600、溫度 0、VISION_PRICE_TEXT=0（預設提示詞）、相似度門檻 0.72、計分版本 menu-ocr-score-v2。與第二項封存時相同（evals/results/2026-11-26-step2/protocol.json）。
+• 價格解析：src/menu_price.py 的 PriceInfo（fixed／market／range／multi／unreadable／missing）。
+• 複核：產品採價格合理性檢查，REVIEW_OUTLIER_RATIO＝0.10、MIN_PEERS＝3（CRC，α＝0.10）。OCR 交叉複核只在評測層作為對照組，與合理性檢查共用同一門檻。
+• 提問策略：gini（Gini 不純度 × 標註覆蓋率）。
+• 合菜：TablePolicy 預設值（dish_intercept 1.972、dish_slope 1.093、people_range 1–10、staple_dishes 1、always_required 青菜／主食／豆魚蛋肉、soup_min_people 3、share_mean、share_max、fallback 其他／點心）。
+• LLM 輸出防護：src/reply_guard.py（MIN_MONEY 10、TOLERANCE 1、MIN_PARTIAL_RATIO 0.5、MIN_PARTIAL_CHARS 2、MIN_INVENTED_NAME 3）。
+
+二、預先登錄的 holdout 判定規則（看結果前寫定）
+(1) 辨識：主要指標為「完整列正確率」（菜名與價格都對），以菜單為單位做 bootstrap 95% 信賴區間（10,000 次，種子 20261127）。封存組每張圖有 3 輪，但學校 API 有伺服器端快取，相同請求不是獨立樣本，所以主要結果只用第 1 輪，另報 3 輪是否一致。若 C（VLM＋現行解析）完整列正確率的區間下界高於 A（OCR＋版面配對）的點估計，結論為「VLM 優於 OCR 基線」；否則照實寫「差異不顯著」。
+(2) 複核：CRC 的保證是「每張圖的價格錯誤中，既沒被標記、也沒顯示價格不明的比例」期望值 ≤ α＝0.10。封存組上以合理性檢查（λ＝0.10）計算這個損失的平均與 bootstrap 區間：平均 ≤ 0.10 記為「保證在封存組成立」，否則記為「不成立」並分析原因。同時列出 none／null_only／cross（OCR）／plausibility／all 五種政策的標記率、捕捉率、殘留錯誤率。
+(3) 遮蔽：封存組遮蔽變體用同一產生器（種子 20261127），報告 VLM 棄答率、錯數字率、合理性檢查與 OCR 的捕捉率；不據此改參數。
+(4) 推薦需求情境：封存組 10 案 30 輪以凍結程式執行一次並揭示分數，同時揭示第二項 11-26 的盲跑結果（當時的程式），兩者並列，差異歸因於程式版本。
+(5) 提問策略：同一模擬使用者協定換成封存組菜單，報告 gini 與無提問、entropy、fixed、random 的命中率與 McNemar 精確檢定。
+
+三、凍結時未完成、照實記錄的缺口
+• 實拍子集（自己到店拍攝、不挑照片）：0 份。封存組全部是網路圖，委員1-2、5-2「人工挑照片」只能部分回應。
+• B′（其他 VLM）：未執行；學校 API 未確認是否有第二個視覺模型。
+• 5.5 影像長邊掃描（準確度–延遲曲線）：未執行。凍結值維持 3600，可在凍結後以開發組做描述性量測，不改凍結值。
+• 標準答案雙人獨立簽核：0 份（登錄表已備）。
+• 節點 7 人工成本、節點 D 使用者評估、開放問答人工評分：使用者指示先跳過。
+• 封存組只有 4 份台式餐廳（阿美、半斤九兩、雞窩、新天地梧棲），合菜規則能在封存組驗證的範圍有限。
+
+四、凍結前驗證（實際執行）
+單元測試 413 項全部通過；推薦規則評測 10/10；開發組互動情境 15/15；CI 範圍的 ruff 與 mypy 全部通過。
