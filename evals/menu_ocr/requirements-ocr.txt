@@ -1,0 +1,5 @@
+# 節點 5 A 組 OCR 基線與交叉複核的評測依賴（不進產品 requirements.txt）
+# 版本為 2026-11-27 開發實驗實際使用的版本
+rapidocr-onnxruntime==1.4.4
+onnxruntime==1.32.0
+opencc-python-reimplemented==0.1.7

@@ -1,0 +1,2569 @@
+{
+  "generatedAt": "2026-11-27T02:23:32+00:00",
+  "vlmSource": "evals/results/2026-11-26-step2 第 1 輪 --debug 原始回應，經目前 menu_vision 解析",
+  "ocr": {
+    "ocrEngine": "rapidocr-onnxruntime (PP-OCR models)",
+    "ocrPostprocess": "opencc s2tw",
+    "rapidocr-onnxruntime": "1.4.4",
+    "onnxruntime": "1.32.0",
+    "opencc-python-reimplemented": "0.1.7"
+  },
+  "summary": {
+    "dev": {
+      "items": 93,
+      "errors": 0,
+      "errorKinds": {
+        "price": 0,
+        "spurious": 0
+      },
+      "missedTruthItems": 0,
+      "missedCaughtByOrphans": 0,
+      "policies": {
+        "none": {
+          "flagged": 0,
+          "errorsCaught": 0,
+          "errorsResidual": 0
+        },
+        "null_only": {
+          "flagged": 7,
+          "errorsCaught": 0,
+          "errorsResidual": 0
+        },
+        "cross": {
+          "flagged": 15,
+          "errorsCaught": 0,
+          "errorsResidual": 0
+        },
+        "all": {
+          "flagged": 93,
+          "errorsCaught": 0,
+          "errorsResidual": 0
+        }
+      },
+      "flagKinds": {
+        "price_ambiguous": 0,
+        "name_not_in_ocr": 8,
+        "ocr_price_mismatch": 2,
+        "price_unverified": 5
+      }
+    },
+    "stress": {
+      "items": 99,
+      "errors": 4,
+      "errorKinds": {
+        "price": 3,
+        "spurious": 1
+      },
+      "missedTruthItems": 1,
+      "missedCaughtByOrphans": 0,
+      "policies": {
+        "none": {
+          "flagged": 0,
+          "errorsCaught": 0,
+          "errorsResidual": 4
+        },
+        "null_only": {
+          "flagged": 19,
+          "errorsCaught": 1,
+          "errorsResidual": 3
+        },
+        "cross": {
+          "flagged": 50,
+          "errorsCaught": 3,
+          "errorsResidual": 1
+        },
+        "all": {
+          "flagged": 99,
+          "errorsCaught": 4,
+          "errorsResidual": 0
+        }
+      },
+      "flagKinds": {
+        "price_ambiguous": 0,
+        "name_not_in_ocr": 20,
+        "ocr_price_mismatch": 3,
+        "price_unverified": 27
+      }
+    },
+    "all": {
+      "items": 192,
+      "errors": 4,
+      "errorKinds": {
+        "price": 3,
+        "spurious": 1
+      },
+      "missedTruthItems": 1,
+      "missedCaughtByOrphans": 0,
+      "policies": {
+        "none": {
+          "flagged": 0,
+          "errorsCaught": 0,
+          "errorsResidual": 4
+        },
+        "null_only": {
+          "flagged": 26,
+          "errorsCaught": 1,
+          "errorsResidual": 3
+        },
+        "cross": {
+          "flagged": 65,
+          "errorsCaught": 3,
+          "errorsResidual": 1
+        },
+        "all": {
+          "flagged": 192,
+          "errorsCaught": 4,
+          "errorsResidual": 0
+        }
+      },
+      "flagKinds": {
+        "price_ambiguous": 0,
+        "name_not_in_ocr": 28,
+        "ocr_price_mismatch": 5,
+        "price_unverified": 32
+      }
+    }
+  },
+  "cases": [
+    {
+      "split": "dev",
+      "case": "extra_caesar_jiayan",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚紅燒肉"
+          }
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "無排骨"
+          }
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鳯梨糖醋骨"
+          }
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "燈龍尖椒松阪豬"
+          }
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肥腸茄香煲"
+          }
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "黑嫩子排"
+          }
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "冰糖豬圈"
+          }
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "四季肥腸"
+          }
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "幹絲肉絲"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "冠軍脆皮德國豬烹調時間40分鐘",
+          "price": "1680",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "dev",
+      "case": "extra_cosmos_jade",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "香雪蓮子"
+          }
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "芋香西米露"
+          }
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "椰果西米露"
+          }
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "杏仁凍豆腐"
+          }
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花茶"
+          }
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "烏龍茶"
+          }
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "香片茶"
+          }
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "普洱茶"
+          }
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鐵觀音茶"
+          }
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花普洱茶"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "一份",
+          "price": "150",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "dev",
+      "case": "liugui_board",
+      "items": [
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "dev",
+      "case": "vege_muffins",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "日式咖哩朱滿福堡"
+          }
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "椒麻堅果辣朱滿福堡"
+          }
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "黑椒扭小排滿福堡"
+          }
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "薯餅起士滿福堡"
+          }
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "經典植物朱肉滿福堡"
+          }
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "松露野菇扭排滿福堡"
+          }
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "義式塔塔G滿福堡"
+          }
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "雙醬植物朱滿福堡"
+          }
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "雙層起司扭滿福堡"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "餘滿福堡",
+          "price": "85",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "dev",
+      "case": "web_dalai_noodles_soups",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "切仔麵/米粉/顆條"
+          }
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肉燥乾麵/米粉/顆條"
+          }
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "什錦麵/米粉/顆條"
+          }
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "排骨湯/乾麵"
+          }
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "豬湯/乾麵"
+          }
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "牛肉湯/河粉"
+          }
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "什錦粥"
+          }
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "蝨目魚肚湯（小）"
+          }
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "蝨目魚肚湯（中）"
+          }
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "蝨目魚肚湯（大）"
+          }
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "蛤仔湯（小）"
+          }
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "蛤仔湯（中）"
+          }
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "蛤仔湯（大）"
+          }
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "仔湯（小）"
+          }
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "仔湯（中）"
+          }
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "仔湯（大）"
+          }
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚片湯（小）"
+          }
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚片湯（中）"
+          }
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚片湯（大）"
+          }
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鮮海魚湯"
+          }
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菇蕈湯（小）"
+          }
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菇蕈湯（中）"
+          }
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菇蕈湯（大）"
+          }
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚丸湯（小）"
+          }
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚丸湯（中）"
+          }
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": 150.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚丸湯（大）"
+          }
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": 50.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "青菜蛋花湯（小）"
+          }
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "青菜蛋花湯（中）"
+          }
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "青菜蛋花湯（大）"
+          }
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "何首鳥養生湯(）"
+          }
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "原味麻油湯"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "dev",
+      "case": "web_fhgh_sets",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": 180.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "一號餐"
+          }
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "ocr_price_mismatch"
+          ],
+          "detail": {
+            "ocrName": "二號餐",
+            "ocrPrice": 5.0
+          }
+        },
+        {
+          "name": "三號餐",
+          "price": 230.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "三號餐"
+          }
+        },
+        {
+          "name": "四號餐",
+          "price": 230.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "四號餐"
+          }
+        },
+        {
+          "name": "五號餐",
+          "price": 350.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "五號餐"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "小吃",
+          "price": "220",
+          "category": ""
+        },
+        {
+          "dish": "套餐",
+          "price": "2",
+          "category": ""
+        },
+        {
+          "dish": "SetMeal",
+          "price": "3",
+          "category": ""
+        },
+        {
+          "dish": "TAIWANESEDELICACIES",
+          "price": "02",
+          "category": ""
+        },
+        {
+          "dish": "TAIWANESEDELICACIES",
+          "price": "03",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "dev",
+      "case": "xianghong",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魯肉便當"
+          }
+        },
+        {
+          "name": "大魯肉飯（外帶）",
+          "price": 55.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "（外帶）大魯肉飯"
+          }
+        },
+        {
+          "name": "小魯肉飯（外帶）",
+          "price": 45.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "（外帶）小魯肉飯"
+          }
+        },
+        {
+          "name": "大魯肉飯（內用）",
+          "price": 50.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "（內用）大魯肉飯"
+          }
+        },
+        {
+          "name": "小魯肉飯（內用）",
+          "price": 40.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "（內用）小魯肉飯"
+          }
+        },
+        {
+          "name": "肉羹飯",
+          "price": 55.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肉羹飯"
+          }
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "ocr_price_mismatch"
+          ],
+          "detail": {
+            "ocrName": "肉羹飯",
+            "ocrPrice": 55.0
+          }
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "白飯"
+          }
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "乾麵"
+          }
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "大乾麵"
+          }
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魯肉湯麵"
+          }
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "大魯肉湯麵"
+          }
+        },
+        {
+          "name": "肉羹麵",
+          "price": 55.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肉羹麵"
+          }
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "大肉羹麵"
+          }
+        },
+        {
+          "name": "魯蛋",
+          "price": 15.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魯蛋"
+          }
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": 20.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "油豆腐/3塊"
+          }
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "燙高麗菜"
+          }
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "淡水魚丸湯"
+          }
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "油豆腐湯"
+          }
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肉羹湯"
+          }
+        },
+        {
+          "name": "75套餐（限內用）",
+          "price": 75.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "85套餐（限內用）",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "味增湯",
+          "price": "25",
+          "category": "湯類"
+        },
+        {
+          "dish": "簡乾",
+          "price": "35",
+          "category": "小菜類"
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "extra_caesar_jiayan_glare",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "魚紅燒肉"
+          }
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "無排骨"
+          }
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鳯梨糖醋骨"
+          }
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "燈箭尖椒松阪豬"
+          }
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肥腸茄香煲"
+          }
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "黑嫩子排"
+          }
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "冰糖豬圈"
+          }
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "四季肥腸"
+          }
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "幹絲肉絲"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "冠軍脆皮德國烹調時間40分鐘",
+          "price": "1680",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "extra_caesar_jiayan_lowres",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鮑魚紅燒肉"
+          }
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "無排骨"
+          }
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "凰梨糖醋骨"
+          }
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "肥腿茄香煲"
+          }
+        },
+        {
+          "name": "黑棗燉子排",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": true,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "四季肥"
+          }
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "冠軍脆皮德圍豬烹調時間40分罐",
+          "price": "1680",
+          "category": ""
+        },
+        {
+          "dish": "燈魔尖概松阪",
+          "price": "520",
+          "category": ""
+        },
+        {
+          "dish": "黑嫩子排",
+          "price": "520",
+          "category": ""
+        },
+        {
+          "dish": "冰糖豬圖",
+          "price": "480",
+          "category": ""
+        },
+        {
+          "dish": "幹蒜肉絲",
+          "price": "420",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "extra_caesar_jiayan_tilt",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 480.0,
+          "error": "price",
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "四季肥腸",
+          "price": 420.0,
+          "error": "price",
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "干絲肉絲",
+          "price": null,
+          "error": "price",
+          "nameTypo": false,
+          "flags": [],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "Sweetandsourporkribs",
+          "price": "1680",
+          "category": ""
+        },
+        {
+          "dish": "冠軍脆皮德國豬烹調時間40分鐘",
+          "price": "680",
+          "category": ""
+        },
+        {
+          "dish": "Braisedabaloneandporkbelly",
+          "price": "560",
+          "category": ""
+        },
+        {
+          "dish": "Braisedporkribswithgreenonion",
+          "price": "520",
+          "category": ""
+        },
+        {
+          "dish": "Braisedabalone",
+          "price": "06",
+          "category": ""
+        },
+        {
+          "dish": "andporkbelly",
+          "price": "07",
+          "category": ""
+        },
+        {
+          "dish": "Sweetandsourporkribswithpineapple",
+          "price": "520",
+          "category": ""
+        },
+        {
+          "dish": "Stirfriedporkneckwithdrychili",
+          "price": "520",
+          "category": ""
+        },
+        {
+          "dish": "Stewedporkintestinesandeggplantincasserole",
+          "price": "520",
+          "category": ""
+        },
+        {
+          "dish": "Braisedspareribswithjujudesauce",
+          "price": "480",
+          "category": ""
+        },
+        {
+          "dish": "Braisedporkknuckles",
+          "price": "480",
+          "category": ""
+        },
+        {
+          "dish": "Stirfriedgreenbeanandporkintestine",
+          "price": "420",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "extra_cosmos_jade_glare",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "香雪蓮子"
+          }
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "芋香西米露"
+          }
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "椰果西米露"
+          }
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "杏仁凍豆腐"
+          }
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花茶"
+          }
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "香片茶"
+          }
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "普洱茶"
+          }
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鐵觀音茶"
+          }
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花普洱茶"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "一份",
+          "price": "150",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "extra_cosmos_jade_lowres",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "香雪蓮子"
+          }
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "芋香西米露"
+          }
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "椰果西米露"
+          }
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "杏仁凍豆腐"
+          }
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花茶"
+          }
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "香片茶"
+          }
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "普洱茶"
+          }
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鐵觀音茶"
+          }
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花普洱茶"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "一份",
+          "price": "150",
+          "category": ""
+        },
+        {
+          "dish": "份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "extra_cosmos_jade_tilt",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "香雪蓮子"
+          }
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "芋香西米露"
+          }
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "椰果西米露"
+          }
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "杏仁凍豆腐"
+          }
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花茶"
+          }
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "香片茶"
+          }
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "普洱茶"
+          }
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "鐵觀音茶"
+          }
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "菊花普洱茶"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "150",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        },
+        {
+          "dish": "一份",
+          "price": "120",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "liugui_board_glare",
+      "items": [
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "ocr_price_mismatch"
+          ],
+          "detail": {
+            "ocrName": "炒板條",
+            "ocrPrice": 38.0
+          }
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "liugui_board_lowres",
+      "items": [
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "liugui_board_tilt",
+      "items": [
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "面",
+          "price": "80",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "vege_muffins_glare",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "日式咖哩朱滿福堡"
+          }
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "椒麻堅果辣朱滿福堡"
+          }
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "黑椒扭小排滿福堡"
+          }
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "薯餅起士滿福堡"
+          }
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "經典植物朱肉滿福堡"
+          }
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "松露野菇扭排滿福堡"
+          }
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "義式塔塔G滿福堡"
+          }
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "雙醬植物朱滿福堡"
+          }
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "雙層起司扭滿福堡"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "加美生菜+S15/升級非油炸植物朱肉+",
+          "price": "15",
+          "category": ""
+        },
+        {
+          "dish": "餘滿福堡",
+          "price": "85",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "vege_muffins_lowres",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "日式咖理朱滿福堡"
+          }
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "椒麻堅果辣朱滿福堡"
+          }
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "黑椒扭小排滿福堡"
+          }
+        },
+        {
+          "name": "鰹魚滿福堡",
+          "price": 85.0,
+          "error": "spurious",
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "薯餅起士蒲福堡"
+          }
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "經典植物朱肉滿福堡"
+          }
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "松露野菇扭排滿福堡"
+          }
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "義式塔塔G蒲福堡"
+          }
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "斐醬植物朱滿福堡"
+          }
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "斐層起司扭滿福堡"
+          }
+        }
+      ],
+      "missed": [
+        "鮪余滿福堡"
+      ],
+      "orphans": [
+        {
+          "dish": "餘滿福堡",
+          "price": "85",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    },
+    {
+      "split": "stress",
+      "case": "vege_muffins_tilt",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [],
+          "detail": {
+            "ocrName": "日式咖哩朱滿福堡"
+          }
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "椒麻果辣朱滿福堡"
+          }
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "黑椒扭小排滿福堡"
+          }
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "name_not_in_ocr"
+          ],
+          "detail": {}
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "薯餅起士滿福堡"
+          }
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "ocr_price_mismatch"
+          ],
+          "detail": {
+            "ocrName": "經典植物朱肉滿福堡",
+            "ocrPrice": 120.0
+          }
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "松露野菇扭排滿福堡"
+          }
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "義式塔塔G滿福堡"
+          }
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "ocr_price_mismatch"
+          ],
+          "detail": {
+            "ocrName": "雙醬植物朱滿福堡",
+            "ocrPrice": 110.0
+          }
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": null,
+          "nameTypo": false,
+          "flags": [
+            "price_unverified"
+          ],
+          "detail": {
+            "ocrName": "雙層起司扭滿福堡"
+          }
+        }
+      ],
+      "missed": [],
+      "orphans": [
+        {
+          "dish": "本系列不含高苣及美生菜",
+          "price": "85",
+          "category": ""
+        },
+        {
+          "dish": "加美生菜+$15/升級非油炸植物朱肉+",
+          "price": "15",
+          "category": ""
+        },
+        {
+          "dish": "滿福堡剛好",
+          "price": "85",
+          "category": ""
+        },
+        {
+          "dish": "PlantTruffleMushroomPlantSteak",
+          "price": "105",
+          "category": ""
+        },
+        {
+          "dish": "PlantPorkwithCurrySauce",
+          "price": "85",
+          "category": ""
+        },
+        {
+          "dish": "VeganChickenwithTartarSauce",
+          "price": "100",
+          "category": ""
+        },
+        {
+          "dish": "PlantShortRibswithBlackPepperSauce",
+          "price": "85",
+          "category": ""
+        },
+        {
+          "dish": "餘滿福堡",
+          "price": "85",
+          "category": ""
+        }
+      ],
+      "orphanHitsMissed": 0
+    }
+  ]
+}

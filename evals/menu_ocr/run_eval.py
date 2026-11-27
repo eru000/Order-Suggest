@@ -73,7 +73,16 @@ def _get_menu_vision() -> Any:
     return menu_vision
 
 
+# --method ocr 時改用 A 組基線（OCR＋版面配對），其餘真值、計分與紀錄完全相同。
+ANALYZER = "vlm"
+
+
 def analyze_menu_image(*args: Any, **kwargs: Any) -> dict[str, Any]:
+    if ANALYZER == "ocr":
+        import ocr_baseline
+
+        kwargs.pop("vision_func", None)
+        return ocr_baseline.analyze(*args, **kwargs)
     return _get_menu_vision().analyze_menu_image(*args, **kwargs)
 
 
@@ -588,7 +597,7 @@ def run_case(
         vision_kwargs = {"vision_func": _logging_vision(exchanges, include_response=debug)}
     transport = None
     try:
-        with trace_transport(deny_network=recorded is not None) as transport:
+        with trace_transport(deny_network=recorded is not None or ANALYZER == "ocr") as transport:
             result = analyze_menu_image(
                 Path(image_path).read_bytes(),
                 case["mime"],
@@ -769,10 +778,13 @@ def print_report(run: dict[str, Any], verbose: bool) -> None:
     print()
     print("=" * 72)
     print(f"  菜單 OCR 評測：{run['label']}")
-    print(
-        f"  OCR={run['config']['visionModel']}  校對={run['config']['verifyModel']}"
-        f"  fast={run['config']['fast']}"
-    )
+    if run["config"].get("method") == "ocr":
+        print(f"  方法=A 組 OCR＋版面配對（{run['config'].get('ocrEngine', 'ocr')}），不呼叫 VLM")
+    else:
+        print(
+            f"  OCR={run['config']['visionModel']}  校對={run['config']['verifyModel']}"
+            f"  fast={run['config']['fast']}"
+        )
     print("=" * 72)
     print(_pad("案例", 20) + f"{'召回':>6}{'精確':>8}{'全標價':>8}{'秒':>7}  店名")
     print("-" * 72)
@@ -1076,6 +1088,12 @@ def main() -> int:
     parser.add_argument(
         "--jobs", type=int, default=1, help="同時跑幾個案例。預設 1，避免一次打爆學校 API"
     )
+    parser.add_argument(
+        "--method",
+        choices=["vlm", "ocr"],
+        default="vlm",
+        help="vlm：產品的 VLM 辨識（預設）；ocr：A 組 OCR＋版面配對基線，不打 API",
+    )
     parser.add_argument("--dry-run", action="store_true", help="只檢查案例與估算呼叫次數")
     parser.add_argument("--verbose", action="store_true", help="印出完整的漏抓/錯字清單")
     parser.add_argument(
@@ -1187,7 +1205,7 @@ def main() -> int:
 
     planned = (
         0
-        if args.replay
+        if args.replay or args.method == "ocr"
         else sum(estimate_api_calls(case["image_path"], args.fast) for case in cases)
     )
     if not args.replay:
@@ -1232,7 +1250,14 @@ def main() -> int:
         visionPriceText=os.getenv("VISION_PRICE_TEXT", "0"),
     )
 
-    if not args.replay and not os.getenv("API_KEY"):
+    global ANALYZER
+    ANALYZER = args.method
+    config["method"] = args.method
+    if args.method == "ocr":
+        import ocr_baseline
+
+        config.update(ocr_baseline.engine_info())
+    if args.method == "vlm" and not args.replay and not os.getenv("API_KEY"):
         print("✗ 沒有讀到 API_KEY，請確認專案根目錄的 .env")
         return 2
 

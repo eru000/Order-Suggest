@@ -23,7 +23,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 SAFE_SETTING_KEYS = frozenset({
     "visionModel", "verifyModel", "fast", "tileOverlap", "tileThreshold",
     "matchThreshold", "jobs", "debug", "visionLongSide", "visionTiles",
-    "visionTemperature", "visionPriceText", "visionMaxTokens", "targetLongSide", "minUpscaleLongSide",
+    "visionTemperature", "visionPriceText", "visionMaxTokens", "method", "ocrEngine",
+    "ocrPostprocess", "rapidocr-onnxruntime", "onnxruntime", "opencc-python-reimplemented", "targetLongSide", "minUpscaleLongSide",
     "jpegQuality", "transport", "endpointHost", "cacheStatus", "cachePolicy",
     "scoringVersion", "longSide", "temperature", "tiles", "maxTokens",
 })
