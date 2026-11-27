@@ -32,7 +32,42 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "evals" / "recommendation"))
 
 OUT = ROOT / "evals" / "results" / "step6"
-_MONEY = re.compile(r"(?:NT\$|\$|＄)\s*([\d,]+(?:\.\d+)?)|([\d,]+(?:\.\d+)?)\s*(?:元|塊)")
+_MONEY = re.compile(r"(?:NT\$|\$|＄)\s*([\d,]+(?:\.\d+)?)|([\d,]+(?:\.\d+)?)(?!\s*(?:%|％|人|位|道|份|杯|瓶|盤|碗|分鐘|個))")
+_CN_DIGITS = {"零": 0, "〇": 0, "一": 1, "二": 2, "兩": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+_CN_UNITS = {"十": 10, "百": 100, "千": 1000, "萬": 10000}
+_CN_RUN = re.compile(r"[零〇一二兩三四五六七八九十百千萬]+")
+
+
+def _cn_number(run: str) -> int | None:
+    """「八百一十」→810、「一千」→1000、「六九三」→693（逐位念法）。"""
+    if all(ch in _CN_DIGITS for ch in run):
+        return int("".join(str(_CN_DIGITS[ch]) for ch in run)) if len(run) >= 2 else None
+    total = section = digit = 0
+    last_unit = 1
+    for ch in run:
+        if ch in _CN_DIGITS:
+            digit = _CN_DIGITS[ch]
+        else:
+            unit = _CN_UNITS[ch]
+            if unit == 10000:
+                total += (section + digit) * unit
+                section = digit = 0
+            else:
+                section += (digit or 1) * unit
+                digit = 0
+            last_unit = unit
+    # 「八百一」＝810、「一千二」＝1200：尾數接在最後一個單位的下一位
+    if digit:
+        section += digit * (last_unit // 10 if last_unit >= 100 else 1)
+    return total + section or None
+
+
+def to_arabic(text: str) -> str:
+    """把中文數字金額轉成阿拉伯數字，LLM 常寫「三百」「八百一十」。"""
+    def repl(match: re.Match[str]) -> str:
+        value = _cn_number(match.group(0))
+        return str(value) if value is not None else match.group(0)
+    return _CN_RUN.sub(repl, text)
 
 
 def _cases() -> list[dict[str, Any]]:
@@ -91,12 +126,14 @@ def fact_check(text: str, rec: dict[str, Any], menu_names: list[str]) -> dict[st
         derived += [v / people for v in (budget, subtotal, total) if v is not None]  # 每人
     allowed.update(round(v, 2) for v in derived if v is not None)
     numbers = []
-    for match in _MONEY.finditer(text):
+    for match in _MONEY.finditer(to_arabic(text)):
         raw = (match.group(1) or match.group(2)).replace(",", "")
         try:
-            numbers.append(round(float(raw), 2))
+            value = round(float(raw), 2)
         except ValueError:
             continue
+        if value >= 10:  # 個位數多半是人數、杯數、道數
+            numbers.append(value)
     # 四捨五入容許 1 元誤差
     unsupported = [n for n in numbers if not any(abs(n - a) <= 1.0 for a in allowed)]
     # 先移除推薦的菜名，再找其他菜名，避免「鴨肉飯」被「鴨肉」重複計算
@@ -212,6 +249,6 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "live":
         raise SystemExit(live())
     if len(sys.argv) >= 3 and sys.argv[1] == "score":
-        raise SystemExit(score(Path(sys.argv[2])))
+        raise SystemExit(score(Path(sys.argv[2]).resolve()))
     print(__doc__)
     raise SystemExit(2)
