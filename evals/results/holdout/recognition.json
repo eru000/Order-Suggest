@@ -1,0 +1,2303 @@
+{
+  "summary": {
+    "frozenAt": "freeze-final",
+    "secondaryPriceRecall": {
+      "A": {
+        "matched": 105,
+        "priceCorrect": 73,
+        "pricedTruth": 132,
+        "priceRecall": {
+          "point": 0.553030303030303,
+          "low": 0.2945205479452055,
+          "high": 0.803030303030303
+        }
+      },
+      "C": {
+        "matched": 118,
+        "priceCorrect": 105,
+        "pricedTruth": 132,
+        "priceRecall": {
+          "point": 0.7954545454545454,
+          "low": 0.6434108527131783,
+          "high": 0.975609756097561
+        }
+      }
+    },
+    "postHocPriceOnlyReview": {
+      "none": {
+        "policy": "none",
+        "risk": 0.08333333333333333,
+        "flagRate": 0.0,
+        "flagged": 0,
+        "items": 139,
+        "errors": 9,
+        "errorsCaught": 0,
+        "unsurfacedErrors": 4
+      },
+      "null_only": {
+        "policy": "null_only",
+        "risk": 0.08333333333333333,
+        "flagRate": 0.1223021582733813,
+        "flagged": 17,
+        "items": 139,
+        "errors": 9,
+        "errorsCaught": 5,
+        "unsurfacedErrors": 4
+      },
+      "cross": {
+        "policy": "cross",
+        "risk": 0.041666666666666664,
+        "flagRate": 0.4244604316546763,
+        "flagged": 59,
+        "items": 139,
+        "errors": 9,
+        "errorsCaught": 7,
+        "unsurfacedErrors": 2
+      },
+      "plausibility": {
+        "policy": "plausibility",
+        "risk": 0.08333333333333333,
+        "flagRate": 0.0,
+        "flagged": 0,
+        "items": 139,
+        "errors": 9,
+        "errorsCaught": 0,
+        "unsurfacedErrors": 4
+      },
+      "plausibility+cross": {
+        "policy": "plausibility+cross",
+        "risk": 0.041666666666666664,
+        "flagRate": 0.4244604316546763,
+        "flagged": 59,
+        "items": 139,
+        "errors": 9,
+        "errorsCaught": 7,
+        "unsurfacedErrors": 2
+      },
+      "all": {
+        "policy": "all",
+        "risk": 0.0,
+        "flagRate": 1.0,
+        "flagged": 139,
+        "items": 139,
+        "errors": 9,
+        "errorsCaught": 9,
+        "unsurfacedErrors": 0
+      }
+    },
+    "menus": 12,
+    "truthItems": 144,
+    "completeRows": {
+      "A_ocr": {
+        "count": 38,
+        "point": 0.2638888888888889,
+        "low": 0.10429447852760736,
+        "high": 0.41968911917098445
+      },
+      "C_vlm": {
+        "count": 93,
+        "point": 0.6458333333333334,
+        "low": 0.4473684210526316,
+        "high": 0.8231292517006803
+      },
+      "C_minus_A": {
+        "low": 0.2517482517482518,
+        "high": 0.5087719298245614
+      },
+      "preRegisteredVerdict": "VLM 優於 OCR 基線"
+    },
+    "review": {
+      "alpha": 0.1,
+      "lambda": 0.1,
+      "plausibilityRisk": {
+        "mean": 0.25,
+        "low": 0.0,
+        "high": 0.5
+      },
+      "preRegisteredVerdict": "不成立",
+      "policies": {
+        "none": {
+          "policy": "none",
+          "risk": 0.25,
+          "flagRate": 0.0,
+          "flagged": 0,
+          "items": 139,
+          "errors": 30,
+          "errorsCaught": 0,
+          "unsurfacedErrors": 17
+        },
+        "null_only": {
+          "policy": "null_only",
+          "risk": 0.25,
+          "flagRate": 0.1223021582733813,
+          "flagged": 17,
+          "items": 139,
+          "errors": 30,
+          "errorsCaught": 13,
+          "unsurfacedErrors": 17
+        },
+        "cross": {
+          "policy": "cross",
+          "risk": 0.09722222222222221,
+          "flagRate": 0.4244604316546763,
+          "flagged": 59,
+          "items": 139,
+          "errors": 30,
+          "errorsCaught": 12,
+          "unsurfacedErrors": 10
+        },
+        "plausibility": {
+          "policy": "plausibility",
+          "risk": 0.25,
+          "flagRate": 0.0,
+          "flagged": 0,
+          "items": 139,
+          "errors": 30,
+          "errorsCaught": 0,
+          "unsurfacedErrors": 17
+        },
+        "plausibility+cross": {
+          "policy": "plausibility+cross",
+          "risk": 0.09722222222222221,
+          "flagRate": 0.4244604316546763,
+          "flagged": 59,
+          "items": 139,
+          "errors": 30,
+          "errorsCaught": 12,
+          "unsurfacedErrors": 10
+        },
+        "all": {
+          "policy": "all",
+          "risk": 0.0,
+          "flagRate": 1.0,
+          "flagged": 139,
+          "items": 139,
+          "errors": 30,
+          "errorsCaught": 30,
+          "unsurfacedErrors": 0
+        }
+      }
+    },
+    "roundConsistency": {
+      "cafe_cama": {
+        "identicalResponses": true,
+        "completeRows": [
+          15,
+          15,
+          15
+        ]
+      },
+      "cafe_comebuy": {
+        "identicalResponses": true,
+        "completeRows": [
+          0,
+          0,
+          0
+        ]
+      },
+      "cafe_meetfresh": {
+        "identicalResponses": true,
+        "completeRows": [
+          0,
+          0,
+          0
+        ]
+      },
+      "cafe_milksha": {
+        "identicalResponses": true,
+        "completeRows": [
+          12,
+          12,
+          12
+        ]
+      },
+      "hotel_regent_lanting": {
+        "identicalResponses": true,
+        "completeRows": [
+          7,
+          7,
+          7
+        ]
+      },
+      "hotel_royal_huigan": {
+        "identicalResponses": true,
+        "completeRows": [
+          9,
+          9,
+          9
+        ]
+      },
+      "hotel_sheraton_pizzapub": {
+        "identicalResponses": true,
+        "completeRows": [
+          4,
+          4,
+          4
+        ]
+      },
+      "hotel_splendor_lobby": {
+        "identicalResponses": true,
+        "completeRows": [
+          8,
+          8,
+          8
+        ]
+      },
+      "tw_amei": {
+        "identicalResponses": true,
+        "completeRows": [
+          4,
+          4,
+          4
+        ]
+      },
+      "tw_extra9": {
+        "identicalResponses": true,
+        "completeRows": [
+          11,
+          11,
+          11
+        ]
+      },
+      "tw_gwoo": {
+        "identicalResponses": true,
+        "completeRows": [
+          21,
+          21,
+          21
+        ]
+      },
+      "tw_newpalace_wuqi": {
+        "identicalResponses": true,
+        "completeRows": [
+          2,
+          2,
+          2
+        ]
+      }
+    }
+  },
+  "cases": [
+    {
+      "case": "cafe_cama",
+      "expected": 27,
+      "A": {
+        "matchedCount": 19,
+        "exactNamePriceCount": 3,
+        "exactNamePriceRate": 0.1111,
+        "recall": 0.704,
+        "precision": 0.514,
+        "predictedCount": 37,
+        "priceCorrectCount": 9,
+        "pricedExpectedTotal": 27
+      },
+      "C": {
+        "1": {
+          "matchedCount": 15,
+          "exactNamePriceCount": 15,
+          "exactNamePriceRate": 0.5556,
+          "recall": 0.556,
+          "precision": 0.556,
+          "predictedCount": 27,
+          "priceCorrectCount": 15,
+          "pricedExpectedTotal": 27,
+          "responseSha256": "f8828330c7a1bad4952573922a06388e9f7b8860a57b33b98c5f9a70d941f81d",
+          "elapsedSec": 59.197
+        },
+        "2": {
+          "matchedCount": 15,
+          "exactNamePriceCount": 15,
+          "exactNamePriceRate": 0.5556,
+          "recall": 0.556,
+          "precision": 0.556,
+          "predictedCount": 27,
+          "priceCorrectCount": 15,
+          "pricedExpectedTotal": 27,
+          "responseSha256": "f8828330c7a1bad4952573922a06388e9f7b8860a57b33b98c5f9a70d941f81d",
+          "elapsedSec": 2.174
+        },
+        "3": {
+          "matchedCount": 15,
+          "exactNamePriceCount": 15,
+          "exactNamePriceRate": 0.5556,
+          "recall": 0.556,
+          "precision": 0.556,
+          "predictedCount": 27,
+          "priceCorrectCount": 15,
+          "pricedExpectedTotal": 27,
+          "responseSha256": "f8828330c7a1bad4952573922a06388e9f7b8860a57b33b98c5f9a70d941f81d",
+          "elapsedSec": 2.144
+        }
+      },
+      "review": [
+        {
+          "name": "厚蜜地瓜美式（L）",
+          "price": 90.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "厚蜜地瓜美式（XL）",
+          "price": 110.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-盛夏草莓精品冷萃（L）",
+          "price": 120.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0909,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+          "price": 120.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0909,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "海鹽西西里（L）",
+          "price": 110.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "雙倍濃金獎美式（L）",
+          "price": 105.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9545,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "雙倍濃金獎美式（XL）",
+          "price": 120.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0909,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "西西里咖啡（L）",
+          "price": 110.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "西西里咖啡（XL）",
+          "price": 125.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1364,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "雙冠莊園精品美式 Premium Americano（M）",
+          "price": 80.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.7273,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙冠莊園精品美式 Premium Americano（L）",
+          "price": 100.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.9091,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙冠莊園精品美式 Premium Americano（XL）",
+          "price": 120.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 1.0909,
+          "ocrFlags": []
+        },
+        {
+          "name": "CAMA金獎美式 Americano（M）",
+          "price": 65.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.5909,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "CAMA金獎美式 Americano（L）",
+          "price": 80.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.7273,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "CAMA金獎美式 Americano（XL）",
+          "price": 95.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.8636,
+          "ocrFlags": []
+        },
+        {
+          "name": "微韻輕美式 Light Americano（M）",
+          "price": 65.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.5909,
+          "ocrFlags": []
+        },
+        {
+          "name": "微韻輕美式 Light Americano（L）",
+          "price": 80.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.7273,
+          "ocrFlags": []
+        },
+        {
+          "name": "微韻輕美式 Light Americano（XL）",
+          "price": 95.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.8636,
+          "ocrFlags": []
+        },
+        {
+          "name": "精品冷萃-花香耶加雪菲（M）",
+          "price": 110.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-花香耶加雪菲（L）",
+          "price": 125.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1364,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-花香耶加雪菲（XL）",
+          "price": 140.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2727,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-百蜜花園（M）",
+          "price": 110.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-百蜜花園（L）",
+          "price": 125.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1364,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "精品冷萃-百蜜花園（XL）",
+          "price": 140.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2727,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "奶蓋海鹽美式 Milk Foam Sea Salt Coffee（L）",
+          "price": 100.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.9091,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "奶蓋海鹽美式 Milk Foam Sea Salt Coffee（XL）",
+          "price": 110.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "濃縮咖啡 Espresso（M）",
+          "price": 70.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 0.6364,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "case": "cafe_comebuy",
+      "expected": 8,
+      "A": {
+        "matchedCount": 7,
+        "exactNamePriceCount": 0,
+        "exactNamePriceRate": 0.0,
+        "recall": 0.875,
+        "precision": 0.5,
+        "predictedCount": 14,
+        "priceCorrectCount": 7,
+        "pricedExpectedTotal": 8
+      },
+      "C": {
+        "1": {
+          "matchedCount": 8,
+          "exactNamePriceCount": 0,
+          "exactNamePriceRate": 0.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 8,
+          "priceCorrectCount": 8,
+          "pricedExpectedTotal": 8,
+          "responseSha256": "66b024ca13f86c334e6a9b5d81de570dac76a5dcdfb87f65f964d970afa9a309",
+          "elapsedSec": 27.474
+        },
+        "2": {
+          "matchedCount": 8,
+          "exactNamePriceCount": 0,
+          "exactNamePriceRate": 0.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 8,
+          "priceCorrectCount": 8,
+          "pricedExpectedTotal": 8,
+          "responseSha256": "66b024ca13f86c334e6a9b5d81de570dac76a5dcdfb87f65f964d970afa9a309",
+          "elapsedSec": 2.516
+        },
+        "3": {
+          "matchedCount": 8,
+          "exactNamePriceCount": 0,
+          "exactNamePriceRate": 0.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 8,
+          "priceCorrectCount": 8,
+          "pricedExpectedTotal": 8,
+          "responseSha256": "66b024ca13f86c334e6a9b5d81de570dac76a5dcdfb87f65f964d970afa9a309",
+          "elapsedSec": 2.538
+        }
+      },
+      "review": [
+        {
+          "name": "碧螺春綠",
+          "price": 40.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8889,
+          "ocrFlags": []
+        },
+        {
+          "name": "金萱烏龍",
+          "price": 40.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8889,
+          "ocrFlags": []
+        },
+        {
+          "name": "文山包種",
+          "price": 50.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1111,
+          "ocrFlags": []
+        },
+        {
+          "name": "小葉紅茶",
+          "price": 50.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1111,
+          "ocrFlags": []
+        },
+        {
+          "name": "嗨神",
+          "price": 45.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "玩火",
+          "price": 45.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮萃大麥紅茶",
+          "price": 40.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8889,
+          "ocrFlags": []
+        },
+        {
+          "name": "玫瑰普洱",
+          "price": 45.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "cafe_meetfresh",
+      "expected": 8,
+      "A": {
+        "matchedCount": 0,
+        "exactNamePriceCount": 0,
+        "exactNamePriceRate": 0.0,
+        "recall": 0.0,
+        "precision": 0.0,
+        "predictedCount": 34,
+        "priceCorrectCount": 0,
+        "pricedExpectedTotal": 0
+      },
+      "C": {
+        "1": {
+          "matchedCount": 0,
+          "exactNamePriceCount": 0,
+          "exactNamePriceRate": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "predictedCount": 8,
+          "priceCorrectCount": 0,
+          "pricedExpectedTotal": 0,
+          "responseSha256": "04968c8db0376d9f1f8b08ac6bf5767d8b3889bf9b89c954d1cc0f19b0aa6979",
+          "elapsedSec": 31.383
+        },
+        "2": {
+          "matchedCount": 0,
+          "exactNamePriceCount": 0,
+          "exactNamePriceRate": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "predictedCount": 8,
+          "priceCorrectCount": 0,
+          "pricedExpectedTotal": 0,
+          "responseSha256": "04968c8db0376d9f1f8b08ac6bf5767d8b3889bf9b89c954d1cc0f19b0aa6979",
+          "elapsedSec": 2.705
+        },
+        "3": {
+          "matchedCount": 0,
+          "exactNamePriceCount": 0,
+          "exactNamePriceRate": 0.0,
+          "recall": 0.0,
+          "precision": 0.0,
+          "predictedCount": 8,
+          "priceCorrectCount": 0,
+          "pricedExpectedTotal": 0,
+          "responseSha256": "04968c8db0376d9f1f8b08ac6bf5767d8b3889bf9b89c954d1cc0f19b0aa6979",
+          "elapsedSec": 2.428
+        }
+      },
+      "review": [
+        {
+          "name": "Pudding & Q Mochi Milk Shaved Ice 布丁Q麻糬牛奶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "Q Mochi Milk Shaved Ice 芋薯圓Q麻糬牛奶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "Red Bean Milk Shaved Ice 紅豆牛奶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "Taro Milk Shaved Ice 芋頭牛奶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "8 Treasures Shaved Ice 總匯八寶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "Signature Jelly Noodle Shaved Ice 招牌粉條冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "Strawberry Milk Shaved Ice 草莓牛奶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "Mango Milk Shaved Ice 芒果牛奶冰",
+          "price": null,
+          "error": true,
+          "spurious": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "case": "cafe_milksha",
+      "expected": 17,
+      "A": {
+        "matchedCount": 17,
+        "exactNamePriceCount": 10,
+        "exactNamePriceRate": 0.5882,
+        "recall": 1.0,
+        "precision": 0.944,
+        "predictedCount": 18,
+        "priceCorrectCount": 17,
+        "pricedExpectedTotal": 17
+      },
+      "C": {
+        "1": {
+          "matchedCount": 17,
+          "exactNamePriceCount": 12,
+          "exactNamePriceRate": 0.7059,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 17,
+          "priceCorrectCount": 13,
+          "pricedExpectedTotal": 17,
+          "responseSha256": "81d529c19808fe53e1d71d0c82d61a93c2c190ef4838ecc7fe51a1fab39d1a46",
+          "elapsedSec": 76.558
+        },
+        "2": {
+          "matchedCount": 17,
+          "exactNamePriceCount": 12,
+          "exactNamePriceRate": 0.7059,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 17,
+          "priceCorrectCount": 13,
+          "pricedExpectedTotal": 17,
+          "responseSha256": "81d529c19808fe53e1d71d0c82d61a93c2c190ef4838ecc7fe51a1fab39d1a46",
+          "elapsedSec": 5.929
+        },
+        "3": {
+          "matchedCount": 17,
+          "exactNamePriceCount": 12,
+          "exactNamePriceRate": 0.7059,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 17,
+          "priceCorrectCount": 13,
+          "pricedExpectedTotal": 17,
+          "responseSha256": "81d529c19808fe53e1d71d0c82d61a93c2c190ef4838ecc7fe51a1fab39d1a46",
+          "elapsedSec": 3.634
+        }
+      },
+      "review": [
+        {
+          "name": "娜杯太妃QQ *雙倍料（L）",
+          "price": 60.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.75,
+          "ocrFlags": []
+        },
+        {
+          "name": "太妃烏龍拿鐵（L）",
+          "price": 75.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "太妃伯爵布朗拿鐵（M）",
+          "price": 80.0,
+          "error": true,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "太妃伯爵布朗拿鐵（L）",
+          "price": 110.0,
+          "error": true,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.4194,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "太妃焙焙拿鐵（M）",
+          "price": 85.0,
+          "error": true,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0968,
+          "ocrFlags": []
+        },
+        {
+          "name": "太妃焙焙拿鐵（L）",
+          "price": 120.0,
+          "error": true,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "京都極選抹茶（M）",
+          "price": 60.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.75,
+          "ocrFlags": []
+        },
+        {
+          "name": "京都極選抹茶（L）",
+          "price": 70.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.875,
+          "ocrFlags": []
+        },
+        {
+          "name": "京都極選抹茶鮮奶（M）",
+          "price": 100.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2903,
+          "ocrFlags": []
+        },
+        {
+          "name": "靜岡焙焙鮮奶（M）",
+          "price": 70.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.875,
+          "ocrFlags": []
+        },
+        {
+          "name": "靜岡焙焙鮮奶（L）",
+          "price": 90.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1613,
+          "ocrFlags": []
+        },
+        {
+          "name": "靜岡焙焙烏龍拿鐵（M）",
+          "price": 65.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8125,
+          "ocrFlags": []
+        },
+        {
+          "name": "靜岡焙焙烏龍拿鐵（L）",
+          "price": 75.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "伯爵可可拿鐵（M）",
+          "price": 75.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "伯爵可可拿鐵（L）",
+          "price": 85.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0968,
+          "ocrFlags": []
+        },
+        {
+          "name": "法芙娜可可鮮奶（M）",
+          "price": 80.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "法芙娜可可鮮奶（L）",
+          "price": 100.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2903,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "case": "hotel_regent_lanting",
+      "expected": 8,
+      "A": {
+        "matchedCount": 5,
+        "exactNamePriceCount": 5,
+        "exactNamePriceRate": 0.625,
+        "recall": 0.625,
+        "precision": 0.556,
+        "predictedCount": 9,
+        "priceCorrectCount": 5,
+        "pricedExpectedTotal": 8
+      },
+      "C": {
+        "1": {
+          "matchedCount": 7,
+          "exactNamePriceCount": 7,
+          "exactNamePriceRate": 0.875,
+          "recall": 0.875,
+          "precision": 0.875,
+          "predictedCount": 8,
+          "priceCorrectCount": 7,
+          "pricedExpectedTotal": 8,
+          "responseSha256": "e673f289db7f1b546d2645d46236145689ae0840dec0d28587ec04407196a8df",
+          "elapsedSec": 67.617
+        },
+        "2": {
+          "matchedCount": 7,
+          "exactNamePriceCount": 7,
+          "exactNamePriceRate": 0.875,
+          "recall": 0.875,
+          "precision": 0.875,
+          "predictedCount": 8,
+          "priceCorrectCount": 7,
+          "pricedExpectedTotal": 8,
+          "responseSha256": "e673f289db7f1b546d2645d46236145689ae0840dec0d28587ec04407196a8df",
+          "elapsedSec": 2.438
+        },
+        "3": {
+          "matchedCount": 7,
+          "exactNamePriceCount": 7,
+          "exactNamePriceRate": 0.875,
+          "recall": 0.875,
+          "precision": 0.875,
+          "predictedCount": 8,
+          "priceCorrectCount": 7,
+          "pricedExpectedTotal": 8,
+          "responseSha256": "e673f289db7f1b546d2645d46236145689ae0840dec0d28587ec04407196a8df",
+          "elapsedSec": 2.398
+        }
+      },
+      "review": [
+        {
+          "name": "鮮筍",
+          "price": 680.0,
+          "error": true,
+          "spurious": true,
+          "priceNull": false,
+          "outlierScore": 1.4167,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "瑤柱娃娃菜",
+          "price": 580.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2083,
+          "ocrFlags": []
+        },
+        {
+          "name": "絲瓜老少蛋",
+          "price": 480.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "雪菜百頁",
+          "price": 460.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9583,
+          "ocrFlags": []
+        },
+        {
+          "name": "麻婆豆腐",
+          "price": 520.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0833,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "乾煸四季豆",
+          "price": 480.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "季節時蔬",
+          "price": 480.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "宮保臭豆腐",
+          "price": 420.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.875,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "case": "hotel_royal_huigan",
+      "expected": 9,
+      "A": {
+        "matchedCount": 8,
+        "exactNamePriceCount": 3,
+        "exactNamePriceRate": 0.3333,
+        "recall": 0.889,
+        "precision": 0.727,
+        "predictedCount": 11,
+        "priceCorrectCount": 5,
+        "pricedExpectedTotal": 9
+      },
+      "C": {
+        "1": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 9,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 9,
+          "pricedExpectedTotal": 9,
+          "responseSha256": "bd112186260636d0328557c231218cf2bd15d30f066c4b1ce92e43d51f328bcd",
+          "elapsedSec": 16.564
+        },
+        "2": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 9,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 9,
+          "pricedExpectedTotal": 9,
+          "responseSha256": "bd112186260636d0328557c231218cf2bd15d30f066c4b1ce92e43d51f328bcd",
+          "elapsedSec": 2.259
+        },
+        "3": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 9,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 9,
+          "pricedExpectedTotal": 9,
+          "responseSha256": "bd112186260636d0328557c231218cf2bd15d30f066c4b1ce92e43d51f328bcd",
+          "elapsedSec": 2.223
+        }
+      },
+      "review": [
+        {
+          "name": "蔬食咖哩飯(五辛素)",
+          "price": 180.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "綠咖哩雞肉飯",
+          "price": 250.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "紅燒牛肉麵",
+          "price": 280.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "老爺式炒飯",
+          "price": 160.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9412,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "XO醬乾拌麵",
+          "price": 160.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9412,
+          "ocrFlags": []
+        },
+        {
+          "name": "油蔥酥意麵",
+          "price": 160.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9412,
+          "ocrFlags": []
+        },
+        {
+          "name": "燻雞起司可頌",
+          "price": 100.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.5882,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燻里肌帕里尼",
+          "price": 120.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.7059,
+          "ocrFlags": []
+        },
+        {
+          "name": "麻油雞麵",
+          "price": 280.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "hotel_sheraton_pizzapub",
+      "expected": 4,
+      "A": {
+        "matchedCount": 4,
+        "exactNamePriceCount": 0,
+        "exactNamePriceRate": 0.0,
+        "recall": 1.0,
+        "precision": 0.333,
+        "predictedCount": 12,
+        "priceCorrectCount": 0,
+        "pricedExpectedTotal": 4
+      },
+      "C": {
+        "1": {
+          "matchedCount": 4,
+          "exactNamePriceCount": 4,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 4,
+          "priceCorrectCount": 4,
+          "pricedExpectedTotal": 4,
+          "responseSha256": "8fb8dc229ff3c3da4176fc69a14ca7f13437f4c1e9c150b96a9bde9bea6d13bf",
+          "elapsedSec": 15.008
+        },
+        "2": {
+          "matchedCount": 4,
+          "exactNamePriceCount": 4,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 4,
+          "priceCorrectCount": 4,
+          "pricedExpectedTotal": 4,
+          "responseSha256": "8fb8dc229ff3c3da4176fc69a14ca7f13437f4c1e9c150b96a9bde9bea6d13bf",
+          "elapsedSec": 3.519
+        },
+        "3": {
+          "matchedCount": 4,
+          "exactNamePriceCount": 4,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 4,
+          "priceCorrectCount": 4,
+          "pricedExpectedTotal": 4,
+          "responseSha256": "8fb8dc229ff3c3da4176fc69a14ca7f13437f4c1e9c150b96a9bde9bea6d13bf",
+          "elapsedSec": 2.431
+        }
+      },
+      "review": [
+        {
+          "name": "主廚手作麵疙瘩、明蝦塔塔、魚子醬",
+          "price": 880.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8148,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "拿坡里番茄水管麵",
+          "price": 580.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.537,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "燒烤日本鹿兒島A5小田和牛紐約客5oz.",
+          "price": 2280.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 2.5909,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "地中海風味香料比目魚",
+          "price": 1080.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2273,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "hotel_splendor_lobby",
+      "expected": 9,
+      "A": {
+        "matchedCount": 9,
+        "exactNamePriceCount": 0,
+        "exactNamePriceRate": 0.0,
+        "recall": 1.0,
+        "precision": 0.45,
+        "predictedCount": 20,
+        "priceCorrectCount": 0,
+        "pricedExpectedTotal": 9
+      },
+      "C": {
+        "1": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 8,
+          "exactNamePriceRate": 0.8889,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 9,
+          "pricedExpectedTotal": 9,
+          "responseSha256": "fa40fb041941305d37ff94690cedf5990aaa5ebf6810b36c9037c3e044afb1fa",
+          "elapsedSec": 18.576
+        },
+        "2": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 8,
+          "exactNamePriceRate": 0.8889,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 9,
+          "pricedExpectedTotal": 9,
+          "responseSha256": "fa40fb041941305d37ff94690cedf5990aaa5ebf6810b36c9037c3e044afb1fa",
+          "elapsedSec": 2.192
+        },
+        "3": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 8,
+          "exactNamePriceRate": 0.8889,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 9,
+          "pricedExpectedTotal": 9,
+          "responseSha256": "fa40fb041941305d37ff94690cedf5990aaa5ebf6810b36c9037c3e044afb1fa",
+          "elapsedSec": 2.725
+        }
+      },
+      "review": [
+        {
+          "name": "奶奶的鄉下炸薯片",
+          "price": 320.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8767,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "酥炸薯條佐松露醬",
+          "price": 320.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8767,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "酥炸雞腿搭法式洋蔥圈",
+          "price": 340.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9315,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "酒館風味百里香酥炸花枝圈搭配白蘭地塔塔醬汁",
+          "price": 340.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9315,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "綜合乳酪盤",
+          "price": 350.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9722,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "招牌香草蒜味烘烤焗田螺",
+          "price": 380.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1014,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "傳統手工輕漬鮭魚佐鮮貝塔塔襯魚子醬",
+          "price": 420.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2174,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "黃金炸魚薯條搭香草蕃茄醬汁及塔塔醬",
+          "price": 420.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2174,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "炙燒港口鮮蝦搭時蔬佐西班牙風味奶油",
+          "price": 450.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.3043,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "tw_amei",
+      "expected": 14,
+      "A": {
+        "matchedCount": 1,
+        "exactNamePriceCount": 0,
+        "exactNamePriceRate": 0.0,
+        "recall": 0.071,
+        "precision": 0.111,
+        "predictedCount": 9,
+        "priceCorrectCount": 0,
+        "pricedExpectedTotal": 14
+      },
+      "C": {
+        "1": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 4,
+          "exactNamePriceRate": 0.2857,
+          "recall": 0.643,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 4,
+          "pricedExpectedTotal": 14,
+          "responseSha256": "8ec3cddd451717afdb503713c01bbe1fba303efb85c6bdebb6d9118590266241",
+          "elapsedSec": 45.485
+        },
+        "2": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 4,
+          "exactNamePriceRate": 0.2857,
+          "recall": 0.643,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 4,
+          "pricedExpectedTotal": 14,
+          "responseSha256": "8ec3cddd451717afdb503713c01bbe1fba303efb85c6bdebb6d9118590266241",
+          "elapsedSec": 2.551
+        },
+        "3": {
+          "matchedCount": 9,
+          "exactNamePriceCount": 4,
+          "exactNamePriceRate": 0.2857,
+          "recall": 0.643,
+          "precision": 1.0,
+          "predictedCount": 9,
+          "priceCorrectCount": 4,
+          "pricedExpectedTotal": 14,
+          "responseSha256": "8ec3cddd451717afdb503713c01bbe1fba303efb85c6bdebb6d9118590266241",
+          "elapsedSec": 2.501
+        }
+      },
+      "review": [
+        {
+          "name": "烏魚子",
+          "price": null,
+          "error": true,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr",
+            "price_ambiguous"
+          ]
+        },
+        {
+          "name": "蝦棗",
+          "price": null,
+          "error": true,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr",
+            "price_ambiguous"
+          ]
+        },
+        {
+          "name": "蟳丸",
+          "price": null,
+          "error": true,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr",
+            "price_ambiguous"
+          ]
+        },
+        {
+          "name": "手工花枝丸",
+          "price": null,
+          "error": true,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "price_ambiguous"
+          ]
+        },
+        {
+          "name": "香菇",
+          "price": 250.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.7143,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "香腸",
+          "price": 250.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.7143,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "蝦棗拼香腸",
+          "price": 350.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.4,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "三色拼盤",
+          "price": null,
+          "error": true,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr",
+            "price_ambiguous"
+          ]
+        },
+        {
+          "name": "四碟拼盤",
+          "price": 1000.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 4.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "tw_extra9",
+      "expected": 12,
+      "A": {
+        "matchedCount": 9,
+        "exactNamePriceCount": 5,
+        "exactNamePriceRate": 0.4167,
+        "recall": 0.75,
+        "precision": 1.0,
+        "predictedCount": 9,
+        "priceCorrectCount": 9,
+        "pricedExpectedTotal": 10
+      },
+      "C": {
+        "1": {
+          "matchedCount": 12,
+          "exactNamePriceCount": 11,
+          "exactNamePriceRate": 0.9167,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 12,
+          "priceCorrectCount": 10,
+          "pricedExpectedTotal": 10,
+          "responseSha256": "c2f5b1ec82ce780bdbcfc4054bd58ab9a4c86136f5f8961f791ca3e1ca674de0",
+          "elapsedSec": 10.605
+        },
+        "2": {
+          "matchedCount": 12,
+          "exactNamePriceCount": 11,
+          "exactNamePriceRate": 0.9167,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 12,
+          "priceCorrectCount": 10,
+          "pricedExpectedTotal": 10,
+          "responseSha256": "c2f5b1ec82ce780bdbcfc4054bd58ab9a4c86136f5f8961f791ca3e1ca674de0",
+          "elapsedSec": 2.286
+        },
+        "3": {
+          "matchedCount": 12,
+          "exactNamePriceCount": 11,
+          "exactNamePriceRate": 0.9167,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 12,
+          "priceCorrectCount": 10,
+          "pricedExpectedTotal": 10,
+          "responseSha256": "c2f5b1ec82ce780bdbcfc4054bd58ab9a4c86136f5f8961f791ca3e1ca674de0",
+          "elapsedSec": 2.159
+        }
+      },
+      "review": [
+        {
+          "name": "綜合和風沙拉",
+          "price": 300.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0714,
+          "ocrFlags": []
+        },
+        {
+          "name": "和風涼拌洋蔥",
+          "price": 180.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.6429,
+          "ocrFlags": []
+        },
+        {
+          "name": "古味鰺魚煙",
+          "price": 240.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8571,
+          "ocrFlags": []
+        },
+        {
+          "name": "冷筍沙拉",
+          "price": 320.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1429,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚蛋沙拉",
+          "price": 280.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "龍蝦沙拉",
+          "price": null,
+          "error": false,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "明蝦沙拉",
+          "price": null,
+          "error": false,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "五味小捲",
+          "price": 280.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "特選烏魚子",
+          "price": 530.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.8929,
+          "ocrFlags": []
+        },
+        {
+          "name": "日式鱈魚肝",
+          "price": 320.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.1429,
+          "ocrFlags": []
+        },
+        {
+          "name": "甘露香魚",
+          "price": 240.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.8571,
+          "ocrFlags": []
+        },
+        {
+          "name": "翡翠黑鑽",
+          "price": 260.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.9286,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "case": "tw_gwoo",
+      "expected": 21,
+      "A": {
+        "matchedCount": 21,
+        "exactNamePriceCount": 12,
+        "exactNamePriceRate": 0.5714,
+        "recall": 1.0,
+        "precision": 0.84,
+        "predictedCount": 25,
+        "priceCorrectCount": 21,
+        "pricedExpectedTotal": 21
+      },
+      "C": {
+        "1": {
+          "matchedCount": 21,
+          "exactNamePriceCount": 21,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 21,
+          "priceCorrectCount": 21,
+          "pricedExpectedTotal": 21,
+          "responseSha256": "cff7e96fe8a0a798fb752fc555a455d737d0b73b38252c84365f8ea14297325a",
+          "elapsedSec": 66.175
+        },
+        "2": {
+          "matchedCount": 21,
+          "exactNamePriceCount": 21,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 21,
+          "priceCorrectCount": 21,
+          "pricedExpectedTotal": 21,
+          "responseSha256": "cff7e96fe8a0a798fb752fc555a455d737d0b73b38252c84365f8ea14297325a",
+          "elapsedSec": 2.679
+        },
+        "3": {
+          "matchedCount": 21,
+          "exactNamePriceCount": 21,
+          "exactNamePriceRate": 1.0,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 21,
+          "priceCorrectCount": 21,
+          "pricedExpectedTotal": 21,
+          "responseSha256": "cff7e96fe8a0a798fb752fc555a455d737d0b73b38252c84365f8ea14297325a",
+          "elapsedSec": 2.654
+        }
+      },
+      "review": [
+        {
+          "name": "砂鍋土雞湯（小）",
+          "price": 400.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.1307,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋土雞湯（中）",
+          "price": 1900.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.6209,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋土雞湯（大）",
+          "price": 3500.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.3258,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋白菜豆腐雞湯（小）",
+          "price": 440.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.1438,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋白菜豆腐雞湯（中）",
+          "price": 2060.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.6732,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋白菜豆腐雞湯（大）",
+          "price": 3820.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.447,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋菇菇雞湯（小）",
+          "price": 520.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.1699,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋菇菇雞湯（中）",
+          "price": 2380.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋菇菇雞湯（大）",
+          "price": 4460.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.6894,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋脆筍雞湯（小）",
+          "price": 650.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.2124,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋脆筍雞湯（中）",
+          "price": 2900.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0357,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋脆筍雞湯（大）",
+          "price": 5500.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 2.0833,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋竹笙雞湯（小）",
+          "price": 730.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.2386,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋竹笙雞湯（中）",
+          "price": 3220.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2197,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋竹笙雞湯（大）",
+          "price": 6140.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 2.3258,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋鮑魚雞湯（小）",
+          "price": 1000.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.3268,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋鮑魚雞湯（中）",
+          "price": 4300.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.6288,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋鮑魚雞湯（大）",
+          "price": 8300.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 3.1439,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋魚翅雞湯（小）",
+          "price": 1190.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.3889,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋魚翅雞湯（中）",
+          "price": 5060.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.9167,
+          "ocrFlags": []
+        },
+        {
+          "name": "砂鍋魚翅雞湯（大）",
+          "price": 9820.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 3.7197,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "case": "tw_newpalace_wuqi",
+      "expected": 7,
+      "A": {
+        "matchedCount": 5,
+        "exactNamePriceCount": 0,
+        "exactNamePriceRate": 0.0,
+        "recall": 0.714,
+        "precision": 0.172,
+        "predictedCount": 29,
+        "priceCorrectCount": 0,
+        "pricedExpectedTotal": 5
+      },
+      "C": {
+        "1": {
+          "matchedCount": 7,
+          "exactNamePriceCount": 2,
+          "exactNamePriceRate": 0.2857,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 7,
+          "priceCorrectCount": 5,
+          "pricedExpectedTotal": 5,
+          "responseSha256": "04c89f9de425c592b957aa330e5d5bc10ccfc2d1bf81ecd1bb8ac1102b1d18d0",
+          "elapsedSec": 27.493
+        },
+        "2": {
+          "matchedCount": 7,
+          "exactNamePriceCount": 2,
+          "exactNamePriceRate": 0.2857,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 7,
+          "priceCorrectCount": 5,
+          "pricedExpectedTotal": 5,
+          "responseSha256": "04c89f9de425c592b957aa330e5d5bc10ccfc2d1bf81ecd1bb8ac1102b1d18d0",
+          "elapsedSec": 2.534
+        },
+        "3": {
+          "matchedCount": 7,
+          "exactNamePriceCount": 2,
+          "exactNamePriceRate": 0.2857,
+          "recall": 1.0,
+          "precision": 1.0,
+          "predictedCount": 7,
+          "priceCorrectCount": 5,
+          "pricedExpectedTotal": 5,
+          "responseSha256": "04c89f9de425c592b957aa330e5d5bc10ccfc2d1bf81ecd1bb8ac1102b1d18d0",
+          "elapsedSec": 2.831
+        }
+      },
+      "review": [
+        {
+          "name": "龍蝦兩吃",
+          "price": null,
+          "error": false,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "象拔蚌兩吃",
+          "price": null,
+          "error": false,
+          "spurious": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "綜合魚肚生魚片",
+          "price": 450.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.2857,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "綜合生魚片",
+          "price": 350.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "韓式冰卷沙拉盤",
+          "price": 350.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "和風海鮮沙拉盤",
+          "price": 350.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "和風蔬果鮑魚沙拉",
+          "price": 180.0,
+          "error": false,
+          "spurious": false,
+          "priceNull": false,
+          "outlierScore": 0.5143,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    }
+  ]
+}

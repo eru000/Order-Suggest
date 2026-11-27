@@ -41,7 +41,11 @@ from PIL import Image, ImageDraw, ImageFilter  # noqa: E402
 
 SEED = 20261127
 ITEMS_PER_IMAGE = 4
-SOURCES = {"dev": ROOT / "菜單照片資料" / "第二項" / "開發原圖"}
+SOURCES = {
+    "dev": ROOT / "菜單照片資料" / "第二項" / "開發原圖",
+    # 節點 H：凍結（freeze-final）後才產生；產生器邏輯與種子不變，只多一個來源目錄
+    "holdout": ROOT / "菜單照片資料" / "第二項" / "獨立封存",
+}
 TREATMENTS = ("mask_full", "blur_partial", "blur_full", "glare_partial", "glare_full")
 
 

@@ -1,0 +1,623 @@
+{
+  "seed": 20261127,
+  "itemsPerImage": 4,
+  "treatments": [
+    "mask_full",
+    "blur_partial",
+    "blur_full",
+    "glare_partial",
+    "glare_full"
+  ],
+  "split": "holdout",
+  "cases": [
+    {
+      "case": "cafe_cama",
+      "sourceSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+      "eligible": 9,
+      "targets": [
+        {
+          "name": "CAMA金獎美式（XL）",
+          "truePrice": 95,
+          "priceText": "95",
+          "priceBox": [
+            667.4,
+            1621.4,
+            711.2,
+            1660.8
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "微韻輕美式（L）",
+          "truePrice": 80,
+          "priceText": "80",
+          "priceBox": [
+            547.5,
+            1778.9,
+            592.2,
+            1822.5
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "微韻輕美式（M）",
+          "truePrice": 65,
+          "priceText": "65",
+          "priceBox": [
+            427.2,
+            1780.3,
+            471.8,
+            1822.5
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "雙冠莊園精品美式（L）",
+          "truePrice": 100,
+          "priceText": "100",
+          "priceBox": [
+            529.3,
+            1462.5,
+            590.8,
+            1500.5
+          ],
+          "maskDigit": 2
+        }
+      ],
+      "variants": [
+        {
+          "name": "cafe_cama__mask_full",
+          "imageSha256": "5fe452f19d206a08b9d16ea055d2067e66ce7d9d5814981e0d4197d622200756",
+          "truthSha256": "7cbcb8c0b9ec66ffc11291cd8ef621941de311f0c6ea17d8a4a6d481bcd67427"
+        },
+        {
+          "name": "cafe_cama__blur_partial",
+          "imageSha256": "368763ad6a985cdf9d112192a061c1da6ea5205c89ddee79d3236f2ad52dd534",
+          "truthSha256": "41d916577aafd7df7c188d95157cc6514b3e4ebabdacca1231b6258e546d96bb"
+        },
+        {
+          "name": "cafe_cama__blur_full",
+          "imageSha256": "15428cde56fa33a388fa9a3d3bb4f5c33c21c505e269ffbbbbcb5d3615770d6c",
+          "truthSha256": "1171055e04d496cdfff7548f3f8180b37e8ed5704f139965aef8edff496c0aa1"
+        },
+        {
+          "name": "cafe_cama__glare_partial",
+          "imageSha256": "10e9443299551b178cf3f1aeaffb4d768209eb64061b766df6d979a179bb97f5",
+          "truthSha256": "eae2c1aaf9e2c12c20b08f53bd0ed039d88366cd2e9d36e4084608d699160666"
+        },
+        {
+          "name": "cafe_cama__glare_full",
+          "imageSha256": "3ea067f7a8869daaa6efe43a5fe98b338f5703704f229a9a74cc3684a90bff7e",
+          "truthSha256": "ab8dfb7c24454bc36388154d75a5ff285692531912783901fedb423479511f59"
+        }
+      ]
+    },
+    {
+      "case": "cafe_comebuy",
+      "sourceSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+      "eligible": 7,
+      "targets": [
+        {
+          "name": "文山包種（L）",
+          "truePrice": 50,
+          "priceText": "50",
+          "priceBox": [
+            237.0,
+            284.0,
+            272.0,
+            305.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "玩火（L）",
+          "truePrice": 45,
+          "priceText": "45",
+          "priceBox": [
+            512.0,
+            158.0,
+            546.0,
+            184.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "碧螺春綠（L）",
+          "truePrice": 40,
+          "priceText": "40",
+          "priceBox": [
+            241.0,
+            71.0,
+            272.0,
+            93.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "鮮萃大麥紅茶（L）",
+          "truePrice": 40,
+          "priceText": "40",
+          "priceBox": [
+            499.7,
+            242.0,
+            544.0,
+            267.0
+          ],
+          "maskDigit": 1
+        }
+      ],
+      "variants": [
+        {
+          "name": "cafe_comebuy__mask_full",
+          "imageSha256": "f7da03b0519d1496b513bf50a73ad2b04684d030eebec409164190d95873ba51",
+          "truthSha256": "6ff95fa9fd7b70bb11928d9cf5c330d4421661da2138f8ed3e82ce425e9cc3ab"
+        },
+        {
+          "name": "cafe_comebuy__blur_partial",
+          "imageSha256": "ec00bbc0ddf2d04fd5b0a7183f8dfd84687f76deb7dbd56612c6a997d6d6f934",
+          "truthSha256": "5c80d3869c2800c12ab4bf585073343855354b8bc2384a017756ab579720c0e8"
+        },
+        {
+          "name": "cafe_comebuy__blur_full",
+          "imageSha256": "085542693ac6f595b885bdb2e0adc1e33fda53aec8b66b435e6a36a1323e9f46",
+          "truthSha256": "e74a914f62878262b06dbd0cce46c6ce2da4728b1f2b75b2301203c7f0d1fcac"
+        },
+        {
+          "name": "cafe_comebuy__glare_partial",
+          "imageSha256": "a436e3bb0c5a28cf2f0857dfee887a6675cb4c208592392bcaf76b4ea6e73c0e",
+          "truthSha256": "9fb7a090c1f203e2638ac3e50fc967a6be270878ddad2b09903839464b5fcb88"
+        },
+        {
+          "name": "cafe_comebuy__glare_full",
+          "imageSha256": "3aa2dde4e9dfbf84924cb2265260563ae6e8505b1a059d4232413c0574b160de",
+          "truthSha256": "2506be4fd624611760dfcb1b8f6a9e35c13f8a558f7b8505435af5f11963b93a"
+        }
+      ]
+    },
+    {
+      "case": "cafe_meetfresh",
+      "sourceSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    },
+    {
+      "case": "cafe_milksha",
+      "sourceSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+      "eligible": 17,
+      "targets": [
+        {
+          "name": "太妃伯爵布朗拿鐵（L）",
+          "truePrice": 80,
+          "priceText": "80",
+          "priceBox": [
+            601.0,
+            279.0,
+            648.0,
+            317.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "法芙娜可可鮮奶（L）",
+          "truePrice": 100,
+          "priceText": "100",
+          "priceBox": [
+            590.0,
+            785.0,
+            657.0,
+            823.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "靜岡焙焙烏龍拿鐵（L）",
+          "truePrice": 75,
+          "priceText": "75",
+          "priceBox": [
+            600.0,
+            639.0,
+            648.0,
+            680.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "靜岡焙焙烏龍拿鐵（M）",
+          "truePrice": 65,
+          "priceText": "65",
+          "priceBox": [
+            515.0,
+            638.0,
+            563.0,
+            679.0
+          ],
+          "maskDigit": 0
+        }
+      ],
+      "variants": [
+        {
+          "name": "cafe_milksha__mask_full",
+          "imageSha256": "e4dc06bae520e04acfb69405ad541ac0313497b61e7706b1effef87d00f22b77",
+          "truthSha256": "20648c44f986218f1a7121a82e666501357bc4078cb058751cfd0fc31c68b4b8"
+        },
+        {
+          "name": "cafe_milksha__blur_partial",
+          "imageSha256": "972404e7834b9dcc0c7c2601b3e6fc7991e88a2ed71b198a7b7c4c6aba1a8de6",
+          "truthSha256": "b19215d5afe0479eff913f44d52cefb3da432bacd009695032bbb5401670bc8a"
+        },
+        {
+          "name": "cafe_milksha__blur_full",
+          "imageSha256": "4fdc5e93d43402a27d24937b4a1f1dd85ac6912c3d962e46657198b2aea0c829",
+          "truthSha256": "3cea1c546af834eb1d161c96ade8e16511188a588ae7835282be4051d0963bb5"
+        },
+        {
+          "name": "cafe_milksha__glare_partial",
+          "imageSha256": "73e51d32d7ec09bbc182bea8e250ab3b1a6074aadc32a891c58fe91bb16f914e",
+          "truthSha256": "f953163110a2177162d069d5555b20ebab2d012b4a0e19accf96f134f31a083a"
+        },
+        {
+          "name": "cafe_milksha__glare_full",
+          "imageSha256": "f821dbc4ab94e59dc50d355862ff18c46bcb9a6ee5b9984ecce948d599846245",
+          "truthSha256": "b64f84ff2a4ce51d51b4b22c3912e5b96b22ac97a9bec07624f7520fc4dc6c44"
+        }
+      ]
+    },
+    {
+      "case": "hotel_regent_lanting",
+      "sourceSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+      "eligible": 5,
+      "targets": [
+        {
+          "name": "宮保臭豆腐",
+          "truePrice": 420,
+          "priceText": "420",
+          "priceBox": [
+            1579.1,
+            645.0,
+            1618.4,
+            671.8
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "瑤柱娃娃菜",
+          "truePrice": 580,
+          "priceText": "580",
+          "priceBox": [
+            777.8,
+            413.4,
+            817.1,
+            440.3
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "絲瓜老少蛋",
+          "truePrice": 480,
+          "priceText": "480",
+          "priceBox": [
+            778.0,
+            528.2,
+            818.1,
+            555.0
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "雪菜百頁",
+          "truePrice": 460,
+          "priceText": "460",
+          "priceBox": [
+            777.8,
+            643.9,
+            817.1,
+            670.8
+          ],
+          "maskDigit": 2
+        }
+      ],
+      "variants": [
+        {
+          "name": "hotel_regent_lanting__mask_full",
+          "imageSha256": "84a626d9fc32df22c7b6bf261bbdbcf3757a462462f4737b13653f58b95fe1c5",
+          "truthSha256": "3f396cf06928c6acb595cdbc6060ea31164cd98230cbacbc3bcd979f46083993"
+        },
+        {
+          "name": "hotel_regent_lanting__blur_partial",
+          "imageSha256": "2dae933215901a7034cc4dc2f606dc82a4083d4d43abb24c191ed76196150e60",
+          "truthSha256": "6cd928521c753cadedf937f8405ac43a782f09941e6dcac273ee93f40dc128c1"
+        },
+        {
+          "name": "hotel_regent_lanting__blur_full",
+          "imageSha256": "2b6c05c6f757ef6d0c81d62c104bcdb2077e781a90c04237523e9916a56c148f",
+          "truthSha256": "f85050a654efe20d9dab5f62d3718303bbbd85df0ca8e3736971fd1d4bb56ce8"
+        },
+        {
+          "name": "hotel_regent_lanting__glare_partial",
+          "imageSha256": "d5fd727db234d11984ef9958f9b6686fb3e893add312556bb9f5f93f3adfe0f5",
+          "truthSha256": "05b34e78e0eb8dd23e7b39ab97eb4dc36a62aa90d0fc4f5f10fb3e3e1c451b70"
+        },
+        {
+          "name": "hotel_regent_lanting__glare_full",
+          "imageSha256": "c79cf6b1dbd8a5b546770bc53c1a5f7b2876516017d4c9c2af0f463356898f53",
+          "truthSha256": "b7d45dd2c6da943d4bbdef0444fbc7b3a35e611b83e36c6ef0239456dbcbd832"
+        }
+      ]
+    },
+    {
+      "case": "hotel_royal_huigan",
+      "sourceSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+      "eligible": 5,
+      "targets": [
+        {
+          "name": "XO醬乾拌麵",
+          "truePrice": 160,
+          "priceText": "160",
+          "priceBox": [
+            517.0,
+            668.0,
+            561.0,
+            699.0
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "油蔥酥意麵",
+          "truePrice": 160,
+          "priceText": "160",
+          "priceBox": [
+            517.0,
+            738.0,
+            561.0,
+            769.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "燻里肌帕里尼",
+          "truePrice": 120,
+          "priceText": "120",
+          "priceBox": [
+            517.0,
+            879.0,
+            561.0,
+            911.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "蔬食咖哩飯(五辛素)",
+          "truePrice": 180,
+          "priceText": "180",
+          "priceBox": [
+            516.5,
+            383.0,
+            561.0,
+            416.0
+          ],
+          "maskDigit": 1
+        }
+      ],
+      "variants": [
+        {
+          "name": "hotel_royal_huigan__mask_full",
+          "imageSha256": "7004566133c336b59f41d079f3eab3c02932ddf70a294aa0c7db4574a3b4b0e5",
+          "truthSha256": "fbe0b617271e8e5848db2eb1007eef16758b07f293d41d328ec0a2bf4bdf7e4c"
+        },
+        {
+          "name": "hotel_royal_huigan__blur_partial",
+          "imageSha256": "327ddbd0db8df8420f47b76e949e7080f1f330b25dec750a319c03f220debe3e",
+          "truthSha256": "2dfca50606ad132ccfb13ddc5b8f0c94bcc6555a1ff7e5bbcc1383c2faaf2d0a"
+        },
+        {
+          "name": "hotel_royal_huigan__blur_full",
+          "imageSha256": "f474de9e7aacbdc87cb5bb927fed7bff6ab185f226c4e97513c97c52bfc28f55",
+          "truthSha256": "5047df358a178c449236961e26e49ad2959f24db60a459f09c042449380c7f05"
+        },
+        {
+          "name": "hotel_royal_huigan__glare_partial",
+          "imageSha256": "f019ec25be72072809cc64f904f87cabb099f7dd1f4257da5081b0da40a97bf2",
+          "truthSha256": "56f6f165a3ff9a8ab509ea2f7df6f2d2fa53bc2ff018cc7e618399a39c9366cf"
+        },
+        {
+          "name": "hotel_royal_huigan__glare_full",
+          "imageSha256": "9520edc9fb3c6bd3a60b49219a67c40e09793fd008f5d33158fa5791e27854f7",
+          "truthSha256": "32f97f04c1bd556361069e2bf15478b491b95e558776e2d05c1786e60ac88161"
+        }
+      ]
+    },
+    {
+      "case": "hotel_sheraton_pizzapub",
+      "sourceSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    },
+    {
+      "case": "hotel_splendor_lobby",
+      "sourceSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    },
+    {
+      "case": "tw_amei",
+      "sourceSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    },
+    {
+      "case": "tw_extra9",
+      "sourceSha256": "555a3990e7224e77beeadb480d490212b39c94e2cd2fe63d290dbd761881a820",
+      "eligible": 9,
+      "targets": [
+        {
+          "name": "五味小捲",
+          "truePrice": 280,
+          "priceText": "280",
+          "priceBox": [
+            199.2,
+            426.0,
+            230.0,
+            442.0
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "冷筍沙拉",
+          "truePrice": 320,
+          "priceText": "320",
+          "priceBox": [
+            200.0,
+            233.0,
+            230.0,
+            251.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "特選烏魚子",
+          "truePrice": 530,
+          "priceText": "530",
+          "priceBox": [
+            199.2,
+            473.0,
+            230.0,
+            491.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "甘露香魚",
+          "truePrice": 240,
+          "priceText": "240",
+          "priceBox": [
+            200.0,
+            569.0,
+            230.0,
+            587.0
+          ],
+          "maskDigit": 2
+        }
+      ],
+      "variants": [
+        {
+          "name": "tw_extra9__mask_full",
+          "imageSha256": "77d4c0fec712dec14588713bcb2cdf962229316e1d67d22ecdf201a32b5de231",
+          "truthSha256": "d7c2c2c1c575d498b4c41b1a2b870d93ab77d3b68d9023b7c52c2f0e5462107c"
+        },
+        {
+          "name": "tw_extra9__blur_partial",
+          "imageSha256": "042587668c170d4ce9f722e7a9784313ea80cfb22cffd9a6eaee7ee061a6cba4",
+          "truthSha256": "a56f1a9b4227ef51a8ddf5dfc0c64b6772d04e36ef5e44652280de7630c4f9ac"
+        },
+        {
+          "name": "tw_extra9__blur_full",
+          "imageSha256": "7825bf101a8ffc244e044c3ba84079ef3bb11016366c72f4f8f687d40825ef2f",
+          "truthSha256": "16a1e39de31b6150fa296294e16943a8b04d8a3e0e7e3223d20ba6a3b35063ee"
+        },
+        {
+          "name": "tw_extra9__glare_partial",
+          "imageSha256": "30fbafd0a175125b2d59edd52708604300205b2d400b00748dcde049615d8055",
+          "truthSha256": "1c36f7948e252ded24d89c05affd961226015625b891b7fe0c6386165907e4dc"
+        },
+        {
+          "name": "tw_extra9__glare_full",
+          "imageSha256": "def1a84895d038a4467d6894f9d57217ce60a402bae9983a961e94f45cde1bdf",
+          "truthSha256": "8ebd7f3175eb8af8b6a668681791ea1c8e87c602289daeacb2b90d48c7cf4645"
+        }
+      ]
+    },
+    {
+      "case": "tw_gwoo",
+      "sourceSha256": "ceeaed073d1b4e397e133b10b4c8d26b7a2a4c4aebc4d6a32a832acb9d35f4d7",
+      "eligible": 21,
+      "targets": [
+        {
+          "name": "砂鍋白菜豆腐雞湯（大）",
+          "truePrice": 3820,
+          "priceText": "3820",
+          "priceBox": [
+            940.0,
+            528.0,
+            1006.0,
+            558.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "砂鍋白菜豆腐雞湯（小）",
+          "truePrice": 440,
+          "priceText": "440",
+          "priceBox": [
+            768.0,
+            529.0,
+            819.0,
+            556.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "砂鍋菇菇雞湯（中）",
+          "truePrice": 2380,
+          "priceText": "2380",
+          "priceBox": [
+            848.0,
+            598.0,
+            913.0,
+            627.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "砂鍋鮑魚雞湯（中）",
+          "truePrice": 4300,
+          "priceText": "4300",
+          "priceBox": [
+            835.0,
+            817.0,
+            913.0,
+            845.0
+          ],
+          "maskDigit": 2
+        }
+      ],
+      "variants": [
+        {
+          "name": "tw_gwoo__mask_full",
+          "imageSha256": "b0b2630345b45e6b5460417c50d5c4c5a9d1b76d76610f6752c00cbf1475139b",
+          "truthSha256": "1f765e01fec6b79589839b517aa44c8f36be7114f56b669941db05754286fd48"
+        },
+        {
+          "name": "tw_gwoo__blur_partial",
+          "imageSha256": "30260fdcb3f70e464fbef70aa4cd5dc31bb1ca781eb56cd059f095bb90bdf4b6",
+          "truthSha256": "7a68887484eabdc70d46806a2cfa23336e029e0b6795eb5b7505af98c631e271"
+        },
+        {
+          "name": "tw_gwoo__blur_full",
+          "imageSha256": "d2190d31bfab685ae81f643b1888a3c8f5c1a6f0344180c063d51bb4c2c61134",
+          "truthSha256": "798ec12335ab4e4c7c9139c18062c4504764f75c4782852efdc4c3d62ffd6e67"
+        },
+        {
+          "name": "tw_gwoo__glare_partial",
+          "imageSha256": "813eba444b8f4df968132558ffaa2972cd1b948e1c2ab625525dcc6818ec7efe",
+          "truthSha256": "7addb68f8555c2aabb22a6486bedf9ba5cb7baccfc9a783444921930e05b1b5d"
+        },
+        {
+          "name": "tw_gwoo__glare_full",
+          "imageSha256": "b0425fd2ebd592f1ae8fbb360c2bbd02f3bf31930fd5f1bdeea4c506b68f02a4",
+          "truthSha256": "32b625ebd040a5f627e91a1cc1f054519b88e1c76b1ccff8ebf9a447809a20c5"
+        }
+      ]
+    },
+    {
+      "case": "tw_newpalace_wuqi",
+      "sourceSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    }
+  ]
+}

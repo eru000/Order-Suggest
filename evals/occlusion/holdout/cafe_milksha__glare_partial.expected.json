@@ -1,0 +1,136 @@
+{
+  "items": [
+    {
+      "name": "娜杯太妃QQ（L）",
+      "price": 60,
+      "variant": "L"
+    },
+    {
+      "name": "太妃烏龍拿鐵（L）",
+      "price": 75,
+      "variant": "L"
+    },
+    {
+      "name": "太妃伯爵布朗拿鐵（L）",
+      "price": 80,
+      "variant": "L",
+      "true_price": 80,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          601.0,
+          279.0,
+          648.0,
+          317.0
+        ]
+      }
+    },
+    {
+      "name": "太妃伯爵布朗拿鐵（瓶）",
+      "price": 110,
+      "variant": "瓶"
+    },
+    {
+      "name": "太妃焙焙拿鐵（L）",
+      "price": 85,
+      "variant": "L"
+    },
+    {
+      "name": "太妃焙焙拿鐵（瓶）",
+      "price": 120,
+      "variant": "瓶"
+    },
+    {
+      "name": "京都極選抹茶（M）",
+      "price": 60,
+      "variant": "M"
+    },
+    {
+      "name": "京都極選抹茶（L）",
+      "price": 70,
+      "variant": "L"
+    },
+    {
+      "name": "京都極選抹茶鮮奶（M）",
+      "price": 100,
+      "variant": "M"
+    },
+    {
+      "name": "靜岡焙焙鮮奶（M）",
+      "price": 70,
+      "variant": "M"
+    },
+    {
+      "name": "靜岡焙焙鮮奶（L）",
+      "price": 90,
+      "variant": "L"
+    },
+    {
+      "name": "靜岡焙焙烏龍拿鐵（M）",
+      "price": 65,
+      "variant": "M",
+      "true_price": 65,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          515.0,
+          638.0,
+          563.0,
+          679.0
+        ]
+      }
+    },
+    {
+      "name": "靜岡焙焙烏龍拿鐵（L）",
+      "price": 75,
+      "variant": "L",
+      "true_price": 75,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          600.0,
+          639.0,
+          648.0,
+          680.0
+        ]
+      }
+    },
+    {
+      "name": "伯爵可可拿鐵（M）",
+      "price": 75,
+      "variant": "M"
+    },
+    {
+      "name": "伯爵可可拿鐵（L）",
+      "price": 85,
+      "variant": "L"
+    },
+    {
+      "name": "法芙娜可可鮮奶（M）",
+      "price": 80,
+      "variant": "M"
+    },
+    {
+      "name": "法芙娜可可鮮奶（L）",
+      "price": 100,
+      "variant": "L",
+      "true_price": 100,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          590.0,
+          785.0,
+          657.0,
+          823.0
+        ]
+      }
+    }
+  ],
+  "derivedFrom": "cafe_milksha",
+  "treatment": "glare_partial",
+  "seed": 20261127
+}

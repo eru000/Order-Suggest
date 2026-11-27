@@ -1,0 +1,87 @@
+{
+  "items": [
+    {
+      "name": "蔬食咖哩飯(五辛素)",
+      "price": 180,
+      "true_price": 180,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          516.5,
+          383.0,
+          561.0,
+          416.0
+        ]
+      }
+    },
+    {
+      "name": "綠咖哩雞肉飯",
+      "price": 250
+    },
+    {
+      "name": "紅燒牛肉麵",
+      "price": 280
+    },
+    {
+      "name": "老爺式炒飯",
+      "price": 160
+    },
+    {
+      "name": "XO醬乾拌麵",
+      "price": 160,
+      "true_price": 160,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          517.0,
+          668.0,
+          561.0,
+          699.0
+        ]
+      }
+    },
+    {
+      "name": "油蔥酥意麵",
+      "price": 160,
+      "true_price": 160,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          517.0,
+          738.0,
+          561.0,
+          769.0
+        ]
+      }
+    },
+    {
+      "name": "燻雞起司可頌",
+      "price": 100
+    },
+    {
+      "name": "燻里肌帕里尼",
+      "price": 120,
+      "true_price": 120,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          517.0,
+          879.0,
+          561.0,
+          911.0
+        ]
+      }
+    },
+    {
+      "name": "麻油雞麵",
+      "price": 280
+    }
+  ],
+  "derivedFrom": "hotel_royal_huigan",
+  "treatment": "glare_partial",
+  "seed": 20261127
+}

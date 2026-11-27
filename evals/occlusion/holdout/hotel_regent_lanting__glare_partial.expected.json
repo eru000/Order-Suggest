@@ -1,0 +1,83 @@
+{
+  "items": [
+    {
+      "name": "鮮筍 (乾煸/雪菜)",
+      "price": 680
+    },
+    {
+      "name": "瑤柱娃娃菜",
+      "price": 580,
+      "true_price": 580,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          777.8,
+          413.4,
+          817.1,
+          440.3
+        ]
+      }
+    },
+    {
+      "name": "絲瓜老少蛋",
+      "price": 480,
+      "true_price": 480,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          778.0,
+          528.2,
+          818.1,
+          555.0
+        ]
+      }
+    },
+    {
+      "name": "雪菜百頁",
+      "price": 460,
+      "true_price": 460,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          777.8,
+          643.9,
+          817.1,
+          670.8
+        ]
+      }
+    },
+    {
+      "name": "麻婆豆腐",
+      "price": 520
+    },
+    {
+      "name": "乾煸四季豆",
+      "price": 480
+    },
+    {
+      "name": "季節時蔬",
+      "price": 480
+    },
+    {
+      "name": "宮保臭豆腐",
+      "price": 420,
+      "true_price": 420,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          1579.1,
+          645.0,
+          1618.4,
+          671.8
+        ]
+      }
+    }
+  ],
+  "derivedFrom": "hotel_regent_lanting",
+  "treatment": "glare_partial",
+  "seed": 20261127
+}

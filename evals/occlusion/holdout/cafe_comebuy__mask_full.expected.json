@@ -1,0 +1,95 @@
+{
+  "items": [
+    {
+      "name": "碧螺春綠（L）",
+      "price": null,
+      "variant": "L",
+      "true_price": 40,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          241.0,
+          71.0,
+          272.0,
+          93.0
+        ],
+        "maskDigit": 0
+      }
+    },
+    {
+      "name": "金萱烏龍（L）",
+      "price": 40,
+      "variant": "L"
+    },
+    {
+      "name": "文山包種（L）",
+      "price": null,
+      "variant": "L",
+      "true_price": 50,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          237.0,
+          284.0,
+          272.0,
+          305.0
+        ],
+        "maskDigit": 1
+      }
+    },
+    {
+      "name": "小葉紅茶（L）",
+      "price": 50,
+      "variant": "L"
+    },
+    {
+      "name": "嗨神（L）",
+      "price": 45,
+      "variant": "L"
+    },
+    {
+      "name": "玩火（L）",
+      "price": null,
+      "variant": "L",
+      "true_price": 45,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          512.0,
+          158.0,
+          546.0,
+          184.0
+        ],
+        "maskDigit": 1
+      }
+    },
+    {
+      "name": "鮮萃大麥紅茶（L）",
+      "price": null,
+      "variant": "L",
+      "true_price": 40,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          499.7,
+          242.0,
+          544.0,
+          267.0
+        ],
+        "maskDigit": 1
+      }
+    },
+    {
+      "name": "玫瑰普洱（L）",
+      "price": 45,
+      "variant": "L"
+    }
+  ],
+  "derivedFrom": "cafe_comebuy",
+  "treatment": "mask_full",
+  "seed": 20261127
+}

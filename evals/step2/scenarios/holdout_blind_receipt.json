@@ -2,8 +2,8 @@
   "mode": "sealed_holdout_blind_execution",
   "outputsAndScoresInspected": false,
   "scenariosChangedAfterFreeze": false,
-  "repetitions": 2,
-  "sameConditionReproduction": true,
+  "repetitions": 1,
+  "sameConditionReproduction": null,
   "fingerprintNormalization": "Remove random revision/mealId and time/duration fields only",
   "scenarioHashes": {
     "development.json": "94e2870262a70712b0dd285984405dbdbe958e70875be9fb65ec284ea82841ce",
@@ -11,12 +11,12 @@
   },
   "runnerSha256": "6e72d1536b9bae7e6421a48e1b0724a7baf2096eca22a0d5bace81e888c80c5c",
   "productSourceHashes": {
-    "decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+    "decision_service.py": "ac0e0ec1073b2249ae80c23a17ebbeb395be421183379a0c2ece005d5a583ae8",
     "decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
     "decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
-    "preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+    "preference_engine.py": "52b7d459d13d44ef30ff40aebb40403abe36f256b89110f6b288dc5de8bdf50f",
     "recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
-    "table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46",
+    "table_menu.py": "84a4a9281b217738eae15559b91c60f4c7da2bd435d4614c55ac9f317d3ac158",
     "menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
     "menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b"
   },
@@ -27,8 +27,8 @@
   "runs": [
     {
       "repetition": 1,
-      "startedAt": "2026-11-26T13:00:54.889057+00:00",
-      "finishedAt": "2026-11-26T13:00:55.099436+00:00",
+      "startedAt": "2026-11-27T05:39:21.162684+00:00",
+      "finishedAt": "2026-11-27T05:39:21.333181+00:00",
       "caseCount": 10,
       "scriptedTurnCount": 30,
       "actualServiceCalls": 30,
@@ -96,86 +96,9 @@
           "technicalFailureCount": 0
         }
       ],
-      "archive": "holdout_blind_20261126T130055100201Z_repeat1.zip",
-      "archiveSha256": "ea40a7bb4647e54950e05c4f7a42a93db084560341f2a5cea2acc7d84b0d1a2f",
-      "behaviorSha256": "21e0820a72e108dee4955540e92c2f9460a6879b8b08a963893329a1a4160d24",
-      "archiveCrcVerified": true,
-      "engineUnchangedDuringExecution": true
-    },
-    {
-      "repetition": 2,
-      "startedAt": "2026-11-26T13:00:55.140730+00:00",
-      "finishedAt": "2026-11-26T13:00:55.192098+00:00",
-      "caseCount": 10,
-      "scriptedTurnCount": 30,
-      "actualServiceCalls": 30,
-      "unexecutedTurns": 0,
-      "technicalFailureCount": 0,
-      "cases": [
-        {
-          "id": "hold_compound_royal",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_compound_gwoo",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_budget_splendor",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_budget_cama",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_cancel_regent",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_cancel_amei",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_replace_newpalace",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_replace_milksha",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_no_solution_meetfresh",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        },
-        {
-          "id": "hold_no_solution_comebuy",
-          "scriptedTurns": 3,
-          "actualServiceCalls": 3,
-          "technicalFailureCount": 0
-        }
-      ],
-      "archive": "holdout_blind_20261126T130055192895Z_repeat2.zip",
-      "archiveSha256": "b94f278cf70f702d7a525a9d0d53b929ee3dc49ea49a1485c70b135f90c8564d",
-      "behaviorSha256": "21e0820a72e108dee4955540e92c2f9460a6879b8b08a963893329a1a4160d24",
+      "archive": "holdout_blind_20261127T053921333783Z_repeat1.zip",
+      "archiveSha256": "2b0e900c7e7d79e7a8d1435d0eeef6d5e935214a8f3cf60ab45c36295d4c39a9",
+      "behaviorSha256": "715afb02b88ca00febc5403be37f70eba88d94da91135a1c590305a56ab51731",
       "archiveCrcVerified": true,
       "engineUnchangedDuringExecution": true
     }

@@ -1,0 +1,6416 @@
+{
+  "generatedAt": "2026-11-27T05:40:18+00:00",
+  "maxQuestions": 2,
+  "summary": {
+    "none": {
+      "users": 111,
+      "hitAt3": 0.3153,
+      "meanQuestions": 0.0,
+      "skippedPerUser": 0.0,
+      "noMatchRate": 0.0,
+      "firstQuestion": {}
+    },
+    "gini": {
+      "users": 111,
+      "hitAt3": 0.3514,
+      "meanQuestions": 0.865,
+      "skippedPerUser": 0.189,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "budget": 85,
+        "dishType": 7,
+        "protein": 4
+      }
+    },
+    "entropy": {
+      "users": 111,
+      "hitAt3": 0.3514,
+      "meanQuestions": 0.865,
+      "skippedPerUser": 0.189,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "budget": 85,
+        "dishType": 7,
+        "protein": 4
+      }
+    },
+    "fixed": {
+      "users": 111,
+      "hitAt3": 0.3514,
+      "meanQuestions": 0.928,
+      "skippedPerUser": 0.207,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "budget": 92,
+        "protein": 4
+      }
+    },
+    "random": {
+      "users": 111,
+      "hitAt3": 0.3514,
+      "meanQuestions": 0.919,
+      "skippedPerUser": 0.198,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "budget": 91,
+        "protein": 4,
+        "dishType": 1
+      }
+    }
+  },
+  "pairedTests": {
+    "gini_vs_none": {
+      "onlyA": 4,
+      "onlyB": 0,
+      "pTwoSided": 0.125
+    },
+    "gini_vs_entropy": {
+      "onlyA": 0,
+      "onlyB": 0,
+      "pTwoSided": 1.0
+    },
+    "gini_vs_fixed": {
+      "onlyA": 0,
+      "onlyB": 0,
+      "pTwoSided": 1.0
+    },
+    "gini_vs_random": {
+      "onlyA": 0,
+      "onlyB": 0,
+      "pTwoSided": 1.0
+    }
+  },
+  "records": [
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-百蜜花園（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "雙冠莊園精品美式（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "厚蜜地瓜美式（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "雙倍濃金獎美式（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "CAMA金獎美式（M）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-花香耶加雪菲（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "奶蓋海鹽美式（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "厚蜜地瓜美式（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-百蜜花園（M）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-花香耶加雪菲（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-盛夏草莓精品冷萃（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "雙冠莊園精品美式（M）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-百蜜花園（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "雙倍濃金獎美式（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "微韻輕美式（M）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "CAMA金獎美式（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "雙冠莊園精品美式（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "精品冷萃-花香耶加雪菲（M）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "海鹽西西里（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "微韻輕美式（XL）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "CAMA金獎美式（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "微韻輕美式（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "none",
+      "target": "奶蓋海鹽美式（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-百蜜花園（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "雙冠莊園精品美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "厚蜜地瓜美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "雙倍濃金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "CAMA金獎美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-花香耶加雪菲（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "奶蓋海鹽美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "厚蜜地瓜美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-百蜜花園（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-花香耶加雪菲（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-盛夏草莓精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "雙冠莊園精品美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-百蜜花園（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "雙倍濃金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "微韻輕美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "CAMA金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "雙冠莊園精品美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "精品冷萃-花香耶加雪菲（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "海鹽西西里（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "微韻輕美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "CAMA金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "微韻輕美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "gini",
+      "target": "奶蓋海鹽美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-百蜜花園（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "雙冠莊園精品美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "厚蜜地瓜美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "雙倍濃金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "CAMA金獎美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-花香耶加雪菲（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "奶蓋海鹽美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "厚蜜地瓜美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-百蜜花園（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-花香耶加雪菲（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-盛夏草莓精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "雙冠莊園精品美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-百蜜花園（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "雙倍濃金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "微韻輕美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "CAMA金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "雙冠莊園精品美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "精品冷萃-花香耶加雪菲（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "海鹽西西里（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "微韻輕美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "CAMA金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "微韻輕美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "entropy",
+      "target": "奶蓋海鹽美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-百蜜花園（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "雙冠莊園精品美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "厚蜜地瓜美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "雙倍濃金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "CAMA金獎美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-花香耶加雪菲（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "奶蓋海鹽美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "厚蜜地瓜美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-百蜜花園（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-花香耶加雪菲（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-盛夏草莓精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "雙冠莊園精品美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-百蜜花園（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "雙倍濃金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "微韻輕美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "CAMA金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "雙冠莊園精品美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "精品冷萃-花香耶加雪菲（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "海鹽西西里（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "微韻輕美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "CAMA金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "微韻輕美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "fixed",
+      "target": "奶蓋海鹽美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-百蜜花園（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "雙冠莊園精品美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "厚蜜地瓜美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "雙倍濃金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "CAMA金獎美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-花香耶加雪菲（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "奶蓋海鹽美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "厚蜜地瓜美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-百蜜花園（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-花香耶加雪菲（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-盛夏草莓精品冷萃（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "雙冠莊園精品美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-百蜜花園（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "雙倍濃金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "微韻輕美式（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "CAMA金獎美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "雙冠莊園精品美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "精品冷萃-花香耶加雪菲（M）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "海鹽西西里（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "微韻輕美式（XL）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "CAMA金獎美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "微韻輕美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_cama",
+      "strategy": "random",
+      "target": "奶蓋海鹽美式（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "none",
+      "target": "玩火（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "none",
+      "target": "嗨神（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "none",
+      "target": "文山包種（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "none",
+      "target": "碧螺春綠（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "none",
+      "target": "玫瑰普洱（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "none",
+      "target": "金萱烏龍（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "gini",
+      "target": "玩火（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "gini",
+      "target": "嗨神（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "gini",
+      "target": "文山包種（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "gini",
+      "target": "碧螺春綠（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "gini",
+      "target": "玫瑰普洱（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "gini",
+      "target": "金萱烏龍（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "entropy",
+      "target": "玩火（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "entropy",
+      "target": "嗨神（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "entropy",
+      "target": "文山包種（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "entropy",
+      "target": "碧螺春綠（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "entropy",
+      "target": "玫瑰普洱（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "entropy",
+      "target": "金萱烏龍（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "fixed",
+      "target": "玩火（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "fixed",
+      "target": "嗨神（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "fixed",
+      "target": "文山包種（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "fixed",
+      "target": "碧螺春綠（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "fixed",
+      "target": "玫瑰普洱（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "fixed",
+      "target": "金萱烏龍（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "random",
+      "target": "玩火（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "random",
+      "target": "嗨神（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "random",
+      "target": "文山包種（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "random",
+      "target": "碧螺春綠（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "random",
+      "target": "玫瑰普洱（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_comebuy",
+      "strategy": "random",
+      "target": "金萱烏龍（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "總匯八寶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "芋薯圓Q麻糬牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "招牌粉條冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "芋頭牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "草莓牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "芒果牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "none",
+      "target": "紅豆牛奶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "總匯八寶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "芋薯圓Q麻糬牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "招牌粉條冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "芋頭牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "草莓牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "芒果牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "gini",
+      "target": "紅豆牛奶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "總匯八寶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "芋薯圓Q麻糬牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "招牌粉條冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "芋頭牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "草莓牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "芒果牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "entropy",
+      "target": "紅豆牛奶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "總匯八寶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "芋薯圓Q麻糬牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "招牌粉條冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "芋頭牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "草莓牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "芒果牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "fixed",
+      "target": "紅豆牛奶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "總匯八寶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "芋薯圓Q麻糬牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "招牌粉條冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "芋頭牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "草莓牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "芒果牛奶冰",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_meetfresh",
+      "strategy": "random",
+      "target": "紅豆牛奶冰",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "none",
+      "target": "法芙娜可可鮮奶（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "none",
+      "target": "靜岡焙焙鮮奶（M）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "none",
+      "target": "靜岡焙焙鮮奶（L）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "none",
+      "target": "娜杯太妃QQ（L）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "none",
+      "target": "法芙娜可可鮮奶（M）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "gini",
+      "target": "法芙娜可可鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "gini",
+      "target": "靜岡焙焙鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "gini",
+      "target": "靜岡焙焙鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "gini",
+      "target": "娜杯太妃QQ（L）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "gini",
+      "target": "法芙娜可可鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "entropy",
+      "target": "法芙娜可可鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "entropy",
+      "target": "靜岡焙焙鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "entropy",
+      "target": "靜岡焙焙鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "entropy",
+      "target": "娜杯太妃QQ（L）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "entropy",
+      "target": "法芙娜可可鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "fixed",
+      "target": "法芙娜可可鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "fixed",
+      "target": "靜岡焙焙鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "fixed",
+      "target": "靜岡焙焙鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "fixed",
+      "target": "娜杯太妃QQ（L）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "fixed",
+      "target": "法芙娜可可鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "random",
+      "target": "法芙娜可可鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "random",
+      "target": "靜岡焙焙鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "random",
+      "target": "靜岡焙焙鮮奶（L）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "random",
+      "target": "娜杯太妃QQ（L）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_cafe_milksha",
+      "strategy": "random",
+      "target": "法芙娜可可鮮奶（M）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "雪菜百頁",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "絲瓜老少蛋",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "宮保臭豆腐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "麻婆豆腐",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "鮮筍 (乾煸/雪菜)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "乾煸四季豆",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "季節時蔬",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "none",
+      "target": "瑤柱娃娃菜",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "雪菜百頁",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "絲瓜老少蛋",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "宮保臭豆腐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "麻婆豆腐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "鮮筍 (乾煸/雪菜)",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "乾煸四季豆",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "季節時蔬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "gini",
+      "target": "瑤柱娃娃菜",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "雪菜百頁",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "絲瓜老少蛋",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "宮保臭豆腐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "麻婆豆腐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "鮮筍 (乾煸/雪菜)",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "乾煸四季豆",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "季節時蔬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "entropy",
+      "target": "瑤柱娃娃菜",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "雪菜百頁",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "絲瓜老少蛋",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "宮保臭豆腐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "麻婆豆腐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "鮮筍 (乾煸/雪菜)",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "乾煸四季豆",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "季節時蔬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "fixed",
+      "target": "瑤柱娃娃菜",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "雪菜百頁",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "絲瓜老少蛋",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "宮保臭豆腐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "麻婆豆腐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "鮮筍 (乾煸/雪菜)",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "乾煸四季豆",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "季節時蔬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_regent_lanting",
+      "strategy": "random",
+      "target": "瑤柱娃娃菜",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "XO醬乾拌麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "蔬食咖哩飯(五辛素)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "紅燒牛肉麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "油蔥酥意麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "麻油雞麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "老爺式炒飯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "none",
+      "target": "綠咖哩雞肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "XO醬乾拌麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "蔬食咖哩飯(五辛素)",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "紅燒牛肉麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "油蔥酥意麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "麻油雞麵",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "老爺式炒飯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "gini",
+      "target": "綠咖哩雞肉飯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "XO醬乾拌麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "蔬食咖哩飯(五辛素)",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "紅燒牛肉麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "油蔥酥意麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "麻油雞麵",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "老爺式炒飯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "entropy",
+      "target": "綠咖哩雞肉飯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "XO醬乾拌麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "蔬食咖哩飯(五辛素)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "紅燒牛肉麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "油蔥酥意麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "麻油雞麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "老爺式炒飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "fixed",
+      "target": "綠咖哩雞肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "XO醬乾拌麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "蔬食咖哩飯(五辛素)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "紅燒牛肉麵",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "油蔥酥意麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "麻油雞麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "老爺式炒飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_royal_huigan",
+      "strategy": "random",
+      "target": "綠咖哩雞肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "none",
+      "target": "拿坡里番茄水管麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "none",
+      "target": "主廚手作麵疙瘩、明蝦塔塔、魚子醬",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "gini",
+      "target": "拿坡里番茄水管麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "gini",
+      "target": "主廚手作麵疙瘩、明蝦塔塔、魚子醬",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "entropy",
+      "target": "拿坡里番茄水管麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "entropy",
+      "target": "主廚手作麵疙瘩、明蝦塔塔、魚子醬",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "fixed",
+      "target": "拿坡里番茄水管麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "fixed",
+      "target": "主廚手作麵疙瘩、明蝦塔塔、魚子醬",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "random",
+      "target": "拿坡里番茄水管麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_sheraton_pizzapub",
+      "strategy": "random",
+      "target": "主廚手作麵疙瘩、明蝦塔塔、魚子醬",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "none",
+      "target": "炙燒港口鮮蝦搭時蔬佐西班牙風味奶油",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "none",
+      "target": "酥炸雞腿搭法式洋蔥圈",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "none",
+      "target": "傳統手工輕漬鮭魚佐鮮貝搭襯魚子醬",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "none",
+      "target": "綜合乳酪盤",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "none",
+      "target": "奶奶的鄉下炸薯片",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "none",
+      "target": "招牌香草蒜味烘烤焗田螺",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "gini",
+      "target": "炙燒港口鮮蝦搭時蔬佐西班牙風味奶油",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "gini",
+      "target": "酥炸雞腿搭法式洋蔥圈",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "gini",
+      "target": "傳統手工輕漬鮭魚佐鮮貝搭襯魚子醬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "gini",
+      "target": "綜合乳酪盤",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "gini",
+      "target": "奶奶的鄉下炸薯片",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "gini",
+      "target": "招牌香草蒜味烘烤焗田螺",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "entropy",
+      "target": "炙燒港口鮮蝦搭時蔬佐西班牙風味奶油",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "entropy",
+      "target": "酥炸雞腿搭法式洋蔥圈",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "entropy",
+      "target": "傳統手工輕漬鮭魚佐鮮貝搭襯魚子醬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "entropy",
+      "target": "綜合乳酪盤",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "entropy",
+      "target": "奶奶的鄉下炸薯片",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "entropy",
+      "target": "招牌香草蒜味烘烤焗田螺",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "fixed",
+      "target": "炙燒港口鮮蝦搭時蔬佐西班牙風味奶油",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "fixed",
+      "target": "酥炸雞腿搭法式洋蔥圈",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "fixed",
+      "target": "傳統手工輕漬鮭魚佐鮮貝搭襯魚子醬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "fixed",
+      "target": "綜合乳酪盤",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "fixed",
+      "target": "奶奶的鄉下炸薯片",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "fixed",
+      "target": "招牌香草蒜味烘烤焗田螺",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "random",
+      "target": "炙燒港口鮮蝦搭時蔬佐西班牙風味奶油",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "random",
+      "target": "酥炸雞腿搭法式洋蔥圈",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "random",
+      "target": "傳統手工輕漬鮭魚佐鮮貝搭襯魚子醬",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "random",
+      "target": "綜合乳酪盤",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "random",
+      "target": "奶奶的鄉下炸薯片",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_hotel_splendor_lobby",
+      "strategy": "random",
+      "target": "招牌香草蒜味烘烤焗田螺",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "蝦棗",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "蟳丸",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "蝦棗",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "手工花枝丸",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "蟳丸",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "香菇",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "手工花枝丸",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "蝦棗拼香腸",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "四碟拼盤",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "香腸",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "none",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "蝦棗",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "蟳丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "蝦棗",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "手工花枝丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "蟳丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "香菇",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "手工花枝丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "蝦棗拼香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "四碟拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "gini",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "蝦棗",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "蟳丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "蝦棗",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "手工花枝丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "蟳丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "香菇",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "手工花枝丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "蝦棗拼香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "四碟拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "entropy",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "蝦棗",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "蟳丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "蝦棗",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "手工花枝丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "蟳丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "香菇",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "手工花枝丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "蝦棗拼香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "四碟拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "fixed",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "蝦棗",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "蟳丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "蝦棗",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "手工花枝丸",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "蟳丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "香菇",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "手工花枝丸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "蝦棗拼香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "四碟拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "香腸",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_amei",
+      "strategy": "random",
+      "target": "三色拼盤",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "甘露香魚",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "特選烏魚子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "日式鱈魚肝",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "和風涼拌洋蔥",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "五味小捲",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "古味鯊魚煙",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "none",
+      "target": "翡翠黑鑽",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "甘露香魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "特選烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "日式鱈魚肝",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "和風涼拌洋蔥",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "五味小捲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "古味鯊魚煙",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "gini",
+      "target": "翡翠黑鑽",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "甘露香魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "特選烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "日式鱈魚肝",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "和風涼拌洋蔥",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "五味小捲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "古味鯊魚煙",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "entropy",
+      "target": "翡翠黑鑽",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "甘露香魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "特選烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "日式鱈魚肝",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "和風涼拌洋蔥",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "五味小捲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "古味鯊魚煙",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "fixed",
+      "target": "翡翠黑鑽",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "甘露香魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "特選烏魚子",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "日式鱈魚肝",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "和風涼拌洋蔥",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "五味小捲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "古味鯊魚煙",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_extra9",
+      "strategy": "random",
+      "target": "翡翠黑鑽",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋竹笙雞湯（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋白菜豆腐雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋菇菇雞湯（小）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋脆筍雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋鮑魚雞湯（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋脆筍雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋魚翅雞湯（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋鮑魚雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋魚翅雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋竹笙雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋鮑魚雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋土雞湯（小）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋土雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋菇菇雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋白菜豆腐雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋菇菇雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋竹笙雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋魚翅雞湯（中）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋土雞湯（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋白菜豆腐雞湯（小）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "none",
+      "target": "砂鍋脆筍雞湯（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋竹笙雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋白菜豆腐雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋菇菇雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋脆筍雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋鮑魚雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋脆筍雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋魚翅雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋鮑魚雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋魚翅雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋竹笙雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋鮑魚雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋土雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋土雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋菇菇雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋白菜豆腐雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋菇菇雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋竹笙雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋魚翅雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋土雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋白菜豆腐雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "gini",
+      "target": "砂鍋脆筍雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋竹笙雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋白菜豆腐雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋菇菇雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋脆筍雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋鮑魚雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋脆筍雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋魚翅雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋鮑魚雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋魚翅雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋竹笙雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋鮑魚雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋土雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋土雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋菇菇雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋白菜豆腐雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋菇菇雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋竹笙雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋魚翅雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋土雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋白菜豆腐雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "entropy",
+      "target": "砂鍋脆筍雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋竹笙雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋白菜豆腐雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋菇菇雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋脆筍雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋鮑魚雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋脆筍雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋魚翅雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋鮑魚雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋魚翅雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋竹笙雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋鮑魚雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋土雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋土雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋菇菇雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋白菜豆腐雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋菇菇雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋竹笙雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋魚翅雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋土雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋白菜豆腐雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "fixed",
+      "target": "砂鍋脆筍雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋竹笙雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋白菜豆腐雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋菇菇雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋脆筍雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋鮑魚雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋脆筍雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋魚翅雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋鮑魚雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋魚翅雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋竹笙雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋鮑魚雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋土雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋土雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋菇菇雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋白菜豆腐雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋菇菇雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋竹笙雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋魚翅雞湯（中）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋土雞湯（大）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋白菜豆腐雞湯（小）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_gwoo",
+      "strategy": "random",
+      "target": "砂鍋脆筍雞湯（小）",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "none",
+      "target": "綜合魚肚生魚片（小份）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "none",
+      "target": "象拔蚌兩吃",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "none",
+      "target": "龍蝦兩吃",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "none",
+      "target": "綜合生魚片（小份）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "gini",
+      "target": "綜合魚肚生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "gini",
+      "target": "象拔蚌兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "gini",
+      "target": "龍蝦兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "gini",
+      "target": "綜合生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "entropy",
+      "target": "綜合魚肚生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "entropy",
+      "target": "象拔蚌兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "entropy",
+      "target": "龍蝦兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "entropy",
+      "target": "綜合生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "fixed",
+      "target": "綜合魚肚生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "fixed",
+      "target": "象拔蚌兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "fixed",
+      "target": "龍蝦兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "fixed",
+      "target": "綜合生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "random",
+      "target": "綜合魚肚生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "random",
+      "target": "象拔蚌兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "random",
+      "target": "龍蝦兩吃",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "holdout_tw_newpalace_wuqi",
+      "strategy": "random",
+      "target": "綜合生魚片（小份）",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    }
+  ]
+}

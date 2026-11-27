@@ -175,11 +175,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", default="dev")
     parser.add_argument("--b", required=True, nargs="+", help="B 組（預設提示詞）的 run label 或路徑，可多個")
-    parser.add_argument("--c", required=True, nargs="+", help="C 組（VISION_PRICE_TEXT=1）的 run，可多個（含重跑）")
+    parser.add_argument("--c", nargs="*", default=[],
+                        help="C 組（VISION_PRICE_TEXT=1）的 run，可多個（含重跑）；封存組只跑凍結設定，可省略")
     args = parser.parse_args()
     case_dir = HERE / args.split
     result: dict[str, Any] = {"split": args.split, "groups": {}}
     for group, labels, cross in (("B", args.b, True), ("C", args.c, True)):
+        if not labels:
+            continue
         runs = [load_run(label) for label in labels]
         merged, failed = merge_runs(runs)
         records = analyze_run(merged, case_dir, cross)

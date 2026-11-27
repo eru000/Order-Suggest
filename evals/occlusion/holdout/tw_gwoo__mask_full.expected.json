@@ -1,0 +1,160 @@
+{
+  "items": [
+    {
+      "name": "砂鍋土雞湯（小）",
+      "price": 400,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋土雞湯（中）",
+      "price": 1900,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋土雞湯（大）",
+      "price": 3500,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋白菜豆腐雞湯（小）",
+      "price": null,
+      "variant": "小",
+      "true_price": 440,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          768.0,
+          529.0,
+          819.0,
+          556.0
+        ],
+        "maskDigit": 0
+      }
+    },
+    {
+      "name": "砂鍋白菜豆腐雞湯（中）",
+      "price": 2060,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋白菜豆腐雞湯（大）",
+      "price": null,
+      "variant": "大",
+      "true_price": 3820,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          940.0,
+          528.0,
+          1006.0,
+          558.0
+        ],
+        "maskDigit": 1
+      }
+    },
+    {
+      "name": "砂鍋菇菇雞湯（小）",
+      "price": 520,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋菇菇雞湯（中）",
+      "price": null,
+      "variant": "中",
+      "true_price": 2380,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          848.0,
+          598.0,
+          913.0,
+          627.0
+        ],
+        "maskDigit": 0
+      }
+    },
+    {
+      "name": "砂鍋菇菇雞湯（大）",
+      "price": 4460,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋脆筍雞湯（小）",
+      "price": 650,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋脆筍雞湯（中）",
+      "price": 2900,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋脆筍雞湯（大）",
+      "price": 5500,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋竹笙雞湯（小）",
+      "price": 730,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋竹笙雞湯（中）",
+      "price": 3220,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋竹笙雞湯（大）",
+      "price": 6140,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋鮑魚雞湯（小）",
+      "price": 1000,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋鮑魚雞湯（中）",
+      "price": null,
+      "variant": "中",
+      "true_price": 4300,
+      "occlusion": {
+        "type": "mask",
+        "level": "full",
+        "box": [
+          835.0,
+          817.0,
+          913.0,
+          845.0
+        ],
+        "maskDigit": 2
+      }
+    },
+    {
+      "name": "砂鍋鮑魚雞湯（大）",
+      "price": 8300,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋魚翅雞湯（小）",
+      "price": 1190,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋魚翅雞湯（中）",
+      "price": 5060,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋魚翅雞湯（大）",
+      "price": 9820,
+      "variant": "大"
+    }
+  ],
+  "derivedFrom": "tw_gwoo",
+  "treatment": "mask_full",
+  "seed": 20261127
+}

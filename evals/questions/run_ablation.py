@@ -36,14 +36,16 @@ from run_eval import load_menus  # noqa: E402
 from session_store import SessionStore  # noqa: E402
 
 DEV_TRUTHS = ROOT / "菜單照片資料" / "第二項" / "開發原圖"
+# 節點 H：凍結後以同一協定換成封存組菜單（--split holdout）
+HOLDOUT_TRUTHS = ROOT / "菜單照片資料" / "第二項" / "獨立封存"
 MAX_TARGETS_PER_MENU = 60
 
 
-def dev_menus() -> dict[str, dict[str, Any]]:
-    menus = dict(load_menus(ROOT))
-    for path in sorted(DEV_TRUTHS.glob("*.expected.json")):
+def truth_menus(directory: Path, prefix: str) -> dict[str, dict[str, Any]]:
+    menus: dict[str, dict[str, Any]] = {}
+    for path in sorted(directory.glob("*.expected.json")):
         truth = json.loads(path.read_text(encoding="utf-8"))
-        name = "dev_" + path.name.removesuffix(".expected.json")
+        name = prefix + path.name.removesuffix(".expected.json")
         menus[name] = {
             "serviceRate": 0,
             "categories": [{"name": "菜單", "items": [
@@ -51,6 +53,10 @@ def dev_menus() -> dict[str, dict[str, Any]]:
             ]}],
         }
     return menus
+
+
+def dev_menus() -> dict[str, dict[str, Any]]:
+    return {**load_menus(ROOT), **truth_menus(DEV_TRUTHS, "dev_")}
 
 
 def answer(question: dict[str, Any], target: dict[str, Any]) -> tuple[str, bool]:
@@ -104,8 +110,9 @@ def simulate(name: str, menu: dict[str, Any], target: dict[str, Any], strategy: 
 
 
 def main() -> int:
+    split = "holdout" if "--split" in sys.argv and sys.argv[-1] == "holdout" else "dev"
     decision_service._QUESTION_RANDOM.seed(20261127)
-    menus = dev_menus()
+    menus = truth_menus(HOLDOUT_TRUTHS, "holdout_") if split == "holdout" else dev_menus()
     records = []
     for name, menu in sorted(menus.items()):
         if shared_table_menu(menu):
@@ -152,9 +159,9 @@ def main() -> int:
     pairs = {f"{a}_vs_{b}": mcnemar(a, b) for a, b in (
         ("gini", "none"), ("gini", "entropy"), ("gini", "fixed"), ("gini", "random"),
     )}
-    out = ROOT / "evals" / "results" / "step6"
+    out = ROOT / "evals" / "results" / ("holdout" if split == "holdout" else "step6")
     out.mkdir(parents=True, exist_ok=True)
-    path = out / "question-ablation-dev.json"
+    path = out / f"question-ablation-{split}.json"
     path.write_text(json.dumps({
         "generatedAt": datetime.now().astimezone().isoformat(timespec="seconds"),
         "maxQuestions": decision_service.MAX_QUESTIONS,

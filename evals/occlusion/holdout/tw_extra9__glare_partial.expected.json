@@ -1,0 +1,101 @@
+{
+  "items": [
+    {
+      "name": "綜合和風沙拉",
+      "price": 300
+    },
+    {
+      "name": "和風涼拌洋蔥",
+      "price": 180
+    },
+    {
+      "name": "古味鯊魚煙",
+      "price": 240
+    },
+    {
+      "name": "冷筍沙拉",
+      "price": 320,
+      "true_price": 320,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          200.0,
+          233.0,
+          230.0,
+          251.0
+        ]
+      }
+    },
+    {
+      "name": "魚蛋沙拉",
+      "price": 280
+    },
+    {
+      "name": "龍蝦沙拉",
+      "price": null,
+      "priceState": "market"
+    },
+    {
+      "name": "明蝦沙拉",
+      "price": null,
+      "priceState": "market"
+    },
+    {
+      "name": "五味小捲",
+      "price": 280,
+      "true_price": 280,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          199.2,
+          426.0,
+          230.0,
+          442.0
+        ]
+      }
+    },
+    {
+      "name": "特選烏魚子",
+      "price": 530,
+      "true_price": 530,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          199.2,
+          473.0,
+          230.0,
+          491.0
+        ]
+      }
+    },
+    {
+      "name": "日式鱈魚肝",
+      "price": 320
+    },
+    {
+      "name": "甘露香魚",
+      "price": 240,
+      "true_price": 240,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          200.0,
+          569.0,
+          230.0,
+          587.0
+        ]
+      }
+    },
+    {
+      "name": "翡翠黑鑽",
+      "price": 260
+    }
+  ],
+  "derivedFrom": "tw_extra9",
+  "treatment": "glare_partial",
+  "seed": 20261127
+}

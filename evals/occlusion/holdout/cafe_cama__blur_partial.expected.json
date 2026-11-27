@@ -1,0 +1,186 @@
+{
+  "items": [
+    {
+      "name": "厚蜜地瓜美式（L）",
+      "price": 90,
+      "variant": "L"
+    },
+    {
+      "name": "厚蜜地瓜美式（XL）",
+      "price": 110,
+      "variant": "XL"
+    },
+    {
+      "name": "精品冷萃-盛夏草莓精品冷萃（L）",
+      "price": 120,
+      "variant": "L"
+    },
+    {
+      "name": "精品冷萃-盛夏蜜桃精品冷萃（L）",
+      "price": 120,
+      "variant": "L"
+    },
+    {
+      "name": "海鹽西西里（L）",
+      "price": 110,
+      "variant": "L"
+    },
+    {
+      "name": "雙倍濃金獎美式（L）",
+      "price": 105,
+      "variant": "L"
+    },
+    {
+      "name": "雙倍濃金獎美式（XL）",
+      "price": 120,
+      "variant": "XL"
+    },
+    {
+      "name": "西西里咖啡（L）",
+      "price": 110,
+      "variant": "L"
+    },
+    {
+      "name": "西西里咖啡（XL）",
+      "price": 125,
+      "variant": "XL"
+    },
+    {
+      "name": "雙冠莊園精品美式（M）",
+      "price": 80,
+      "variant": "M"
+    },
+    {
+      "name": "雙冠莊園精品美式（L）",
+      "price": 100,
+      "variant": "L",
+      "true_price": 100,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          529.3,
+          1462.5,
+          590.8,
+          1500.5
+        ]
+      }
+    },
+    {
+      "name": "雙冠莊園精品美式（XL）",
+      "price": 120,
+      "variant": "XL"
+    },
+    {
+      "name": "CAMA金獎美式（M）",
+      "price": 65,
+      "variant": "M"
+    },
+    {
+      "name": "CAMA金獎美式（L）",
+      "price": 80,
+      "variant": "L"
+    },
+    {
+      "name": "CAMA金獎美式（XL）",
+      "price": 95,
+      "variant": "XL",
+      "true_price": 95,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          667.4,
+          1621.4,
+          711.2,
+          1660.8
+        ]
+      }
+    },
+    {
+      "name": "微韻輕美式（M）",
+      "price": 65,
+      "variant": "M",
+      "true_price": 65,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          427.2,
+          1780.3,
+          471.8,
+          1822.5
+        ]
+      }
+    },
+    {
+      "name": "微韻輕美式（L）",
+      "price": 80,
+      "variant": "L",
+      "true_price": 80,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          547.5,
+          1778.9,
+          592.2,
+          1822.5
+        ]
+      }
+    },
+    {
+      "name": "微韻輕美式（XL）",
+      "price": 95,
+      "variant": "XL"
+    },
+    {
+      "name": "精品冷萃-花香耶加雪菲（M）",
+      "price": 110,
+      "variant": "M"
+    },
+    {
+      "name": "精品冷萃-花香耶加雪菲（L）",
+      "price": 125,
+      "variant": "L"
+    },
+    {
+      "name": "精品冷萃-花香耶加雪菲（XL）",
+      "price": 140,
+      "variant": "XL"
+    },
+    {
+      "name": "精品冷萃-百蜜花園（M）",
+      "price": 110,
+      "variant": "M"
+    },
+    {
+      "name": "精品冷萃-百蜜花園（L）",
+      "price": 125,
+      "variant": "L"
+    },
+    {
+      "name": "精品冷萃-百蜜花園（XL）",
+      "price": 140,
+      "variant": "XL"
+    },
+    {
+      "name": "奶蓋海鹽美式（L）",
+      "price": 100,
+      "variant": "L"
+    },
+    {
+      "name": "奶蓋海鹽美式（XL）",
+      "price": 110,
+      "variant": "XL"
+    },
+    {
+      "name": "濃縮咖啡（M）",
+      "price": 70,
+      "variant": "M"
+    }
+  ],
+  "derivedFrom": "cafe_cama",
+  "treatment": "blur_partial",
+  "seed": 20261127
+}
