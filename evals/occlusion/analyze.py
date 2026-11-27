@@ -96,7 +96,17 @@ def _ocr_cached(path: Path) -> list[dict[str, Any]]:
     import ocr_baseline
 
     if path not in _OCR_CACHE:
-        _OCR_CACHE[path] = ocr_baseline.ocr_lines(path.read_bytes())
+        # 磁碟快取（以影像 SHA-256 為鍵）：35 張圖的 OCR 超過單次執行時間上限時可分批預熱
+        import hashlib
+
+        data = path.read_bytes()
+        disk = ROOT / "evals" / "results" / "occlusion_ocr_cache" / f"{hashlib.sha256(data).hexdigest()}.json"
+        if disk.is_file():
+            _OCR_CACHE[path] = json.loads(disk.read_text(encoding="utf-8"))
+        else:
+            _OCR_CACHE[path] = ocr_baseline.ocr_lines(data)
+            disk.parent.mkdir(parents=True, exist_ok=True)
+            disk.write_text(json.dumps(_OCR_CACHE[path], ensure_ascii=False), encoding="utf-8")
     return _OCR_CACHE[path]
 
 

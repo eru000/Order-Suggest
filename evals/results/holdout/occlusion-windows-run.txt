@@ -1,0 +1,15 @@
+== 執行時間 2026-11-27T13:51:48，程式版本 8c65285 ==
+== 預估呼叫數 ==
+  tw_gwoo__mask_full   答案  21 項　預估 1 次呼叫
+
+案例格式檢查：可用 35/35；--dry-run 不讀 .env、不呼叫 API；呼叫估算僅依目前程序環境與預設值。
+== 封存組遮蔽：預設提示詞（凍結設定）==
+[tw_gwoo__glare_full] 漏抓 4 項：
+  砂鍋白菜豆腐雞湯（小）、砂鍋白菜豆腐雞湯（大）、砂鍋菇菇雞湯（中）、砂鍋鮑魚雞湯（中）
+[tw_gwoo__glare_full] 價格錯誤 2 項：
+  砂鍋鮑魚雞湯（大）：應為 8300，讀成 3300.0
+  砂鍋鮑魚雞湯（小）：應為 1000，讀成 None
+
+紀錄已存到 evals\menu_ocr\runs\20261127-140446_occl-holdout-B.json
+比較兩次結果：python evals\menu_ocr\run_eval.py --compare <另一個label> occl-holdout-B
+== 完成 2026-11-27T14:04:46 ==

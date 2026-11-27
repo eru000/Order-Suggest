@@ -1,0 +1,2172 @@
+{
+  "source": "evals/results/stepB/occlusion-holdout.json",
+  "technicalFailures": [
+    {
+      "case": "cafe_milksha__blur_full",
+      "status": "error",
+      "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+    },
+    {
+      "case": "cafe_milksha__blur_partial",
+      "status": "error",
+      "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+    },
+    {
+      "case": "cafe_milksha__glare_full",
+      "status": "error",
+      "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+    },
+    {
+      "case": "cafe_milksha__mask_full",
+      "status": "error",
+      "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+    }
+  ],
+  "matchArtifacts": 9,
+  "summary": {
+    "all_full": {
+      "n": 72,
+      "missing": 20,
+      "abstain": 42,
+      "wrong_number": 10,
+      "wrongCaughtByPlausibility": 5,
+      "wrongCaughtByOcr": 1,
+      "wrongCaughtByEither": 6
+    },
+    "all_partial": {
+      "n": 52,
+      "abstain": 24,
+      "right_number": 27,
+      "wrong_number": 1,
+      "wrongCaughtByPlausibility": 0,
+      "wrongCaughtByOcr": 1,
+      "wrongCaughtByEither": 1
+    },
+    "blur_full": {
+      "n": 24,
+      "missing": 8,
+      "abstain": 16
+    },
+    "blur_partial": {
+      "n": 24,
+      "abstain": 24
+    },
+    "glare_full": {
+      "n": 24,
+      "missing": 8,
+      "abstain": 16
+    },
+    "glare_partial": {
+      "n": 28,
+      "right_number": 27,
+      "wrong_number": 1,
+      "wrongCaughtByPlausibility": 0,
+      "wrongCaughtByOcr": 1,
+      "wrongCaughtByEither": 1
+    },
+    "mask_full": {
+      "n": 24,
+      "missing": 4,
+      "abstain": 10,
+      "wrong_number": 10,
+      "wrongCaughtByPlausibility": 5,
+      "wrongCaughtByOcr": 1,
+      "wrongCaughtByEither": 6
+    }
+  },
+  "records": [
+    {
+      "case": "cafe_cama__blur_full",
+      "priceStatus": null,
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "雙冠莊園精品美式（L）",
+      "truePrice": 100,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__blur_full",
+      "priceStatus": null,
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "CAMA金獎美式（XL）",
+      "truePrice": 95,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__blur_full",
+      "priceStatus": null,
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "微韻輕美式（M）",
+      "truePrice": 65,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__blur_full",
+      "priceStatus": null,
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "微韻輕美式（L）",
+      "truePrice": 80,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "雙冠莊園精品美式（L）",
+      "truePrice": 100,
+      "predicted": {
+        "name": "雙冠莊園精品美式（L）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_cama__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "CAMA金獎美式（XL）",
+      "truePrice": 95,
+      "predicted": {
+        "name": "CAMA金獎美式（XL）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_cama__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "微韻輕美式（M）",
+      "truePrice": 65,
+      "predicted": {
+        "name": "微韻輕美式（M）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_cama__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "微韻輕美式（L）",
+      "truePrice": 80,
+      "predicted": {
+        "name": "微韻輕美式（L）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_cama__glare_full",
+      "priceStatus": "fixed",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "雙冠莊園精品美式（L）",
+      "truePrice": 100,
+      "predicted": {
+        "name": "雙冠莊園精品美式（XL）",
+        "price": 120.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__glare_full",
+      "priceStatus": "fixed",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "CAMA金獎美式（XL）",
+      "truePrice": 95,
+      "predicted": {
+        "name": "CAMA金獎美式（L）",
+        "price": 80.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__glare_full",
+      "priceStatus": null,
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "微韻輕美式（M）",
+      "truePrice": 65,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__glare_full",
+      "priceStatus": "fixed",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "微韻輕美式（L）",
+      "truePrice": 80,
+      "predicted": {
+        "name": "微韻輕美式（XL）",
+        "price": 95.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_unverified"
+      ],
+      "surfaced": true,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "雙冠莊園精品美式（L）",
+      "truePrice": 100,
+      "predicted": {
+        "name": "雙冠莊園精品美式（L）",
+        "price": 100.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_cama__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "CAMA金獎美式（XL）",
+      "truePrice": 95,
+      "predicted": {
+        "name": "CAMA金獎美式（XL）",
+        "price": 95.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_cama__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "微韻輕美式（M）",
+      "truePrice": 65,
+      "predicted": {
+        "name": "微韻輕美式（M）",
+        "price": 65.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_cama__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "微韻輕美式（L）",
+      "truePrice": 80,
+      "predicted": {
+        "name": "微韻輕美式（L）",
+        "price": 80.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_cama__mask_full",
+      "priceStatus": null,
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "雙冠莊園精品美式（L）",
+      "truePrice": 100,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__mask_full",
+      "priceStatus": null,
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "CAMA金獎美式（XL）",
+      "truePrice": 95,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__mask_full",
+      "priceStatus": null,
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "微韻輕美式（M）",
+      "truePrice": 65,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_cama__mask_full",
+      "priceStatus": null,
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "微韻輕美式（L）",
+      "truePrice": 80,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "cafe_comebuy__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "碧螺春綠（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "碧螺春綠",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "文山包種（L）",
+      "truePrice": 50,
+      "predicted": {
+        "name": "文山包種",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "玩火（L）",
+      "truePrice": 45,
+      "predicted": {
+        "name": "玩火",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "鮮萃大麥紅茶（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "鮮萃大麥紅茶",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "碧螺春綠（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "碧螺春綠",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "文山包種（L）",
+      "truePrice": 50,
+      "predicted": {
+        "name": "文山包種",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "玩火（L）",
+      "truePrice": 45,
+      "predicted": {
+        "name": "玩火",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "鮮萃大麥紅茶（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "鮮萃大麥紅茶",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "碧螺春綠（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "碧螺春綠",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "文山包種（L）",
+      "truePrice": 50,
+      "predicted": {
+        "name": "文山包種",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "玩火（L）",
+      "truePrice": 45,
+      "predicted": {
+        "name": "玩火",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "鮮萃大麥紅茶（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "鮮萃大麥紅",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "碧螺春綠（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "碧螺春綠",
+        "price": 40.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_comebuy__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "文山包種（L）",
+      "truePrice": 50,
+      "predicted": {
+        "name": "文山包種",
+        "price": 50.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_comebuy__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "玩火（L）",
+      "truePrice": 45,
+      "predicted": {
+        "name": "玩火",
+        "price": 45.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_comebuy__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "鮮萃大麥紅茶（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "鮮萃大麥紅茶",
+        "price": 40.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_comebuy__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "碧螺春綠（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "碧螺春綠",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "文山包種（L）",
+      "truePrice": 50,
+      "predicted": {
+        "name": "文山包種",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "玩火（L）",
+      "truePrice": 45,
+      "predicted": {
+        "name": "玩火",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_comebuy__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "鮮萃大麥紅茶（L）",
+      "truePrice": 40,
+      "predicted": {
+        "name": "鮮萃大麥紅茶",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "cafe_milksha__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "太妃伯爵布朗拿鐵（L）",
+      "truePrice": 80,
+      "predicted": {
+        "name": "太妃伯爵布朗拿鐵（L）",
+        "price": 110.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "ocr_price_mismatch"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "cafe_milksha__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "靜岡焙焙烏龍拿鐵（M）",
+      "truePrice": 65,
+      "predicted": {
+        "name": "靜岡焙焙烏龍拿鐵（M）",
+        "price": 65.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_milksha__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "靜岡焙焙烏龍拿鐵（L）",
+      "truePrice": 75,
+      "predicted": {
+        "name": "靜岡焙焙烏龍拿鐵（L）",
+        "price": 75.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "cafe_milksha__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "法芙娜可可鮮奶（L）",
+      "truePrice": 100,
+      "predicted": {
+        "name": "法芙娜可可鮮奶（L）",
+        "price": 100.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "瑤柱娃娃菜",
+      "truePrice": 580,
+      "predicted": {
+        "name": "瑤柱娃娃菜",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "絲瓜老少蛋",
+      "truePrice": 480,
+      "predicted": {
+        "name": "絲瓜老少蛋",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "雪菜百頁",
+      "truePrice": 460,
+      "predicted": {
+        "name": "雪菜百頁",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "宮保臭豆腐",
+      "truePrice": 420,
+      "predicted": {
+        "name": "宮保臭豆腐",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "瑤柱娃娃菜",
+      "truePrice": 580,
+      "predicted": {
+        "name": "瑤柱娃娃菜",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "絲瓜老少蛋",
+      "truePrice": 480,
+      "predicted": {
+        "name": "絲瓜老少蛋",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "雪菜百頁",
+      "truePrice": 460,
+      "predicted": {
+        "name": "雪菜百頁",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "宮保臭豆腐",
+      "truePrice": 420,
+      "predicted": {
+        "name": "宮保臭豆腐",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "瑤柱娃娃菜",
+      "truePrice": 580,
+      "predicted": {
+        "name": "瑤柱娃娃菜",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "絲瓜老少蛋",
+      "truePrice": 480,
+      "predicted": {
+        "name": "絲瓜老少蛋",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "雪菜百頁",
+      "truePrice": 460,
+      "predicted": {
+        "name": "雪菜百頁",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "宮保臭豆腐",
+      "truePrice": 420,
+      "predicted": {
+        "name": "宮保臭豆腐",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "瑤柱娃娃菜",
+      "truePrice": 580,
+      "predicted": {
+        "name": "瑤柱娃娃菜",
+        "price": 580.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "絲瓜老少蛋",
+      "truePrice": 480,
+      "predicted": {
+        "name": "絲瓜老少蛋",
+        "price": 480.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "雪菜百頁",
+      "truePrice": 460,
+      "predicted": {
+        "name": "雪菜百頁",
+        "price": 460.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_regent_lanting__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "宮保臭豆腐",
+      "truePrice": 420,
+      "predicted": {
+        "name": "宮保臭豆腐",
+        "price": 420.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_regent_lanting__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "瑤柱娃娃菜",
+      "truePrice": 580,
+      "predicted": {
+        "name": "瑤柱娃娃菜",
+        "price": 30.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_outlier"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "hotel_regent_lanting__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "絲瓜老少蛋",
+      "truePrice": 480,
+      "predicted": {
+        "name": "絲瓜老少蛋",
+        "price": 48.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "hotel_regent_lanting__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "雪菜百頁",
+      "truePrice": 460,
+      "predicted": {
+        "name": "雪菜百頁",
+        "price": 46.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_outlier"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "hotel_regent_lanting__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "宮保臭豆腐",
+      "truePrice": 420,
+      "predicted": {
+        "name": "宮保臭豆腐",
+        "price": 42.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_outlier"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "蔬食咖哩飯(五辛素)",
+      "truePrice": 180,
+      "predicted": {
+        "name": "蔬食咖哩飯(五辛素)",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "XO醬乾拌麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "XO醬乾拌麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "油蔥酥意麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "油蔥酥意麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "燻里肌帕里尼",
+      "truePrice": 120,
+      "predicted": {
+        "name": "燻里肌帕里尼",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "蔬食咖哩飯(五辛素)",
+      "truePrice": 180,
+      "predicted": {
+        "name": "蔬食咖哩飯(五辛素)",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "XO醬乾拌麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "XO醬乾拌麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "油蔥酥意麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "油蔥酥意麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "燻里肌帕里尼",
+      "truePrice": 120,
+      "predicted": {
+        "name": "燻里肌帕里尼",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "蔬食咖哩飯(五辛素)",
+      "truePrice": 180,
+      "predicted": {
+        "name": "蔬食咖哩飯(五辛素)",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "XO醬乾拌麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "XO醬乾拌麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "油蔥酥意麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "油蔥酥意麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "燻里肌帕里尼",
+      "truePrice": 120,
+      "predicted": {
+        "name": "燻里肌帕里尼",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "蔬食咖哩飯(五辛素)",
+      "truePrice": 180,
+      "predicted": {
+        "name": "蔬食咖哩飯(五辛素)",
+        "price": 180.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "XO醬乾拌麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "XO醬乾拌麵",
+        "price": 160.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "油蔥酥意麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "油蔥酥意麵",
+        "price": 160.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [
+        "price_unverified"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_royal_huigan__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "燻里肌帕里尼",
+      "truePrice": 120,
+      "predicted": {
+        "name": "燻里肌帕里尼",
+        "price": 120.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "hotel_royal_huigan__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "蔬食咖哩飯(五辛素)",
+      "truePrice": 180,
+      "predicted": {
+        "name": "蔬食咖哩飯(五辛素)",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "XO醬乾拌麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "XO醬乾拌麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "油蔥酥意麵",
+      "truePrice": 160,
+      "predicted": {
+        "name": "油蔥酥意麵",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "hotel_royal_huigan__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "燻里肌帕里尼",
+      "truePrice": 120,
+      "predicted": {
+        "name": "燻里肌帕里尼",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "冷筍沙拉",
+      "truePrice": 320,
+      "predicted": {
+        "name": "冷筍沙拉",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "五味小捲",
+      "truePrice": 280,
+      "predicted": {
+        "name": "五味小捲",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "特選烏魚子",
+      "truePrice": 530,
+      "predicted": {
+        "name": "特選烏魚子",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_full",
+      "priceStatus": "missing",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "甘露香魚",
+      "truePrice": 240,
+      "predicted": {
+        "name": "甘露香魚",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "冷筍沙拉",
+      "truePrice": 320,
+      "predicted": {
+        "name": "冷筍沙拉",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "五味小捲",
+      "truePrice": 280,
+      "predicted": {
+        "name": "五味小捲",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "特選烏魚子",
+      "truePrice": 530,
+      "predicted": {
+        "name": "特選烏魚子",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "甘露香魚",
+      "truePrice": 240,
+      "predicted": {
+        "name": "甘露香魚",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "冷筍沙拉",
+      "truePrice": 320,
+      "predicted": {
+        "name": "冷筍沙拉",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "五味小捲",
+      "truePrice": 280,
+      "predicted": {
+        "name": "五味小捲",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "特選烏魚子",
+      "truePrice": 530,
+      "predicted": {
+        "name": "特選烏魚子",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__glare_full",
+      "priceStatus": "missing",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "甘露香魚",
+      "truePrice": 240,
+      "predicted": {
+        "name": "甘露香魚",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_extra9__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "冷筍沙拉",
+      "truePrice": 320,
+      "predicted": {
+        "name": "冷筍沙拉",
+        "price": 320.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_extra9__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "五味小捲",
+      "truePrice": 280,
+      "predicted": {
+        "name": "五味小捲",
+        "price": 280.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_extra9__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "特選烏魚子",
+      "truePrice": 530,
+      "predicted": {
+        "name": "特選烏魚子",
+        "price": 530.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_extra9__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "甘露香魚",
+      "truePrice": 240,
+      "predicted": {
+        "name": "甘露香魚",
+        "price": 240.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_extra9__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "冷筍沙拉",
+      "truePrice": 320,
+      "predicted": {
+        "name": "冷筍沙拉",
+        "price": 20.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_outlier"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "tw_extra9__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "五味小捲",
+      "truePrice": 280,
+      "predicted": {
+        "name": "五味小捲",
+        "price": 28.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_unverified"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "tw_extra9__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "特選烏魚子",
+      "truePrice": 530,
+      "predicted": {
+        "name": "特選烏魚子",
+        "price": 30.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "tw_extra9__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "甘露香魚",
+      "truePrice": 240,
+      "predicted": {
+        "name": "甘露香魚",
+        "price": 24.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "tw_gwoo__blur_full",
+      "priceStatus": null,
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "砂鍋白菜豆腐雞湯（小）",
+      "truePrice": 440,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__blur_full",
+      "priceStatus": "fixed",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "砂鍋白菜豆腐雞湯（大）",
+      "truePrice": 3820,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（中）",
+        "price": 2060.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__blur_full",
+      "priceStatus": "fixed",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "砂鍋菇菇雞湯（中）",
+      "truePrice": 2380,
+      "predicted": {
+        "name": "砂鍋菇菇雞湯（大）",
+        "price": 4460.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__blur_full",
+      "priceStatus": "fixed",
+      "treatment": "blur_full",
+      "level": "full",
+      "item": "砂鍋鮑魚雞湯（中）",
+      "truePrice": 4300,
+      "predicted": {
+        "name": "砂鍋魚翅雞湯（中）",
+        "price": 5060.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "砂鍋白菜豆腐雞湯（小）",
+      "truePrice": 440,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（小）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_gwoo__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "砂鍋白菜豆腐雞湯（大）",
+      "truePrice": 3820,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（大）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_gwoo__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "砂鍋菇菇雞湯（中）",
+      "truePrice": 2380,
+      "predicted": {
+        "name": "砂鍋菇菇雞湯（中）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_gwoo__blur_partial",
+      "priceStatus": "missing",
+      "treatment": "blur_partial",
+      "level": "partial",
+      "item": "砂鍋鮑魚雞湯（中）",
+      "truePrice": 4300,
+      "predicted": {
+        "name": "砂鍋鮑魚雞湯（中）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_gwoo__glare_full",
+      "priceStatus": null,
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "砂鍋白菜豆腐雞湯（小）",
+      "truePrice": 440,
+      "predicted": null,
+      "outcome": "missing",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__glare_full",
+      "priceStatus": "fixed",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "砂鍋白菜豆腐雞湯（大）",
+      "truePrice": 3820,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（中）",
+        "price": 2060.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__glare_full",
+      "priceStatus": "fixed",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "砂鍋菇菇雞湯（中）",
+      "truePrice": 2380,
+      "predicted": {
+        "name": "砂鍋菇菇雞湯（大）",
+        "price": 4460.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__glare_full",
+      "priceStatus": "fixed",
+      "treatment": "glare_full",
+      "level": "full",
+      "item": "砂鍋鮑魚雞湯（中）",
+      "truePrice": 4300,
+      "predicted": {
+        "name": "砂鍋魚翅雞湯（中）",
+        "price": 5060.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": true,
+      "correctedOutcome": "missing"
+    },
+    {
+      "case": "tw_gwoo__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "砂鍋白菜豆腐雞湯（小）",
+      "truePrice": 440,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（小）",
+        "price": 440.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_gwoo__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "砂鍋白菜豆腐雞湯（大）",
+      "truePrice": 3820,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（大）",
+        "price": 3820.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_gwoo__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "砂鍋菇菇雞湯（中）",
+      "truePrice": 2380,
+      "predicted": {
+        "name": "砂鍋菇菇雞湯（中）",
+        "price": 2380.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_gwoo__glare_partial",
+      "priceStatus": "fixed",
+      "treatment": "glare_partial",
+      "level": "partial",
+      "item": "砂鍋鮑魚雞湯（中）",
+      "truePrice": 4300,
+      "predicted": {
+        "name": "砂鍋鮑魚雞湯（中）",
+        "price": 4300.0
+      },
+      "outcome": "right_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "right_number"
+    },
+    {
+      "case": "tw_gwoo__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "砂鍋白菜豆腐雞湯（小）",
+      "truePrice": 440,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（小）",
+        "price": 40.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [
+        "price_outlier"
+      ],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "tw_gwoo__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "砂鍋白菜豆腐雞湯（大）",
+      "truePrice": 3820,
+      "predicted": {
+        "name": "砂鍋白菜豆腐雞湯（大）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    },
+    {
+      "case": "tw_gwoo__mask_full",
+      "priceStatus": "fixed",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "砂鍋菇菇雞湯（中）",
+      "truePrice": 2380,
+      "predicted": {
+        "name": "砂鍋菇菇雞湯（中）",
+        "price": 380.0
+      },
+      "outcome": "wrong_number",
+      "crossFlags": [],
+      "surfaced": false,
+      "matchArtifact": false,
+      "correctedOutcome": "wrong_number"
+    },
+    {
+      "case": "tw_gwoo__mask_full",
+      "priceStatus": "missing",
+      "treatment": "mask_full",
+      "level": "full",
+      "item": "砂鍋鮑魚雞湯（中）",
+      "truePrice": 4300,
+      "predicted": {
+        "name": "砂鍋鮑魚雞湯（中）",
+        "price": null
+      },
+      "outcome": "abstain",
+      "crossFlags": [],
+      "surfaced": true,
+      "matchArtifact": false,
+      "correctedOutcome": "abstain"
+    }
+  ]
+}
