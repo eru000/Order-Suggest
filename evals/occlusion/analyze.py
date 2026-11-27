@@ -70,6 +70,24 @@ def predicted_items(row: dict[str, Any]) -> list[dict[str, Any]]:
     return list(raw.get("items") or []) if isinstance(raw, dict) else []
 
 
+def merge_runs(runs: list[dict[str, Any]]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """同一組的多次執行（例如重跑逾時的案例）依案例合併；成功的結果優先。
+
+    技術失敗（API 逾時等）不算模型的表現，另外列出，不進結果分類。
+    """
+    rows: dict[str, dict[str, Any]] = {}
+    for run in runs:
+        for row in run["cases"]:
+            if row.get("status") == "ok" or row["case"] not in rows:
+                rows[row["case"]] = row
+    ok = [row for row in rows.values() if row.get("status") == "ok"]
+    failed = [
+        {"case": row["case"], "status": row.get("status"), "error": str(row.get("error"))[:200]}
+        for row in rows.values() if row.get("status") != "ok"
+    ]
+    return {"cases": ok}, failed
+
+
 def analyze_run(run: dict[str, Any], case_dir: Path, with_cross_check: bool) -> list[dict[str, Any]]:
     records = []
     for row in run["cases"]:
@@ -95,8 +113,15 @@ def analyze_run(run: dict[str, Any], case_dir: Path, with_cross_check: bool) -> 
             predicted = {"name": match["predicted"], "price": match["predictedPrice"]} if match else None
             outcome = classify(target["true_price"], predicted)
             flags = flags_by_name.get(match["predicted"], []) if match else []
+            status = None
+            if match:
+                status = next(
+                    ((i.get("priceInfo") or {}).get("status") for i in items if i.get("name") == match["predicted"]),
+                    None,
+                )
             records.append({
                 "case": case,
+                "priceStatus": status,
                 "treatment": treatment,
                 "level": target["occlusion"]["level"],
                 "item": target["name"],
@@ -122,7 +147,14 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
         table[key] = {
             "n": len(rows),
             **counts,
+            "abstainAsQuestionMark": sum(
+                1 for r in rows if r["outcome"] == "abstain" and r.get("priceStatus") == "unreadable"
+            ),
             "wrongFlaggedByCrossCheck": sum(1 for r in wrong if r["crossFlags"]),
+            "wrongFlagKinds": {
+                flag: sum(1 for r in wrong if flag in r["crossFlags"])
+                for flag in sorted({f for r in wrong for f in r["crossFlags"]})
+            },
         }
     return table
 
@@ -130,17 +162,19 @@ def summarize(records: list[dict[str, Any]]) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", default="dev")
-    parser.add_argument("--b", required=True, help="B 組（預設提示詞）的 run label 或路徑")
-    parser.add_argument("--c", required=True, help="C 組（VISION_PRICE_TEXT=1）的 run label 或路徑")
+    parser.add_argument("--b", required=True, nargs="+", help="B 組（預設提示詞）的 run label 或路徑，可多個")
+    parser.add_argument("--c", required=True, nargs="+", help="C 組（VISION_PRICE_TEXT=1）的 run，可多個（含重跑）")
     args = parser.parse_args()
     case_dir = HERE / args.split
     result: dict[str, Any] = {"split": args.split, "groups": {}}
-    for group, label, cross in (("B", args.b, True), ("C", args.c, True)):
-        run = load_run(label)
-        records = analyze_run(run, case_dir, cross)
+    for group, labels, cross in (("B", args.b, True), ("C", args.c, True)):
+        runs = [load_run(label) for label in labels]
+        merged, failed = merge_runs(runs)
+        records = analyze_run(merged, case_dir, cross)
         result["groups"][group] = {
-            "label": run.get("label"),
-            "config": {k: run["config"].get(k) for k in ("visionModel", "visionPriceText", "matchThreshold")},
+            "labels": [run.get("label") for run in runs],
+            "config": {k: runs[0]["config"].get(k) for k in ("visionModel", "visionPriceText", "matchThreshold")},
+            "technicalFailures": failed,
             "summary": summarize(records),
             "records": records,
         }
@@ -149,6 +183,9 @@ def main() -> int:
     path = out / f"occlusion-{args.split}.json"
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    for group, data in result["groups"].items():
+        if data["technicalFailures"]:
+            print(f"{group} 組技術失敗（不計入結果）：", [f["case"] for f in data["technicalFailures"]])
     print(f"{'組別/處理':22}{'n':>4}{'棄答':>6}{'錯數字':>7}{'對數字':>7}{'漏項':>6}{'錯數字被標記':>10}")
     for group, data in result["groups"].items():
         for key, row in data["summary"].items():

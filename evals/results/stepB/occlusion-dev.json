@@ -1,0 +1,3033 @@
+{
+  "split": "dev",
+  "groups": {
+    "B": {
+      "labels": [
+        "occl-dev-B"
+      ],
+      "config": {
+        "visionModel": "ornith-35b",
+        "visionPriceText": "0",
+        "matchThreshold": 0.72
+      },
+      "technicalFailures": [],
+      "summary": {
+        "all_full": {
+          "n": 60,
+          "abstain": 47,
+          "wrong_number": 10,
+          "right_number": 3,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 10,
+          "wrongFlagKinds": {
+            "ocr_price_mismatch": 1,
+            "price_outlier": 10,
+            "price_unverified": 1
+          }
+        },
+        "all_partial": {
+          "n": 40,
+          "abstain": 19,
+          "wrong_number": 0,
+          "right_number": 21,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "blur_full": {
+          "n": 20,
+          "abstain": 19,
+          "wrong_number": 0,
+          "right_number": 1,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "blur_partial": {
+          "n": 20,
+          "abstain": 19,
+          "wrong_number": 0,
+          "right_number": 1,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "glare_full": {
+          "n": 20,
+          "abstain": 19,
+          "wrong_number": 0,
+          "right_number": 1,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "glare_partial": {
+          "n": 20,
+          "abstain": 0,
+          "wrong_number": 0,
+          "right_number": 20,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "mask_full": {
+          "n": 20,
+          "abstain": 9,
+          "wrong_number": 10,
+          "right_number": 1,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 10,
+          "wrongFlagKinds": {
+            "ocr_price_mismatch": 1,
+            "price_outlier": 10,
+            "price_unverified": 1
+          }
+        }
+      },
+      "records": [
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": 680.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": 520.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": 520.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": 480.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": 68.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": 85.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": 85.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": 120.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": 100.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": 8.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": 8.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": 12.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "fixed",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "name_not_in_ocr"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "fixed",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "name_not_in_ocr"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "fixed",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": 150.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": 50.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": 9.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier",
+            "ocr_price_mismatch"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": 15.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "name_not_in_ocr"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": 180.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": 230.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": 230.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": 350.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "missing",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": 55.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": 15.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": 20.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": 55.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": 5.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": 5.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier",
+            "price_unverified"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": 0.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": 5.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        }
+      ]
+    },
+    "C": {
+      "labels": [
+        "occl-dev-C"
+      ],
+      "config": {
+        "visionModel": "ornith-35b",
+        "visionPriceText": "1",
+        "matchThreshold": 0.72
+      },
+      "technicalFailures": [
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "status": "error",
+          "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "status": "error",
+          "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_partial",
+          "status": "error",
+          "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+        },
+        {
+          "case": "web_dalai_noodles_soups__mask_full",
+          "status": "error",
+          "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
+        }
+      ],
+      "summary": {
+        "all_full": {
+          "n": 48,
+          "abstain": 38,
+          "wrong_number": 10,
+          "right_number": 0,
+          "missing": 0,
+          "abstainAsQuestionMark": 6,
+          "wrongFlaggedByCrossCheck": 10,
+          "wrongFlagKinds": {
+            "price_outlier": 10,
+            "price_unverified": 1
+          }
+        },
+        "all_partial": {
+          "n": 36,
+          "abstain": 19,
+          "wrong_number": 0,
+          "right_number": 17,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "blur_full": {
+          "n": 16,
+          "abstain": 16,
+          "wrong_number": 0,
+          "right_number": 0,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "blur_partial": {
+          "n": 20,
+          "abstain": 19,
+          "wrong_number": 0,
+          "right_number": 1,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "glare_full": {
+          "n": 16,
+          "abstain": 16,
+          "wrong_number": 0,
+          "right_number": 0,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "glare_partial": {
+          "n": 16,
+          "abstain": 0,
+          "wrong_number": 0,
+          "right_number": 16,
+          "missing": 0,
+          "abstainAsQuestionMark": 0,
+          "wrongFlaggedByCrossCheck": 0,
+          "wrongFlagKinds": {}
+        },
+        "mask_full": {
+          "n": 16,
+          "abstain": 6,
+          "wrong_number": 10,
+          "right_number": 0,
+          "missing": 0,
+          "abstainAsQuestionMark": 6,
+          "wrongFlaggedByCrossCheck": 10,
+          "wrongFlagKinds": {
+            "price_outlier": 10,
+            "price_unverified": 1
+          }
+        }
+      },
+      "records": [
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": 680.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": 520.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": 520.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": 480.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "predicted": {
+            "name": "鮑魚紅燒肉",
+            "price": 68.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "unreadable",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "predicted": {
+            "name": "鳳梨糖醋骨",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "price_ambiguous"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "predicted": {
+            "name": "燈籠尖椒松阪豬",
+            "price": 20.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "extra_caesar_jiayan__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "冰糖豬腳圈",
+          "truePrice": 480,
+          "predicted": {
+            "name": "冰糖豬腳圈",
+            "price": 80.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": 85.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": 85.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": 120.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": 100.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "日式咖哩朱滿福堡",
+            "price": 8.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "predicted": {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": 8.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "predicted": {
+            "name": "松露野菇扭排滿福堡",
+            "price": 12.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "vege_muffins__mask_full",
+          "priceStatus": "unreadable",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "predicted": {
+            "name": "雙醬植物朱滿福堡",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "price_ambiguous"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "fixed",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "name_not_in_ocr"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": 180.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": 230.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": 230.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": 350.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "unreadable",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "一號餐",
+          "truePrice": 180,
+          "predicted": {
+            "name": "一號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "price_ambiguous"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "unreadable",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "三號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "三號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "price_ambiguous"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "unreadable",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "四號餐",
+          "truePrice": 230,
+          "predicted": {
+            "name": "四號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "price_ambiguous"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "web_fhgh_sets__mask_full",
+          "priceStatus": "unreadable",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "五號餐",
+          "truePrice": 350,
+          "predicted": {
+            "name": "五號餐",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "price_ambiguous"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__blur_partial",
+          "priceStatus": "missing",
+          "treatment": "blur_partial",
+          "level": "partial",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": 55.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": 15.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": 20.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__glare_partial",
+          "priceStatus": "fixed",
+          "treatment": "glare_partial",
+          "level": "partial",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": 55.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "肉羹飯",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹飯",
+            "price": 5.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "魯蛋",
+          "truePrice": 15,
+          "predicted": {
+            "name": "魯蛋",
+            "price": 5.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier",
+            "price_unverified"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "油豆腐/3塊",
+          "truePrice": 20,
+          "predicted": {
+            "name": "油豆腐/3塊",
+            "price": 0.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        },
+        {
+          "case": "xianghong__mask_full",
+          "priceStatus": "fixed",
+          "treatment": "mask_full",
+          "level": "full",
+          "item": "肉羹麵",
+          "truePrice": 55,
+          "predicted": {
+            "name": "肉羹麵",
+            "price": 5.0
+          },
+          "outcome": "wrong_number",
+          "crossFlags": [
+            "price_outlier"
+          ],
+          "surfaced": true
+        }
+      ]
+    }
+  }
+}

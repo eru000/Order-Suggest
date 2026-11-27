@@ -87,5 +87,35 @@ class CrossCheckTest(unittest.TestCase):
         self.assertNotIn("review", vlm["categories"][0]["items"][0])
 
 
+
+class PriceOutlierTest(unittest.TestCase):
+    """遮蔽實驗：被遮掉一位數時 VLM 與 OCR 讀到同一個殘缺數字（680→68），彼此一致；
+    只有和同分類價格比較的合理性檢查抓得到。"""
+
+    def menu(self, *prices):
+        return {"categories": [{"name": "主菜", "items": [
+            {"name": f"菜{i}", "price": price} for i, price in enumerate(prices)
+        ]}]}
+
+    def test_truncated_price_is_flagged(self):
+        from cross_check import price_outliers
+        menu = self.menu(680, 520, 480, 68, 560)
+        flagged = price_outliers(menu)
+        names = [i["name"] for i in menu["categories"][0]["items"] if id(i) in flagged]
+        self.assertEqual(names, ["菜3"])
+
+    def test_zero_price_among_priced_items_is_flagged(self):
+        from cross_check import price_outliers
+        menu = self.menu(20, 15, 35, 0)
+        self.assertEqual(len(price_outliers(menu)), 1)
+
+    def test_normal_cheap_side_dish_is_not_flagged(self):
+        from cross_check import price_outliers
+        self.assertEqual(price_outliers(self.menu(15, 50, 55, 45, 65)), {})
+
+    def test_needs_enough_peers(self):
+        from cross_check import price_outliers
+        self.assertEqual(price_outliers(self.menu(500, 5)), {})
+
 if __name__ == "__main__":
     unittest.main()

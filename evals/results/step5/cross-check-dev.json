@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T02:23:32+00:00",
+  "generatedAt": "2026-11-27T03:41:47+00:00",
   "vlmSource": "evals/results/2026-11-26-step2 第 1 輪 --debug 原始回應，經目前 menu_vision 解析",
   "ocr": {
     "ocrEngine": "rapidocr-onnxruntime (PP-OCR models)",
@@ -235,7 +235,13 @@
         {
           "dish": "冠軍脆皮德國豬烹調時間40分鐘",
           "price": "1680",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2127.3465750558034,
+            602.9375,
+            2197.447021484375,
+            635.1100463867188
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -358,22 +364,46 @@
         {
           "dish": "一份",
           "price": "150",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            550.0,
+            439.0,
+            604.0,
+            469.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1189.0,
+            436.0,
+            1245.0,
+            469.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            540.0,
+            830.0,
+            592.0,
+            859.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1175.0,
+            829.0,
+            1226.0,
+            859.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -527,7 +557,13 @@
         {
           "dish": "餘滿福堡",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            799.0,
+            363.0,
+            842.0,
+            395.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -914,27 +950,57 @@
         {
           "dish": "小吃",
           "price": "220",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            762.0,
+            811.0,
+            812.0,
+            846.0
+          ]
         },
         {
           "dish": "套餐",
           "price": "2",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            473.0,
+            578.0,
+            497.0,
+            608.0
+          ]
         },
         {
           "dish": "SetMeal",
           "price": "3",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            474.0,
+            917.0,
+            494.0,
+            943.0
+          ]
         },
         {
           "dish": "TAIWANESEDELICACIES",
           "price": "02",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            44.0,
+            1281.0,
+            69.0,
+            1303.0
+          ]
         },
         {
           "dish": "TAIWANESEDELICACIES",
           "price": "03",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1836.0,
+            1282.0,
+            1862.0,
+            1304.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -1192,12 +1258,24 @@
         {
           "dish": "味增湯",
           "price": "25",
-          "category": "湯類"
+          "category": "湯類",
+          "priceBox": [
+            369.0,
+            581.0,
+            395.0,
+            606.0
+          ]
         },
         {
           "dish": "簡乾",
           "price": "35",
-          "category": "小菜類"
+          "category": "小菜類",
+          "priceBox": [
+            178.0,
+            758.0,
+            206.0,
+            782.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -1312,7 +1390,13 @@
         {
           "dish": "冠軍脆皮德國烹調時間40分鐘",
           "price": "1680",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2127.3465750558034,
+            602.9375,
+            2197.447021484375,
+            635.1100463867188
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -1427,27 +1511,57 @@
         {
           "dish": "冠軍脆皮德圍豬烹調時間40分罐",
           "price": "1680",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2127.3465750558034,
+            602.9375,
+            2197.447021484375,
+            635.1100463867188
+          ]
         },
         {
           "dish": "燈魔尖概松阪",
           "price": "520",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2128.367431640625,
+            979.4755859375,
+            2181.963623046875,
+            1012.8397216796875
+          ]
         },
         {
           "dish": "黑嫩子排",
           "price": "520",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2128.367431640625,
+            1164.169921875,
+            2183.15478515625,
+            1201.1087646484375
+          ]
         },
         {
           "dish": "冰糖豬圖",
           "price": "480",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2128.367431640625,
+            1260.6875,
+            2181.963623046875,
+            1294.0516357421875
+          ]
         },
         {
           "dish": "幹蒜肉絲",
           "price": "420",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2128.367431640625,
+            1446.5733642578125,
+            2181.963623046875,
+            1479.9375
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -1560,62 +1674,134 @@
         {
           "dish": "Sweetandsourporkribs",
           "price": "1680",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2192.0756487165177,
+            618.5087280273438,
+            2265.783935546875,
+            672.7412719726562
+          ]
         },
         {
           "dish": "冠軍脆皮德國豬烹調時間40分鐘",
           "price": "680",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2207.15234375,
+            712.77001953125,
+            2264.48095703125,
+            764.4199829101562
+          ]
         },
         {
           "dish": "Braisedabaloneandporkbelly",
           "price": "560",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2220.181640625,
+            805.739990234375,
+            2277.51025390625,
+            857.3900146484375
+          ]
         },
         {
           "dish": "Braisedporkribswithgreenonion",
           "price": "520",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2232.5592041015625,
+            900.001220703125,
+            2290.539306640625,
+            950.3599853515625
+          ]
         },
         {
           "dish": "Braisedabalone",
           "price": "06",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1211.71875,
+            1018.7962646484375,
+            1257.3211669921875,
+            1054.9512939453125
+          ]
         },
         {
           "dish": "andporkbelly",
           "price": "07",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1330.2847900390625,
+            1003.30126953125,
+            1368.069580078125,
+            1036.873779296875
+          ]
         },
         {
           "dish": "Sweetandsourporkribswithpineapple",
           "price": "520",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2246.239990234375,
+            992.9712524414062,
+            2303.568603515625,
+            1043.3299560546875
+          ]
         },
         {
           "dish": "Stirfriedporkneckwithdrychili",
           "price": "520",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2259.269287109375,
+            1084.6500244140625,
+            2316.597900390625,
+            1135.0087890625
+          ]
         },
         {
           "dish": "Stewedporkintestinesandeggplantincasserole",
           "price": "520",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2271.6470947265625,
+            1177.6199951171875,
+            2329.627197265625,
+            1229.27001953125
+          ]
         },
         {
           "dish": "Braisedspareribswithjujudesauce",
           "price": "480",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2285.32763671875,
+            1270.5899658203125,
+            2342.65625,
+            1322.239990234375
+          ]
         },
         {
           "dish": "Braisedporkknuckles",
           "price": "480",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2297.7054443359375,
+            1363.5599365234375,
+            2354.382568359375,
+            1415.2099609375
+          ]
         },
         {
           "dish": "Stirfriedgreenbeanandporkintestine",
           "price": "420",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            2311.38623046875,
+            1455.23876953125,
+            2368.71484375,
+            1506.8887939453125
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -1738,22 +1924,46 @@
         {
           "dish": "一份",
           "price": "150",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            549.0,
+            438.0,
+            606.0,
+            471.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1189.0,
+            436.0,
+            1245.0,
+            469.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            541.0,
+            830.0,
+            593.0,
+            859.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1175.0,
+            829.0,
+            1226.0,
+            859.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -1876,22 +2086,46 @@
         {
           "dish": "一份",
           "price": "150",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            549.0,
+            438.0,
+            606.0,
+            472.0
+          ]
         },
         {
           "dish": "份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1190.0,
+            435.0,
+            1245.0,
+            469.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            541.0,
+            830.0,
+            593.0,
+            859.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1175.0,
+            830.0,
+            1227.0,
+            859.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -2014,22 +2248,46 @@
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1239.0,
+            442.0,
+            1298.0,
+            480.0
+          ]
         },
         {
           "dish": "一份",
           "price": "150",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            604.0,
+            531.0,
+            666.0,
+            572.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1278.0,
+            833.0,
+            1334.0,
+            869.0
+          ]
         },
         {
           "dish": "一份",
           "price": "120",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            651.0,
+            921.0,
+            707.0,
+            957.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -2155,7 +2413,13 @@
         {
           "dish": "面",
           "price": "80",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            87.0,
+            95.0,
+            115.0,
+            126.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -2270,12 +2534,24 @@
         {
           "dish": "加美生菜+S15/升級非油炸植物朱肉+",
           "price": "15",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1414.857142857143,
+            89.0,
+            1468.0,
+            118.0
+          ]
         },
         {
           "dish": "餘滿福堡",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            799.0,
+            361.0,
+            843.0,
+            396.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -2392,7 +2668,13 @@
         {
           "dish": "餘滿福堡",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            798.0,
+            361.0,
+            843.0,
+            396.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
@@ -2525,42 +2807,90 @@
         {
           "dish": "本系列不含高苣及美生菜",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1637.0,
+            144.0,
+            1682.0,
+            182.0
+          ]
         },
         {
           "dish": "加美生菜+$15/升級非油炸植物朱肉+",
           "price": "15",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1420.3809523809523,
+            119.0,
+            1474.0,
+            228.0
+          ]
         },
         {
           "dish": "滿福堡剛好",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            811.0,
+            260.0,
+            856.0,
+            297.0
+          ]
         },
         {
           "dish": "PlantTruffleMushroomPlantSteak",
           "price": "105",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1635.0,
+            287.0,
+            1705.0,
+            333.0
+          ]
         },
         {
           "dish": "PlantPorkwithCurrySauce",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            831.0,
+            404.0,
+            878.0,
+            445.0
+          ]
         },
         {
           "dish": "VeganChickenwithTartarSauce",
           "price": "100",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            1646.0,
+            361.0,
+            1715.0,
+            407.0
+          ]
         },
         {
           "dish": "PlantShortRibswithBlackPepperSauce",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            842.0,
+            479.0,
+            888.0,
+            518.0
+          ]
         },
         {
           "dish": "餘滿福堡",
           "price": "85",
-          "category": ""
+          "category": "",
+          "priceBox": [
+            851.0,
+            552.0,
+            898.0,
+            590.0
+          ]
         }
       ],
       "orphanHitsMissed": 0
