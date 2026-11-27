@@ -88,6 +88,18 @@ def merge_runs(runs: list[dict[str, Any]]) -> tuple[dict[str, Any], list[dict[st
     return {"cases": ok}, failed
 
 
+_OCR_CACHE: dict[Path, list[dict[str, Any]]] = {}
+
+
+def _ocr_cached(path: Path) -> list[dict[str, Any]]:
+    """B、C 兩組用同一批影像，OCR 只跑一次。"""
+    import ocr_baseline
+
+    if path not in _OCR_CACHE:
+        _OCR_CACHE[path] = ocr_baseline.ocr_lines(path.read_bytes())
+    return _OCR_CACHE[path]
+
+
 def analyze_run(run: dict[str, Any], case_dir: Path, with_cross_check: bool) -> list[dict[str, Any]]:
     records = []
     for row in run["cases"]:
@@ -100,7 +112,7 @@ def analyze_run(run: dict[str, Any], case_dir: Path, with_cross_check: bool) -> 
             import ocr_baseline
             from cross_check import cross_check
 
-            lines = ocr_baseline.ocr_lines((case_dir / f"{case}.png").read_bytes())
+            lines = _ocr_cached(case_dir / f"{case}.png")
             checked = cross_check({"categories": [{"name": "菜單", "items": items}]}, lines)
             flags_by_name = {item["name"]: item["review"]["flags"] for item in checked["items"]}
         matching = match_items(

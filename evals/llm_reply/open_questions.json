@@ -1,0 +1,25 @@
+{
+  "說明": "節點 6 開放問答：模板答不了、需要讀整份菜單的問題。只用開發菜單（專案根目錄 menu_*.json）。expectedHint 是評分者參考，不是唯一正解；兩位評分者獨立判斷 LLM 回答是否正確且未捏造。",
+  "questions": [
+    {"id": "q01", "restaurant": "斗六當歸鴨", "question": "最便宜的湯是哪一個？", "expectedHint": "當歸清湯 20 元"},
+    {"id": "q02", "restaurant": "斗六當歸鴨", "question": "有沒有不含鴨肉的飯或麵？", "expectedHint": "松阪豬肉飯、香排骨麵(乾)、炒麵(油麵)、鴨油排飯（名稱含鴨油，需提醒）"},
+    {"id": "q03", "restaurant": "斗六當歸鴨", "question": "鴨肉飯大碗跟小碗差多少錢？", "expectedHint": "大 60、小 40，差 20 元"},
+    {"id": "q04", "restaurant": "斗六當歸鴨", "question": "有什麼青菜可以點？", "expectedHint": "滷地瓜葉、滷高麗菜（各 30）；當歸高麗菜湯"},
+    {"id": "q05", "restaurant": "斗六當歸鴨", "question": "一個人一百元以內，能吃到飯加湯嗎？", "expectedHint": "可以，例如鴨肉飯(小)40＋當歸湯/米血湯 40"},
+    {"id": "q06", "restaurant": "奔頂牛排 東海", "question": "不吃牛的話可以點什麼？", "expectedHint": "風味鮭魚排 400、香煎鯖魚 330、香煎雞排 310"},
+    {"id": "q07", "restaurant": "奔頂牛排 東海", "question": "最貴的是哪一道？", "expectedHint": "帶骨牛小排 470"},
+    {"id": "q08", "restaurant": "奔頂牛排 東海", "question": "菲力跟沙朗哪個比較便宜？", "expectedHint": "沙朗 380 比菲力 450 便宜 70"},
+    {"id": "q09", "restaurant": "奔頂牛排 東海", "question": "有沒有海鮮？", "expectedHint": "風味鮭魚排、香煎鯖魚"},
+    {"id": "q10", "restaurant": "奔頂牛排 東海", "question": "有素食嗎？", "expectedHint": "菜單上沒有素食主餐，應如實說明"},
+    {"id": "q11", "restaurant": "大肥鵝", "question": "有哪些青菜？", "expectedHint": "鵝油高麗菜、豆腐水蓮菜、清炒蘆筍、清炒花椰菜、季節時蔬等"},
+    {"id": "q12", "restaurant": "大肥鵝", "question": "有沒有不辣的海鮮？", "expectedHint": "菠蘿果律蝦球、黃金軟絲條、泰式洋蔥中卷等；不應推香辣類"},
+    {"id": "q13", "restaurant": "大肥鵝", "question": "有沒有甜點或水果？", "expectedHint": "什錦水果盤、西瓜盤、鳳梨盤、塔拉木冰淇淋"},
+    {"id": "q14", "restaurant": "大肥鵝", "question": "龍蝦多少錢？", "expectedHint": "時價／未標價，應說明需問店家，不可報數字"},
+    {"id": "q15", "restaurant": "大肥鵝", "question": "有沒有啤酒，最便宜的多少？", "expectedHint": "有多種，玻璃瓶裝 100 元最便宜"},
+    {"id": "q16", "restaurant": "森森燒肉 台中中科店", "question": "有沒有不是牛肉的肉可以烤？", "expectedHint": "豚肩排、松阪豚、豚肩肉、雞腿肉、海鮮類"},
+    {"id": "q17", "restaurant": "森森燒肉 台中中科店", "question": "有沒有湯？", "expectedHint": "菜單只有『精選熟食湯品』類別，未列具體湯品與價格；海鮮石鍋粥 269"},
+    {"id": "q18", "restaurant": "森森燒肉 台中中科店", "question": "A5和牛最便宜的是哪個？", "expectedHint": "A5日本和牛霜雨一品 818"},
+    {"id": "q19", "restaurant": "森森燒肉 台中中科店", "question": "有沒有可以當主食的飯或粥？", "expectedHint": "玉子鮭魚石鍋飯 149、海鮮石鍋粥 269"},
+    {"id": "q20", "restaurant": "森森燒肉 台中中科店", "question": "有不含酒精的飲料嗎？", "expectedHint": "菜單只列『飲料』類別與多種酒類，無法確認具體無酒精飲品，應如實說明"}
+  ]
+}

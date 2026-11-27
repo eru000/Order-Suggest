@@ -1,0 +1,8185 @@
+{
+  "generatedAt": "2026-11-27T03:45:26+00:00",
+  "maxQuestions": 2,
+  "summary": {
+    "none": {
+      "users": 134,
+      "hitAt3": 0.2388,
+      "meanQuestions": 0.0,
+      "skippedPerUser": 0.0,
+      "noMatchRate": 0.0,
+      "firstQuestion": {}
+    },
+    "gini": {
+      "users": 134,
+      "hitAt3": 0.5224,
+      "meanQuestions": 1.672,
+      "skippedPerUser": 0.179,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "dishType": 93,
+        "budget": 24,
+        "protein": 8
+      }
+    },
+    "entropy": {
+      "users": 134,
+      "hitAt3": 0.5224,
+      "meanQuestions": 1.664,
+      "skippedPerUser": 0.164,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "dishType": 102,
+        "budget": 15,
+        "protein": 8
+      }
+    },
+    "fixed": {
+      "users": 134,
+      "hitAt3": 0.4851,
+      "meanQuestions": 1.716,
+      "skippedPerUser": 0.157,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "budget": 125
+      }
+    },
+    "random": {
+      "users": 134,
+      "hitAt3": 0.4925,
+      "meanQuestions": 1.672,
+      "skippedPerUser": 0.134,
+      "noMatchRate": 0.0,
+      "firstQuestion": {
+        "budget": 68,
+        "dishType": 45,
+        "protein": 12
+      }
+    }
+  },
+  "pairedTests": {
+    "gini_vs_none": {
+      "onlyA": 38,
+      "onlyB": 0,
+      "pTwoSided": 0.0
+    },
+    "gini_vs_entropy": {
+      "onlyA": 0,
+      "onlyB": 0,
+      "pTwoSided": 1.0
+    },
+    "gini_vs_fixed": {
+      "onlyA": 5,
+      "onlyB": 0,
+      "pTwoSided": 0.0625
+    },
+    "gini_vs_random": {
+      "onlyA": 7,
+      "onlyB": 3,
+      "pTwoSided": 0.3438
+    }
+  },
+  "records": [
+    {
+      "menu": "dev_budaoweng",
+      "strategy": "none",
+      "target": "麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_budaoweng",
+      "strategy": "gini",
+      "target": "麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_budaoweng",
+      "strategy": "entropy",
+      "target": "麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_budaoweng",
+      "strategy": "fixed",
+      "target": "麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_budaoweng",
+      "strategy": "random",
+      "target": "麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "松阪豬肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "鴨肉香拌麵線",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "乾麵(油麵)",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "當歸松阪豬肉湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "鴨油拌飯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "當歸鴨肉湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "鴨肉飯(小)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "香拌麵線(乾)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "當歸鴨腿湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "none",
+      "target": "鴨肉乾麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "鴨肉香拌麵線",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "乾麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "鴨油拌飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "香拌麵線(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "gini",
+      "target": "鴨肉乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "鴨肉香拌麵線",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "乾麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "鴨油拌飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "香拌麵線(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "entropy",
+      "target": "鴨肉乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "鴨肉香拌麵線",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "乾麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "鴨油拌飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "香拌麵線(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "fixed",
+      "target": "鴨肉乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "鴨肉香拌麵線",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "乾麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "鴨油拌飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "當歸鴨肉湯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "香拌麵線(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_douliumen",
+      "strategy": "random",
+      "target": "鴨肉乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_extra_caesar_jiayan",
+      "strategy": "none",
+      "target": "肥腸茄香煲",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_caesar_jiayan",
+      "strategy": "gini",
+      "target": "肥腸茄香煲",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_caesar_jiayan",
+      "strategy": "entropy",
+      "target": "肥腸茄香煲",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_caesar_jiayan",
+      "strategy": "fixed",
+      "target": "肥腸茄香煲",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_caesar_jiayan",
+      "strategy": "random",
+      "target": "肥腸茄香煲",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "none",
+      "target": "芋香西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "none",
+      "target": "杏仁凍豆腐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "none",
+      "target": "香蘋雪蓮子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "none",
+      "target": "椰果西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "gini",
+      "target": "芋香西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "gini",
+      "target": "杏仁凍豆腐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "gini",
+      "target": "香蘋雪蓮子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "gini",
+      "target": "椰果西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "entropy",
+      "target": "芋香西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "entropy",
+      "target": "杏仁凍豆腐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "entropy",
+      "target": "香蘋雪蓮子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "entropy",
+      "target": "椰果西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "fixed",
+      "target": "芋香西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "fixed",
+      "target": "杏仁凍豆腐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "fixed",
+      "target": "香蘋雪蓮子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "fixed",
+      "target": "椰果西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "random",
+      "target": "芋香西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "random",
+      "target": "杏仁凍豆腐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "random",
+      "target": "香蘋雪蓮子",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_extra_cosmos_jade",
+      "strategy": "random",
+      "target": "椰果西米露",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸冬粉（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子粄條（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒烏龍",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子米粉（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸粥（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "湯麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "乾拉麵（小）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "炒麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸拉麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "紅麴炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子冬粉（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "火腿炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "麻油炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒味噌",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸米粉（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "茄汁炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "香腸炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸拉麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子粥（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子拉麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "乾麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子拉麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒冬粉",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子米粉（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "湯麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸粥（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子素肉湯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸冬粉（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "什錦炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "當歸米粉（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "湯拉麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "素肉燥飯（大）",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒雞絲",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒拉麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子粄條（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒粥",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "咖哩炒飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒意麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "乾麵（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子粥（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "鍋燒粄條",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "素肉燥飯（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "乾拉麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "蓮子冬粉（小）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "none",
+      "target": "湯拉麵（大）",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子粄條（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒烏龍",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "湯麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "乾拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "炒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "紅麴炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "火腿炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "麻油炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒味噌",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "茄汁炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "香腸炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "乾麵（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒冬粉",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "湯麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子素肉湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "什錦炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "當歸米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "湯拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "素肉燥飯（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒雞絲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒拉麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子粄條（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒粥",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "咖哩炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒意麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "乾麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "鍋燒粄條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "素肉燥飯（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "乾拉麵（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "蓮子冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "gini",
+      "target": "湯拉麵（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子粄條（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒烏龍",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "湯麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "乾拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "炒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "紅麴炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "火腿炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "麻油炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒味噌",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "茄汁炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "香腸炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "乾麵（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒冬粉",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "湯麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子素肉湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "什錦炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "當歸米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "湯拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "素肉燥飯（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒雞絲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒拉麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子粄條（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒粥",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "咖哩炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒意麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "乾麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "鍋燒粄條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "素肉燥飯（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "乾拉麵（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "蓮子冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "entropy",
+      "target": "湯拉麵（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子粄條（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒烏龍",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "湯麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "乾拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "炒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "紅麴炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "火腿炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "麻油炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒味噌",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "茄汁炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "香腸炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "乾麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒冬粉",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "湯麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子素肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "什錦炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "當歸米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "湯拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "素肉燥飯（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒雞絲",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒拉麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子粄條（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒粥",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "咖哩炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒意麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "乾麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "鍋燒粄條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "素肉燥飯（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "乾拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "蓮子冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "fixed",
+      "target": "湯拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子粄條（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒烏龍",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "湯麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "乾拉麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "炒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "紅麴炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "火腿炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "麻油炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒味噌",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸米粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "茄汁炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "香腸炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "texture"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "乾麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒冬粉",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "湯麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸粥（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子素肉湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸冬粉（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "什錦炒飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "當歸米粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "湯拉麵（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "素肉燥飯（大）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒雞絲",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒拉麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子粄條（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒粥",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "texture"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "咖哩炒飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "texture"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒意麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "乾麵（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子粥（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "鍋燒粄條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "素肉燥飯（小）",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "portion"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "乾拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "蓮子冬粉（小）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_guoshao_6col",
+      "strategy": "random",
+      "target": "湯拉麵（大）",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "none",
+      "target": "鍋燒麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "none",
+      "target": "炒板條",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "none",
+      "target": "什錦麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "gini",
+      "target": "鍋燒麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "gini",
+      "target": "炒板條",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "gini",
+      "target": "什錦麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "entropy",
+      "target": "鍋燒麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "entropy",
+      "target": "炒板條",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "entropy",
+      "target": "什錦麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "fixed",
+      "target": "鍋燒麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "fixed",
+      "target": "炒板條",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "fixed",
+      "target": "什錦麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "random",
+      "target": "鍋燒麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "random",
+      "target": "炒板條",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_liugui_board",
+      "strategy": "random",
+      "target": "什錦麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "椒麻堅果辣朱滿福堡",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "黑椒扭小排滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "鮪余滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "雙層起司扭滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "薯餅起士滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "雙醬植物朱滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "松露野菇扭排滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "經典植物朱肉滿福堡",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "日式咖哩朱滿福堡",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "none",
+      "target": "義式塔塔G滿福堡",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "椒麻堅果辣朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "黑椒扭小排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "鮪余滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "雙層起司扭滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "薯餅起士滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "雙醬植物朱滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "松露野菇扭排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "經典植物朱肉滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "日式咖哩朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "gini",
+      "target": "義式塔塔G滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "椒麻堅果辣朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "黑椒扭小排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "鮪余滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "雙層起司扭滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "薯餅起士滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "雙醬植物朱滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "松露野菇扭排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "經典植物朱肉滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "日式咖哩朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "entropy",
+      "target": "義式塔塔G滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "椒麻堅果辣朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "黑椒扭小排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "鮪余滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "雙層起司扭滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "薯餅起士滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "雙醬植物朱滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "松露野菇扭排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "經典植物朱肉滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "日式咖哩朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "fixed",
+      "target": "義式塔塔G滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "椒麻堅果辣朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "黑椒扭小排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "鮪余滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "雙層起司扭滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "薯餅起士滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "雙醬植物朱滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "松露野菇扭排滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "經典植物朱肉滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "日式咖哩朱滿福堡",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_vege_muffins",
+      "strategy": "random",
+      "target": "義式塔塔G滿福堡",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "原味麻油雞湯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "肉燥乾麵/米粉/粿條",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "排骨湯/乾麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "鮮海魚湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "豬腳湯/乾麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "切仔麵/米粉/粿條",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "牛肉湯/河粉",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "什錦麵/米粉/粿條",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "none",
+      "target": "什錦粥",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "原味麻油雞湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "肉燥乾麵/米粉/粿條",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "排骨湯/乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "鮮海魚湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "豬腳湯/乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "切仔麵/米粉/粿條",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "牛肉湯/河粉",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "什錦麵/米粉/粿條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "gini",
+      "target": "什錦粥",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "原味麻油雞湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "肉燥乾麵/米粉/粿條",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "排骨湯/乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "鮮海魚湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "豬腳湯/乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "切仔麵/米粉/粿條",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "牛肉湯/河粉",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "什錦麵/米粉/粿條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "entropy",
+      "target": "什錦粥",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "原味麻油雞湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "肉燥乾麵/米粉/粿條",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "排骨湯/乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "鮮海魚湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "豬腳湯/乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "切仔麵/米粉/粿條",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "牛肉湯/河粉",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "什錦麵/米粉/粿條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "fixed",
+      "target": "什錦粥",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "原味麻油雞湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "肉燥乾麵/米粉/粿條",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "排骨湯/乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "鮮海魚湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "豬腳湯/乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "切仔麵/米粉/粿條",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "牛肉湯/河粉",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "什錦麵/米粉/粿條",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_dalai_noodles_soups",
+      "strategy": "random",
+      "target": "什錦粥",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "none",
+      "target": "五號餐",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "none",
+      "target": "四號餐",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "none",
+      "target": "二號餐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "none",
+      "target": "三號餐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "none",
+      "target": "一號餐",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "gini",
+      "target": "五號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "gini",
+      "target": "四號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "gini",
+      "target": "二號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "gini",
+      "target": "三號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "gini",
+      "target": "一號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "entropy",
+      "target": "五號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "entropy",
+      "target": "四號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "entropy",
+      "target": "二號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "entropy",
+      "target": "三號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "entropy",
+      "target": "一號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "fixed",
+      "target": "五號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "fixed",
+      "target": "四號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "fixed",
+      "target": "二號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "fixed",
+      "target": "三號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "fixed",
+      "target": "一號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "random",
+      "target": "五號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "random",
+      "target": "四號餐",
+      "hit": false,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "random",
+      "target": "二號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "random",
+      "target": "三號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_web_fhgh_sets",
+      "strategy": "random",
+      "target": "一號餐",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "白飯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "肉羹麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "大魯肉湯麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "（限內用）85套餐",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "大乾麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "（限內用）75套餐",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "（內用）大魯肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "（外帶）大魯肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "大肉羹麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "淡水魚丸湯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "肉羹飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "乾麵",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "大肉羹飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "魯肉湯麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "（外帶）小魯肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "none",
+      "target": "（內用）小魯肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "白飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "肉羹麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "大魯肉湯麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "（限內用）85套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "大乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "（限內用）75套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "（內用）大魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "（外帶）大魯肉飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "大肉羹麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "淡水魚丸湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "大肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "魯肉湯麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "（外帶）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "gini",
+      "target": "（內用）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "白飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "肉羹麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "大魯肉湯麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "（限內用）85套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "大乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "（限內用）75套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "（內用）大魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "（外帶）大魯肉飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "大肉羹麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "淡水魚丸湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "大肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "魯肉湯麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "（外帶）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "entropy",
+      "target": "（內用）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "白飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "肉羹麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "大魯肉湯麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "（限內用）85套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "大乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "（限內用）75套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "（內用）大魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "（外帶）大魯肉飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "大肉羹麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "淡水魚丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "大肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "魯肉湯麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "（外帶）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "fixed",
+      "target": "（內用）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "白飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "肉羹麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "大魯肉湯麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "（限內用）85套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "大乾麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "（限內用）75套餐",
+      "hit": false,
+      "questions": 2,
+      "skipped": 2,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "（內用）大魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "（外帶）大魯肉飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "大肉羹麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "淡水魚丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "乾麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "大肉羹飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "魯肉湯麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "（外帶）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "dev_xianghong",
+      "strategy": "random",
+      "target": "（內用）小魯肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "帶骨牛小排",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "風味鮭魚排",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "香煎鯖魚",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "香煎雞排",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "沙朗牛排",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "翼板牛排",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "菲力牛排",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "none",
+      "target": "犇頂牛排",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "帶骨牛小排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "風味鮭魚排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "香煎鯖魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "香煎雞排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "沙朗牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "翼板牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "菲力牛排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "gini",
+      "target": "犇頂牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "帶骨牛小排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "風味鮭魚排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "香煎鯖魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "香煎雞排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "沙朗牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "翼板牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "菲力牛排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "entropy",
+      "target": "犇頂牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "帶骨牛小排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "風味鮭魚排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "香煎鯖魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "香煎雞排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "沙朗牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "翼板牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "菲力牛排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "fixed",
+      "target": "犇頂牛排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "帶骨牛小排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "風味鮭魚排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "香煎鯖魚",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "香煎雞排",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "沙朗牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "翼板牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "菲力牛排",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "protein"
+      ]
+    },
+    {
+      "menu": "奔頂牛排 東海",
+      "strategy": "random",
+      "target": "犇頂牛排",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "香排骨麵(乾)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "炒麵(油麵)",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "當歸鴨腿湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "鴨肉香排骨麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "松阪豬肉飯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "鴨肉炒麵",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "鴨油排飯",
+      "hit": true,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "鴨肉飯(小)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "當歸松阪豬肉湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "none",
+      "target": "當歸鴨肉湯",
+      "hit": false,
+      "questions": 0,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": []
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "香排骨麵(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "炒麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "鴨肉香排骨麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "鴨肉炒麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "鴨油排飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "gini",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "香排骨麵(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "炒麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "鴨肉香排骨麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "鴨肉炒麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "鴨油排飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "entropy",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "香排骨麵(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "炒麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "當歸鴨腿湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "鴨肉香排骨麵",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "鴨肉炒麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "鴨油排飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "fixed",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "鴨腿飯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "香排骨麵(乾)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "炒麵(油麵)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "當歸鴨腿湯",
+      "hit": false,
+      "questions": 2,
+      "skipped": 1,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "鴨肉香排骨麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "松阪豬肉飯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "鴨肉炒麵",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "當歸鴨肉丸湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "鴨油排飯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "鴨肉飯(小)",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "budget",
+        "dishType"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "鴨肉飯(大)",
+      "hit": false,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein",
+        "budget"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "當歸松阪豬肉湯",
+      "hit": true,
+      "questions": 1,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "protein"
+      ]
+    },
+    {
+      "menu": "斗六當歸鴨",
+      "strategy": "random",
+      "target": "當歸鴨肉湯",
+      "hit": true,
+      "questions": 2,
+      "skipped": 0,
+      "noMatch": false,
+      "fields": [
+        "dishType",
+        "budget"
+      ]
+    }
+  ]
+}

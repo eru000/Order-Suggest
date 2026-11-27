@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import copy
+import math
+import random
 import re
 import time
 import uuid
@@ -28,6 +30,27 @@ from preference_engine import (
 from table_menu import compose_table, describe_unmet, diagnose_table
 
 MAX_QUESTIONS = 2
+# 提問策略（期末規劃節點 6，委員5-5）。四種策略共用完全相同的「可問條件」
+# （2～4 個選項、已標註比例 ≥ 0.7、預算題的價差條件），只差在「先問哪一題」：
+#   gini     (1 − Σ pᵢ²) × K/N          現行預設；期中報告誤稱為資訊增益
+#   entropy  H(p) / log₂4 × K/N          資訊增益（以 bits 計，除以 2 正規化到 0～1）
+#   fixed    固定順序：預算 → 飯麵 → 湯乾 → 主食材 → 口味 → 份量
+#   random   在可問的題目中隨機選
+# pᵢ＝已標註品項中第 i 個選項的比例，K＝有標註的品項數，N＝目前候選品項數。
+QUESTION_STRATEGIES = ("gini", "entropy", "fixed", "random")
+FIXED_QUESTION_ORDER = ("budget", "dishType", "texture", "protein", "taste", "portion")
+_QUESTION_RANDOM = random.Random(20261127)
+
+
+def question_score(counts, known, total, strategy="gini"):
+    """一個欄位問題的價值，0～1。counts＝各選項的品項數，known＝有標註的品項數。"""
+    if not known or not total:
+        return 0.0
+    coverage = known / total
+    if strategy == "entropy":
+        entropy = -sum((n / known) * math.log2(n / known) for n in counts.values() if n)
+        return entropy / 2.0 * coverage
+    return (1 - sum(n * n for n in counts.values()) / known**2) * coverage
 START_PATTERN = re.compile(
     r"不知道.*吃|不知.*吃|吃什麼好|吃甚麼好|幫我選|幫我挑|選不出|選擇障礙|隨便吃"
     r"|幫我決定|直接推薦|不用問了"
@@ -96,7 +119,10 @@ def _constraints(prefs: dict[str, Any]) -> list[str]:
 
 
 class DecisionService:
-    def __init__(self, sessions, menus, default_restaurant):
+    def __init__(self, sessions, menus, default_restaurant, question_strategy="gini"):
+        if question_strategy not in QUESTION_STRATEGIES:
+            raise ValueError(f"未知的提問策略：{question_strategy}")
+        self.question_strategy = question_strategy
         self.sessions = sessions
         self.menus = menus
         self.default_restaurant = default_restaurant
@@ -373,7 +399,10 @@ class DecisionService:
                  or (guide_with_evidence and len(available) > 1))
                 and (d.get("question") or len(d["asked"]) < MAX_QUESTIONS)
             ):
-                question = self._next_question(d, available, allow_comparison=guide_with_evidence)
+                question = self._next_question(
+                    d, available, allow_comparison=guide_with_evidence,
+                    strategy=self.question_strategy,
+                )
             if question:
                 d["question"] = question
                 if question["field"] not in d["asked"]:
@@ -647,7 +676,7 @@ class DecisionService:
         }
 
     @staticmethod
-    def _next_question(d, rows, *, allow_comparison=False):
+    def _next_question(d, rows, *, allow_comparison=False, strategy="gini"):
         if d.get("question"):
             return d["question"]
         prefs = d["prefs"]
@@ -693,9 +722,12 @@ class DecisionService:
                                 _option("skip", "都可以")],
                 }
                 # Expected reduction, discounted when many dishes have no evidence.
-                gain = (1 - sum(n * n for n in counts.values()) / known**2)
-                questions.append((gain * known / len(rows), question))
+                questions.append((question_score(counts, known, len(rows), strategy), question))
         if questions:
+            if strategy == "fixed":
+                return min(questions, key=lambda e: FIXED_QUESTION_ORDER.index(e[1]["field"]))[1]
+            if strategy == "random":
+                return _QUESTION_RANDOM.choice(questions)[1]
             return max(questions, key=lambda entry: entry[0])[1]
         if allow_comparison and "comparison" not in d["asked"]:
             options = DecisionService._pick(rows, [])

@@ -1624,7 +1624,8 @@
     },
     "C": {
       "labels": [
-        "occl-dev-C"
+        "occl-dev-C",
+        "occl-dev-C-retry"
       ],
       "config": {
         "visionModel": "ornith-35b",
@@ -1632,16 +1633,6 @@
         "matchThreshold": 0.72
       },
       "technicalFailures": [
-        {
-          "case": "web_dalai_noodles_soups__blur_full",
-          "status": "error",
-          "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
-        },
-        {
-          "case": "web_dalai_noodles_soups__glare_full",
-          "status": "error",
-          "error": "RuntimeError: model API request failed: HTTP 524 error code: 524\n"
-        },
         {
           "case": "web_dalai_noodles_soups__glare_partial",
           "status": "error",
@@ -1655,10 +1646,10 @@
       ],
       "summary": {
         "all_full": {
-          "n": 48,
-          "abstain": 38,
+          "n": 56,
+          "abstain": 44,
           "wrong_number": 10,
-          "right_number": 0,
+          "right_number": 2,
           "missing": 0,
           "abstainAsQuestionMark": 6,
           "wrongFlaggedByCrossCheck": 10,
@@ -1678,10 +1669,10 @@
           "wrongFlagKinds": {}
         },
         "blur_full": {
-          "n": 16,
-          "abstain": 16,
+          "n": 20,
+          "abstain": 19,
           "wrong_number": 0,
-          "right_number": 0,
+          "right_number": 1,
           "missing": 0,
           "abstainAsQuestionMark": 0,
           "wrongFlaggedByCrossCheck": 0,
@@ -1698,10 +1689,10 @@
           "wrongFlagKinds": {}
         },
         "glare_full": {
-          "n": 16,
-          "abstain": 16,
+          "n": 20,
+          "abstain": 19,
           "wrong_number": 0,
-          "right_number": 0,
+          "right_number": 1,
           "missing": 0,
           "abstainAsQuestionMark": 0,
           "wrongFlaggedByCrossCheck": 0,
@@ -2349,6 +2340,68 @@
           "surfaced": true
         },
         {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "fixed",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__blur_full",
+          "priceStatus": "missing",
+          "treatment": "blur_full",
+          "level": "full",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [
+            "name_not_in_ocr"
+          ],
+          "surfaced": true
+        },
+        {
           "case": "web_dalai_noodles_soups__blur_partial",
           "priceStatus": "fixed",
           "treatment": "blur_partial",
@@ -2408,6 +2461,66 @@
           "crossFlags": [
             "name_not_in_ocr"
           ],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "fixed",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "蛤仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蛤仔湯（小）",
+            "price": 90.0
+          },
+          "outcome": "right_number",
+          "crossFlags": [],
+          "surfaced": false
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "蚵仔湯（小）",
+          "truePrice": 90,
+          "predicted": {
+            "name": "蚵仔湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "魚丸湯（大）",
+          "truePrice": 150,
+          "predicted": {
+            "name": "魚丸湯（大）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
+          "surfaced": true
+        },
+        {
+          "case": "web_dalai_noodles_soups__glare_full",
+          "priceStatus": "missing",
+          "treatment": "glare_full",
+          "level": "full",
+          "item": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "predicted": {
+            "name": "青菜蛋花湯（小）",
+            "price": null
+          },
+          "outcome": "abstain",
+          "crossFlags": [],
           "surfaced": true
         },
         {
