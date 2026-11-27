@@ -1,0 +1,74 @@
+{
+  "restaurant": "阿美飯店（台南台菜餐廳）",
+  "items": [
+    {
+      "name": "烏魚子",
+      "price": 600,
+      "variant": "unlabelled price option 1"
+    },
+    {
+      "name": "烏魚子",
+      "price": 1200,
+      "variant": "unlabelled price option 2"
+    },
+    {
+      "name": "蝦棗",
+      "price": 250,
+      "variant": "unlabelled price option 1"
+    },
+    {
+      "name": "蝦棗",
+      "price": 450,
+      "variant": "unlabelled price option 2"
+    },
+    {
+      "name": "蟳丸",
+      "price": 250,
+      "variant": "unlabelled price option 1"
+    },
+    {
+      "name": "蟳丸",
+      "price": 450,
+      "variant": "unlabelled price option 2"
+    },
+    {
+      "name": "手工花枝丸",
+      "price": 250,
+      "variant": "unlabelled price option 1"
+    },
+    {
+      "name": "手工花枝丸",
+      "price": 450,
+      "variant": "unlabelled price option 2"
+    },
+    {
+      "name": "香菇",
+      "price": 250
+    },
+    {
+      "name": "香腸",
+      "price": 250
+    },
+    {
+      "name": "蝦棗拼香腸",
+      "price": 350
+    },
+    {
+      "name": "三色拼盤",
+      "price": 450,
+      "variant": "unlabelled price option 1"
+    },
+    {
+      "name": "三色拼盤",
+      "price": 700,
+      "variant": "unlabelled price option 2"
+    },
+    {
+      "name": "四碟拼盤",
+      "price": 1000
+    }
+  ],
+  "annotationNotes": "Nine printed rows expand to fourteen numeric price options. Slash alternatives have no size labels in the image; variant records their left-to-right order without inferring portions. Restaurant name contains 飯店 but this is a standalone Tainan Taiwanese restaurant, not a hotel. No synthetic degradation or model inference.",
+  "annotatedAt": "2026-11-26",
+  "inputSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7"
+}

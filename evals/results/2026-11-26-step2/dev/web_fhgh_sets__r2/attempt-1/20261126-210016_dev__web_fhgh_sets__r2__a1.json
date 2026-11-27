@@ -1,0 +1,376 @@
+{
+  "label": "dev__web_fhgh_sets__r2__a1",
+  "startedAt": "2026-11-26T21:00:13+08:00",
+  "finishedAt": "2026-11-26T21:00:16+08:00",
+  "config": {
+    "visionModel": "ornith-35b",
+    "verifyModel": "ornith-35b",
+    "fast": false,
+    "tileOverlap": 0.12,
+    "tileThreshold": 1600,
+    "matchThreshold": 0.72,
+    "jobs": 1,
+    "debug": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "visionLongSide": "3600",
+    "visionTiles": "0",
+    "visionTemperature": "0.0",
+    "visionPriceText": "0"
+  },
+  "scoringVersion": "menu-ocr-score-v2",
+  "provenance": {
+    "schemaVersion": 1,
+    "runMode": "live",
+    "cacheStatus": "unknown",
+    "settings": {
+      "visionModel": "ornith-35b",
+      "verifyModel": "ornith-35b",
+      "fast": false,
+      "tileOverlap": 0.12,
+      "tileThreshold": 1600,
+      "matchThreshold": 0.72,
+      "jobs": 1,
+      "debug": true,
+      "scoringVersion": "menu-ocr-score-v2",
+      "visionLongSide": "3600",
+      "visionTiles": "0",
+      "visionTemperature": "0.0",
+      "visionPriceText": "0"
+    },
+    "scoringVersion": "menu-ocr-score-v2",
+    "matchThreshold": 0.72,
+    "caseManifest": [
+      {
+        "caseId": "web_fhgh_sets",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/web_fhgh_sets.png",
+          "sha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "1873c2cfb1467985bfee3d7216f01f033717141087bd3279e248a95a0a5e0cb4",
+          "fileSha256": "ce35ae33c9f8b4dfb67ab6265e9ff1f2c8b90c6971ee465588b0a2ef065445fe",
+          "path": "菜單照片資料/第二項/開發原圖/web_fhgh_sets.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      }
+    ],
+    "datasetFingerprint": "71355ca03cbbb59347e907709eeebb75971267dc2d598d09f363d75d715ed3a4",
+    "code": {
+      "commit": "803c5c16c854966e992e920b6227901a18dfff44",
+      "dirty": true,
+      "sourceHashes": {
+        "evals/menu_ocr/run_eval.py": "707f5adc65c59e700e82b0e44bb51bab770e0b1eb7798fb9e52ad396d9ba2d6b",
+        "evals/menu_ocr/run_provenance.py": "670b3156ade51ce0e7e3ea46d47c7b809a7df1ca85ae8ec95ff8eb3097245d80",
+        "evals/menu_ocr/transport_trace.py": "ef4066882a23f43f5dbd23bdeb38edadc76ea6463ae6670e9c9b823b79ecd594",
+        "src/api_compat.py": "62f46cab3430d7af2f0203b23e783c688b54b30849f6dda378765c646b7f68a0",
+        "src/application_services.py": "17808122b9aef572f8d0a8b9fe41d4915bc508128eb6957661402aba8f4c5c2e",
+        "src/back.py": "f1013fb3f878b6b97c644bbb298719f9258f1e72b1ecc1e801b898d91eacb34d",
+        "src/conversation_service.py": "bf6c883ba0c3f636a9c44c9a7e63d69f203c7db7c4932c6985dc1184eb241d87",
+        "src/decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+        "src/decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+        "src/decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+        "src/main.py": "2bf3bbac7ac4b589c0146748eb4bf9aebe39b5bc575812db9ed3794d57e5ddaa",
+        "src/menu_ingestion_service.py": "f1620d038372732817dafe67dc0cfe81e5d36bd4c6ff43e9094892c492176eed",
+        "src/menu_library.py": "a8b6a8ef709ba4d485c9b1c4ddab34ec811473f32cffab5807e54e383a883d23",
+        "src/menu_price.py": "369cf08e572e2c659201ab9fdd46e0e0694347591556b341417a62c0929b214c",
+        "src/menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+        "src/menu_vision.py": "53aee41c5736d92ff2663240ac011056af3c83fe6ac001c3ec983be85c4a2989",
+        "src/menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b",
+        "src/migrate_legacy_data.py": "536f50cfd3be0402bc1fc41d39f1ea11887ec099e872343aeff6a15c21a7f3a5",
+        "src/observability.py": "0ce6d65c9ba84226fa463445884c6d7fea6c7b6db3bc9a7e8c8f866390bb40f8",
+        "src/ollama_fuc.py": "c05584485caf0a09a990710ba66dc07e14a27ac2d4e0b17b0b325d53835cac20",
+        "src/pending_analysis_service.py": "162fc23d0301e164535553f5ea8aa4f4332e02ccbf2c8d5fb2297e3a5abc7926",
+        "src/persistence.py": "7cbca064fc80f5970437388c3589fd6ca279be27c9ac3af0b0aacbaeb3392dcd",
+        "src/preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+        "src/recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
+        "src/restaurant_reviews.py": "9fe63ae6ccac849b0c94c56daae7bcc0fb0297ec5ef25a3c5184a8b9ca229827",
+        "src/runtime_cache.py": "8f49262e5b679fefa0482f7d14016591cb2b3fd122d28de84ccef3df1023fbea",
+        "src/security.py": "b755b4e7da249b6480b7e77976ad48af547de0964c68a06ac83b07ca5cb680fb",
+        "src/session_store.py": "f8ef1884429c316e53bd3d6adcb082c157e16e02933bce64114f2452695a459c",
+        "src/storage/__init__.py": "fec80c76bbd10a4b8b681f72e4887ab87148015f5afa48997ec202cca8fd553b",
+        "src/storage/database.py": "5961df6e84cf138698b5431367723e1662f787f97802b2673e01dd870aab53ef",
+        "src/storage/importer.py": "9d7989fd8868bf98777c81cdf0c84495556d59cb567bf9f11df53c794461290b",
+        "src/storage/models.py": "f28f21b72cada046a42078d695888dfe1c89fc83d63fb527c61dee0655a76b6d",
+        "src/storage/repositories.py": "ab42640fb0db94e42d985b832a621500b88f843b0d3cdd57f35461d8017cd0a0",
+        "src/table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46"
+      },
+      "sourceFingerprint": "a23c01c78d014bf302d14de49510be189039dd0ce105a3056cb8f27c982794cd"
+    },
+    "runtime": {
+      "python": "3.14.2",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "replaySource": null
+  },
+  "cases": [
+    {
+      "case": "web_fhgh_sets",
+      "ok": true,
+      "status": "ok",
+      "error": "",
+      "truth": {
+        "source": {
+          "url": "https://hotel.fhgh.com.tw/download/0/202/",
+          "retrieved": "2026-11-26",
+          "pdfPage": 2,
+          "pdfSha256": "7cde5bf1739803dc2960807bfe3c7c3470aaa925de39f97efd3eddd8acaa3f6f",
+          "render": "pdftoppm -f 2 -l 2 -scale-to 1900 -singlefile -png",
+          "inputSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+          "size": [
+            1900,
+            1344
+          ],
+          "group": "web-pilot-20261126",
+          "truthFrozenAt": "2026-11-26T15:37:27+08:00"
+        },
+        "annotationPolicy": "名人堂花園大飯店台灣小吃總匯套餐頁。五個可購買套餐依中文標題計分；內含菜色、飲料更換與說明不另列。店名不計分。",
+        "items": [
+          {
+            "name": "一號餐",
+            "price": 180
+          },
+          {
+            "name": "二號餐",
+            "price": 220
+          },
+          {
+            "name": "三號餐",
+            "price": 230
+          },
+          {
+            "name": "四號餐",
+            "price": 230
+          },
+          {
+            "name": "五號餐",
+            "price": 350
+          }
+        ]
+      },
+      "provenance": {
+        "caseId": "web_fhgh_sets",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/web_fhgh_sets.png",
+          "sha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "1873c2cfb1467985bfee3d7216f01f033717141087bd3279e248a95a0a5e0cb4",
+          "fileSha256": "ce35ae33c9f8b4dfb67ab6265e9ff1f2c8b90c6971ee465588b0a2ef065445fe",
+          "path": "菜單照片資料/第二項/開發原圖/web_fhgh_sets.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      },
+      "inference": {
+        "executionMode": "live",
+        "requestedModel": "ornith-35b",
+        "activeModel": "ornith-35b",
+        "fallback": false,
+        "underlyingModelVersion": "unknown",
+        "cacheStatus": "unknown",
+        "capturedCallCount": 1,
+        "requestedModels": [
+          "ornith-35b"
+        ],
+        "promptHashes": [
+          "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398"
+        ],
+        "inputImageHashes": [
+          "b00d7a873605e994bb49bd27f4f24223a0d4bd519ac2d017827bee2a60fadf75"
+        ]
+      },
+      "durationSec": 2.3,
+      "models": {
+        "ocrRequested": "ornith-35b",
+        "ocr": "ornith-35b"
+      },
+      "raw": {
+        "detectedRestaurantName": "",
+        "items": [
+          {
+            "name": "一號餐",
+            "price": 180.0,
+            "category": "小吃套餐"
+          },
+          {
+            "name": "二號餐",
+            "price": 220.0,
+            "category": "小吃套餐"
+          },
+          {
+            "name": "三號餐",
+            "price": 230.0,
+            "category": "小吃套餐"
+          },
+          {
+            "name": "四號餐",
+            "price": 230.0,
+            "category": "小吃套餐"
+          },
+          {
+            "name": "五號餐",
+            "price": 350.0,
+            "category": "小吃套餐"
+          }
+        ],
+        "warnings": [],
+        "quality": {
+          "score": 0.812,
+          "priceCoverage": 1.0,
+          "itemCount": 5,
+          "conflictCount": 0,
+          "modelFallback": false,
+          "verifyDroppedCount": 0,
+          "verifyInventedCount": 0,
+          "needsReviewCount": 0,
+          "ambiguousPriceCount": 0
+        },
+        "sourceBlocks": [
+          {
+            "id": "full",
+            "box": [
+              0,
+              0,
+              3600,
+              2547
+            ]
+          }
+        ]
+      },
+      "exchanges": [
+        {
+          "model": "ornith-35b",
+          "imageCount": 1,
+          "promptHead": "你是繁體中文菜單 OCR 專家。這是整張菜單的完整照片。\n全圖初步資訊：{}\n逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。\n被手寫線劃過的印刷品項仍要保留。看不清價格用 nul",
+          "promptSha": "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398",
+          "inputImages": [
+            {
+              "kind": "embedded_image",
+              "sha256": "b00d7a873605e994bb49bd27f4f24223a0d4bd519ac2d017827bee2a60fadf75",
+              "byteCount": 1551391,
+              "mime": "image/jpeg"
+            }
+          ],
+          "requestedModel": "ornith-35b",
+          "temperature": 0.0,
+          "timeout": 180.0,
+          "requestSha256": "93825df07d19cc7b2ac9a62efbc96e137d8e532ad0e95cf446df3968135d38e8",
+          "executionMode": "live",
+          "cacheStatus": "unknown",
+          "underlyingModelVersion": "unknown",
+          "durationSec": 1.8,
+          "responseChars": 433,
+          "jsonParsed": true,
+          "endsAbruptly": false,
+          "itemCount": 5,
+          "items": [
+            "一號餐",
+            "二號餐",
+            "三號餐",
+            "四號餐",
+            "五號餐"
+          ],
+          "response": "{\"restaurant_name\": \"\", \"categories\": [{\"name\": \"小吃套餐\", \"items\": [{\"name\": \"一號餐\", \"price\": 180, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"二號餐\", \"price\": 220, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"三號餐\", \"price\": 230, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"四號餐\", \"price\": 230, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"五號餐\", \"price\": 350, \"chili_count\": null, \"spice_level\": null}]}]}"
+        }
+      ],
+      "transport": {
+        "observer": "python.audit.urllib.Request",
+        "observationScope": "current context urllib request attempts before network I/O",
+        "requestHashScope": "method, URL and body bytes; headers excluded; SHA-256 only",
+        "requestCount": 1,
+        "blockedRequestCount": 0,
+        "droppedEventCount": 0,
+        "identicalRequestRepeats": 0,
+        "responsesObserved": false,
+        "cacheStatus": "unknown",
+        "underlyingModelVersion": "unknown",
+        "requests": [
+          {
+            "index": 1,
+            "elapsedSec": 0.508716,
+            "requestSha256": "210ce19aaf37cbff76be55068dfd4911a528ccc9d13d4f07a014fe9d18872515",
+            "bodySha256": "be5d403c6cfbfa6b29c543f267f83e0a335ea21e59eab0d006dcd9e675dd4d13",
+            "requestedModel": "ornith-35b",
+            "blockedByReplay": false
+          }
+        ]
+      },
+      "expectedCount": 5,
+      "predictedCount": 5,
+      "matchedCount": 5,
+      "recall": 1.0,
+      "precision": 1.0,
+      "exactNameCount": 5,
+      "exactNameRate": 1.0,
+      "exactNameTotalCount": 5,
+      "exactNameRecall": 1.0,
+      "exactNamePriceCount": 5,
+      "exactNamePriceRate": 1.0,
+      "cer": 0.0,
+      "cerEdits": 0,
+      "cerChars": 15,
+      "cerRaw": 0.0,
+      "cerRawEdits": 0,
+      "cerRawChars": 15,
+      "cerStrict": 0.0,
+      "cerStrictEdits": 0,
+      "cerStrictChars": 15,
+      "pricedExpected": 5,
+      "pricedExpectedTotal": 5,
+      "priceCorrectCount": 5,
+      "priceRecall": 1.0,
+      "priceAccuracy": 1.0,
+      "priceInvented": 0,
+      "restaurantNameExpected": "",
+      "restaurantNameDetected": "",
+      "restaurantNameOk": null,
+      "qualityScoreReported": 0.812,
+      "scoringVersion": "menu-ocr-score-v2",
+      "missed": [],
+      "spurious": [],
+      "reordered": [],
+      "nearMisses": [],
+      "priceErrors": []
+    }
+  ],
+  "summary": {
+    "caseCount": 1,
+    "okCount": 1,
+    "failedCount": 0,
+    "emptyCount": 0,
+    "skippedCount": 0,
+    "scoredCaseCount": 1,
+    "executedCount": 1,
+    "availableCaseRate": 1.0,
+    "declaredExpectedCount": 5,
+    "declaredPricedExpectedTotal": 5,
+    "unknownTruthCount": 0,
+    "datasetComplete": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "expectedCount": 5,
+    "predictedCount": 5,
+    "matchedCount": 5,
+    "pricedExpected": 5,
+    "pricedExpectedTotal": 5,
+    "priceCorrectCount": 5,
+    "exactNameTotalCount": 5,
+    "exactNamePriceCount": 5,
+    "recall": 1.0,
+    "precision": 1.0,
+    "exactNameRate": 1.0,
+    "exactNameRecall": 1.0,
+    "exactNamePriceRate": 1.0,
+    "priceRecall": 1.0,
+    "cer": 0.0,
+    "cerRaw": 0.0,
+    "cerStrict": 0.0,
+    "priceAccuracy": 1.0,
+    "priceInvented": 0,
+    "restaurantNameOkCount": 0,
+    "restaurantNameChecked": 0,
+    "totalDurationSec": 2.3
+  }
+}

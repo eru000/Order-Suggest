@@ -1,0 +1,38 @@
+{
+  "caseId": "extra_caesar_jiayan",
+  "split": "dev",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+  "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T20:59:23+08:00",
+      "finishedAt": "2026-11-26T20:59:49+08:00",
+      "elapsedSec": 26.301,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "57c1c42d34149f415767a3f688b025f59f7e9d2aa19af0f7e4f7618b4b7ee1ff"
+      ],
+      "transportBodyHashes": [
+        "12a4e328782a5f14b3b605142d886c13144bb9b56df11c70bc5dcf54b137157d"
+      ],
+      "sourceImageSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+      "truthSnapshotSha256": "53d7fb91080b4ed0f01edda9e644e0db4682739d338ecc132a0c71e7ede72931",
+      "runSha256": "555b6742fa11b8a5ae8ffad2b070ae77ebdb154818c8d98dc1476202fb00d895",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\dev\\extra_caesar_jiayan__r1\\attempt-1\\20261126-205949_dev__extra_caesar_jiayan__r1__a1.json",
+      "artifactSha256": "555b6742fa11b8a5ae8ffad2b070ae77ebdb154818c8d98dc1476202fb00d895",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T20:59:49+08:00"
+}

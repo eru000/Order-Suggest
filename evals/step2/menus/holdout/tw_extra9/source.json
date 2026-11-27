@@ -1,0 +1,36 @@
+{
+  "restaurant": "半斤九兩台菜海鮮餐廳",
+  "group": "extra9",
+  "url": "https://extra9.com.tw/menu",
+  "kind": "web_html",
+  "region": "Screenshot of the entire official .menu__main > ul > li#a 清爽涼意 category at desktop viewport 1440x1200, deviceScaleFactor 1; element bounds x=144,y=561.78125,width=230.390625,height=638.",
+  "features": [
+    "web-html",
+    "single-column",
+    "market-price",
+    "dotted-leaders",
+    "digital-menu"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "555a3990e7224e77beeadb480d490212b39c94e2cd2fe63d290dbd761881a820",
+  "annotationStatus": "frozen_before_model_inference",
+  "notes": "All twelve entries in the complete 清爽涼意 category are annotated. Rendered by headless Microsoft Edge using the official HTML, CSS and dynamic menu data. The site loading overlay remained stuck in headless mode and only #loader was hidden; menu content, order, styles and prices were unchanged. This is a screenshot of digital HTML, not a photograph. No synthetic degradation or model inference.",
+  "dataUrls": [
+    "https://extra9.com.tw/php/menu_title.php",
+    "https://extra9.com.tw/php/menu_content.php"
+  ],
+  "rendering": {
+    "tool": "Playwright Microsoft Edge headless",
+    "viewport": [
+      1440,
+      1200
+    ],
+    "deviceScaleFactor": 1,
+    "selector": ".menu__main > ul > li#a",
+    "loaderOverlayHidden": true
+  },
+  "originalFile": "source.html",
+  "originalSha256": "b71d719bf7e806340df008d9617d98bd388f70c9bbefab74fc72c92edab10a30",
+  "split": "holdout",
+  "currency": "TWD"
+}

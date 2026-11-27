@@ -1,0 +1,588 @@
+{
+  "label": "dev__xianghong__r3__a1",
+  "startedAt": "2026-11-26T21:00:28+08:00",
+  "finishedAt": "2026-11-26T21:00:30+08:00",
+  "config": {
+    "visionModel": "ornith-35b",
+    "verifyModel": "ornith-35b",
+    "fast": false,
+    "tileOverlap": 0.12,
+    "tileThreshold": 1600,
+    "matchThreshold": 0.72,
+    "jobs": 1,
+    "debug": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "visionLongSide": "3600",
+    "visionTiles": "0",
+    "visionTemperature": "0.0",
+    "visionPriceText": "0"
+  },
+  "scoringVersion": "menu-ocr-score-v2",
+  "provenance": {
+    "schemaVersion": 1,
+    "runMode": "live",
+    "cacheStatus": "unknown",
+    "settings": {
+      "visionModel": "ornith-35b",
+      "verifyModel": "ornith-35b",
+      "fast": false,
+      "tileOverlap": 0.12,
+      "tileThreshold": 1600,
+      "matchThreshold": 0.72,
+      "jobs": 1,
+      "debug": true,
+      "scoringVersion": "menu-ocr-score-v2",
+      "visionLongSide": "3600",
+      "visionTiles": "0",
+      "visionTemperature": "0.0",
+      "visionPriceText": "0"
+    },
+    "scoringVersion": "menu-ocr-score-v2",
+    "matchThreshold": 0.72,
+    "caseManifest": [
+      {
+        "caseId": "xianghong",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/xianghong.png",
+          "sha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "8b38d519f2db8cc73e2d3739c00bf3fb1ef28cf7ae852ace8d9e73f47554bd51",
+          "fileSha256": "877445c545b8e3462c4f943fa7cbbe956a2aa7d9bcb4c1124d55acbac06bb0f9",
+          "path": "菜單照片資料/第二項/開發原圖/xianghong.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      }
+    ],
+    "datasetFingerprint": "3239123e32bd58623dd1279530475ce4513e7c42673c537ba5c286741a4bb2ef",
+    "code": {
+      "commit": "803c5c16c854966e992e920b6227901a18dfff44",
+      "dirty": true,
+      "sourceHashes": {
+        "evals/menu_ocr/run_eval.py": "707f5adc65c59e700e82b0e44bb51bab770e0b1eb7798fb9e52ad396d9ba2d6b",
+        "evals/menu_ocr/run_provenance.py": "670b3156ade51ce0e7e3ea46d47c7b809a7df1ca85ae8ec95ff8eb3097245d80",
+        "evals/menu_ocr/transport_trace.py": "ef4066882a23f43f5dbd23bdeb38edadc76ea6463ae6670e9c9b823b79ecd594",
+        "src/api_compat.py": "62f46cab3430d7af2f0203b23e783c688b54b30849f6dda378765c646b7f68a0",
+        "src/application_services.py": "17808122b9aef572f8d0a8b9fe41d4915bc508128eb6957661402aba8f4c5c2e",
+        "src/back.py": "f1013fb3f878b6b97c644bbb298719f9258f1e72b1ecc1e801b898d91eacb34d",
+        "src/conversation_service.py": "bf6c883ba0c3f636a9c44c9a7e63d69f203c7db7c4932c6985dc1184eb241d87",
+        "src/decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+        "src/decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+        "src/decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+        "src/main.py": "2bf3bbac7ac4b589c0146748eb4bf9aebe39b5bc575812db9ed3794d57e5ddaa",
+        "src/menu_ingestion_service.py": "f1620d038372732817dafe67dc0cfe81e5d36bd4c6ff43e9094892c492176eed",
+        "src/menu_library.py": "a8b6a8ef709ba4d485c9b1c4ddab34ec811473f32cffab5807e54e383a883d23",
+        "src/menu_price.py": "369cf08e572e2c659201ab9fdd46e0e0694347591556b341417a62c0929b214c",
+        "src/menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+        "src/menu_vision.py": "53aee41c5736d92ff2663240ac011056af3c83fe6ac001c3ec983be85c4a2989",
+        "src/menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b",
+        "src/migrate_legacy_data.py": "536f50cfd3be0402bc1fc41d39f1ea11887ec099e872343aeff6a15c21a7f3a5",
+        "src/observability.py": "0ce6d65c9ba84226fa463445884c6d7fea6c7b6db3bc9a7e8c8f866390bb40f8",
+        "src/ollama_fuc.py": "c05584485caf0a09a990710ba66dc07e14a27ac2d4e0b17b0b325d53835cac20",
+        "src/pending_analysis_service.py": "162fc23d0301e164535553f5ea8aa4f4332e02ccbf2c8d5fb2297e3a5abc7926",
+        "src/persistence.py": "7cbca064fc80f5970437388c3589fd6ca279be27c9ac3af0b0aacbaeb3392dcd",
+        "src/preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+        "src/recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
+        "src/restaurant_reviews.py": "9fe63ae6ccac849b0c94c56daae7bcc0fb0297ec5ef25a3c5184a8b9ca229827",
+        "src/runtime_cache.py": "8f49262e5b679fefa0482f7d14016591cb2b3fd122d28de84ccef3df1023fbea",
+        "src/security.py": "b755b4e7da249b6480b7e77976ad48af547de0964c68a06ac83b07ca5cb680fb",
+        "src/session_store.py": "f8ef1884429c316e53bd3d6adcb082c157e16e02933bce64114f2452695a459c",
+        "src/storage/__init__.py": "fec80c76bbd10a4b8b681f72e4887ab87148015f5afa48997ec202cca8fd553b",
+        "src/storage/database.py": "5961df6e84cf138698b5431367723e1662f787f97802b2673e01dd870aab53ef",
+        "src/storage/importer.py": "9d7989fd8868bf98777c81cdf0c84495556d59cb567bf9f11df53c794461290b",
+        "src/storage/models.py": "f28f21b72cada046a42078d695888dfe1c89fc83d63fb527c61dee0655a76b6d",
+        "src/storage/repositories.py": "ab42640fb0db94e42d985b832a621500b88f843b0d3cdd57f35461d8017cd0a0",
+        "src/table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46"
+      },
+      "sourceFingerprint": "a23c01c78d014bf302d14de49510be189039dd0ce105a3056cb8f27c982794cd"
+    },
+    "runtime": {
+      "python": "3.14.2",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "replaySource": null
+  },
+  "cases": [
+    {
+      "case": "xianghong",
+      "ok": true,
+      "status": "ok",
+      "error": "",
+      "truth": {
+        "_來源": "image.png，Google Maps 上的店家照片截圖。515x888，直式雙欄。",
+        "_待確認": "「魯肉便當」的價格被反光蓋住個位數。第一位確定是 7，第二位我拉了對比與通道分離都只能看出是 5（頂橫線右端與左下開口的弧都在，不是 0 也不是 6）。標成 75，但你如果知道實際價格請直接改——ground truth 錯了會讓每一次評測都系統性偏差。",
+        "_標註決定": [
+          "（外帶）／（內用）前綴保留，因為菜單上真的印了，而且大魯肉飯外帶 55、內用 50 是兩個不同價格的品項。拿掉前綴會變成兩個同名品項——那正好會踩到 normalize_vision_result 全域去重的 bug。",
+          "「75套餐」「85套餐」的單價欄印的是「味噌湯／魚丸湯」（可選的湯），不是數字。價格取自品名本身。",
+          "分類標題（飯類／麵類／小菜類／湯類）不是品項，不列入。",
+          "底部的地址與電話不是品項，不列入。模型若抄進來會被算成幻覺，這是正確的。"
+        ],
+        "restaurant_name": "向宏魯肉飯",
+        "items": [
+          {
+            "name": "魯肉便當",
+            "price": 75
+          },
+          {
+            "name": "（外帶）大魯肉飯",
+            "price": 55
+          },
+          {
+            "name": "（外帶）小魯肉飯",
+            "price": 45
+          },
+          {
+            "name": "（內用）大魯肉飯",
+            "price": 50
+          },
+          {
+            "name": "（內用）小魯肉飯",
+            "price": 40
+          },
+          {
+            "name": "肉羹飯",
+            "price": 55
+          },
+          {
+            "name": "大肉羹飯",
+            "price": 65
+          },
+          {
+            "name": "白飯",
+            "price": 15
+          },
+          {
+            "name": "魯蛋",
+            "price": 15
+          },
+          {
+            "name": "油豆腐/3塊",
+            "price": 20
+          },
+          {
+            "name": "筍乾",
+            "price": 35
+          },
+          {
+            "name": "燙高麗菜",
+            "price": 35
+          },
+          {
+            "name": "乾麵",
+            "price": 45
+          },
+          {
+            "name": "大乾麵",
+            "price": 55
+          },
+          {
+            "name": "魯肉湯麵",
+            "price": 45
+          },
+          {
+            "name": "大魯肉湯麵",
+            "price": 55
+          },
+          {
+            "name": "肉羹麵",
+            "price": 55
+          },
+          {
+            "name": "大肉羹麵",
+            "price": 65
+          },
+          {
+            "name": "味噌湯",
+            "price": 25
+          },
+          {
+            "name": "淡水魚丸湯",
+            "price": 25
+          },
+          {
+            "name": "油豆腐湯",
+            "price": 30
+          },
+          {
+            "name": "肉羹湯",
+            "price": 40
+          },
+          {
+            "name": "（限內用）75套餐",
+            "price": 75
+          },
+          {
+            "name": "（限內用）85套餐",
+            "price": 85
+          }
+        ]
+      },
+      "provenance": {
+        "caseId": "xianghong",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/xianghong.png",
+          "sha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "8b38d519f2db8cc73e2d3739c00bf3fb1ef28cf7ae852ace8d9e73f47554bd51",
+          "fileSha256": "877445c545b8e3462c4f943fa7cbbe956a2aa7d9bcb4c1124d55acbac06bb0f9",
+          "path": "菜單照片資料/第二項/開發原圖/xianghong.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      },
+      "inference": {
+        "executionMode": "live",
+        "requestedModel": "ornith-35b",
+        "activeModel": "ornith-35b",
+        "fallback": false,
+        "underlyingModelVersion": "unknown",
+        "cacheStatus": "unknown",
+        "capturedCallCount": 1,
+        "requestedModels": [
+          "ornith-35b"
+        ],
+        "promptHashes": [
+          "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398"
+        ],
+        "inputImageHashes": [
+          "af14c79e58c1387591a185b36255d51a17159c071bf1327cca771a3afafc53e2"
+        ]
+      },
+      "durationSec": 2.7,
+      "models": {
+        "ocrRequested": "ornith-35b",
+        "ocr": "ornith-35b"
+      },
+      "raw": {
+        "detectedRestaurantName": "向宏魯肉飯",
+        "items": [
+          {
+            "name": "魯肉便當",
+            "price": 75.0,
+            "category": "飯類"
+          },
+          {
+            "name": "大魯肉飯（外帶）",
+            "price": 55.0,
+            "category": "飯類"
+          },
+          {
+            "name": "小魯肉飯（外帶）",
+            "price": 45.0,
+            "category": "飯類"
+          },
+          {
+            "name": "大魯肉飯（內用）",
+            "price": 50.0,
+            "category": "飯類"
+          },
+          {
+            "name": "小魯肉飯（內用）",
+            "price": 40.0,
+            "category": "飯類"
+          },
+          {
+            "name": "肉羹飯",
+            "price": 55.0,
+            "category": "飯類"
+          },
+          {
+            "name": "大肉羹飯",
+            "price": 65.0,
+            "category": "飯類"
+          },
+          {
+            "name": "白飯",
+            "price": 15.0,
+            "category": "飯類"
+          },
+          {
+            "name": "乾麵",
+            "price": 45.0,
+            "category": "麵類"
+          },
+          {
+            "name": "大乾麵",
+            "price": 55.0,
+            "category": "麵類"
+          },
+          {
+            "name": "魯肉湯麵",
+            "price": 45.0,
+            "category": "麵類"
+          },
+          {
+            "name": "大魯肉湯麵",
+            "price": 55.0,
+            "category": "麵類"
+          },
+          {
+            "name": "肉羹麵",
+            "price": 55.0,
+            "category": "麵類"
+          },
+          {
+            "name": "大肉羹麵",
+            "price": 65.0,
+            "category": "麵類"
+          },
+          {
+            "name": "魯蛋",
+            "price": 15.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "油豆腐/3塊",
+            "price": 20.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "筍乾",
+            "price": 35.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "燙高麗菜",
+            "price": 35.0,
+            "category": "小菜類"
+          },
+          {
+            "name": "味噌湯",
+            "price": 25.0,
+            "category": "湯類"
+          },
+          {
+            "name": "淡水魚丸湯",
+            "price": 25.0,
+            "category": "湯類"
+          },
+          {
+            "name": "油豆腐湯",
+            "price": 30.0,
+            "category": "湯類"
+          },
+          {
+            "name": "肉羹湯",
+            "price": 40.0,
+            "category": "湯類"
+          },
+          {
+            "name": "75套餐（限內用）",
+            "price": 75.0,
+            "category": "湯類"
+          },
+          {
+            "name": "85套餐（限內用）",
+            "price": 85.0,
+            "category": "湯類"
+          }
+        ],
+        "warnings": [
+          "75套餐、85套餐 的單價欄為空，價格取自品名中印出的數字",
+          "全圖未見辣椒圖示或辣度標示"
+        ],
+        "quality": {
+          "score": 1.0,
+          "priceCoverage": 1.0,
+          "itemCount": 24,
+          "conflictCount": 0,
+          "modelFallback": false,
+          "verifyDroppedCount": 0,
+          "verifyInventedCount": 0,
+          "needsReviewCount": 0,
+          "ambiguousPriceCount": 0
+        },
+        "sourceBlocks": [
+          {
+            "id": "full",
+            "box": [
+              0,
+              0,
+              2088,
+              3600
+            ]
+          }
+        ]
+      },
+      "exchanges": [
+        {
+          "model": "ornith-35b",
+          "imageCount": 1,
+          "promptHead": "你是繁體中文菜單 OCR 專家。這是整張菜單的完整照片。\n全圖初步資訊：{}\n逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。\n被手寫線劃過的印刷品項仍要保留。看不清價格用 nul",
+          "promptSha": "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398",
+          "inputImages": [
+            {
+              "kind": "embedded_image",
+              "sha256": "af14c79e58c1387591a185b36255d51a17159c071bf1327cca771a3afafc53e2",
+              "byteCount": 1344833,
+              "mime": "image/jpeg"
+            }
+          ],
+          "requestedModel": "ornith-35b",
+          "temperature": 0.0,
+          "timeout": 180.0,
+          "requestSha256": "d6aabc8e088d8d77eb55bff72ec4f12e56a834f8c8ffa6fa0630b82ac22485aa",
+          "executionMode": "live",
+          "cacheStatus": "unknown",
+          "underlyingModelVersion": "unknown",
+          "durationSec": 2.3,
+          "responseChars": 1059,
+          "jsonParsed": true,
+          "endsAbruptly": false,
+          "itemCount": 24,
+          "items": [
+            "魯肉便當",
+            "大魯肉飯（外帶）",
+            "小魯肉飯（外帶）",
+            "大魯肉飯（內用）",
+            "小魯肉飯（內用）",
+            "肉羹飯",
+            "大肉羹飯",
+            "白飯",
+            "乾麵",
+            "大乾麵",
+            "魯肉湯麵",
+            "大魯肉湯麵",
+            "肉羹麵",
+            "大肉羹麵",
+            "魯蛋",
+            "油豆腐/3塊",
+            "筍乾",
+            "燙高麗菜",
+            "味噌湯",
+            "淡水魚丸湯",
+            "油豆腐湯",
+            "肉羹湯",
+            "75套餐（限內用）",
+            "85套餐（限內用）"
+          ],
+          "response": "{\"restaurant_name\": \"向宏魯肉飯\", \"source_type\": \"photo\", \"menu_type\": \"price_list\", \"layout\": \"two_column_table\", \"warnings\": [\"75套餐、85套餐 的單價欄為空，價格取自品名中印出的數字\", \"全圖未見辣椒圖示或辣度標示\"], \"categories\": [{\"name\": \"飯類\", \"items\": [{\"name\": \"魯肉便當\", \"price\": 75}, {\"name\": \"大魯肉飯（外帶）\", \"price\": 55}, {\"name\": \"小魯肉飯（外帶）\", \"price\": 45}, {\"name\": \"大魯肉飯（內用）\", \"price\": 50}, {\"name\": \"小魯肉飯（內用）\", \"price\": 40}, {\"name\": \"肉羹飯\", \"price\": 55}, {\"name\": \"大肉羹飯\", \"price\": 65}, {\"name\": \"白飯\", \"price\": 15}]}, {\"name\": \"麵類\", \"items\": [{\"name\": \"乾麵\", \"price\": 45}, {\"name\": \"大乾麵\", \"price\": 55}, {\"name\": \"魯肉湯麵\", \"price\": 45}, {\"name\": \"大魯肉湯麵\", \"price\": 55}, {\"name\": \"肉羹麵\", \"price\": 55}, {\"name\": \"大肉羹麵\", \"price\": 65}]}, {\"name\": \"小菜類\", \"items\": [{\"name\": \"魯蛋\", \"price\": 15}, {\"name\": \"油豆腐/3塊\", \"price\": 20}, {\"name\": \"筍乾\", \"price\": 35}, {\"name\": \"燙高麗菜\", \"price\": 35}]}, {\"name\": \"湯類\", \"items\": [{\"name\": \"味噌湯\", \"price\": 25}, {\"name\": \"淡水魚丸湯\", \"price\": 25}, {\"name\": \"油豆腐湯\", \"price\": 30}, {\"name\": \"肉羹湯\", \"price\": 40}, {\"name\": \"75套餐（限內用）\", \"price\": 75}, {\"name\": \"85套餐（限內用）\", \"price\": 85}]}]}"
+        }
+      ],
+      "transport": {
+        "observer": "python.audit.urllib.Request",
+        "observationScope": "current context urllib request attempts before network I/O",
+        "requestHashScope": "method, URL and body bytes; headers excluded; SHA-256 only",
+        "requestCount": 1,
+        "blockedRequestCount": 0,
+        "droppedEventCount": 0,
+        "identicalRequestRepeats": 0,
+        "responsesObserved": false,
+        "cacheStatus": "unknown",
+        "underlyingModelVersion": "unknown",
+        "requests": [
+          {
+            "index": 1,
+            "elapsedSec": 0.394417,
+            "requestSha256": "6703cdd2eba003713839c0fb859051cfe2635c6fb7eb0da2805da6fb3b41f905",
+            "bodySha256": "c8164e3cde7127dacc8a6a54bab5c5a112355b302df13531c2de7d30fe909cac",
+            "requestedModel": "ornith-35b",
+            "blockedByReplay": false
+          }
+        ]
+      },
+      "expectedCount": 24,
+      "predictedCount": 24,
+      "matchedCount": 24,
+      "recall": 1.0,
+      "precision": 1.0,
+      "exactNameCount": 18,
+      "exactNameRate": 0.75,
+      "exactNameTotalCount": 18,
+      "exactNameRecall": 0.75,
+      "exactNamePriceCount": 18,
+      "exactNamePriceRate": 0.75,
+      "cer": 0.28,
+      "cerEdits": 28,
+      "cerChars": 100,
+      "cerRaw": 0.4248,
+      "cerRawEdits": 48,
+      "cerRawChars": 113,
+      "cerStrict": 0.28,
+      "cerStrictEdits": 28,
+      "cerStrictChars": 100,
+      "pricedExpected": 24,
+      "pricedExpectedTotal": 24,
+      "priceCorrectCount": 24,
+      "priceRecall": 1.0,
+      "priceAccuracy": 1.0,
+      "priceInvented": 0,
+      "restaurantNameExpected": "向宏魯肉飯",
+      "restaurantNameDetected": "向宏魯肉飯",
+      "restaurantNameOk": true,
+      "qualityScoreReported": 1.0,
+      "scoringVersion": "menu-ocr-score-v2",
+      "missed": [],
+      "spurious": [],
+      "reordered": [
+        {
+          "expected": "（內用）大魯肉飯",
+          "predicted": "大魯肉飯（內用）"
+        },
+        {
+          "expected": "（內用）小魯肉飯",
+          "predicted": "小魯肉飯（內用）"
+        },
+        {
+          "expected": "（外帶）大魯肉飯",
+          "predicted": "大魯肉飯（外帶）"
+        },
+        {
+          "expected": "（外帶）小魯肉飯",
+          "predicted": "小魯肉飯（外帶）"
+        },
+        {
+          "expected": "（限內用）75套餐",
+          "predicted": "75套餐（限內用）"
+        },
+        {
+          "expected": "（限內用）85套餐",
+          "predicted": "85套餐（限內用）"
+        }
+      ],
+      "nearMisses": [],
+      "priceErrors": []
+    }
+  ],
+  "summary": {
+    "caseCount": 1,
+    "okCount": 1,
+    "failedCount": 0,
+    "emptyCount": 0,
+    "skippedCount": 0,
+    "scoredCaseCount": 1,
+    "executedCount": 1,
+    "availableCaseRate": 1.0,
+    "declaredExpectedCount": 24,
+    "declaredPricedExpectedTotal": 24,
+    "unknownTruthCount": 0,
+    "datasetComplete": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "expectedCount": 24,
+    "predictedCount": 24,
+    "matchedCount": 24,
+    "pricedExpected": 24,
+    "pricedExpectedTotal": 24,
+    "priceCorrectCount": 24,
+    "exactNameTotalCount": 18,
+    "exactNamePriceCount": 18,
+    "recall": 1.0,
+    "precision": 1.0,
+    "exactNameRate": 0.75,
+    "exactNameRecall": 0.75,
+    "exactNamePriceRate": 0.75,
+    "priceRecall": 1.0,
+    "cer": 0.28,
+    "cerRaw": 0.4248,
+    "cerStrict": 0.28,
+    "priceAccuracy": 1.0,
+    "priceInvented": 0,
+    "restaurantNameOkCount": 1,
+    "restaurantNameChecked": 1,
+    "totalDurationSec": 2.7
+  }
+}

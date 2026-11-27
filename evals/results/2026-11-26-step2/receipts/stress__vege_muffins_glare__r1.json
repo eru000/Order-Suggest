@@ -1,0 +1,38 @@
+{
+  "caseId": "vege_muffins_glare",
+  "split": "stress",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+  "inputSha256": "d0b92bc33c31d5f7eb0c4fa411dd1baf3583fe1bc803bc83f95629d124524d8f",
+  "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:03:55+08:00",
+      "finishedAt": "2026-11-26T21:04:49+08:00",
+      "elapsedSec": 53.662,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "1e7e01aeb9353b41a42fb81255ab0f8aee8a120b87b346a84a7da2019296e2c5"
+      ],
+      "transportBodyHashes": [
+        "1641c001e30e6707e4bafb1db1aec277ce97d4e165ac97d4cf498378bb49b028"
+      ],
+      "sourceImageSha256": "d0b92bc33c31d5f7eb0c4fa411dd1baf3583fe1bc803bc83f95629d124524d8f",
+      "truthSnapshotSha256": "72289a2728a6e19e3f142a515d97d2d473301bae5a2b4805628d4b4c4f34366a",
+      "runSha256": "136d7eb3efdd56b6710e34049b226793236f7eff01e818562368ddf04f4b9e11",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\stress\\vege_muffins_glare__r1\\attempt-1\\20261126-210449_stress__vege_muffins_glare__r1__a1.json",
+      "artifactSha256": "136d7eb3efdd56b6710e34049b226793236f7eff01e818562368ddf04f4b9e11",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:04:49+08:00"
+}

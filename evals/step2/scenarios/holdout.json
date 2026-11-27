@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-26T20:55:16+08:00",
+  "createdBeforeExecution": true,
+  "budgetBasis": "single_item_printed_base_price",
+  "constraintsAreIndependentOracle": true,
+  "scope": "Objective feasibility and state transition checks. No taste, portion, nutrition or allergen-safety inference. All requests and expected constraints are fixed before running; failures do not change expectations.",
+  "holdoutPolicy": "Only independent static feasibility against bound truth menus; never call the production service for holdout. No prompt, rule or product updates from these cases.",
+  "cases": [
+    {
+      "id": "hold_compound_royal",
+      "category": "compound",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/hotel_royal_huigan/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "午餐要飯類，250元內，不吃雞也不要牛，請幫我決定",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 250,
+            "excludeTokens": [
+              "雞",
+              "牛"
+            ],
+            "nameAny": [
+              "飯"
+            ]
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "現在只留180元，仍然想吃飯",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 180,
+            "excludeTokens": [
+              "雞",
+              "牛"
+            ],
+            "nameAny": [
+              "飯"
+            ]
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "先排除咖哩，其他一樣",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 180,
+            "excludeTokens": [
+              "雞",
+              "牛",
+              "咖哩"
+            ],
+            "nameAny": [
+              "飯"
+            ]
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "11c56627572ba43ac16b78ab8f6e65412c3987a11fb7a7d47a389f714215c5f2"
+    },
+    {
+      "id": "hold_compound_gwoo",
+      "category": "compound",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/tw_gwoo/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "我要小份雞湯，800元以內，別放白菜類",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 800,
+            "excludeTokens": [
+              "白菜"
+            ],
+            "variant": "小"
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "小份就好，650元封頂",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 650,
+            "excludeTokens": [
+              "白菜"
+            ],
+            "variant": "小"
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "菇菇這次也先不要",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 650,
+            "excludeTokens": [
+              "白菜",
+              "菇菇"
+            ],
+            "variant": "小"
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "870d0872c426f885ff2cb882d7f760f664b953b35e05ac00e8c4f5cf65e1ee00"
+    },
+    {
+      "id": "hold_budget_splendor",
+      "category": "budget_change",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/hotel_splendor_lobby/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "一份開胃菜先抓450元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 450
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "剛算過只能花330元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 330
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "可以提高到400元，請重新找",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 400
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "03a367d5a9d7fe05c8f025de610cedfdd16aceba033bda11daa7cfa7f4255b77"
+    },
+    {
+      "id": "hold_budget_cama",
+      "category": "budget_change",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/cafe_cama/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "挑一杯黑咖啡，140元內",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 140
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "這杯只剩70元額度",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 70
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "改抓100元上限，不用奶蓋",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 100,
+            "excludeTokens": [
+              "奶蓋"
+            ]
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "269dc8ec0e31557219c7fd035c2d0781da06f3fcc2835236558505b6805a2137"
+    },
+    {
+      "id": "hold_cancel_regent",
+      "category": "cancel_condition",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/hotel_regent_lanting/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "一道菜600元內，先避開豆腐",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 600,
+            "excludeTokens": [
+              "豆腐"
+            ]
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "豆腐也能接受了，600元內即可",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 600
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "價格條件再收成480元內",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 480
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "79f1cb232c9e3fa94d783e744fd6095cc64a747ea1a1bf54313a94dcaf97e904"
+    },
+    {
+      "id": "hold_cancel_amei",
+      "category": "cancel_condition",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/tw_amei/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "700元內找一道，暫時不想香腸",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 700,
+            "excludeTokens": [
+              "香腸"
+            ]
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "把香腸那條限制刪掉",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 700
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "message",
+          "text": "現在最多300元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 300
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "0727ce13464c768432fef2e22c9e2b182d1f4b3fa1dc80bd779bf56a5c126be5"
+    },
+    {
+      "id": "hold_replace_newpalace",
+      "category": "replace",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/tw_newpalace_wuqi/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "先給我500元以下且確定有標價的一道",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 500
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "replace",
+          "text": "第一個換掉，別改其他選項",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 500
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "replace",
+          "text": "第一道再換一個，不要重複剛拒絕的",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 500
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "e402ce2d4edb673fc88dc988f7f5e1cacaf2e829ef0f8e5f083fa1bf0b486f57"
+    },
+    {
+      "id": "hold_replace_milksha",
+      "category": "replace",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/cafe_milksha/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "飲料挑100元以下，不要QQ",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 100,
+            "excludeTokens": [
+              "QQ"
+            ]
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "replace",
+          "text": "換掉第一杯，其他留下",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 100,
+            "excludeTokens": [
+              "QQ"
+            ]
+          },
+          "expectSolution": true
+        },
+        {
+          "action": "replace",
+          "text": "再換第一杯，同樣預算和排除條件",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 100,
+            "excludeTokens": [
+              "QQ"
+            ]
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "aac837d975ab286a73e212b816be775fd3f4408873df62f9b2fe26bad26adc71"
+    },
+    {
+      "id": "hold_no_solution_meetfresh",
+      "category": "no_solution",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/cafe_meetfresh/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "我要能核實價格的冰品，300元內",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 300
+          },
+          "expectSolution": false
+        },
+        {
+          "action": "message",
+          "text": "增加到1000元，但價錢必須看得到",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 1000
+          },
+          "expectSolution": false
+        },
+        {
+          "action": "message",
+          "text": "不設金額上限，可是仍然只選明確標價的",
+          "constraints": {
+            "requireKnownPrice": true
+          },
+          "expectSolution": false
+        }
+      ],
+      "truthSha256": "6ecc3325cb59ec6bb655feb63f6790d845f5ed5dbb6d03afb9091a1ad594296f"
+    },
+    {
+      "id": "hold_no_solution_comebuy",
+      "category": "no_solution",
+      "split": "holdout",
+      "menu": "evals/step2/menus/holdout/cafe_comebuy/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "只買這張原葉茶區35元以下的",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 35
+          },
+          "expectSolution": false
+        },
+        {
+          "action": "message",
+          "text": "提高到39元，仍不要超支",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 39
+          },
+          "expectSolution": false
+        },
+        {
+          "action": "message",
+          "text": "最後能到40元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 40
+          },
+          "expectSolution": true
+        }
+      ],
+      "truthSha256": "d746a9d47c6f988b7fcc49fb476bfda554386b5a7609e808aa7ee418e8f2bce2"
+    }
+  ]
+}

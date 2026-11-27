@@ -1,0 +1,43 @@
+{
+  "restaurant": "新天地梧棲創始店（一樓小吃區）",
+  "items": [
+    {
+      "name": "龍蝦兩吃",
+      "price": null,
+      "priceState": "market"
+    },
+    {
+      "name": "象拔蚌兩吃",
+      "price": null,
+      "priceState": "market"
+    },
+    {
+      "name": "綜合魚肚生魚片",
+      "price": 450,
+      "variant": "小份"
+    },
+    {
+      "name": "綜合生魚片",
+      "price": 350,
+      "variant": "小份"
+    },
+    {
+      "name": "韓式冰卷沙拉盤",
+      "price": 350,
+      "variant": "小份"
+    },
+    {
+      "name": "和風海鮮沙拉盤",
+      "price": 350,
+      "variant": "小份"
+    },
+    {
+      "name": "和風蔬果鮑魚沙拉",
+      "price": 180,
+      "variant": "盅"
+    }
+  ],
+  "annotationNotes": "All seven pictured and named menu entries on the page are annotated. 時價 remains null/market. Chinese names and the printed price unit 小份/盅 are retained; descriptions are not additional dishes. This is the standalone Wuqi restaurant, not a hotel. No synthetic degradation or model inference.",
+  "annotatedAt": "2026-11-26",
+  "inputSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed"
+}

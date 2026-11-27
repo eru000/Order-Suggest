@@ -1,0 +1,36 @@
+{
+  "restaurant": "Meet Fresh 鮮芋仙 美國官方歷史菜單",
+  "group": "meetfresh",
+  "url": "https://www.meetfresh.us/wp-content/uploads/2020/05/2020Menu.pdf",
+  "kind": "web_pdf",
+  "region": "PDF page 1, complete SHAVED ICE category above PURPLE RICE SERIES; crop PDF points [994,12,1587.4,312], rendered at 240 dpi. All eight listed desserts included; blue Kcal numbers are calories and no item price is printed in this region.",
+  "page": 1,
+  "cropPdfPoints": [
+    994,
+    12,
+    1587.4,
+    312
+  ],
+  "renderDpi": 240,
+  "features": [
+    "traditional-chinese",
+    "english",
+    "two-column",
+    "dessert-photos",
+    "calorie-distractors",
+    "unpriced-items",
+    "seasonal-icons"
+  ],
+  "currency": "USD",
+  "originalFile": "original.pdf",
+  "originalSha256": "3130e20d14a70812aee7f8dac1f3294e5ed01721674e64934dcf940a5b5ca355",
+  "limitations": [
+    "Historical official 2020 PDF, not a claim of currently available products or prices.",
+    "Selected complete category has no printed prices; all prices deliberately null.",
+    "Chinese product label is the canonical name; English parallel translation is not a second orderable item."
+  ],
+  "acquiredAt": "2026-11-26T15:58:54+08:00",
+  "inputSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+  "split": "holdout",
+  "annotationScope": "All orderable base items and all priced size variants visible in the complete selected category; no inference from calories or descriptions."
+}

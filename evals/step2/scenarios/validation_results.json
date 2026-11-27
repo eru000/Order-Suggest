@@ -1,0 +1,53 @@
+{
+  "generatedAt": "2026-11-26T13:01:52.322696+00:00",
+  "validation": {
+    "frozenFilesVerified": true,
+    "truthHashesVerified": true,
+    "developmentCases": 5,
+    "holdoutCases": 10,
+    "developmentGroups": [
+      "kaohsiung-liugui-tvbs-2538522",
+      "vege-burger"
+    ],
+    "holdoutGroups": [
+      "amei_tainan",
+      "cama",
+      "comebuy",
+      "hotel_royal_tainan",
+      "jiyuan_gwoo",
+      "meetfresh",
+      "milksha",
+      "newpalace",
+      "regent_taipei",
+      "splendor_taichung"
+    ],
+    "groupOverlap": []
+  },
+  "runnerSha256": "6e72d1536b9bae7e6421a48e1b0724a7baf2096eca22a0d5bace81e888c80c5c",
+  "scenarioHashes": {
+    "development.json": "94e2870262a70712b0dd285984405dbdbe958e70875be9fb65ec284ea82841ce",
+    "holdout.json": "1fc09679f342ec7464e18870f7d9ee8a460b38a10a22741b35716041e3ea9025"
+  },
+  "productSourceHashes": {
+    "decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+    "decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+    "decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+    "preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+    "recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
+    "table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46",
+    "menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+    "menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b"
+  },
+  "limitations": [
+    "Developer-authored objective scenarios, not user satisfaction or external validation.",
+    "Printed single-item base prices; service fees, portion sufficiency and unprinted ingredients are outside this benchmark.",
+    "Development has only two source menus; scripted turns are not independent users.",
+    "Holdout static feasibility validates the dataset, not product generalization.",
+    "If asked a question, press recommend without relaxing constraints."
+  ],
+  "blockedAttempts": {
+    "network": 0,
+    "env": 0
+  },
+  "holdoutProductExecuted": false
+}

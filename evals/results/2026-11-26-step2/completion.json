@@ -1,0 +1,13 @@
+{
+  "finishedAt": "2026-11-26T21:09:15+08:00",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "plannedCellIdsMatch": true,
+  "completedCells": 78,
+  "plannedLiveImageRounds": 69,
+  "plannedMissingImageSkips": 9,
+  "technicalStatuses": {
+    "ok": 69,
+    "skipped_missing_image": 9
+  },
+  "holdoutScoresInspected": false
+}

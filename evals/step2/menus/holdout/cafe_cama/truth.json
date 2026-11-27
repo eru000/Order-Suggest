@@ -1,0 +1,139 @@
+{
+  "items": [
+    {
+      "name": "厚蜜地瓜美式",
+      "price": 90,
+      "variant": "L"
+    },
+    {
+      "name": "厚蜜地瓜美式",
+      "price": 110,
+      "variant": "XL"
+    },
+    {
+      "name": "精品冷萃-盛夏草莓精品冷萃",
+      "price": 120,
+      "variant": "L"
+    },
+    {
+      "name": "精品冷萃-盛夏蜜桃精品冷萃",
+      "price": 120,
+      "variant": "L"
+    },
+    {
+      "name": "海鹽西西里",
+      "price": 110,
+      "variant": "L"
+    },
+    {
+      "name": "雙倍濃金獎美式",
+      "price": 105,
+      "variant": "L"
+    },
+    {
+      "name": "雙倍濃金獎美式",
+      "price": 120,
+      "variant": "XL"
+    },
+    {
+      "name": "西西里咖啡",
+      "price": 110,
+      "variant": "L"
+    },
+    {
+      "name": "西西里咖啡",
+      "price": 125,
+      "variant": "XL"
+    },
+    {
+      "name": "雙冠莊園精品美式",
+      "price": 80,
+      "variant": "M"
+    },
+    {
+      "name": "雙冠莊園精品美式",
+      "price": 100,
+      "variant": "L"
+    },
+    {
+      "name": "雙冠莊園精品美式",
+      "price": 120,
+      "variant": "XL"
+    },
+    {
+      "name": "CAMA金獎美式",
+      "price": 65,
+      "variant": "M"
+    },
+    {
+      "name": "CAMA金獎美式",
+      "price": 80,
+      "variant": "L"
+    },
+    {
+      "name": "CAMA金獎美式",
+      "price": 95,
+      "variant": "XL"
+    },
+    {
+      "name": "微韻輕美式",
+      "price": 65,
+      "variant": "M"
+    },
+    {
+      "name": "微韻輕美式",
+      "price": 80,
+      "variant": "L"
+    },
+    {
+      "name": "微韻輕美式",
+      "price": 95,
+      "variant": "XL"
+    },
+    {
+      "name": "精品冷萃-花香耶加雪菲",
+      "price": 110,
+      "variant": "M"
+    },
+    {
+      "name": "精品冷萃-花香耶加雪菲",
+      "price": 125,
+      "variant": "L"
+    },
+    {
+      "name": "精品冷萃-花香耶加雪菲",
+      "price": 140,
+      "variant": "XL"
+    },
+    {
+      "name": "精品冷萃-百蜜花園",
+      "price": 110,
+      "variant": "M"
+    },
+    {
+      "name": "精品冷萃-百蜜花園",
+      "price": 125,
+      "variant": "L"
+    },
+    {
+      "name": "精品冷萃-百蜜花園",
+      "price": 140,
+      "variant": "XL"
+    },
+    {
+      "name": "奶蓋海鹽美式",
+      "price": 100,
+      "variant": "L"
+    },
+    {
+      "name": "奶蓋海鹽美式",
+      "price": 110,
+      "variant": "XL"
+    },
+    {
+      "name": "濃縮咖啡",
+      "price": 70,
+      "variant": "M"
+    }
+  ]
+}

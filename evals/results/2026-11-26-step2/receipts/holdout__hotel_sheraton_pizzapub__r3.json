@@ -1,0 +1,38 @@
+{
+  "caseId": "hotel_sheraton_pizzapub",
+  "split": "holdout",
+  "round": 3,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+  "truthSha256": "63f15d6b30d95ad28ea5b901bd646344a93405deb011a36452e4b8da6edd512b",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:09:05+08:00",
+      "finishedAt": "2026-11-26T21:09:08+08:00",
+      "elapsedSec": 2.431,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "0be4295df5251fbae33c62863f3be2c5f5c60956812b4a37b26def0892a13272"
+      ],
+      "transportBodyHashes": [
+        "7d76bec46065b3711c474ddda694440471ba5a4b4820e05079b831f9cde38de5"
+      ],
+      "sourceImageSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+      "truthSnapshotSha256": "7b94d8a5c85297f6d0008a1e3e0335e55e9c6cd214aeebdb1f23653624f091df",
+      "runSha256": "d89de5644f796fb5ac7b2e8068d908fa65a4dae60bdd5dddff6cff57930757f3",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__hotel_sheraton_pizzapub__r3__a1.zip",
+      "artifactSha256": "03c47d79c49fae314bbcc0b67bbde01b655a8b81f8291c4e0698831534655b19",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:09:08+08:00"
+}

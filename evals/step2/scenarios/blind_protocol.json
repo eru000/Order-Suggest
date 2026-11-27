@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "authorizedAt": "2026-11-26T13:00:48.074457+00:00",
+  "authorization": "User requested the complete experiment and authorized blind product execution of ten frozen holdout scenarios after the initial static-only policy. Behavioral expectations and input scenarios remain unchanged.",
+  "execution": "Two separate same-condition runs; ten cases and three scripted turns each. Normal DecisionService actions; question prompts may receive the existing recommend action. Missing replacement targets are still submitted and recorded as technical failures, not silently skipped.",
+  "blinding": "Outputs and automatic scores go only to ZIP archives. Public receipt reveals execution, technical failures, hashes and reproducibility, not recommendation outputs or scores. No human inspection or product tuning.",
+  "comparison": "Automatic behavior hash excludes predetermined revision/mealId and time/duration fields. Repeated runs are not independent test samples."
+}

@@ -1,0 +1,38 @@
+{
+  "caseId": "liugui_board_lowres",
+  "split": "stress",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+  "inputSha256": "549f6e7a17c8011a5975cedbdf3d00f39feef2568a641faa2afcf51415b77d92",
+  "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:02:41+08:00",
+      "finishedAt": "2026-11-26T21:03:09+08:00",
+      "elapsedSec": 28.601,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "f1103118862c178a7c81408344758691d959a5bc3816f5f6031edcbea01e07bc"
+      ],
+      "transportBodyHashes": [
+        "3fbd26d1f7537274268a05de1dfcd143d439593b9339747c4307bcd1b671461f"
+      ],
+      "sourceImageSha256": "549f6e7a17c8011a5975cedbdf3d00f39feef2568a641faa2afcf51415b77d92",
+      "truthSnapshotSha256": "ab76b578b28dc84d267fb74756abb8f0b715ab4dd4db19241bd1a1e660603b65",
+      "runSha256": "8f5b0df2dfa87226c0ee4085be96d2984c1404bb50f791da2cdc5f12a1614cdc",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\stress\\liugui_board_lowres__r1\\attempt-1\\20261126-210309_stress__liugui_board_lowres__r1__a1.json",
+      "artifactSha256": "8f5b0df2dfa87226c0ee4085be96d2984c1404bb50f791da2cdc5f12a1614cdc",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:03:09+08:00"
+}

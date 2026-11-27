@@ -1,0 +1,38 @@
+{
+  "caseId": "cafe_cama",
+  "split": "holdout",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+  "truthSha256": "1ae7d85500a7c5716edba1908147f1602716886e3c20aa2acee3fc9a8596ec0f",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:08:33+08:00",
+      "finishedAt": "2026-11-26T21:08:35+08:00",
+      "elapsedSec": 2.174,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "bbe5aebe8bef5ea94a6da0db4fd0442260bfc7da8e74a98c5a18094bff8e391b"
+      ],
+      "transportBodyHashes": [
+        "301ca04b88895ba21f7bdaf7d9fb02f30f96edab25c1b1fe13bfc0bc042a641b"
+      ],
+      "sourceImageSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+      "truthSnapshotSha256": "0d990649f20ff1b6b7532b78007fc7a643117aaf35811fe817fc66ad6d867c41",
+      "runSha256": "76c2b8af951df8ef8636d40997a893884126d5b85520d0700f61578850fd01d7",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__cafe_cama__r2__a1.zip",
+      "artifactSha256": "f914b678bfe910afc3d364e1bae42c9f1eb4b2085c79cbeacfc4f8f08205cdc2",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:08:35+08:00"
+}

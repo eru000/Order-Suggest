@@ -1,0 +1,38 @@
+{
+  "restaurant": "板橋凱撒大飯店 家宴中餐廳",
+  "group": "caesar_hotels",
+  "url": "https://banqiao.caesarpark.com.tw/download/jiayan_menu/",
+  "kind": "web_pdf",
+  "region": {
+    "page": 4,
+    "totalPages": 14,
+    "scope": "full_page",
+    "method": "Poppler pdftoppm -f 4 -singlefile -r 150 -png; no crop, retouch or OCR",
+    "dpi": 150,
+    "pixelDimensions": [
+      2363,
+      1754
+    ]
+  },
+  "features": [
+    "hotel",
+    "bilingual",
+    "photo_text",
+    "two_page_spread",
+    "pork_dishes",
+    "spice_icons",
+    "cooking_time_note",
+    "printed_prices"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+  "sourceSha256": "3dee334d8890ead990cfa140188292afc93ecb0efef48cc1aa1aed47772e2fbf",
+  "truthSha256": "9212c45c371a6cbd2b71b29496aaff3eed2f4edbccb300e19b9e3fc9189c0f8b",
+  "pageUrl": "https://banqiao.caesarpark.com.tw/download/jiayan_menu/",
+  "sourceVersion": "202502 printed at page bottom; printed spread page numbers 06-07",
+  "currency": "TWD",
+  "annotationMethod": "Manual transcription by assistant after visually inspecting the entire rendered page; no OCR/VLM prediction consulted",
+  "annotationNotes": "完整PDF第4頁（印刷跨頁06-07）豬肉料理10項，左半餐點照片圖說屬右半相同品項，不重複計入。小字「烹調時間40分鐘」是出餐註解，不是菜名或價格。依原圖保留「黑棗」而非搜尋摘要偶見的「黑蒜」；辣椒圖示不併入菜名。",
+  "completeness": "All named menu rows on the selected PDF page are annotated. Page-level snapshot only, not the full multi-page restaurant menu.",
+  "rights": "Public official PDF; redistribution license not established. input.png retained locally for research; original PDF remains outside the repository."
+}

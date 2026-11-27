@@ -1,0 +1,14 @@
+{
+  "caseId": "budaoweng",
+  "split": "dev",
+  "round": 3,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": null,
+  "truthSha256": "cc6b51c13415d0978b5165bab551aeeb377796fe8c9cfe0bc7df26d63b480724",
+  "plannedStatus": "skipped_missing_image",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [],
+  "complete": true,
+  "technicalStatus": "skipped_missing_image",
+  "finishedAt": "2026-11-26T21:00:27+08:00"
+}

@@ -1,0 +1,37 @@
+{
+  "restaurant": "台中金典酒店 Lobby Lounge 大廳酒吧",
+  "group": "splendor_taichung",
+  "url": "https://www.splendor-hotel.com.tw/download/lobby_menu_20250807.pdf",
+  "kind": "web_pdf",
+  "region": {
+    "page": 3,
+    "totalPages": 22,
+    "scope": "full_page",
+    "method": "Poppler pdftoppm -f PAGE -singlefile -r 160 -png; no crop, retouch or OCR",
+    "dpi": 160,
+    "pixelDimensions": [
+      908,
+      1947
+    ]
+  },
+  "features": [
+    "hotel",
+    "single_column",
+    "bilingual",
+    "appetizers",
+    "long_names",
+    "clear_digital",
+    "printed_prices"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+  "sourceSha256": "7f7aee44ea2d177cab53005d2c62619163ef8922c40b41842efc7df4e0b2d87f",
+  "truthSha256": "03a367d5a9d7fe05c8f025de610cedfdd16aceba033bda11daa7cfa7f4255b77",
+  "pageUrl": "https://www.splendor-taichung.com.tw/zh-tw/dining/content/1230",
+  "sourceVersion": "lobby_menu_20250807.pdf; filename version 2025-08-07",
+  "currency": "TWD",
+  "annotationMethod": "Manual transcription by assistant after visually inspecting the entire rendered page; no OCR/VLM prediction consulted",
+  "annotationNotes": "完整第3頁開胃菜9項。英文翻譯為同一品項而非額外菜色；保留繁中原字。頁面未顯示餐廳名稱，店名由官方連結確認。",
+  "completeness": "All named priced dish rows on the selected page are annotated; this is a page-level snapshot, not the full multi-page restaurant menu.",
+  "rights": "Public official PDF; redistribution license not established. input.png is retained locally for research; original PDF remains outside the repository."
+}

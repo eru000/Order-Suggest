@@ -1,0 +1,38 @@
+{
+  "caseId": "web_dalai_noodles_soups",
+  "split": "dev",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+  "truthSha256": "7c1e3f05312031b7521ad33d104e10ad21d5e699e4f1f28d0e296fa5f48d687a",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:00:10+08:00",
+      "finishedAt": "2026-11-26T21:00:13+08:00",
+      "elapsedSec": 3.647,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "2dd6bfe5e175bb545d0e602bf8404e62f33f9d82c7d5ae4798b7dbcb3f2edd20"
+      ],
+      "transportBodyHashes": [
+        "a6e85c955c21fad601defafee72bb92cf8c536da15d7141eb92d6691bd945de2"
+      ],
+      "sourceImageSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+      "truthSnapshotSha256": "deb22bfa5329f199943670b5d84b404ce062bd76318b004ad8b4854c29f21536",
+      "runSha256": "3938b112fbf44c85c6ca8455f296bdc45a794c55fb6e3aba0164ee9fa8517aaf",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\dev\\web_dalai_noodles_soups__r2\\attempt-1\\20261126-210013_dev__web_dalai_noodles_soups__r2__a1.json",
+      "artifactSha256": "3938b112fbf44c85c6ca8455f296bdc45a794c55fb6e3aba0164ee9fa8517aaf",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:00:13+08:00"
+}

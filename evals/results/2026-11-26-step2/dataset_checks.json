@@ -1,0 +1,117 @@
+{
+  "manifestSha256": "c17f2998f0b40e4a122ed72f551e36d0ca405325f7e37b5ef5c561911ffab81f",
+  "counts": {
+    "dev": {
+      "registered": 10,
+      "availableImages": 7,
+      "availableItems": 93,
+      "unknownPrices": 7,
+      "missingItems": 107,
+      "sources": {
+        "budaoweng": 8,
+        "douliumen": 35,
+        "guoshao_6col": 64,
+        "xianghong": 24,
+        "web_dalai_noodles_soups": 31,
+        "web_fhgh_sets": 5,
+        "extra_caesar_jiayan": 10,
+        "extra_cosmos_jade": 10,
+        "liugui_board": 3,
+        "vege_muffins": 10
+      }
+    },
+    "stress": {
+      "registered": 12,
+      "availableImages": 12,
+      "availableItems": 99,
+      "unknownPrices": 18,
+      "missingItems": 0,
+      "sources": {
+        "extra_caesar_jiayan_lowres": 10,
+        "extra_caesar_jiayan_tilt": 10,
+        "extra_caesar_jiayan_glare": 10,
+        "extra_cosmos_jade_lowres": 10,
+        "extra_cosmos_jade_tilt": 10,
+        "extra_cosmos_jade_glare": 10,
+        "liugui_board_lowres": 3,
+        "liugui_board_tilt": 3,
+        "liugui_board_glare": 3,
+        "vege_muffins_lowres": 10,
+        "vege_muffins_tilt": 10,
+        "vege_muffins_glare": 10
+      }
+    },
+    "holdout": {
+      "registered": 12,
+      "availableImages": 12,
+      "availableItems": 144,
+      "unknownPrices": 12,
+      "missingItems": 0,
+      "sources": {
+        "cafe_cama": 27,
+        "cafe_comebuy": 8,
+        "cafe_meetfresh": 8,
+        "cafe_milksha": 17,
+        "hotel_regent_lanting": 8,
+        "hotel_royal_huigan": 9,
+        "hotel_sheraton_pizzapub": 4,
+        "hotel_splendor_lobby": 9,
+        "tw_amei": 14,
+        "tw_extra9": 12,
+        "tw_gwoo": 21,
+        "tw_newpalace_wuqi": 7
+      }
+    }
+  },
+  "sourceSnapshotsVerified": 19,
+  "missingImages": [
+    "budaoweng",
+    "douliumen",
+    "guoshao_6col"
+  ],
+  "crossSplitComparisons": 84,
+  "crossSplitExactDuplicates": 0,
+  "visualCheckMethod": "64-bit grayscale dHash (9×8 Lanczos) on each original; minimum Hamming distance is descriptive, not proof that unrelated images have different brands.",
+  "closestCrossSplitPairs": [
+    {
+      "hamming": 19,
+      "development": "extra_caesar_jiayan",
+      "holdout": "cafe_milksha"
+    },
+    {
+      "hamming": 19,
+      "development": "web_fhgh_sets",
+      "holdout": "tw_extra9"
+    },
+    {
+      "hamming": 21,
+      "development": "liugui_board",
+      "holdout": "tw_amei"
+    }
+  ],
+  "additionalCasesVisuallyCrossCheckedByAssistants": {
+    "extra_caesar_jiayan": 10,
+    "extra_cosmos_jade": 10,
+    "liugui_board": 3,
+    "vege_muffins": 10,
+    "cafe_cama": 27,
+    "cafe_comebuy": 8,
+    "cafe_meetfresh": 8,
+    "cafe_milksha": 17,
+    "hotel_regent_lanting": 8,
+    "hotel_royal_huigan": 9,
+    "hotel_sheraton_pizzapub": 4,
+    "hotel_splendor_lobby": 9,
+    "tw_amei": 14,
+    "tw_extra9": 12,
+    "tw_gwoo": 21,
+    "tw_newpalace_wuqi": 7
+  },
+  "assistantReviewedRows": 177,
+  "humanDoubleReviewCount": 0,
+  "gradingNotes": [
+    "Visible named size is appended in full-width parentheses in the evaluator-facing name. Original name/variant/price are archived separately.",
+    "Unlabelled slash prices are retained as distinct unlabelled options without fabricating size names; duplicate-name ordering in the v2 scorer may affect credit at future unblinding.",
+    "Historical xianghong price for 魯肉便當 is annotated as 75 with glare uncertainty; kept unchanged."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "restaurant": "高雄六龜麵店（報導未具店名）",
+  "group": "kaohsiung-liugui-tvbs-2538522",
+  "url": "https://news-images.tvbs.com.tw/legacy/img/upload/2024/07/03/20240703192729-01dda282.jpg",
+  "pageUrl": "https://news.tvbs.com.tw/life/2538522",
+  "region": "TVBS 2024-07-03 現場看板新聞配圖，1200×675。取右半「店內」第一排最右三完整直欄，原像素 112×129，不採新聞疊字或店外舊價。按圖片用字抄錄「板」。",
+  "features": [
+    "handwritten_repricing",
+    "vertical_text",
+    "low_resolution",
+    "photographed_board"
+  ],
+  "capture": "published_field_photo",
+  "identityNote": "媒體未揭店名；以六龜地點與報導作來源家族識別，供開發使用。",
+  "acquiredAt": "2026-11-26",
+  "kind": "web_image",
+  "rawSha256": "f0b5d78950da871943de50ee63b0529aac57326dfe502075f07516e7aef811bc",
+  "cropXYXY": [
+    832,
+    92,
+    944,
+    221
+  ],
+  "inputSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb"
+}

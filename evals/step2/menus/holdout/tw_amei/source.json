@@ -1,0 +1,23 @@
+{
+  "restaurant": "阿美飯店（台南台菜餐廳）",
+  "group": "amei_tainan",
+  "url": "https://www.amei.com.tw/wp-content/uploads/2026/07/a_la_carte_m_01.png",
+  "kind": "web_image",
+  "region": "Entire official image a_la_carte_m_01.png: complete 綜合拼盤 section, 423x360 pixels; no crop or resize.",
+  "features": [
+    "low-resolution",
+    "wide-character-spacing",
+    "slash-price-alternatives",
+    "digital-menu",
+    "single-section"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+  "annotationStatus": "frozen_before_model_inference",
+  "notes": "Nine printed rows expand to fourteen numeric price options. Slash alternatives have no size labels in the image; variant records their left-to-right order without inferring portions. Restaurant name contains 飯店 but this is a standalone Tainan Taiwanese restaurant, not a hotel. No synthetic degradation or model inference.",
+  "officialPageUrl": "https://www.amei.com.tw/mostpopular.html",
+  "originalFile": "source.png",
+  "originalSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+  "split": "holdout",
+  "currency": "TWD"
+}

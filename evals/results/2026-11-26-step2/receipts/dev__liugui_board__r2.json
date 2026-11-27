@@ -1,0 +1,38 @@
+{
+  "caseId": "liugui_board",
+  "split": "dev",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb",
+  "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:00:21+08:00",
+      "finishedAt": "2026-11-26T21:00:23+08:00",
+      "elapsedSec": 1.331,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "9ecc1a8864325f3843d8d9796279d09b36ebb88560c37af1410ad6f8b3a724ab"
+      ],
+      "transportBodyHashes": [
+        "79ba2d777f1466e5eadf678e9258b2caa30957f410e5795f93120ca81808baf2"
+      ],
+      "sourceImageSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb",
+      "truthSnapshotSha256": "ab76b578b28dc84d267fb74756abb8f0b715ab4dd4db19241bd1a1e660603b65",
+      "runSha256": "7a3f0349fbd77ad53ba14289fbbc24f252944077ef5cd09741acb20a8457e678",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\dev\\liugui_board__r2\\attempt-1\\20261126-210023_dev__liugui_board__r2__a1.json",
+      "artifactSha256": "7a3f0349fbd77ad53ba14289fbbc24f252944077ef5cd09741acb20a8457e678",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:00:23+08:00"
+}

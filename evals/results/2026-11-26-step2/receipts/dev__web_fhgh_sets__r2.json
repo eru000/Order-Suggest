@@ -1,0 +1,38 @@
+{
+  "caseId": "web_fhgh_sets",
+  "split": "dev",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+  "truthSha256": "ce35ae33c9f8b4dfb67ab6265e9ff1f2c8b90c6971ee465588b0a2ef065445fe",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:00:13+08:00",
+      "finishedAt": "2026-11-26T21:00:16+08:00",
+      "elapsedSec": 2.658,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "93825df07d19cc7b2ac9a62efbc96e137d8e532ad0e95cf446df3968135d38e8"
+      ],
+      "transportBodyHashes": [
+        "be5d403c6cfbfa6b29c543f267f83e0a335ea21e59eab0d006dcd9e675dd4d13"
+      ],
+      "sourceImageSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+      "truthSnapshotSha256": "1873c2cfb1467985bfee3d7216f01f033717141087bd3279e248a95a0a5e0cb4",
+      "runSha256": "533ecf855a353814a15ca2dff8e23cb0b063cedf5bd015187fa2cdaff70b26cd",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\dev\\web_fhgh_sets__r2\\attempt-1\\20261126-210016_dev__web_fhgh_sets__r2__a1.json",
+      "artifactSha256": "533ecf855a353814a15ca2dff8e23cb0b063cedf5bd015187fa2cdaff70b26cd",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:00:16+08:00"
+}

@@ -1,0 +1,38 @@
+{
+  "caseId": "cafe_comebuy",
+  "split": "holdout",
+  "round": 3,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+  "truthSha256": "020be913834cace2f637fd486cc254eceed53a9cdb9a2eb7005882e1d365b47a",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:08:58+08:00",
+      "finishedAt": "2026-11-26T21:09:01+08:00",
+      "elapsedSec": 2.538,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "b3047b49be24e7c2eeade603f1abc3e2d25bdce56b850413664a630f6520d36a"
+      ],
+      "transportBodyHashes": [
+        "1692a091238abc0ddabfb8e03eef1f77d8696e4f251a3840655436f414bd19ef"
+      ],
+      "sourceImageSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+      "truthSnapshotSha256": "d1322b2ccfbf8d84608e7d0de3540659958f6daf4a402f494d8c7a049932862f",
+      "runSha256": "f8b9ff83edd649c6966e77a4ebfc9e1db1eca721d73f27a4ca0344fa1f141e41",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__cafe_comebuy__r3__a1.zip",
+      "artifactSha256": "03cb0510fa3beb3293ede6a51991ea81e55dc64bcb323dfd7ae7c04325981d06",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:09:01+08:00"
+}

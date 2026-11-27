@@ -1,0 +1,38 @@
+{
+  "caseId": "cafe_meetfresh",
+  "split": "holdout",
+  "round": 3,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+  "truthSha256": "5d75e399b6800961849e7fc1b131328777798d22b5361f4a010208b1c463a604",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:09:01+08:00",
+      "finishedAt": "2026-11-26T21:09:03+08:00",
+      "elapsedSec": 2.428,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "fc1d229de0bb449ff26791e961cd7be1500574257d5d02ebbc1fe6fca4596fc7"
+      ],
+      "transportBodyHashes": [
+        "e287bf80af28ac755ee871af3d0074c67de6beb64409215923a16e530fa6be9c"
+      ],
+      "sourceImageSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+      "truthSnapshotSha256": "f72b30991a76ceb5e38a1835a8486e8f0c865ca06a745de52e4c73642876f740",
+      "runSha256": "b2a79a8983537abfe3c59d6c60a718df258556703ffbe7c9e06cb51b9a115477",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__cafe_meetfresh__r3__a1.zip",
+      "artifactSha256": "b86c26ef6bf02ef7f84317126f94722468e9a54e3756c1420ef7ba5b9b0c8a85",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:09:03+08:00"
+}

@@ -1,0 +1,38 @@
+{
+  "restaurant": "台北喜來登大飯店 PIZZA PUB 比薩屋",
+  "group": "sheraton_grand_taipei",
+  "url": "https://www.sheratongrandtaipei.com/files/pages_1729001084141sf2l79.pdf",
+  "kind": "web_pdf",
+  "region": {
+    "page": 11,
+    "totalPages": 14,
+    "scope": "full_page",
+    "method": "Poppler pdftoppm -f PAGE -singlefile -r 160 -png; no crop, retouch or OCR",
+    "dpi": 160,
+    "pixelDimensions": [
+      1071,
+      2016
+    ]
+  },
+  "features": [
+    "hotel",
+    "photo_text",
+    "trilingual",
+    "pasta",
+    "main_courses",
+    "portion_in_name",
+    "thousands_separator",
+    "printed_prices"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+  "sourceSha256": "335a9860b41a64ab9e2ea14f02c4fd73b5d23fcd05ce5467299081b91eb383e2",
+  "truthSha256": "d73a23c01b486ed72708c8ccc963f37d95fdb13b5fc6f7934a30221153513d33",
+  "pageUrl": "https://www.sheratongrandtaipei.com/files/pages_1729001084141sf2l79.pdf",
+  "sourceVersion": "Official PDF filename pages_1729001084141sf2l79.pdf; no effective date claimed",
+  "currency": "TWD",
+  "annotationMethod": "Manual transcription by assistant after visually inspecting the entire rendered page; no OCR/VLM prediction consulted",
+  "annotationNotes": "完整第11頁：義大利麵2項及主菜2項。頁面照片的「拿坡里番茄水管麵」圖說是同一道餐點，不重複計為第5項。保留中文菜名中的A5與5oz.；英文/義大利文描述及原料產地不是額外餐點。頁面未印餐廳名稱。",
+  "completeness": "All named priced dish rows on the selected page are annotated; this is a page-level snapshot, not the full multi-page restaurant menu.",
+  "rights": "Public official PDF; redistribution license not established. input.png is retained locally for research; original PDF remains outside the repository."
+}

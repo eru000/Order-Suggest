@@ -1,0 +1,414 @@
+{
+  "label": "dev__vege_muffins__r2__a1",
+  "startedAt": "2026-11-26T21:00:23+08:00",
+  "finishedAt": "2026-11-26T21:00:46+08:00",
+  "config": {
+    "visionModel": "ornith-35b",
+    "verifyModel": "ornith-35b",
+    "fast": false,
+    "tileOverlap": 0.12,
+    "tileThreshold": 1600,
+    "matchThreshold": 0.72,
+    "jobs": 1,
+    "debug": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "visionLongSide": "3600",
+    "visionTiles": "0",
+    "visionTemperature": "0.0",
+    "visionPriceText": "0"
+  },
+  "scoringVersion": "menu-ocr-score-v2",
+  "provenance": {
+    "schemaVersion": 1,
+    "runMode": "live",
+    "cacheStatus": "unknown",
+    "settings": {
+      "visionModel": "ornith-35b",
+      "verifyModel": "ornith-35b",
+      "fast": false,
+      "tileOverlap": 0.12,
+      "tileThreshold": 1600,
+      "matchThreshold": 0.72,
+      "jobs": 1,
+      "debug": true,
+      "scoringVersion": "menu-ocr-score-v2",
+      "visionLongSide": "3600",
+      "visionTiles": "0",
+      "visionTemperature": "0.0",
+      "visionPriceText": "0"
+    },
+    "scoringVersion": "menu-ocr-score-v2",
+    "matchThreshold": 0.72,
+    "caseManifest": [
+      {
+        "caseId": "vege_muffins",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/vege_muffins.png",
+          "sha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "72289a2728a6e19e3f142a515d97d2d473301bae5a2b4805628d4b4c4f34366a",
+          "fileSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+          "path": "菜單照片資料/第二項/開發原圖/vege_muffins.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      }
+    ],
+    "datasetFingerprint": "59f60b3dda1732cf45b9e8f4c32cd8d411d34c689b71c97adeec466bf2d88011",
+    "code": {
+      "commit": "803c5c16c854966e992e920b6227901a18dfff44",
+      "dirty": true,
+      "sourceHashes": {
+        "evals/menu_ocr/run_eval.py": "707f5adc65c59e700e82b0e44bb51bab770e0b1eb7798fb9e52ad396d9ba2d6b",
+        "evals/menu_ocr/run_provenance.py": "670b3156ade51ce0e7e3ea46d47c7b809a7df1ca85ae8ec95ff8eb3097245d80",
+        "evals/menu_ocr/transport_trace.py": "ef4066882a23f43f5dbd23bdeb38edadc76ea6463ae6670e9c9b823b79ecd594",
+        "src/api_compat.py": "62f46cab3430d7af2f0203b23e783c688b54b30849f6dda378765c646b7f68a0",
+        "src/application_services.py": "17808122b9aef572f8d0a8b9fe41d4915bc508128eb6957661402aba8f4c5c2e",
+        "src/back.py": "f1013fb3f878b6b97c644bbb298719f9258f1e72b1ecc1e801b898d91eacb34d",
+        "src/conversation_service.py": "bf6c883ba0c3f636a9c44c9a7e63d69f203c7db7c4932c6985dc1184eb241d87",
+        "src/decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+        "src/decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+        "src/decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+        "src/main.py": "2bf3bbac7ac4b589c0146748eb4bf9aebe39b5bc575812db9ed3794d57e5ddaa",
+        "src/menu_ingestion_service.py": "f1620d038372732817dafe67dc0cfe81e5d36bd4c6ff43e9094892c492176eed",
+        "src/menu_library.py": "a8b6a8ef709ba4d485c9b1c4ddab34ec811473f32cffab5807e54e383a883d23",
+        "src/menu_price.py": "369cf08e572e2c659201ab9fdd46e0e0694347591556b341417a62c0929b214c",
+        "src/menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+        "src/menu_vision.py": "53aee41c5736d92ff2663240ac011056af3c83fe6ac001c3ec983be85c4a2989",
+        "src/menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b",
+        "src/migrate_legacy_data.py": "536f50cfd3be0402bc1fc41d39f1ea11887ec099e872343aeff6a15c21a7f3a5",
+        "src/observability.py": "0ce6d65c9ba84226fa463445884c6d7fea6c7b6db3bc9a7e8c8f866390bb40f8",
+        "src/ollama_fuc.py": "c05584485caf0a09a990710ba66dc07e14a27ac2d4e0b17b0b325d53835cac20",
+        "src/pending_analysis_service.py": "162fc23d0301e164535553f5ea8aa4f4332e02ccbf2c8d5fb2297e3a5abc7926",
+        "src/persistence.py": "7cbca064fc80f5970437388c3589fd6ca279be27c9ac3af0b0aacbaeb3392dcd",
+        "src/preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+        "src/recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
+        "src/restaurant_reviews.py": "9fe63ae6ccac849b0c94c56daae7bcc0fb0297ec5ef25a3c5184a8b9ca229827",
+        "src/runtime_cache.py": "8f49262e5b679fefa0482f7d14016591cb2b3fd122d28de84ccef3df1023fbea",
+        "src/security.py": "b755b4e7da249b6480b7e77976ad48af547de0964c68a06ac83b07ca5cb680fb",
+        "src/session_store.py": "f8ef1884429c316e53bd3d6adcb082c157e16e02933bce64114f2452695a459c",
+        "src/storage/__init__.py": "fec80c76bbd10a4b8b681f72e4887ab87148015f5afa48997ec202cca8fd553b",
+        "src/storage/database.py": "5961df6e84cf138698b5431367723e1662f787f97802b2673e01dd870aab53ef",
+        "src/storage/importer.py": "9d7989fd8868bf98777c81cdf0c84495556d59cb567bf9f11df53c794461290b",
+        "src/storage/models.py": "f28f21b72cada046a42078d695888dfe1c89fc83d63fb527c61dee0655a76b6d",
+        "src/storage/repositories.py": "ab42640fb0db94e42d985b832a621500b88f843b0d3cdd57f35461d8017cd0a0",
+        "src/table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46"
+      },
+      "sourceFingerprint": "a23c01c78d014bf302d14de49510be189039dd0ce105a3056cb8f27c982794cd"
+    },
+    "runtime": {
+      "python": "3.14.2",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "replaySource": null
+  },
+  "cases": [
+    {
+      "case": "vege_muffins",
+      "ok": true,
+      "status": "ok",
+      "error": "",
+      "truth": {
+        "items": [
+          {
+            "name": "日式咖哩朱滿福堡",
+            "price": 85
+          },
+          {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": 85
+          },
+          {
+            "name": "黑椒扭小排滿福堡",
+            "price": 85
+          },
+          {
+            "name": "鮪余滿福堡",
+            "price": 85
+          },
+          {
+            "name": "薯餅起士滿福堡",
+            "price": 85
+          },
+          {
+            "name": "經典植物朱肉滿福堡",
+            "price": 85
+          },
+          {
+            "name": "松露野菇扭排滿福堡",
+            "price": 120
+          },
+          {
+            "name": "義式塔塔G滿福堡",
+            "price": 105
+          },
+          {
+            "name": "雙醬植物朱滿福堡",
+            "price": 100
+          },
+          {
+            "name": "雙層起司扭滿福堡",
+            "price": 110
+          }
+        ]
+      },
+      "provenance": {
+        "caseId": "vege_muffins",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/vege_muffins.png",
+          "sha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "72289a2728a6e19e3f142a515d97d2d473301bae5a2b4805628d4b4c4f34366a",
+          "fileSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+          "path": "菜單照片資料/第二項/開發原圖/vege_muffins.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      },
+      "inference": {
+        "executionMode": "live",
+        "requestedModel": "ornith-35b",
+        "activeModel": "ornith-35b",
+        "fallback": false,
+        "underlyingModelVersion": "unknown",
+        "cacheStatus": "unknown",
+        "capturedCallCount": 1,
+        "requestedModels": [
+          "ornith-35b"
+        ],
+        "promptHashes": [
+          "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398"
+        ],
+        "inputImageHashes": [
+          "219099bbcbb3bedf2ab4785b0f27815a221505ee2e1fae01c3516882eb640205"
+        ]
+      },
+      "durationSec": 23.2,
+      "models": {
+        "ocrRequested": "ornith-35b",
+        "ocr": "ornith-35b"
+      },
+      "raw": {
+        "detectedRestaurantName": "",
+        "items": [
+          {
+            "name": "日式咖哩朱滿福堡",
+            "price": 85.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "椒麻堅果辣朱滿福堡",
+            "price": 85.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "黑椒扭小排滿福堡",
+            "price": 85.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "鮪余滿福堡",
+            "price": 85.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "薯餅起士滿福堡",
+            "price": 85.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "經典植物朱肉滿福堡",
+            "price": 85.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "松露野菇扭排滿福堡",
+            "price": 120.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "義式塔塔G滿福堡",
+            "price": 105.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "雙醬植物朱滿福堡",
+            "price": 100.0,
+            "category": "MUFFINS 滿福堡剛好"
+          },
+          {
+            "name": "雙層起司扭滿福堡",
+            "price": 110.0,
+            "category": "MUFFINS 滿福堡剛好"
+          }
+        ],
+        "warnings": [
+          "區塊內未見店名，restaurant_name 留空",
+          "「加美生菜+$15／升級非油炸植物朱肉+$15」為加價註解，未列為品項"
+        ],
+        "quality": {
+          "score": 0.875,
+          "priceCoverage": 1.0,
+          "itemCount": 10,
+          "conflictCount": 0,
+          "modelFallback": false,
+          "verifyDroppedCount": 0,
+          "verifyInventedCount": 0,
+          "needsReviewCount": 0,
+          "ambiguousPriceCount": 0
+        },
+        "sourceBlocks": [
+          {
+            "id": "full",
+            "box": [
+              0,
+              0,
+              3600,
+              1130
+            ]
+          }
+        ]
+      },
+      "exchanges": [
+        {
+          "model": "ornith-35b",
+          "imageCount": 1,
+          "promptHead": "你是繁體中文菜單 OCR 專家。這是整張菜單的完整照片。\n全圖初步資訊：{}\n逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。\n被手寫線劃過的印刷品項仍要保留。看不清價格用 nul",
+          "promptSha": "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398",
+          "inputImages": [
+            {
+              "kind": "embedded_image",
+              "sha256": "219099bbcbb3bedf2ab4785b0f27815a221505ee2e1fae01c3516882eb640205",
+              "byteCount": 674816,
+              "mime": "image/jpeg"
+            }
+          ],
+          "requestedModel": "ornith-35b",
+          "temperature": 0.0,
+          "timeout": 180.0,
+          "requestSha256": "893aae7adae2edf5240ce6e2d2d220227fb5033e3b5b93619eebddb1a627f36a",
+          "executionMode": "live",
+          "cacheStatus": "unknown",
+          "underlyingModelVersion": "unknown",
+          "durationSec": 22.9,
+          "responseChars": 996,
+          "jsonParsed": true,
+          "endsAbruptly": false,
+          "itemCount": 10,
+          "items": [
+            "日式咖哩朱滿福堡",
+            "椒麻堅果辣朱滿福堡",
+            "黑椒扭小排滿福堡",
+            "鮪余滿福堡",
+            "薯餅起士滿福堡",
+            "經典植物朱肉滿福堡",
+            "松露野菇扭排滿福堡",
+            "義式塔塔G滿福堡",
+            "雙醬植物朱滿福堡",
+            "雙層起司扭滿福堡"
+          ],
+          "response": "{\"restaurant_name\": \"\", \"source_type\": \"photo\", \"menu_type\": \"food\", \"layout\": \"two-column\", \"categories\": [{\"name\": \"MUFFINS 滿福堡剛好\", \"items\": [{\"name\": \"日式咖哩朱滿福堡\", \"price\": 85, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"椒麻堅果辣朱滿福堡\", \"price\": 85, \"chili_count\": 1, \"spice_level\": null}, {\"name\": \"黑椒扭小排滿福堡\", \"price\": 85, \"chili_count\": 1, \"spice_level\": null}, {\"name\": \"鮪余滿福堡\", \"price\": 85, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"薯餅起士滿福堡\", \"price\": 85, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"經典植物朱肉滿福堡\", \"price\": 85, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"松露野菇扭排滿福堡\", \"price\": 120, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"義式塔塔G滿福堡\", \"price\": 105, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"雙醬植物朱滿福堡\", \"price\": 100, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"雙層起司扭滿福堡\", \"price\": 110, \"chili_count\": null, \"spice_level\": null}]}], \"warnings\": [\"區塊內未見店名，restaurant_name 留空\", \"「加美生菜+$15／升級非油炸植物朱肉+$15」為加價註解，未列為品項\"]}"
+        }
+      ],
+      "transport": {
+        "observer": "python.audit.urllib.Request",
+        "observationScope": "current context urllib request attempts before network I/O",
+        "requestHashScope": "method, URL and body bytes; headers excluded; SHA-256 only",
+        "requestCount": 1,
+        "blockedRequestCount": 0,
+        "droppedEventCount": 0,
+        "identicalRequestRepeats": 0,
+        "responsesObserved": false,
+        "cacheStatus": "unknown",
+        "underlyingModelVersion": "unknown",
+        "requests": [
+          {
+            "index": 1,
+            "elapsedSec": 0.238891,
+            "requestSha256": "7ffb09f6745212bfff4ef64f6417ab3b054812651d398c90c30e667debbe2933",
+            "bodySha256": "b28f031efec9e61fcecf25079245239867453a1ffca400a89b7b06d91f919100",
+            "requestedModel": "ornith-35b",
+            "blockedByReplay": false
+          }
+        ]
+      },
+      "expectedCount": 10,
+      "predictedCount": 10,
+      "matchedCount": 10,
+      "recall": 1.0,
+      "precision": 1.0,
+      "exactNameCount": 10,
+      "exactNameRate": 1.0,
+      "exactNameTotalCount": 10,
+      "exactNameRecall": 1.0,
+      "exactNamePriceCount": 10,
+      "exactNamePriceRate": 1.0,
+      "cer": 0.0,
+      "cerEdits": 0,
+      "cerChars": 79,
+      "cerRaw": 0.0,
+      "cerRawEdits": 0,
+      "cerRawChars": 79,
+      "cerStrict": 0.0,
+      "cerStrictEdits": 0,
+      "cerStrictChars": 79,
+      "pricedExpected": 10,
+      "pricedExpectedTotal": 10,
+      "priceCorrectCount": 10,
+      "priceRecall": 1.0,
+      "priceAccuracy": 1.0,
+      "priceInvented": 0,
+      "restaurantNameExpected": "",
+      "restaurantNameDetected": "",
+      "restaurantNameOk": null,
+      "qualityScoreReported": 0.875,
+      "scoringVersion": "menu-ocr-score-v2",
+      "missed": [],
+      "spurious": [],
+      "reordered": [],
+      "nearMisses": [],
+      "priceErrors": []
+    }
+  ],
+  "summary": {
+    "caseCount": 1,
+    "okCount": 1,
+    "failedCount": 0,
+    "emptyCount": 0,
+    "skippedCount": 0,
+    "scoredCaseCount": 1,
+    "executedCount": 1,
+    "availableCaseRate": 1.0,
+    "declaredExpectedCount": 10,
+    "declaredPricedExpectedTotal": 10,
+    "unknownTruthCount": 0,
+    "datasetComplete": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "expectedCount": 10,
+    "predictedCount": 10,
+    "matchedCount": 10,
+    "pricedExpected": 10,
+    "pricedExpectedTotal": 10,
+    "priceCorrectCount": 10,
+    "exactNameTotalCount": 10,
+    "exactNamePriceCount": 10,
+    "recall": 1.0,
+    "precision": 1.0,
+    "exactNameRate": 1.0,
+    "exactNameRecall": 1.0,
+    "exactNamePriceRate": 1.0,
+    "priceRecall": 1.0,
+    "cer": 0.0,
+    "cerRaw": 0.0,
+    "cerStrict": 0.0,
+    "priceAccuracy": 1.0,
+    "priceInvented": 0,
+    "restaurantNameOkCount": 0,
+    "restaurantNameChecked": 0,
+    "totalDurationSec": 23.2
+  }
+}

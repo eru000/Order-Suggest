@@ -1,0 +1,38 @@
+{
+  "caseId": "tw_amei",
+  "split": "holdout",
+  "round": 3,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+  "truthSha256": "f9b902062efe49fadb57376748b5de954abeb93f15d17f8b8dccf33ae126f692",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:09:08+08:00",
+      "finishedAt": "2026-11-26T21:09:10+08:00",
+      "elapsedSec": 2.501,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "e9232808035998d0c3b17d73db46624d812e57c461e9465be736fe401d91033b"
+      ],
+      "transportBodyHashes": [
+        "9b707ad8f2db38d3cfd5689332710f86c8aa7f0360d6a10fe1275baf76f610c7"
+      ],
+      "sourceImageSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+      "truthSnapshotSha256": "be7f95bbcb170c500408c57240e65f96bc8eb01cccf4b598bb3f38fc850a4312",
+      "runSha256": "49868a501dea2704b68f90671c703b2c8b63ba44bb0f2b9843a730e18b4ba23c",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__tw_amei__r3__a1.zip",
+      "artifactSha256": "6953b35848ea594638c1fcca601214c97fb8752280e92fbafc9f1ead5fee95f2",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:09:10+08:00"
+}

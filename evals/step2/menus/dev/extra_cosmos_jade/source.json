@@ -1,0 +1,39 @@
+{
+  "restaurant": "台北天成大飯店 翠庭中餐廳",
+  "group": "cosmos_hotels",
+  "url": "https://www.cosmos-hotel.com.tw/wp-content/uploads/sites/279/2026/06/%E5%A4%A9%E6%88%90%E7%BF%A0%E5%BA%AD%E5%B0%8F%E5%90%83%E8%8F%9C%E5%96%AE-%E4%B8%AD%E8%8B%B1%E6%97%A52026-05%E7%89%88.pdf",
+  "kind": "web_pdf",
+  "region": {
+    "page": 17,
+    "totalPages": 17,
+    "scope": "full_page",
+    "method": "Poppler pdftoppm -f 17 -singlefile -r 170 -png; no crop, retouch or OCR",
+    "dpi": 170,
+    "pixelDimensions": [
+      1304,
+      1777
+    ]
+  },
+  "features": [
+    "hotel",
+    "trilingual",
+    "photo_text",
+    "two_columns",
+    "desserts",
+    "tea",
+    "unpriced_items",
+    "dark_background",
+    "mixed_price_states"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+  "sourceSha256": "babc46e073f79b0a314dbe686aa256c4c96d5b186a268ae087765774cac7a8a1",
+  "truthSha256": "b56133dcdb8705956aa1cfd5aeb84924af51935034756fe3dae74427ff494f0c",
+  "pageUrl": "https://www.cosmos-hotel.com.tw/%E7%BE%8E%E9%A5%8C%E9%A5%97%E5%AE%B4/%E7%BF%A0%E5%BA%AD%E4%B8%AD%E9%A4%90%E5%BB%B3/",
+  "sourceVersion": "Filename 2026-05版; official dining page menu link acquired 2026-11-26",
+  "currency": "TWD",
+  "annotationMethod": "Manual transcription by assistant after visually inspecting the entire rendered page; no OCR/VLM prediction consulted",
+  "annotationNotes": "完整第17頁：港點甜品4項有一份單價，茶類6項在本頁確實未標價，皆標null/priceState=unpriced；不推斷免費、不從其他頁、網頁或外部菜單補價。英日翻譯是同一品項，不另列。頁面有翠庭標誌。",
+  "completeness": "All named menu rows on the selected PDF page are annotated. Page-level snapshot only, not the full multi-page restaurant menu.",
+  "rights": "Public official PDF; redistribution license not established. input.png retained locally for research; original PDF remains outside the repository."
+}

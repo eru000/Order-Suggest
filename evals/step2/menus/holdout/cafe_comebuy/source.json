@@ -1,0 +1,33 @@
+{
+  "restaurant": "COMEBUY",
+  "group": "comebuy",
+  "url": "https://www.comebuy2002.com.tw/products-detail/comebuy_menu/",
+  "assetUrl": "https://www.comebuy2002.com.tw/upload/catalog_b/twL_catalog_products_26F23_oP1fLQ8D8U.jpg",
+  "kind": "web_image",
+  "region": "Complete upper-right 原葉鮮萃茶 block, including 綠茶/烏龍茶/紅茶/風味茶; original pixel crop [570,24,1138,505], unscaled. Excludes the separately headed milk-tea and latte blocks below.",
+  "cropPixels": [
+    570,
+    24,
+    1138,
+    505
+  ],
+  "features": [
+    "traditional-chinese",
+    "bilingual",
+    "two-column",
+    "drink-photos",
+    "vertical-category",
+    "single-size"
+  ],
+  "currency": "TWD",
+  "originalFile": "original.jpg",
+  "originalSha256": "d8bc4c08f8fa3d7cb62d0dbb1eda4a487f86de4c7bc5bb833de8fd59ab669b1b",
+  "limitations": [
+    "Official image snapshot; prices are the values visible in this asset, not a claim about every branch.",
+    "Only the complete selected category is included, not the full restaurant menu."
+  ],
+  "acquiredAt": "2026-11-26T15:58:54+08:00",
+  "inputSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+  "split": "holdout",
+  "annotationScope": "All orderable base items and all priced size variants visible in the complete selected category; no inference from calories or descriptions."
+}

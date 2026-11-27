@@ -1,0 +1,38 @@
+{
+  "restaurant": "台南老爺行旅 回甘咖啡",
+  "group": "hotel_royal_tainan",
+  "url": "https://www.hotelroyal.com.tw/Files/Documents/wnL20260402054050503.pdf",
+  "kind": "web_pdf",
+  "region": {
+    "page": 10,
+    "totalPages": 12,
+    "scope": "full_page",
+    "method": "Poppler pdftoppm -f PAGE -singlefile -r 160 -png; no crop, retouch or OCR",
+    "dpi": 160,
+    "pixelDimensions": [
+      599,
+      1132
+    ]
+  },
+  "features": [
+    "hotel",
+    "single_column",
+    "trilingual",
+    "hot_food",
+    "vegetarian_label",
+    "pork_beef_origin_icons",
+    "service_charge",
+    "printed_prices"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+  "sourceSha256": "1b30695bc53a3ccf8a4064788a4bf93231236ff2e37a10fa9832092040fbff5c",
+  "truthSha256": "11c56627572ba43ac16b78ab8f6e65412c3987a11fb7a7d47a389f714215c5f2",
+  "pageUrl": "https://www.hotelroyal.com.tw/zh-tw/tainan/dining/1437",
+  "sourceVersion": "PDF title 20260402-回甘咖啡菜單價目表",
+  "currency": "TWD",
+  "annotationMethod": "Manual transcription by assistant after visually inspecting the entire rendered page; no OCR/VLM prediction consulted",
+  "annotationNotes": "完整第10頁熱食9項。保留菜單的燻、帕里尼與(五辛素)原字，不改用其他同音寫法；英日文及肉品產地不是額外品項。價格未加內用10%服務費。頁面未印餐廳名稱。",
+  "completeness": "All named priced dish rows on the selected page are annotated; this is a page-level snapshot, not the full multi-page restaurant menu.",
+  "rights": "Public official PDF; redistribution license not established. input.png is retained locally for research; original PDF remains outside the repository."
+}

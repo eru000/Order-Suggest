@@ -1,0 +1,29 @@
+{
+  "restaurant": "新天地梧棲創始店（一樓小吃區）",
+  "group": "newpalace",
+  "url": "https://www.newpalace.com.tw/upload/files/restaurant/4228_1150930-%E6%A2%A7%E6%A3%B2-%E7%B6%B2%E9%A0%81%E7%94%A8%E8%8F%9C%E5%96%AE.pdf",
+  "kind": "web_pdf",
+  "region": "Complete PDF page 2 (1-based), 冷盤佳餚 Appetizer page; pdftoppm -f 2 -l 2 -scale-to 1900 -singlefile -png; no crop.",
+  "features": [
+    "multi-column",
+    "market-price",
+    "unit-price",
+    "food-photos",
+    "descriptive-text",
+    "digital-menu"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+  "annotationStatus": "frozen_before_model_inference",
+  "notes": "All seven pictured and named menu entries on the page are annotated. 時價 remains null/market. Chinese names and the printed price unit 小份/盅 are retained; descriptions are not additional dishes. This is the standalone Wuqi restaurant, not a hotel. No synthetic degradation or model inference.",
+  "officialPageUrl": "https://www.newpalace.com.tw/rt/wuqi",
+  "rendering": {
+    "tool": "pdftoppm",
+    "maxSide": 1900,
+    "page": 2
+  },
+  "originalFile": "source.pdf",
+  "originalSha256": "cd026dcb270e86fc35220141eefc6f5219964df196a901c92f5dda9023267b19",
+  "split": "holdout",
+  "currency": "TWD"
+}

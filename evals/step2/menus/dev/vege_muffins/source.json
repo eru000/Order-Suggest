@@ -1,0 +1,24 @@
+{
+  "restaurant": "蔬醒松山總店",
+  "group": "vege-burger",
+  "url": "https://www.vegeburger.tw/assets/menu-main.jpg",
+  "pageUrl": "https://vegeburger.tw/menu",
+  "region": "2600×1838 菜單左下整個 MUFFINS 滿福堡剛好區，原像素裁切。每個列名及價格計一項，升級與加生菜屬加購。",
+  "features": [
+    "two_column",
+    "bilingual",
+    "modifier_surcharge",
+    "food_photo"
+  ],
+  "capture": "digital",
+  "acquiredAt": "2026-11-26",
+  "kind": "web_image",
+  "rawSha256": "d2175ce0a6b28c57f881acb966b1c7b9881eeefee12f39981748ebf1e52123de",
+  "cropXYXY": [
+    15,
+    1284,
+    1719,
+    1819
+  ],
+  "inputSha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7"
+}

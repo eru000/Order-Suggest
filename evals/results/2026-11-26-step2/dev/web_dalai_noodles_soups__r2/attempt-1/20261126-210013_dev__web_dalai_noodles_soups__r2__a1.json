@@ -1,0 +1,636 @@
+{
+  "label": "dev__web_dalai_noodles_soups__r2__a1",
+  "startedAt": "2026-11-26T21:00:10+08:00",
+  "finishedAt": "2026-11-26T21:00:13+08:00",
+  "config": {
+    "visionModel": "ornith-35b",
+    "verifyModel": "ornith-35b",
+    "fast": false,
+    "tileOverlap": 0.12,
+    "tileThreshold": 1600,
+    "matchThreshold": 0.72,
+    "jobs": 1,
+    "debug": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "visionLongSide": "3600",
+    "visionTiles": "0",
+    "visionTemperature": "0.0",
+    "visionPriceText": "0"
+  },
+  "scoringVersion": "menu-ocr-score-v2",
+  "provenance": {
+    "schemaVersion": 1,
+    "runMode": "live",
+    "cacheStatus": "unknown",
+    "settings": {
+      "visionModel": "ornith-35b",
+      "verifyModel": "ornith-35b",
+      "fast": false,
+      "tileOverlap": 0.12,
+      "tileThreshold": 1600,
+      "matchThreshold": 0.72,
+      "jobs": 1,
+      "debug": true,
+      "scoringVersion": "menu-ocr-score-v2",
+      "visionLongSide": "3600",
+      "visionTiles": "0",
+      "visionTemperature": "0.0",
+      "visionPriceText": "0"
+    },
+    "scoringVersion": "menu-ocr-score-v2",
+    "matchThreshold": 0.72,
+    "caseManifest": [
+      {
+        "caseId": "web_dalai_noodles_soups",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/web_dalai_noodles_soups.png",
+          "sha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "deb22bfa5329f199943670b5d84b404ce062bd76318b004ad8b4854c29f21536",
+          "fileSha256": "7c1e3f05312031b7521ad33d104e10ad21d5e699e4f1f28d0e296fa5f48d687a",
+          "path": "菜單照片資料/第二項/開發原圖/web_dalai_noodles_soups.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      }
+    ],
+    "datasetFingerprint": "c8e9eeb36b5f6ae65181c00028d908d5f6e9b90b099cb257f0c61e59abb87848",
+    "code": {
+      "commit": "803c5c16c854966e992e920b6227901a18dfff44",
+      "dirty": true,
+      "sourceHashes": {
+        "evals/menu_ocr/run_eval.py": "707f5adc65c59e700e82b0e44bb51bab770e0b1eb7798fb9e52ad396d9ba2d6b",
+        "evals/menu_ocr/run_provenance.py": "670b3156ade51ce0e7e3ea46d47c7b809a7df1ca85ae8ec95ff8eb3097245d80",
+        "evals/menu_ocr/transport_trace.py": "ef4066882a23f43f5dbd23bdeb38edadc76ea6463ae6670e9c9b823b79ecd594",
+        "src/api_compat.py": "62f46cab3430d7af2f0203b23e783c688b54b30849f6dda378765c646b7f68a0",
+        "src/application_services.py": "17808122b9aef572f8d0a8b9fe41d4915bc508128eb6957661402aba8f4c5c2e",
+        "src/back.py": "f1013fb3f878b6b97c644bbb298719f9258f1e72b1ecc1e801b898d91eacb34d",
+        "src/conversation_service.py": "bf6c883ba0c3f636a9c44c9a7e63d69f203c7db7c4932c6985dc1184eb241d87",
+        "src/decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+        "src/decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+        "src/decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+        "src/main.py": "2bf3bbac7ac4b589c0146748eb4bf9aebe39b5bc575812db9ed3794d57e5ddaa",
+        "src/menu_ingestion_service.py": "f1620d038372732817dafe67dc0cfe81e5d36bd4c6ff43e9094892c492176eed",
+        "src/menu_library.py": "a8b6a8ef709ba4d485c9b1c4ddab34ec811473f32cffab5807e54e383a883d23",
+        "src/menu_price.py": "369cf08e572e2c659201ab9fdd46e0e0694347591556b341417a62c0929b214c",
+        "src/menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+        "src/menu_vision.py": "53aee41c5736d92ff2663240ac011056af3c83fe6ac001c3ec983be85c4a2989",
+        "src/menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b",
+        "src/migrate_legacy_data.py": "536f50cfd3be0402bc1fc41d39f1ea11887ec099e872343aeff6a15c21a7f3a5",
+        "src/observability.py": "0ce6d65c9ba84226fa463445884c6d7fea6c7b6db3bc9a7e8c8f866390bb40f8",
+        "src/ollama_fuc.py": "c05584485caf0a09a990710ba66dc07e14a27ac2d4e0b17b0b325d53835cac20",
+        "src/pending_analysis_service.py": "162fc23d0301e164535553f5ea8aa4f4332e02ccbf2c8d5fb2297e3a5abc7926",
+        "src/persistence.py": "7cbca064fc80f5970437388c3589fd6ca279be27c9ac3af0b0aacbaeb3392dcd",
+        "src/preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+        "src/recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
+        "src/restaurant_reviews.py": "9fe63ae6ccac849b0c94c56daae7bcc0fb0297ec5ef25a3c5184a8b9ca229827",
+        "src/runtime_cache.py": "8f49262e5b679fefa0482f7d14016591cb2b3fd122d28de84ccef3df1023fbea",
+        "src/security.py": "b755b4e7da249b6480b7e77976ad48af547de0964c68a06ac83b07ca5cb680fb",
+        "src/session_store.py": "f8ef1884429c316e53bd3d6adcb082c157e16e02933bce64114f2452695a459c",
+        "src/storage/__init__.py": "fec80c76bbd10a4b8b681f72e4887ab87148015f5afa48997ec202cca8fd553b",
+        "src/storage/database.py": "5961df6e84cf138698b5431367723e1662f787f97802b2673e01dd870aab53ef",
+        "src/storage/importer.py": "9d7989fd8868bf98777c81cdf0c84495556d59cb567bf9f11df53c794461290b",
+        "src/storage/models.py": "f28f21b72cada046a42078d695888dfe1c89fc83d63fb527c61dee0655a76b6d",
+        "src/storage/repositories.py": "ab42640fb0db94e42d985b832a621500b88f843b0d3cdd57f35461d8017cd0a0",
+        "src/table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46"
+      },
+      "sourceFingerprint": "a23c01c78d014bf302d14de49510be189039dd0ce105a3056cb8f27c982794cd"
+    },
+    "runtime": {
+      "python": "3.14.2",
+      "platform": "Windows-11-10.0.26200-SP0"
+    },
+    "replaySource": null
+  },
+  "cases": [
+    {
+      "case": "web_dalai_noodles_soups",
+      "ok": true,
+      "status": "ok",
+      "error": "",
+      "truth": {
+        "source": {
+          "url": "https://www.dalaifood.com.tw/images/menu.pdf",
+          "retrieved": "2026-11-26",
+          "pdfPage": 2,
+          "pdfSha256": "9207e633dbb1e0874091526ad11bc746144f7687ce6922aabe91b170a47c4e6b",
+          "render": "pdftoppm -f 2 -l 2 -scale-to 1900 -singlefile -png",
+          "inputSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+          "size": [
+            1900,
+            1343
+          ],
+          "group": "web-pilot-20261126",
+          "truthFrozenAt": "2026-11-26T15:37:27+08:00"
+        },
+        "annotationPolicy": "大來小館雙頁麵湯菜單。抄中文整列品名，同價麵種維持印刷斜線；小中大各自成項，時價為 null。季節、英譯、推薦星號、低消與圖片下重複標示均不另列。店名不計分。",
+        "items": [
+          {
+            "name": "切仔麵/米粉/粿條",
+            "price": 50
+          },
+          {
+            "name": "肉燥乾麵/米粉/粿條",
+            "price": 60
+          },
+          {
+            "name": "什錦麵/米粉/粿條",
+            "price": 130
+          },
+          {
+            "name": "排骨湯/乾麵",
+            "price": 130
+          },
+          {
+            "name": "豬腳湯/乾麵",
+            "price": 130
+          },
+          {
+            "name": "牛肉湯/河粉",
+            "price": 130
+          },
+          {
+            "name": "什錦粥",
+            "price": 130
+          },
+          {
+            "name": "虱目魚肚湯（小）",
+            "price": 90
+          },
+          {
+            "name": "虱目魚肚湯（中）",
+            "price": 180
+          },
+          {
+            "name": "虱目魚肚湯（大）",
+            "price": 270
+          },
+          {
+            "name": "蛤仔湯（小）",
+            "price": 90
+          },
+          {
+            "name": "蛤仔湯（中）",
+            "price": 160
+          },
+          {
+            "name": "蛤仔湯（大）",
+            "price": 240
+          },
+          {
+            "name": "蚵仔湯（小）",
+            "price": 90
+          },
+          {
+            "name": "蚵仔湯（中）",
+            "price": 160
+          },
+          {
+            "name": "蚵仔湯（大）",
+            "price": 240
+          },
+          {
+            "name": "魚片湯（小）",
+            "price": 90
+          },
+          {
+            "name": "魚片湯（中）",
+            "price": 160
+          },
+          {
+            "name": "魚片湯（大）",
+            "price": 240
+          },
+          {
+            "name": "菇蕈湯（小）",
+            "price": 90
+          },
+          {
+            "name": "菇蕈湯（中）",
+            "price": 160
+          },
+          {
+            "name": "菇蕈湯（大）",
+            "price": 240
+          },
+          {
+            "name": "魚丸湯（小）",
+            "price": 50
+          },
+          {
+            "name": "魚丸湯（中）",
+            "price": 100
+          },
+          {
+            "name": "魚丸湯（大）",
+            "price": 150
+          },
+          {
+            "name": "青菜蛋花湯（小）",
+            "price": 50
+          },
+          {
+            "name": "青菜蛋花湯（中）",
+            "price": 100
+          },
+          {
+            "name": "青菜蛋花湯（大）",
+            "price": 150
+          },
+          {
+            "name": "鮮海魚湯",
+            "price": null
+          },
+          {
+            "name": "何首烏養生湯(雞)",
+            "price": 180
+          },
+          {
+            "name": "原味麻油雞湯",
+            "price": 280
+          }
+        ]
+      },
+      "provenance": {
+        "caseId": "web_dalai_noodles_soups",
+        "sourceImage": {
+          "path": "菜單照片資料/第二項/開發原圖/web_dalai_noodles_soups.png",
+          "sha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+          "status": "present"
+        },
+        "truth": {
+          "sha256": "deb22bfa5329f199943670b5d84b404ce062bd76318b004ad8b4854c29f21536",
+          "fileSha256": "7c1e3f05312031b7521ad33d104e10ad21d5e699e4f1f28d0e296fa5f48d687a",
+          "path": "菜單照片資料/第二項/開發原圖/web_dalai_noodles_soups.expected.json"
+        },
+        "status": "ready",
+        "skipReason": ""
+      },
+      "inference": {
+        "executionMode": "live",
+        "requestedModel": "ornith-35b",
+        "activeModel": "ornith-35b",
+        "fallback": false,
+        "underlyingModelVersion": "unknown",
+        "cacheStatus": "unknown",
+        "capturedCallCount": 1,
+        "requestedModels": [
+          "ornith-35b"
+        ],
+        "promptHashes": [
+          "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398"
+        ],
+        "inputImageHashes": [
+          "f7e14d95f01c92ffe951623ad24604790feae1d2ee6cf606218ff7344827cdd8"
+        ]
+      },
+      "durationSec": 3.2,
+      "models": {
+        "ocrRequested": "ornith-35b",
+        "ocr": "ornith-35b"
+      },
+      "raw": {
+        "detectedRestaurantName": "",
+        "items": [
+          {
+            "name": "切仔麵/米粉/粿條",
+            "price": 50.0,
+            "category": "麵類"
+          },
+          {
+            "name": "肉燥乾麵/米粉/粿條",
+            "price": 60.0,
+            "category": "麵類"
+          },
+          {
+            "name": "什錦麵/米粉/粿條",
+            "price": 130.0,
+            "category": "麵類"
+          },
+          {
+            "name": "排骨湯/乾麵",
+            "price": 130.0,
+            "category": "麵類"
+          },
+          {
+            "name": "豬腳湯/乾麵",
+            "price": 130.0,
+            "category": "麵類"
+          },
+          {
+            "name": "牛肉湯/河粉",
+            "price": 130.0,
+            "category": "麵類"
+          },
+          {
+            "name": "什錦粥",
+            "price": 130.0,
+            "category": "麵類"
+          },
+          {
+            "name": "虱目魚肚湯（小）",
+            "price": 90.0,
+            "category": "湯類"
+          },
+          {
+            "name": "虱目魚肚湯（中）",
+            "price": 180.0,
+            "category": "湯類"
+          },
+          {
+            "name": "虱目魚肚湯（大）",
+            "price": 270.0,
+            "category": "湯類"
+          },
+          {
+            "name": "蛤仔湯（小）",
+            "price": 90.0,
+            "category": "湯類"
+          },
+          {
+            "name": "蛤仔湯（中）",
+            "price": 160.0,
+            "category": "湯類"
+          },
+          {
+            "name": "蛤仔湯（大）",
+            "price": 240.0,
+            "category": "湯類"
+          },
+          {
+            "name": "蚵仔湯（小）",
+            "price": 90.0,
+            "category": "湯類"
+          },
+          {
+            "name": "蚵仔湯（中）",
+            "price": 160.0,
+            "category": "湯類"
+          },
+          {
+            "name": "蚵仔湯（大）",
+            "price": 240.0,
+            "category": "湯類"
+          },
+          {
+            "name": "魚片湯（小）",
+            "price": 90.0,
+            "category": "湯類"
+          },
+          {
+            "name": "魚片湯（中）",
+            "price": 160.0,
+            "category": "湯類"
+          },
+          {
+            "name": "魚片湯（大）",
+            "price": 240.0,
+            "category": "湯類"
+          },
+          {
+            "name": "鮮海魚湯",
+            "price": null,
+            "category": "湯類"
+          },
+          {
+            "name": "菇蕈湯（小）",
+            "price": 90.0,
+            "category": "湯類"
+          },
+          {
+            "name": "菇蕈湯（中）",
+            "price": 160.0,
+            "category": "湯類"
+          },
+          {
+            "name": "菇蕈湯（大）",
+            "price": 240.0,
+            "category": "湯類"
+          },
+          {
+            "name": "魚丸湯（小）",
+            "price": 50.0,
+            "category": "湯類"
+          },
+          {
+            "name": "魚丸湯（中）",
+            "price": 100.0,
+            "category": "湯類"
+          },
+          {
+            "name": "魚丸湯（大）",
+            "price": 150.0,
+            "category": "湯類"
+          },
+          {
+            "name": "青菜蛋花湯（小）",
+            "price": 50.0,
+            "category": "湯類"
+          },
+          {
+            "name": "青菜蛋花湯（中）",
+            "price": 100.0,
+            "category": "湯類"
+          },
+          {
+            "name": "青菜蛋花湯（大）",
+            "price": 150.0,
+            "category": "湯類"
+          },
+          {
+            "name": "何首烏養生湯(雞)",
+            "price": 180.0,
+            "category": "湯類"
+          },
+          {
+            "name": "原味麻油雞湯",
+            "price": 280.0,
+            "category": "湯類"
+          }
+        ],
+        "warnings": [],
+        "quality": {
+          "score": 0.982,
+          "priceCoverage": 0.968,
+          "itemCount": 31,
+          "conflictCount": 0,
+          "modelFallback": false,
+          "verifyDroppedCount": 0,
+          "verifyInventedCount": 0,
+          "needsReviewCount": 0,
+          "ambiguousPriceCount": 0
+        },
+        "sourceBlocks": [
+          {
+            "id": "full",
+            "box": [
+              0,
+              0,
+              3600,
+              2545
+            ]
+          }
+        ]
+      },
+      "exchanges": [
+        {
+          "model": "ornith-35b",
+          "imageCount": 1,
+          "promptHead": "你是繁體中文菜單 OCR 專家。這是整張菜單的完整照片。\n全圖初步資訊：{}\n逐字抄錄所有主要餐點品名與印刷價格。保留印刷的繁體字，不要憑圖片猜食材，不要加入產地、克數、電話或說明文字。\n被手寫線劃過的印刷品項仍要保留。看不清價格用 nul",
+          "promptSha": "1149ee39daf47fe6440c1ca5938a3300a66e89a7721485e8886d559608329398",
+          "inputImages": [
+            {
+              "kind": "embedded_image",
+              "sha256": "f7e14d95f01c92ffe951623ad24604790feae1d2ee6cf606218ff7344827cdd8",
+              "byteCount": 1291230,
+              "mime": "image/jpeg"
+            }
+          ],
+          "requestedModel": "ornith-35b",
+          "temperature": 0.0,
+          "timeout": 180.0,
+          "requestSha256": "2dd6bfe5e175bb545d0e602bf8404e62f33f9d82c7d5ae4798b7dbcb3f2edd20",
+          "executionMode": "live",
+          "cacheStatus": "unknown",
+          "underlyingModelVersion": "unknown",
+          "durationSec": 2.8,
+          "responseChars": 2461,
+          "jsonParsed": true,
+          "endsAbruptly": false,
+          "itemCount": 31,
+          "items": [
+            "切仔麵/米粉/粿條",
+            "肉燥乾麵/米粉/粿條",
+            "什錦麵/米粉/粿條",
+            "排骨湯/乾麵",
+            "豬腳湯/乾麵",
+            "牛肉湯/河粉",
+            "什錦粥",
+            "虱目魚肚湯（小）",
+            "虱目魚肚湯（中）",
+            "虱目魚肚湯（大）",
+            "蛤仔湯（小）",
+            "蛤仔湯（中）",
+            "蛤仔湯（大）",
+            "蚵仔湯（小）",
+            "蚵仔湯（中）",
+            "蚵仔湯（大）",
+            "魚片湯（小）",
+            "魚片湯（中）",
+            "魚片湯（大）",
+            "鮮海魚湯",
+            "菇蕈湯（小）",
+            "菇蕈湯（中）",
+            "菇蕈湯（大）",
+            "魚丸湯（小）",
+            "魚丸湯（中）",
+            "魚丸湯（大）",
+            "青菜蛋花湯（小）",
+            "青菜蛋花湯（中）",
+            "青菜蛋花湯（大）",
+            "何首烏養生湯(雞)",
+            "原味麻油雞湯"
+          ],
+          "response": "{\"restaurant_name\": \"\", \"categories\": [{\"name\": \"麵類\", \"items\": [{\"name\": \"切仔麵/米粉/粿條\", \"price\": 50, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"肉燥乾麵/米粉/粿條\", \"price\": 60, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"什錦麵/米粉/粿條\", \"price\": 130, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"排骨湯/乾麵\", \"price\": 130, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"豬腳湯/乾麵\", \"price\": 130, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"牛肉湯/河粉\", \"price\": 130, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"什錦粥\", \"price\": 130, \"chili_count\": null, \"spice_level\": null}]}, {\"name\": \"湯類\", \"items\": [{\"name\": \"虱目魚肚湯（小）\", \"price\": 90, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"虱目魚肚湯（中）\", \"price\": 180, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"虱目魚肚湯（大）\", \"price\": 270, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"蛤仔湯（小）\", \"price\": 90, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"蛤仔湯（中）\", \"price\": 160, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"蛤仔湯（大）\", \"price\": 240, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"蚵仔湯（小）\", \"price\": 90, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"蚵仔湯（中）\", \"price\": 160, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"蚵仔湯（大）\", \"price\": 240, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魚片湯（小）\", \"price\": 90, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魚片湯（中）\", \"price\": 160, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魚片湯（大）\", \"price\": 240, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"鮮海魚湯\", \"price\": \"時價\", \"chili_count\": null, \"spice_level\": null}, {\"name\": \"菇蕈湯（小）\", \"price\": 90, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"菇蕈湯（中）\", \"price\": 160, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"菇蕈湯（大）\", \"price\": 240, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魚丸湯（小）\", \"price\": 50, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魚丸湯（中）\", \"price\": 100, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"魚丸湯（大）\", \"price\": 150, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"青菜蛋花湯（小）\", \"price\": 50, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"青菜蛋花湯（中）\", \"price\": 100, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"青菜蛋花湯（大）\", \"price\": 150, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"何首烏養生湯(雞)\", \"price\": 180, \"chili_count\": null, \"spice_level\": null}, {\"name\": \"原味麻油雞湯\", \"price\": 280, \"chili_count\": null, \"spice_level\": null}]}]}"
+        }
+      ],
+      "transport": {
+        "observer": "python.audit.urllib.Request",
+        "observationScope": "current context urllib request attempts before network I/O",
+        "requestHashScope": "method, URL and body bytes; headers excluded; SHA-256 only",
+        "requestCount": 1,
+        "blockedRequestCount": 0,
+        "droppedEventCount": 0,
+        "identicalRequestRepeats": 0,
+        "responsesObserved": false,
+        "cacheStatus": "unknown",
+        "underlyingModelVersion": "unknown",
+        "requests": [
+          {
+            "index": 1,
+            "elapsedSec": 0.474025,
+            "requestSha256": "0b91ad2b5a2d543030dba7c0988b06671f9a96cecffadc72b1af9fd52e6202cb",
+            "bodySha256": "a6e85c955c21fad601defafee72bb92cf8c536da15d7141eb92d6691bd945de2",
+            "requestedModel": "ornith-35b",
+            "blockedByReplay": false
+          }
+        ]
+      },
+      "expectedCount": 31,
+      "predictedCount": 31,
+      "matchedCount": 31,
+      "recall": 1.0,
+      "precision": 1.0,
+      "exactNameCount": 31,
+      "exactNameRate": 1.0,
+      "exactNameTotalCount": 31,
+      "exactNameRecall": 1.0,
+      "exactNamePriceCount": 31,
+      "exactNamePriceRate": 1.0,
+      "cer": 0.0,
+      "cerEdits": 0,
+      "cerChars": 153,
+      "cerRaw": 0.0,
+      "cerRawEdits": 0,
+      "cerRawChars": 206,
+      "cerStrict": 0.0,
+      "cerStrictEdits": 0,
+      "cerStrictChars": 153,
+      "pricedExpected": 30,
+      "pricedExpectedTotal": 30,
+      "priceCorrectCount": 30,
+      "priceRecall": 1.0,
+      "priceAccuracy": 1.0,
+      "priceInvented": 0,
+      "restaurantNameExpected": "",
+      "restaurantNameDetected": "",
+      "restaurantNameOk": null,
+      "qualityScoreReported": 0.982,
+      "scoringVersion": "menu-ocr-score-v2",
+      "missed": [],
+      "spurious": [],
+      "reordered": [],
+      "nearMisses": [],
+      "priceErrors": []
+    }
+  ],
+  "summary": {
+    "caseCount": 1,
+    "okCount": 1,
+    "failedCount": 0,
+    "emptyCount": 0,
+    "skippedCount": 0,
+    "scoredCaseCount": 1,
+    "executedCount": 1,
+    "availableCaseRate": 1.0,
+    "declaredExpectedCount": 31,
+    "declaredPricedExpectedTotal": 30,
+    "unknownTruthCount": 0,
+    "datasetComplete": true,
+    "scoringVersion": "menu-ocr-score-v2",
+    "expectedCount": 31,
+    "predictedCount": 31,
+    "matchedCount": 31,
+    "pricedExpected": 30,
+    "pricedExpectedTotal": 30,
+    "priceCorrectCount": 30,
+    "exactNameTotalCount": 31,
+    "exactNamePriceCount": 31,
+    "recall": 1.0,
+    "precision": 1.0,
+    "exactNameRate": 1.0,
+    "exactNameRecall": 1.0,
+    "exactNamePriceRate": 1.0,
+    "priceRecall": 1.0,
+    "cer": 0.0,
+    "cerRaw": 0.0,
+    "cerStrict": 0.0,
+    "priceAccuracy": 1.0,
+    "priceInvented": 0,
+    "restaurantNameOkCount": 0,
+    "restaurantNameChecked": 0,
+    "totalDurationSec": 3.2
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "restaurant": "cama café 現烘咖啡專門店",
+  "group": "cama",
+  "url": "https://www.camacafe.com/Menu/1",
+  "kind": "web_html",
+  "region": "Native official HTML screenshot, complete 黑咖 Black Coffee base-drink category from heading and M/L/XL header through the last 濃縮咖啡 row; excludes the separately headed 風味調整 add-on section below. Selector .menu.Meals containing .ti.classno_56. Browser viewport 1280x2200 CSS px, device scale 2; original site layout retained.",
+  "viewportCssPixels": [
+    1280,
+    2200
+  ],
+  "deviceScaleFactor": 2,
+  "clipCssPixels": {
+    "x": 66,
+    "y": 556.515625,
+    "width": 372.796875,
+    "height": 1395.5625
+  },
+  "features": [
+    "traditional-chinese",
+    "english",
+    "long-column",
+    "size-columns",
+    "sparse-price-cells",
+    "temperature-icons"
+  ],
+  "currency": "TWD",
+  "acquiredAt": "2026-11-26T20:50:36+08:00",
+  "inputSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+  "originalFile": "original.html",
+  "originalSha256": "c819b621d4e089c21f4d7e2502716a157514fa76c92c946caa1a5449e84ace87",
+  "split": "holdout",
+  "annotationScope": "All 13 base-drink rows and every displayed purchasable size in the complete selected category. Chinese/original leading product label is canonical; the separate English translation is not an extra item. Blank price cells indicate unavailable sizes, not null-price variants.",
+  "limitations": [
+    "Official HTML screenshot, not a photographed physical menu.",
+    "Selected complete category only; excludes other categories and separate add-on pricing.",
+    "Actual branch product availability may differ."
+  ]
+}

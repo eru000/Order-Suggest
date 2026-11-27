@@ -1,0 +1,38 @@
+{
+  "caseId": "extra_cosmos_jade",
+  "split": "dev",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+  "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T20:59:32+08:00",
+      "finishedAt": "2026-11-26T20:59:52+08:00",
+      "elapsedSec": 20.914,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "0bcf7ac393cc2c4d82c177e166704f892574c1983290706d97d61fc0e185dc55"
+      ],
+      "transportBodyHashes": [
+        "82636343dfa38f08c85553d4905159af4a849697d40407c6044bff9d3bae1f3c"
+      ],
+      "sourceImageSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+      "truthSnapshotSha256": "d5eb966529508f56cb3f248fdc59cb829514438ffdfab8314915f16c4b94e0be",
+      "runSha256": "74c265f210ca754dd4a50e9783bafb7cfc9661cec1872321ee2e03e88fc2276e",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\dev\\extra_cosmos_jade__r1\\attempt-1\\20261126-205952_dev__extra_cosmos_jade__r1__a1.json",
+      "artifactSha256": "74c265f210ca754dd4a50e9783bafb7cfc9661cec1872321ee2e03e88fc2276e",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T20:59:52+08:00"
+}

@@ -1,0 +1,38 @@
+{
+  "caseId": "cafe_milksha",
+  "split": "holdout",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+  "truthSha256": "c9f1822868b593fbee52f3bf8325673e36fd4f468117ed1ade2c0380565a2be3",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:08:40+08:00",
+      "finishedAt": "2026-11-26T21:08:46+08:00",
+      "elapsedSec": 5.929,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "3a05fb622958d87e1cbbe1d28d76d1e9d37139892b85d3c5ca8af575d47b22b4"
+      ],
+      "transportBodyHashes": [
+        "d3d07dfe20edb7ce7359356c2bcb1f65b60c95fe20c17823bd0898e1a635bc37"
+      ],
+      "sourceImageSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+      "truthSnapshotSha256": "bc392e973694f7faf6ca358fb0008bdb3a9cf13c3137e520309b0fdc0a5f99e0",
+      "runSha256": "c1fad80f0c961e42cc89063d58d6a78c727a89cf76100acd68b172719dafd927",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__cafe_milksha__r2__a1.zip",
+      "artifactSha256": "e6921f870a07e0aed604c2a6b9a44950d70f705fca75c92985c0a74daec7ae54",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:08:46+08:00"
+}

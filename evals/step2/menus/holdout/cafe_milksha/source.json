@@ -1,0 +1,36 @@
+{
+  "restaurant": "迷客夏 Milksha 一般門市北部菜單",
+  "group": "milksha",
+  "url": "https://www.milksha.com/products.php",
+  "assetUrl": "https://www.milksha.com/upload/price/2611101658230000002.pdf",
+  "kind": "web_pdf",
+  "region": "PDF page 1 (北部), complete 季節限定 category. Render complete page at 300 dpi, then crop pixel rectangle [960,380,1716,1244]. All ten named drinks and every displayed size/bottle price included. Blank size cells are unavailable variants, not null-price orderables.",
+  "page": 1,
+  "renderDpi": 300,
+  "features": [
+    "traditional-chinese",
+    "seasonal",
+    "size-columns",
+    "sparse-price-cells",
+    "bottle-variant",
+    "recommendation-icons"
+  ],
+  "currency": "TWD",
+  "menuPrintedDate": "2026-11-11",
+  "originalFile": "original.pdf",
+  "originalSha256": "56c5e8758da8f2e519fc73b9e5cd2adfa42c3aebce51d4a4741a4e6a930aede9",
+  "limitations": [
+    "Northern-region general-store menu; department-store and central/southern menus are different.",
+    "Excludes other complete categories and add-ons outside this crop."
+  ],
+  "acquiredAt": "2026-11-26T15:58:54+08:00",
+  "inputSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+  "split": "holdout",
+  "annotationScope": "All orderable base items and all priced size variants visible in the complete selected category; no inference from calories or descriptions.",
+  "cropPixelsAtRenderDpi": [
+    960,
+    380,
+    1716,
+    1244
+  ]
+}

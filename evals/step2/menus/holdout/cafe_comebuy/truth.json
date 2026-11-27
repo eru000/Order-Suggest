@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "name": "碧螺春綠",
+      "price": 40,
+      "variant": "L"
+    },
+    {
+      "name": "金萱烏龍",
+      "price": 40,
+      "variant": "L"
+    },
+    {
+      "name": "文山包種",
+      "price": 50,
+      "variant": "L"
+    },
+    {
+      "name": "小葉紅茶",
+      "price": 50,
+      "variant": "L"
+    },
+    {
+      "name": "嗨神",
+      "price": 45,
+      "variant": "L"
+    },
+    {
+      "name": "玩火",
+      "price": 45,
+      "variant": "L"
+    },
+    {
+      "name": "鮮萃大麥紅茶",
+      "price": 40,
+      "variant": "L"
+    },
+    {
+      "name": "玫瑰普洱",
+      "price": 45,
+      "variant": "L"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "items": [
+    {
+      "name": "香蘋雪蓮子",
+      "price": 150
+    },
+    {
+      "name": "芋香西米露",
+      "price": 120
+    },
+    {
+      "name": "椰果西米露",
+      "price": 120
+    },
+    {
+      "name": "杏仁凍豆腐",
+      "price": 120
+    },
+    {
+      "name": "菊花茶",
+      "price": null,
+      "priceState": "unpriced"
+    },
+    {
+      "name": "烏龍茶",
+      "price": null,
+      "priceState": "unpriced"
+    },
+    {
+      "name": "香片茶",
+      "price": null,
+      "priceState": "unpriced"
+    },
+    {
+      "name": "普洱茶",
+      "price": null,
+      "priceState": "unpriced"
+    },
+    {
+      "name": "鐵觀音茶",
+      "price": null,
+      "priceState": "unpriced"
+    },
+    {
+      "name": "菊花普洱茶",
+      "price": null,
+      "priceState": "unpriced"
+    }
+  ]
+}

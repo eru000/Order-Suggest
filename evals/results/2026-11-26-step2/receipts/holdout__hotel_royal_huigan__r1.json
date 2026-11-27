@@ -1,0 +1,38 @@
+{
+  "caseId": "hotel_royal_huigan",
+  "split": "holdout",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+  "truthSha256": "beb7bbda8253021e6cdf181d025aef92c852d79298908e3a0c7f6e20caf42f00",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:06:58+08:00",
+      "finishedAt": "2026-11-26T21:07:14+08:00",
+      "elapsedSec": 16.564,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "971a6c09ae7cf78189e52ed81a9dce49e06ee3531d2744467f41decc7dfc777d"
+      ],
+      "transportBodyHashes": [
+        "ccb87785da2adb1a2b6af947641391d9bf6f07c4eab072f4f08ad0bd6b2d1acd"
+      ],
+      "sourceImageSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+      "truthSnapshotSha256": "b0e4b2e5693e3583ce59faca3a6300436a90c5c2e29edb3172675609a469de15",
+      "runSha256": "5c3546aaed98b0cc73ebb0c8bfbde231d08ed7d1e822c1cc6cf151a4fc99c0c0",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__hotel_royal_huigan__r1__a1.zip",
+      "artifactSha256": "b814e292c13d6115e8bef72d630acb6e83b5a9029ee8bd052fa07f628b451411",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:07:14+08:00"
+}

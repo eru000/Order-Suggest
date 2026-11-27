@@ -112,13 +112,16 @@ def _expected_path(image_path: Path) -> Path:
     return image_path.parent / f"{image_path.stem}.expected.json"
 
 
-def load_cases(only: list[str] | None = None) -> list[dict[str, Any]]:
+def load_cases(
+    only: list[str] | None = None, cases_dir: Path | None = None,
+) -> list[dict[str, Any]]:
     """Read all declared truths, retaining missing images as explicit skips."""
-    if not CASES_DIR.is_dir():
-        raise CaseError(f"找不到案例目錄：{CASES_DIR}")
+    cases_dir = CASES_DIR if cases_dir is None else cases_dir
+    if not cases_dir.is_dir():
+        raise CaseError(f"找不到案例目錄：{cases_dir}")
 
     images: dict[str, Path] = {}
-    for image_path in sorted(CASES_DIR.iterdir()):
+    for image_path in sorted(cases_dir.iterdir()):
         if image_path.suffix.lower() not in IMAGE_SUFFIXES:
             continue
         name = image_path.stem
@@ -129,14 +132,14 @@ def load_cases(only: list[str] | None = None) -> list[dict[str, Any]]:
         images[name] = image_path
     truths = {
         path.name.removesuffix(".expected.json"): path
-        for path in sorted(CASES_DIR.glob("*.expected.json"))
+        for path in sorted(cases_dir.glob("*.expected.json"))
         if not path.name.startswith("_")
         and (not only or path.name.removesuffix(".expected.json") in only)
     }
     cases: list[dict[str, Any]] = []
     for name in sorted(set(images) | set(truths)):
         image_path = images.get(name)
-        expected_path = truths.get(name, CASES_DIR / f"{name}.expected.json")
+        expected_path = truths.get(name, cases_dir / f"{name}.expected.json")
         if not expected_path.exists():
             raise CaseError(f"「{name}」缺少答案檔：{expected_path.name}")
         try:
@@ -174,7 +177,7 @@ def load_cases(only: list[str] | None = None) -> list[dict[str, Any]]:
             raise CaseError(f"找不到指定的案例：{'、'.join(sorted(missing))}")
     if not cases:
         raise CaseError(
-            f"{CASES_DIR} 裡沒有任何案例。放一張 menu.jpg 和一份 menu.expected.json 就能開始。"
+            f"{cases_dir} 裡沒有任何案例。放一張 menu.jpg 和一份 menu.expected.json 就能開始。"
         )
     return cases
 
@@ -886,7 +889,9 @@ def load_run(label: str) -> dict[str, Any]:
     return run
 
 
-def rescore(label: str, threshold: float, allow_current_truth: bool = False) -> dict[str, Any]:
+def rescore(
+    label: str, threshold: float, allow_current_truth: bool = False, cases_dir: Path | None = None,
+) -> dict[str, Any]:
     """用現在的計分規則重算一份舊紀錄，不打 API。
 
     計分規則本身也會有 bug。發現的時候不該為了重算而再燒一次配額，
@@ -895,7 +900,7 @@ def rescore(label: str, threshold: float, allow_current_truth: bool = False) -> 
     run = load_run(label)
     cases = {}
     if any(not isinstance(row.get("truth"), dict) for row in run["cases"]):
-        cases = {case["name"]: case for case in load_cases(None)}
+        cases = {case["name"]: case for case in load_cases(None, cases_dir)}
     for row in run["cases"]:
         case = (
             {"name": row["case"], "expected": row["truth"]}
@@ -945,7 +950,10 @@ def rescore(label: str, threshold: float, allow_current_truth: bool = False) -> 
     return run
 
 
-def sweep(label: str, thresholds: list[float], allow_current_truth: bool = False) -> None:
+def sweep(
+    label: str, thresholds: list[float], allow_current_truth: bool = False,
+    cases_dir: Path | None = None,
+) -> None:
     """掃不同的配對門檻重算同一份紀錄，不打 API。
 
     評審問「0.72 這個門檻憑什麼」。單看一個門檻下的 100% 召回率答不了，
@@ -962,7 +970,7 @@ def sweep(label: str, thresholds: list[float], allow_current_truth: bool = False
     )
     print("-" * 72)
     for threshold in thresholds:
-        run = rescore(label, threshold, allow_current_truth)
+        run = rescore(label, threshold, allow_current_truth, cases_dir)
         summary = run["summary"]
         matched = summary.get("matchedCount", 0)
         mark = "  ←目前採用" if abs(threshold - DEFAULT_MATCH_THRESHOLD) < 1e-9 else ""
@@ -1052,6 +1060,7 @@ def main() -> int:
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--case", action="append", help="只跑指定案例，可重複")
+    parser.add_argument("--cases-dir", type=Path, help="指定獨立案例資料夾，預設使用原開發資料")
     parser.add_argument("--label", default="run", help="這次執行的名稱，用於存檔與比較")
     parser.add_argument("--model", help="覆寫 VISION_MODEL")
     parser.add_argument("--verify-model", help="覆寫 VISION_VERIFY_MODEL")
@@ -1108,7 +1117,8 @@ def main() -> int:
     if args.sweep:
         steps = {round(0.50 + 0.05 * i, 2) for i in range(11)}
         try:
-            sweep(args.sweep, sorted(steps | {DEFAULT_MATCH_THRESHOLD}), args.allow_current_truth)
+            sweep(args.sweep, sorted(steps | {DEFAULT_MATCH_THRESHOLD}),
+                  args.allow_current_truth, args.cases_dir)
         except CaseError as exc:
             print(f"✗ {exc}")
             return 2
@@ -1116,7 +1126,7 @@ def main() -> int:
 
     if args.rescore:
         try:
-            run = rescore(args.rescore, args.threshold, args.allow_current_truth)
+            run = rescore(args.rescore, args.threshold, args.allow_current_truth, args.cases_dir)
         except CaseError as exc:
             print(f"✗ {exc}")
             return 2
@@ -1124,7 +1134,7 @@ def main() -> int:
         return 0
 
     try:
-        cases = load_cases(args.case)
+        cases = load_cases(args.case, args.cases_dir)
     except CaseError as exc:
         print(f"✗ {exc}")
         return 2

@@ -1,0 +1,44 @@
+{
+  "items": [
+    {
+      "name": "布丁Q麻糬牛奶冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "芋薯圓Q麻糬牛奶冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "紅豆牛奶冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "芋頭牛奶冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "總匯八寶冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "招牌粉條冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "草莓牛奶冰",
+      "price": null,
+      "priceState": "not_printed"
+    },
+    {
+      "name": "芒果牛奶冰",
+      "price": null,
+      "priceState": "not_printed"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "restaurant": "雞窩餐廳",
+  "group": "jiyuan_gwoo",
+  "url": "https://g-woo.com.tw/asset/%E9%9B%9E%E7%AA%A9%E8%8F%9C%E5%96%AE%EF%BC%88%E6%96%B02%EF%BC%89.pdf",
+  "kind": "web_pdf",
+  "region": "PDF page 2 (1-based), rendered with pdftoppm -scale-to 1900; full raster 1135x1900; crop box [0,0,1135,1040] retains the complete 招牌砂鍋雞湯 section and excludes the following 雞湯加點配料 section.",
+  "features": [
+    "three-size-columns",
+    "bilingual",
+    "dotted-leaders",
+    "food-photos",
+    "patterned-background",
+    "digital-menu"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "ceeaed073d1b4e397e133b10b4c8d26b7a2a4c4aebc4d6a32a832acb9d35f4d7",
+  "annotationStatus": "frozen_before_model_inference",
+  "notes": "Seven printed dishes each have explicit 小/中/大 price columns, expanded to twenty-one dish-size pairs. Header states small 1–2, medium 3–4, large 6–8 servings. Prices are printed base amounts; no service fee is added. No synthetic degradation or model inference.",
+  "officialPageUrl": "https://g-woo.com.tw/about",
+  "rendering": {
+    "tool": "pdftoppm",
+    "maxSide": 1900,
+    "page": 2,
+    "cropPixels": [
+      0,
+      0,
+      1135,
+      1040
+    ]
+  },
+  "originalFile": "source.pdf",
+  "originalSha256": "a8d30b1aefbf4ec97382e3bd4f77e0e7bc03098cde55363bcd079b9470002f11",
+  "split": "holdout",
+  "currency": "TWD"
+}

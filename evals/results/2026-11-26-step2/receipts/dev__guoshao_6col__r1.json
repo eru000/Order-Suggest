@@ -1,0 +1,14 @@
+{
+  "caseId": "guoshao_6col",
+  "split": "dev",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": null,
+  "truthSha256": "4f1aa8fbb2ac866ff0efd751f85953e8e64f1f1628ab1f19f1a7f37a17eafb18",
+  "plannedStatus": "skipped_missing_image",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [],
+  "complete": true,
+  "technicalStatus": "skipped_missing_image",
+  "finishedAt": "2026-11-26T20:58:08+08:00"
+}

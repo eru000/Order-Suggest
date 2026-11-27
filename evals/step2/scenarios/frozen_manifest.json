@@ -1,0 +1,8 @@
+{
+  "frozenAt": "2026-11-26T20:55:16+08:00",
+  "scenarioFiles": {
+    "development.json": "94e2870262a70712b0dd285984405dbdbe958e70875be9fb65ec284ea82841ce",
+    "holdout.json": "1fc09679f342ec7464e18870f7d9ee8a460b38a10a22741b35716041e3ea9025"
+  },
+  "policy": "Created before any product execution. Future edits require a new dataset version; never replace expectations based on observed failures."
+}

@@ -1,0 +1,38 @@
+{
+  "restaurant": "台北晶華酒店 蘭亭",
+  "group": "regent_taipei",
+  "url": "https://docs.regenttaiwan.com/link/IHG_Menu/LanTing.pdf",
+  "kind": "web_pdf",
+  "region": {
+    "page": 8,
+    "totalPages": 12,
+    "scope": "full_page",
+    "method": "Poppler pdftoppm -f PAGE -singlefile -r 160 -png; no crop, retouch or OCR",
+    "dpi": 160,
+    "pixelDimensions": [
+      2081,
+      1323
+    ]
+  },
+  "features": [
+    "hotel",
+    "two_columns",
+    "trilingual",
+    "vegetables",
+    "tofu",
+    "spice_icons",
+    "preparation_options",
+    "service_charge"
+  ],
+  "acquiredAt": "2026-11-26",
+  "inputSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+  "sourceSha256": "2b7a5395be7a2cc210d1b9e408a24f0e915225b8692b97ea6f204400b334f4b7",
+  "truthSha256": "79f1cb232c9e3fa94d783e744fd6095cc64a747ea1a1bf54313a94dcaf97e904",
+  "pageUrl": "https://www.regenttaiwan.com/dining/lan-ting",
+  "sourceVersion": "PDF metadata title: 2026 Club 單點菜單; acquired snapshot",
+  "currency": "TWD",
+  "annotationMethod": "Manual transcription by assistant after visually inspecting the entire rendered page; no OCR/VLM prediction consulted",
+  "annotationNotes": "完整第8頁豆腐/蔬食8個列印品項。鮮筍的乾煸/雪菜是相同價格的烹調選項，保留原括號，未擴寫為兩道。豬肉產地、主廚標章、辣椒圖示與英日文翻譯不屬菜名；未納入品名。所有價格為未加10%服務費之原列印價格。頁面未印餐廳名稱。",
+  "completeness": "All named priced dish rows on the selected page are annotated; this is a page-level snapshot, not the full multi-page restaurant menu.",
+  "rights": "Public official PDF; redistribution license not established. input.png is retained locally for research; original PDF remains outside the repository."
+}

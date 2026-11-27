@@ -1,0 +1,38 @@
+{
+  "caseId": "xianghong",
+  "split": "dev",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\開發原圖",
+  "inputSha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+  "truthSha256": "877445c545b8e3462c4f943fa7cbbe956a2aa7d9bcb4c1124d55acbac06bb0f9",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:00:07+08:00",
+      "finishedAt": "2026-11-26T21:00:10+08:00",
+      "elapsedSec": 2.532,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "d6aabc8e088d8d77eb55bff72ec4f12e56a834f8c8ffa6fa0630b82ac22485aa"
+      ],
+      "transportBodyHashes": [
+        "c8164e3cde7127dacc8a6a54bab5c5a112355b302df13531c2de7d30fe909cac"
+      ],
+      "sourceImageSha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+      "truthSnapshotSha256": "8b38d519f2db8cc73e2d3739c00bf3fb1ef28cf7ae852ace8d9e73f47554bd51",
+      "runSha256": "8b9aaa623d50b666d2835075ff64804692464b7431ca0ac26118ba2024a0d6ab",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\dev\\xianghong__r2\\attempt-1\\20261126-210010_dev__xianghong__r2__a1.json",
+      "artifactSha256": "8b9aaa623d50b666d2835075ff64804692464b7431ca0ac26118ba2024a0d6ab",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:00:10+08:00"
+}

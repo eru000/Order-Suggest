@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "frozenAt": "2026-11-26T20:55:16+08:00",
+  "createdBeforeExecution": true,
+  "budgetBasis": "single_item_printed_base_price",
+  "constraintsAreIndependentOracle": true,
+  "scope": "Objective feasibility and state transition checks. No taste, portion, nutrition or allergen-safety inference. All requests and expected constraints are fixed before running; failures do not change expectations.",
+  "holdoutPolicy": "Only independent static feasibility against bound truth menus; never call the production service for holdout. No prompt, rule or product updates from these cases.",
+  "cases": [
+    {
+      "id": "dev_compound",
+      "category": "compound",
+      "split": "dev",
+      "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "午餐幫我挑，預算90元，不吃鍋燒，想吃麵",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 90,
+            "excludeTokens": [
+              "鍋燒"
+            ],
+            "nameAny": [
+              "麵",
+              "板條"
+            ]
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 90,
+            "excludesContains": [
+              "鍋燒"
+            ]
+          }
+        },
+        {
+          "action": "message",
+          "text": "預算改成85元，其他忌口保留",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 85,
+            "excludeTokens": [
+              "鍋燒"
+            ],
+            "nameAny": [
+              "麵",
+              "板條"
+            ]
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 85,
+            "excludesContains": [
+              "鍋燒"
+            ]
+          }
+        },
+        {
+          "action": "message",
+          "text": "預算回到90元，直接推薦",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 90,
+            "excludeTokens": [
+              "鍋燒"
+            ],
+            "nameAny": [
+              "麵",
+              "板條"
+            ]
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 90,
+            "excludesContains": [
+              "鍋燒"
+            ]
+          }
+        }
+      ],
+      "truthSha256": "13bd690e824a938c6b3b43ab4723f1bd3527ee7db2a477de8f66032df27924af"
+    },
+    {
+      "id": "dev_budget",
+      "category": "budget_change",
+      "split": "dev",
+      "menu": "evals/step2/menus/dev/vege_muffins/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "這一人餐預算120元，幫我直接推薦",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 120
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 120
+          }
+        },
+        {
+          "action": "message",
+          "text": "預算降到90元，其他維持",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 90
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 90
+          }
+        },
+        {
+          "action": "message",
+          "text": "改成預算80元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 80
+          },
+          "expectSolution": false,
+          "expectPrefs": {
+            "budget": 80
+          }
+        }
+      ],
+      "truthSha256": "a39698885fb1b7988662ec45b8e2f020be057b6fd9e6ed6246702fa4b977e6bf"
+    },
+    {
+      "id": "dev_cancel",
+      "category": "cancel_condition",
+      "split": "dev",
+      "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "幫我選，預算90元，不吃鍋燒",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 90,
+            "excludeTokens": [
+              "鍋燒"
+            ]
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 90,
+            "excludesContains": [
+              "鍋燒"
+            ]
+          }
+        },
+        {
+          "action": "message",
+          "text": "可以吃鍋燒了，預算仍然90元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 90
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 90,
+            "excludesAbsent": [
+              "鍋燒"
+            ]
+          }
+        },
+        {
+          "action": "message",
+          "text": "取消這一餐的預算上限",
+          "constraints": {
+            "requireKnownPrice": true
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "absent": [
+              "budget"
+            ],
+            "excludesAbsent": [
+              "鍋燒"
+            ]
+          }
+        }
+      ],
+      "truthSha256": "13bd690e824a938c6b3b43ab4723f1bd3527ee7db2a477de8f66032df27924af"
+    },
+    {
+      "id": "dev_replace",
+      "category": "replace",
+      "split": "dev",
+      "menu": "evals/step2/menus/dev/vege_muffins/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "滿福堡幫我挑一份，預算120元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 120
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 120
+          }
+        },
+        {
+          "action": "replace",
+          "text": "",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 120
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 120
+          }
+        },
+        {
+          "action": "replace",
+          "text": "",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 120
+          },
+          "expectSolution": true,
+          "expectPrefs": {
+            "budget": 120
+          }
+        }
+      ],
+      "truthSha256": "a39698885fb1b7988662ec45b8e2f020be057b6fd9e6ed6246702fa4b977e6bf"
+    },
+    {
+      "id": "dev_no_solution",
+      "category": "no_solution",
+      "split": "dev",
+      "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+      "turns": [
+        {
+          "action": "start",
+          "text": "只有50元的午餐預算，請幫我挑",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 50
+          },
+          "expectSolution": false,
+          "expectPrefs": {
+            "budget": 50
+          }
+        },
+        {
+          "action": "message",
+          "text": "那預算改成60元",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 60
+          },
+          "expectSolution": false,
+          "expectPrefs": {
+            "budget": 60
+          }
+        },
+        {
+          "action": "message",
+          "text": "預算到65元為止",
+          "constraints": {
+            "requireKnownPrice": true,
+            "budget": 65
+          },
+          "expectSolution": false,
+          "expectPrefs": {
+            "budget": 65
+          }
+        }
+      ],
+      "truthSha256": "13bd690e824a938c6b3b43ab4723f1bd3527ee7db2a477de8f66032df27924af"
+    }
+  ]
+}

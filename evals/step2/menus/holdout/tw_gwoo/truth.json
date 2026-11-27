@@ -1,0 +1,113 @@
+{
+  "restaurant": "雞窩餐廳",
+  "items": [
+    {
+      "name": "砂鍋土雞湯",
+      "price": 400,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋土雞湯",
+      "price": 1900,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋土雞湯",
+      "price": 3500,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋白菜豆腐雞湯",
+      "price": 440,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋白菜豆腐雞湯",
+      "price": 2060,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋白菜豆腐雞湯",
+      "price": 3820,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋菇菇雞湯",
+      "price": 520,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋菇菇雞湯",
+      "price": 2380,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋菇菇雞湯",
+      "price": 4460,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋脆筍雞湯",
+      "price": 650,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋脆筍雞湯",
+      "price": 2900,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋脆筍雞湯",
+      "price": 5500,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋竹笙雞湯",
+      "price": 730,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋竹笙雞湯",
+      "price": 3220,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋竹笙雞湯",
+      "price": 6140,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋鮑魚雞湯",
+      "price": 1000,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋鮑魚雞湯",
+      "price": 4300,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋鮑魚雞湯",
+      "price": 8300,
+      "variant": "大"
+    },
+    {
+      "name": "砂鍋魚翅雞湯",
+      "price": 1190,
+      "variant": "小"
+    },
+    {
+      "name": "砂鍋魚翅雞湯",
+      "price": 5060,
+      "variant": "中"
+    },
+    {
+      "name": "砂鍋魚翅雞湯",
+      "price": 9820,
+      "variant": "大"
+    }
+  ],
+  "annotationNotes": "Seven printed dishes each have explicit 小/中/大 price columns, expanded to twenty-one dish-size pairs. Header states small 1–2, medium 3–4, large 6–8 servings. Prices are printed base amounts; no service fee is added. No synthetic degradation or model inference.",
+  "annotatedAt": "2026-11-26",
+  "inputSha256": "ceeaed073d1b4e397e133b10b4c8d26b7a2a4c4aebc4d6a32a832acb9d35f4d7"
+}

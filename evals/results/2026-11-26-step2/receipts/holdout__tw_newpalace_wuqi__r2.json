@@ -1,0 +1,38 @@
+{
+  "caseId": "tw_newpalace_wuqi",
+  "split": "holdout",
+  "round": 2,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+  "truthSha256": "000e46a1025bccd5f8b1adf5aaa1a4a6ec2cfc6781f31d23d1b14094e4011cff",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:08:56+08:00",
+      "finishedAt": "2026-11-26T21:08:58+08:00",
+      "elapsedSec": 2.534,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "949a92c13bb557c5fd68a43da7f94fd89eae17525ca65df3af8a80f18ff12551"
+      ],
+      "transportBodyHashes": [
+        "e5e57c4df805eed05e9c91e1e6b830af2fdbea9669a4d43447599ad31a10e072"
+      ],
+      "sourceImageSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+      "truthSnapshotSha256": "02a19e70248f24ad48882679aedaaf2657b0a57dced23d33da1abe7e3a49e276",
+      "runSha256": "d47129a4f5341c11b9257bd784535dc9717d6fa8e2ea60fe1eb5e9c1e47a3b75",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__tw_newpalace_wuqi__r2__a1.zip",
+      "artifactSha256": "5612ea47cf0bbe4221b614a1770d8bc6cd90208411910bb96ca269f2f308728d",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:08:58+08:00"
+}

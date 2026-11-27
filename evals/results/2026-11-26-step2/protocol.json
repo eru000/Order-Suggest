@@ -1,0 +1,772 @@
+{
+  "studyId": "2026-11-26-step2",
+  "createdAt": "2026-11-26T20:58:08+08:00",
+  "manifestSha256": "c17f2998f0b40e4a122ed72f551e36d0ca405325f7e37b5ef5c561911ffab81f",
+  "manifestPath": "菜單照片資料\\第二項\\manifest.json",
+  "settings": {
+    "model": "ornith-35b",
+    "verifyModel": "ornith-35b",
+    "threshold": 0.72,
+    "debug": true,
+    "workerConcurrency": 2,
+    "runnerJobsPerWorker": 1,
+    "visionLongSide": "3600",
+    "visionTiles": "0",
+    "visionTemperature": 0.0,
+    "visionPriceText": "0",
+    "tileOverlap": 0.12,
+    "tileThreshold": 1600,
+    "fast": false,
+    "cacheStatus": "unknown",
+    "repeatsAreIndependent": false
+  },
+  "sourceHashes": {
+    "evals/menu_ocr/run_eval.py": "707f5adc65c59e700e82b0e44bb51bab770e0b1eb7798fb9e52ad396d9ba2d6b",
+    "evals/menu_ocr/run_provenance.py": "670b3156ade51ce0e7e3ea46d47c7b809a7df1ca85ae8ec95ff8eb3097245d80",
+    "evals/menu_ocr/transport_trace.py": "ef4066882a23f43f5dbd23bdeb38edadc76ea6463ae6670e9c9b823b79ecd594",
+    "evals/step2/run_study.py": "2cbf8b71f031cd2a43ee973c8314a8a2a28b4f73be70701c0923e2530e477444",
+    "src/api_compat.py": "62f46cab3430d7af2f0203b23e783c688b54b30849f6dda378765c646b7f68a0",
+    "src/application_services.py": "17808122b9aef572f8d0a8b9fe41d4915bc508128eb6957661402aba8f4c5c2e",
+    "src/back.py": "f1013fb3f878b6b97c644bbb298719f9258f1e72b1ecc1e801b898d91eacb34d",
+    "src/conversation_service.py": "bf6c883ba0c3f636a9c44c9a7e63d69f203c7db7c4932c6985dc1184eb241d87",
+    "src/decision_catalog.py": "dea54920b7bf20619c9575c25e1e15d344324a01f7b393e7553f25e5a96a2d6d",
+    "src/decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+    "src/decision_service.py": "a70cd69a1c35aa7932afe9f3afe8f2b0918f6d62d3608f78d4eda83c11bc751d",
+    "src/main.py": "2bf3bbac7ac4b589c0146748eb4bf9aebe39b5bc575812db9ed3794d57e5ddaa",
+    "src/menu_ingestion_service.py": "f1620d038372732817dafe67dc0cfe81e5d36bd4c6ff43e9094892c492176eed",
+    "src/menu_library.py": "a8b6a8ef709ba4d485c9b1c4ddab34ec811473f32cffab5807e54e383a883d23",
+    "src/menu_price.py": "369cf08e572e2c659201ab9fdd46e0e0694347591556b341417a62c0929b214c",
+    "src/menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+    "src/menu_vision.py": "53aee41c5736d92ff2663240ac011056af3c83fe6ac001c3ec983be85c4a2989",
+    "src/menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b",
+    "src/migrate_legacy_data.py": "536f50cfd3be0402bc1fc41d39f1ea11887ec099e872343aeff6a15c21a7f3a5",
+    "src/observability.py": "0ce6d65c9ba84226fa463445884c6d7fea6c7b6db3bc9a7e8c8f866390bb40f8",
+    "src/ollama_fuc.py": "c05584485caf0a09a990710ba66dc07e14a27ac2d4e0b17b0b325d53835cac20",
+    "src/pending_analysis_service.py": "162fc23d0301e164535553f5ea8aa4f4332e02ccbf2c8d5fb2297e3a5abc7926",
+    "src/persistence.py": "7cbca064fc80f5970437388c3589fd6ca279be27c9ac3af0b0aacbaeb3392dcd",
+    "src/preference_engine.py": "fe7c99cb8b44ee21a0c80a1b36d6b1157696a96238524f92fd9a44b3b2700932",
+    "src/recommendation.py": "c370ea4d972e9415f9b97f3a8c9e991a6e23b21d418d1ee15ca7692963358c9b",
+    "src/restaurant_reviews.py": "9fe63ae6ccac849b0c94c56daae7bcc0fb0297ec5ef25a3c5184a8b9ca229827",
+    "src/runtime_cache.py": "8f49262e5b679fefa0482f7d14016591cb2b3fd122d28de84ccef3df1023fbea",
+    "src/security.py": "b755b4e7da249b6480b7e77976ad48af547de0964c68a06ac83b07ca5cb680fb",
+    "src/session_store.py": "f8ef1884429c316e53bd3d6adcb082c157e16e02933bce64114f2452695a459c",
+    "src/storage/__init__.py": "fec80c76bbd10a4b8b681f72e4887ab87148015f5afa48997ec202cca8fd553b",
+    "src/storage/database.py": "5961df6e84cf138698b5431367723e1662f787f97802b2673e01dd870aab53ef",
+    "src/storage/importer.py": "9d7989fd8868bf98777c81cdf0c84495556d59cb567bf9f11df53c794461290b",
+    "src/storage/models.py": "f28f21b72cada046a42078d695888dfe1c89fc83d63fb527c61dee0655a76b6d",
+    "src/storage/repositories.py": "ab42640fb0db94e42d985b832a621500b88f843b0d3cdd57f35461d8017cd0a0",
+    "src/table_menu.py": "abcc5e7760531eb21da65a91be098a0e7554ae68d04d24385f96d97a15e33d46"
+  },
+  "tasks": [
+    {
+      "caseId": "budaoweng",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "cc6b51c13415d0978b5165bab551aeeb377796fe8c9cfe0bc7df26d63b480724",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "douliumen",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "756e2b5aea882badfb0cb23b606b2cc81f22f0892bcad679c877d06454d8ab7e",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "guoshao_6col",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "4f1aa8fbb2ac866ff0efd751f85953e8e64f1f1628ab1f19f1a7f37a17eafb18",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "xianghong",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+      "truthSha256": "877445c545b8e3462c4f943fa7cbbe956a2aa7d9bcb4c1124d55acbac06bb0f9",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "web_dalai_noodles_soups",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+      "truthSha256": "7c1e3f05312031b7521ad33d104e10ad21d5e699e4f1f28d0e296fa5f48d687a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "web_fhgh_sets",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+      "truthSha256": "ce35ae33c9f8b4dfb67ab6265e9ff1f2c8b90c6971ee465588b0a2ef065445fe",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_caesar_jiayan",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+      "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_cosmos_jade",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+      "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "liugui_board",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb",
+      "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "vege_muffins",
+      "split": "dev",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7",
+      "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "budaoweng",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "cc6b51c13415d0978b5165bab551aeeb377796fe8c9cfe0bc7df26d63b480724",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "douliumen",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "756e2b5aea882badfb0cb23b606b2cc81f22f0892bcad679c877d06454d8ab7e",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "guoshao_6col",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "4f1aa8fbb2ac866ff0efd751f85953e8e64f1f1628ab1f19f1a7f37a17eafb18",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "xianghong",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+      "truthSha256": "877445c545b8e3462c4f943fa7cbbe956a2aa7d9bcb4c1124d55acbac06bb0f9",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "web_dalai_noodles_soups",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+      "truthSha256": "7c1e3f05312031b7521ad33d104e10ad21d5e699e4f1f28d0e296fa5f48d687a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "web_fhgh_sets",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+      "truthSha256": "ce35ae33c9f8b4dfb67ab6265e9ff1f2c8b90c6971ee465588b0a2ef065445fe",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_caesar_jiayan",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+      "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_cosmos_jade",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+      "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "liugui_board",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb",
+      "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "vege_muffins",
+      "split": "dev",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7",
+      "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "budaoweng",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "cc6b51c13415d0978b5165bab551aeeb377796fe8c9cfe0bc7df26d63b480724",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "douliumen",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "756e2b5aea882badfb0cb23b606b2cc81f22f0892bcad679c877d06454d8ab7e",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "guoshao_6col",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": null,
+      "truthSha256": "4f1aa8fbb2ac866ff0efd751f85953e8e64f1f1628ab1f19f1a7f37a17eafb18",
+      "plannedStatus": "skipped_missing_image"
+    },
+    {
+      "caseId": "xianghong",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+      "truthSha256": "877445c545b8e3462c4f943fa7cbbe956a2aa7d9bcb4c1124d55acbac06bb0f9",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "web_dalai_noodles_soups",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+      "truthSha256": "7c1e3f05312031b7521ad33d104e10ad21d5e699e4f1f28d0e296fa5f48d687a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "web_fhgh_sets",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+      "truthSha256": "ce35ae33c9f8b4dfb67ab6265e9ff1f2c8b90c6971ee465588b0a2ef065445fe",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_caesar_jiayan",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+      "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_cosmos_jade",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+      "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "liugui_board",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb",
+      "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "vege_muffins",
+      "split": "dev",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\開發原圖",
+      "inputSha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7",
+      "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_caesar_jiayan_lowres",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "5d313037be88ca4d36717d6845316de70e842c08da82ed830cddf5c64e8e2fdf",
+      "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_caesar_jiayan_tilt",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "7bbe7f68bd81f97b402b90fec94a1f0dabf1943df61a808c1103631eb8920a95",
+      "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_caesar_jiayan_glare",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "c552bd6f6a606e13c00d1be9baf1e5ce552d297c517f35c4af865dde699b2711",
+      "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_cosmos_jade_lowres",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "8bb68f5f978dbf36e97f49877cdc40a2f802f86254fb614f97a37c605285f2f7",
+      "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_cosmos_jade_tilt",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "a17aa0db3fe83ec6e013fcf9d028a39635fd35f74dbc087b9f34cf0ce0e9c3b8",
+      "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "extra_cosmos_jade_glare",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "32fb09ac12b55c612e43319e6971c2b8d614e930d1d1e82db4db52d565d7106b",
+      "truthSha256": "94084f913a87b2439fd4f002eeceef54552203d1cf7937eb5d1fb94dcc45783a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "liugui_board_lowres",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "549f6e7a17c8011a5975cedbdf3d00f39feef2568a641faa2afcf51415b77d92",
+      "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "liugui_board_tilt",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "e66eb39e33dc1b89d94101bb646b3131add1e60760b431a61423acef2e0faec4",
+      "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "liugui_board_glare",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "814407bcd9aa317eea31b6bde46c585794494f1e39947bf39cb714223b511ba5",
+      "truthSha256": "726ce290f71f1fd78aec66fbfcfd38d23a73f2834c5cfa5d4cf0eda38a1346e0",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "vege_muffins_lowres",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "c462d98f30955f5023c140c9563a022ac18fc8a386320af36bc5430ad82a9d6a",
+      "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "vege_muffins_tilt",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "74bd57c8ea52c60908f4d3987c0a2baed843af6300f02098f8c8455f7a821d4a",
+      "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "vege_muffins_glare",
+      "split": "stress",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+      "inputSha256": "d0b92bc33c31d5f7eb0c4fa411dd1baf3583fe1bc803bc83f95629d124524d8f",
+      "truthSha256": "5d628f91c08cda6f1c9d5ce67138134eedbe8a484ddd23c882f52f78a5e05487",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_cama",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+      "truthSha256": "1ae7d85500a7c5716edba1908147f1602716886e3c20aa2acee3fc9a8596ec0f",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_comebuy",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+      "truthSha256": "020be913834cace2f637fd486cc254eceed53a9cdb9a2eb7005882e1d365b47a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_meetfresh",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+      "truthSha256": "5d75e399b6800961849e7fc1b131328777798d22b5361f4a010208b1c463a604",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_milksha",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+      "truthSha256": "c9f1822868b593fbee52f3bf8325673e36fd4f468117ed1ade2c0380565a2be3",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_regent_lanting",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+      "truthSha256": "6819620acbeed067309068a481a1f728d5d9b287e0df144760fadb2395ed7c83",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_royal_huigan",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+      "truthSha256": "beb7bbda8253021e6cdf181d025aef92c852d79298908e3a0c7f6e20caf42f00",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_sheraton_pizzapub",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+      "truthSha256": "63f15d6b30d95ad28ea5b901bd646344a93405deb011a36452e4b8da6edd512b",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_splendor_lobby",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+      "truthSha256": "36f91e099ef1b12fad2850a04f1ccfc4f3e311b8aa90b165467b2144fde737d1",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_amei",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+      "truthSha256": "f9b902062efe49fadb57376748b5de954abeb93f15d17f8b8dccf33ae126f692",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_extra9",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "555a3990e7224e77beeadb480d490212b39c94e2cd2fe63d290dbd761881a820",
+      "truthSha256": "3f9f5c80b088bd0b128fdc89ae8735793a9a18dfc68bac041fe0521c308ccfa9",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_gwoo",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "ceeaed073d1b4e397e133b10b4c8d26b7a2a4c4aebc4d6a32a832acb9d35f4d7",
+      "truthSha256": "9eaf3d184633aa4f43822e5f30169435774d8d5ce88890d18da93a3b8b3f43b2",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_newpalace_wuqi",
+      "split": "holdout",
+      "round": 1,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+      "truthSha256": "000e46a1025bccd5f8b1adf5aaa1a4a6ec2cfc6781f31d23d1b14094e4011cff",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_cama",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+      "truthSha256": "1ae7d85500a7c5716edba1908147f1602716886e3c20aa2acee3fc9a8596ec0f",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_comebuy",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+      "truthSha256": "020be913834cace2f637fd486cc254eceed53a9cdb9a2eb7005882e1d365b47a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_meetfresh",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+      "truthSha256": "5d75e399b6800961849e7fc1b131328777798d22b5361f4a010208b1c463a604",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_milksha",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+      "truthSha256": "c9f1822868b593fbee52f3bf8325673e36fd4f468117ed1ade2c0380565a2be3",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_regent_lanting",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+      "truthSha256": "6819620acbeed067309068a481a1f728d5d9b287e0df144760fadb2395ed7c83",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_royal_huigan",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+      "truthSha256": "beb7bbda8253021e6cdf181d025aef92c852d79298908e3a0c7f6e20caf42f00",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_sheraton_pizzapub",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+      "truthSha256": "63f15d6b30d95ad28ea5b901bd646344a93405deb011a36452e4b8da6edd512b",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_splendor_lobby",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+      "truthSha256": "36f91e099ef1b12fad2850a04f1ccfc4f3e311b8aa90b165467b2144fde737d1",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_amei",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+      "truthSha256": "f9b902062efe49fadb57376748b5de954abeb93f15d17f8b8dccf33ae126f692",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_extra9",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "555a3990e7224e77beeadb480d490212b39c94e2cd2fe63d290dbd761881a820",
+      "truthSha256": "3f9f5c80b088bd0b128fdc89ae8735793a9a18dfc68bac041fe0521c308ccfa9",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_gwoo",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "ceeaed073d1b4e397e133b10b4c8d26b7a2a4c4aebc4d6a32a832acb9d35f4d7",
+      "truthSha256": "9eaf3d184633aa4f43822e5f30169435774d8d5ce88890d18da93a3b8b3f43b2",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_newpalace_wuqi",
+      "split": "holdout",
+      "round": 2,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+      "truthSha256": "000e46a1025bccd5f8b1adf5aaa1a4a6ec2cfc6781f31d23d1b14094e4011cff",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_cama",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "ac231b86fd7f94dfe092706716bae3512262aa358d91cff4b29937d9efde1bcb",
+      "truthSha256": "1ae7d85500a7c5716edba1908147f1602716886e3c20aa2acee3fc9a8596ec0f",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_comebuy",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "fd9499ee271c26a8336cb5b268e13a416565da73acb5afa8be427fff3bca14fe",
+      "truthSha256": "020be913834cace2f637fd486cc254eceed53a9cdb9a2eb7005882e1d365b47a",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_meetfresh",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "876ef4117740d476456febcb1419912f346736605a9197210a0669a16fb51c6a",
+      "truthSha256": "5d75e399b6800961849e7fc1b131328777798d22b5361f4a010208b1c463a604",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "cafe_milksha",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "8dba9b814910fd3941583963f5b6445d7ad9e9d82b11a3579d375b03de286e53",
+      "truthSha256": "c9f1822868b593fbee52f3bf8325673e36fd4f468117ed1ade2c0380565a2be3",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_regent_lanting",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+      "truthSha256": "6819620acbeed067309068a481a1f728d5d9b287e0df144760fadb2395ed7c83",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_royal_huigan",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "e1896b83a076f86e8a925a05ba36904fa75a80d78d2fd9d44e623f5da7a17d6c",
+      "truthSha256": "beb7bbda8253021e6cdf181d025aef92c852d79298908e3a0c7f6e20caf42f00",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_sheraton_pizzapub",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "c9c625dcd2c35963fa9c57948ecf880698b2c11b1b5cf09d1320a5f94fbe95ee",
+      "truthSha256": "63f15d6b30d95ad28ea5b901bd646344a93405deb011a36452e4b8da6edd512b",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "hotel_splendor_lobby",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+      "truthSha256": "36f91e099ef1b12fad2850a04f1ccfc4f3e311b8aa90b165467b2144fde737d1",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_amei",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "28ec388cccc67ca9d1368bca59f359723cf3fda45e045193594f934911afb4e7",
+      "truthSha256": "f9b902062efe49fadb57376748b5de954abeb93f15d17f8b8dccf33ae126f692",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_extra9",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "555a3990e7224e77beeadb480d490212b39c94e2cd2fe63d290dbd761881a820",
+      "truthSha256": "3f9f5c80b088bd0b128fdc89ae8735793a9a18dfc68bac041fe0521c308ccfa9",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_gwoo",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "ceeaed073d1b4e397e133b10b4c8d26b7a2a4c4aebc4d6a32a832acb9d35f4d7",
+      "truthSha256": "9eaf3d184633aa4f43822e5f30169435774d8d5ce88890d18da93a3b8b3f43b2",
+      "plannedStatus": "ready"
+    },
+    {
+      "caseId": "tw_newpalace_wuqi",
+      "split": "holdout",
+      "round": 3,
+      "casesDir": "菜單照片資料\\第二項\\獨立封存",
+      "inputSha256": "26b9300d9a515d28750954d6462a25b9f3f1fa2e9d35df1a200f49f915da81ed",
+      "truthSha256": "000e46a1025bccd5f8b1adf5aaa1a4a6ec2cfc6781f31d23d1b14094e4011cff",
+      "plannedStatus": "ready"
+    }
+  ],
+  "plannedLiveImageRounds": 69,
+  "plannedMissingImageSkips": 9,
+  "retryPolicy": {
+    "maxAdditionalAttempts": 1,
+    "backoffSeconds": 3,
+    "eligible": "technical transport/process failure only; never recognition scores"
+  },
+  "holdoutPolicy": "Seal full runner JSON and logs into ZIP. Public receipts whitelist only technical status, IDs, calls and hashes; do not inspect predictions or scores."
+}

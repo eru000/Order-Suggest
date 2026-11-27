@@ -1,0 +1,89 @@
+{
+  "items": [
+    {
+      "name": "娜杯太妃QQ",
+      "price": 60,
+      "variant": "L"
+    },
+    {
+      "name": "太妃烏龍拿鐵",
+      "price": 75,
+      "variant": "L"
+    },
+    {
+      "name": "太妃伯爵布朗拿鐵",
+      "price": 80,
+      "variant": "L"
+    },
+    {
+      "name": "太妃伯爵布朗拿鐵",
+      "price": 110,
+      "variant": "瓶"
+    },
+    {
+      "name": "太妃焙焙拿鐵",
+      "price": 85,
+      "variant": "L"
+    },
+    {
+      "name": "太妃焙焙拿鐵",
+      "price": 120,
+      "variant": "瓶"
+    },
+    {
+      "name": "京都極選抹茶",
+      "price": 60,
+      "variant": "M"
+    },
+    {
+      "name": "京都極選抹茶",
+      "price": 70,
+      "variant": "L"
+    },
+    {
+      "name": "京都極選抹茶鮮奶",
+      "price": 100,
+      "variant": "M"
+    },
+    {
+      "name": "靜岡焙焙鮮奶",
+      "price": 70,
+      "variant": "M"
+    },
+    {
+      "name": "靜岡焙焙鮮奶",
+      "price": 90,
+      "variant": "L"
+    },
+    {
+      "name": "靜岡焙焙烏龍拿鐵",
+      "price": 65,
+      "variant": "M"
+    },
+    {
+      "name": "靜岡焙焙烏龍拿鐵",
+      "price": 75,
+      "variant": "L"
+    },
+    {
+      "name": "伯爵可可拿鐵",
+      "price": 75,
+      "variant": "M"
+    },
+    {
+      "name": "伯爵可可拿鐵",
+      "price": 85,
+      "variant": "L"
+    },
+    {
+      "name": "法芙娜可可鮮奶",
+      "price": 80,
+      "variant": "M"
+    },
+    {
+      "name": "法芙娜可可鮮奶",
+      "price": 100,
+      "variant": "L"
+    }
+  ]
+}

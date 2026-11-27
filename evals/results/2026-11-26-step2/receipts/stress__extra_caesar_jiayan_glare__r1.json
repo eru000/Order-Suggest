@@ -1,0 +1,38 @@
+{
+  "caseId": "extra_caesar_jiayan_glare",
+  "split": "stress",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\開發合成干擾",
+  "inputSha256": "c552bd6f6a606e13c00d1be9baf1e5ce552d297c517f35c4af865dde699b2711",
+  "truthSha256": "a08a20c4221217fdc1ecf2be4a9cb91e87ff4021849705ed9e255705693c9752",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:01:45+08:00",
+      "finishedAt": "2026-11-26T21:02:24+08:00",
+      "elapsedSec": 38.896,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "e88a1fe0345de5a8addb2af70beb18bfd9c789d14acfe5bd9e2ecf644b8f4aa5"
+      ],
+      "transportBodyHashes": [
+        "0acb7bd1baf91a6d985dce5e78aad2410b78df3d8f30618db0be506835f8a2e0"
+      ],
+      "sourceImageSha256": "c552bd6f6a606e13c00d1be9baf1e5ce552d297c517f35c4af865dde699b2711",
+      "truthSnapshotSha256": "53d7fb91080b4ed0f01edda9e644e0db4682739d338ecc132a0c71e7ede72931",
+      "runSha256": "446875a292bb99f088953613d21c2f5455aeee56530b10c058c49b438c3acafe",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\stress\\extra_caesar_jiayan_glare__r1\\attempt-1\\20261126-210224_stress__extra_caesar_jiayan_glare__r1__a1.json",
+      "artifactSha256": "446875a292bb99f088953613d21c2f5455aeee56530b10c058c49b438c3acafe",
+      "sealed": false
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:02:24+08:00"
+}

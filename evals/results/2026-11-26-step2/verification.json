@@ -1,0 +1,24 @@
+{
+  "imageProtocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "verifiedPhotoManifestSha256": "c17f2998f0b40e4a122ed72f551e36d0ca405325f7e37b5ef5c561911ffab81f",
+  "offlineRegression": {
+    "testsRun": 362,
+    "passed": 362,
+    "python": "3.14.2",
+    "environment": "isolated copy with dummy API settings",
+    "command": "python -m unittest discover -s tests -p test_*.py -t tests",
+    "runnerOutput": [
+      "Ran 362 tests in 11.141s",
+      "",
+      "OK"
+    ]
+  },
+  "scenarios": {
+    "frozenFilesVerified": true,
+    "verifiedSealedZipCount": 2,
+    "blindCalls": 60,
+    "sameNormalizedBehavior": true,
+    "outputsOpened": false
+  },
+  "sourceFilesChangedSinceImageBaseline": []
+}

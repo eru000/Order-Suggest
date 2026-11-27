@@ -1,0 +1,38 @@
+{
+  "caseId": "hotel_splendor_lobby",
+  "split": "holdout",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+  "truthSha256": "36f91e099ef1b12fad2850a04f1ccfc4f3e311b8aa90b165467b2144fde737d1",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:07:14+08:00",
+      "finishedAt": "2026-11-26T21:07:33+08:00",
+      "elapsedSec": 18.576,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "7e239bde08f98511cffbc179a8cb5006d960e49d3f47dee299ae0c9388baddf0"
+      ],
+      "transportBodyHashes": [
+        "4f57c23024aba46fc7ea0ab26bcf736d48035d70e7eed56b829c6166dc843956"
+      ],
+      "sourceImageSha256": "3f31d44ed2de08dc79f1c463a6ae7fd656ae2547890308bb0c84c39b3ec0a842",
+      "truthSnapshotSha256": "ab57f72fb1d9c208d663799b11b9c8bfeedb7379ba1f1261e30605461a208a2a",
+      "runSha256": "b9856594d6adb851e67ec4c1e2025e4fdd7d28911aea09d7e735fee6ba06d6a8",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__hotel_splendor_lobby__r1__a1.zip",
+      "artifactSha256": "baf13320e5041163bbe969c374c4621190c4aa211eefe0691fdd0383d1e130ae",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:07:33+08:00"
+}

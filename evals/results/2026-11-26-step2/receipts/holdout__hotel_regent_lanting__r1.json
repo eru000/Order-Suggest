@@ -1,0 +1,38 @@
+{
+  "caseId": "hotel_regent_lanting",
+  "split": "holdout",
+  "round": 1,
+  "casesDir": "菜單照片資料\\第二項\\獨立封存",
+  "inputSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+  "truthSha256": "6819620acbeed067309068a481a1f728d5d9b287e0df144760fadb2395ed7c83",
+  "plannedStatus": "ready",
+  "protocolSha256": "242ddc21cb5bcaccb6fa6d9e36d90d868db16432749eda40b19947127586fd62",
+  "attempts": [
+    {
+      "attempt": 1,
+      "startedAt": "2026-11-26T21:05:50+08:00",
+      "finishedAt": "2026-11-26T21:06:58+08:00",
+      "elapsedSec": 67.617,
+      "workerExitCode": 0,
+      "technicalStatus": "ok",
+      "resultCaseIdsMatch": true,
+      "wrapperCallCount": 1,
+      "transportRequestCount": 1,
+      "requestHashes": [
+        "3570cc1744ef5927dfa89b9bc3fc86aa68bd4af735bd322ed71bb6ab0c789d48"
+      ],
+      "transportBodyHashes": [
+        "8ac7290434e7cd84d9ce5ddf6073994888de63dbe2875edc1599177ad0b553e5"
+      ],
+      "sourceImageSha256": "006d59a95aef8d47d5ba4848e225689f455fa0c88ebd3d81ac21c2f52bcd402e",
+      "truthSnapshotSha256": "1ab847f7792730b398e279e69a7eb00ef4fe0e0d109c43c8af4c4c34bb1327fa",
+      "runSha256": "5942df81170918ae46c985c17d5742fc2f4dd5884db064588fee6419041de6d0",
+      "artifactPath": "evals\\results\\2026-11-26-step2\\sealed\\holdout__hotel_regent_lanting__r1__a1.zip",
+      "artifactSha256": "d0cb0dd18f077766af1184a02b9db3cbcc8632b13820bddb4c22a86bb97e9d17",
+      "sealed": true
+    }
+  ],
+  "complete": true,
+  "technicalStatus": "ok",
+  "finishedAt": "2026-11-26T21:06:58+08:00"
+}
