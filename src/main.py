@@ -646,12 +646,36 @@ def generate_ai_reply(
         )
         cleaned = response.strip() if isinstance(response, str) else ""
         if cleaned:
-            return cleaned
+            return _guarded_reply(cleaned, rec, menu, decision_context)
         print(" [generate_ai_reply] LLM 返回空回覆，降級使用模板")
         return _reply_fallback(rec, decision_context)
     except Exception as e:
         print(f" [generate_ai_reply] 錯誤: {e}，降級使用模板")
         return _reply_fallback(rec, decision_context)
+
+
+def _guarded_reply(text, rec, menu, decision_context):
+    """推薦說明的輸出防護：與推薦資料不一致就改用模板（src/reply_guard.py）。
+
+    第六項消融：LLM 的推薦說明 10 則只有 4 則忠實，模板 10/10。開放問答
+    （decision_context）本來就會談到推薦以外的菜，不套用。
+    """
+    if decision_context is not None or not isinstance(rec, dict) or not rec.get("items"):
+        return text
+    from reply_guard import check_reply
+
+    verdict = check_reply(text, rec, menu)
+    if verdict["ok"]:
+        return text
+    emit(
+        "reply.guard_rejected",
+        reasons=verdict["reasons"],
+        missingItems=len(verdict["missingItems"]),
+        unsupportedNumbers=len(verdict["unsupportedNumbers"]),
+        unrecommendedDishes=len(verdict["inventedDishes"]),
+    )
+    print(f" [reply_guard] LLM 說明與推薦不一致（{'、'.join(verdict['reasons'])}），改用模板")
+    return _fallback_format(rec)
 
 
 def _reply_fallback(rec, decision_context):
@@ -734,11 +758,30 @@ def generate_ai_reply_stream(
     降級策略跟非串流版不同：一旦已經吐出任何文字，就不能再改用模板補救，
     否則畫面上會出現「半段 AI 回覆 + 一整段模板」的重複內容。
     所以只有在「一個字都還沒吐出來」時才降級。
+
+    推薦說明（decision_context 為 None 且有推薦品項）要先過輸出防護，所以整段
+    收齊、檢查完才一次送出，不逐字吐。實測等待幾乎都在第一個字之前（12–42 秒），
+    生成本身只要 1.4–2.3 秒，推薦卡片又已經先送到畫面，所以只多等這 1–2 秒。
     """
     from ollama_fuc import chat_stream as _ollama_chat_stream
 
     mdl = model or DEFAULT_MODEL
     messages = _build_recommendation_prompt(rec, user_input, menu, decision_context)
+    if decision_context is None and isinstance(rec, dict) and rec.get("items"):
+        try:
+            text = "".join(
+                piece for piece in _ollama_chat_stream(
+                    messages, model=mdl, timeout=timeout, temperature=_reply_temperature()
+                ) if piece
+            ).strip()
+        except Exception as e:
+            print(f" [generate_ai_reply_stream] 錯誤: {e}，降級使用模板")
+            text = ""
+        if not text:
+            yield _reply_fallback(rec, decision_context)
+            return
+        yield _guarded_reply(text, rec, menu, decision_context)
+        return
     produced = False
 
     try:

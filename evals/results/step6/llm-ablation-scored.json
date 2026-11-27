@@ -13,11 +13,13 @@
     },
     "llm": {
       "itemCount": 42,
-      "itemsMentioned": 22,
+      "itemsMentioned": 39,
       "unsupportedNumbers": 8,
       "inventedDishes": 5,
       "chars": 1579
-    }
+    },
+    "guardPassed": 3,
+    "guardRejected": 7
   },
   "cases": [
     {
@@ -26,6 +28,7 @@
       "template": {
         "itemCount": 6,
         "itemsMentioned": 6,
+        "missingItems": [],
         "moneyMentions": 11,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -33,11 +36,24 @@
       },
       "llm": {
         "itemCount": 6,
-        "itemsMentioned": 4,
+        "itemsMentioned": 5,
+        "missingItems": [
+          "東北酸白菜肉鍋"
+        ],
         "moneyMentions": 1,
         "unsupportedNumbers": [],
         "inventedDishes": [],
         "chars": 124
+      },
+      "guard": {
+        "missingItems": [
+          "東北酸白菜肉鍋"
+        ],
+        "unsupportedNumbers": [],
+        "ok": false,
+        "reasons": [
+          "missing_items"
+        ]
       },
       "llmError": null,
       "llmSeconds": 3.52
@@ -48,6 +64,7 @@
       "template": {
         "itemCount": 4,
         "itemsMentioned": 4,
+        "missingItems": [],
         "moneyMentions": 9,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -55,7 +72,8 @@
       },
       "llm": {
         "itemCount": 4,
-        "itemsMentioned": 3,
+        "itemsMentioned": 4,
+        "missingItems": [],
         "moneyMentions": 11,
         "unsupportedNumbers": [
           180.0,
@@ -67,6 +85,18 @@
         ],
         "chars": 155
       },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [
+          180.0,
+          250.0
+        ],
+        "ok": false,
+        "reasons": [
+          "unsupported_numbers",
+          "unrecommended_dishes"
+        ]
+      },
       "llmError": null,
       "llmSeconds": 4.9
     },
@@ -76,6 +106,7 @@
       "template": {
         "itemCount": 9,
         "itemsMentioned": 9,
+        "missingItems": [],
         "moneyMentions": 14,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -83,7 +114,8 @@
       },
       "llm": {
         "itemCount": 9,
-        "itemsMentioned": 7,
+        "itemsMentioned": 9,
+        "missingItems": [],
         "moneyMentions": 4,
         "unsupportedNumbers": [
           3000.0,
@@ -91,6 +123,17 @@
         ],
         "inventedDishes": [],
         "chars": 169
+      },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [
+          3000.0,
+          3600.0
+        ],
+        "ok": false,
+        "reasons": [
+          "unsupported_numbers"
+        ]
       },
       "llmError": null,
       "llmSeconds": 5.64
@@ -101,6 +144,7 @@
       "template": {
         "itemCount": 3,
         "itemsMentioned": 3,
+        "missingItems": [],
         "moneyMentions": 6,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -109,6 +153,7 @@
       "llm": {
         "itemCount": 3,
         "itemsMentioned": 3,
+        "missingItems": [],
         "moneyMentions": 7,
         "unsupportedNumbers": [
           60.0,
@@ -116,6 +161,17 @@
         ],
         "inventedDishes": [],
         "chars": 141
+      },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [
+          60.0,
+          66.0
+        ],
+        "ok": false,
+        "reasons": [
+          "unsupported_numbers"
+        ]
       },
       "llmError": null,
       "llmSeconds": 4.02
@@ -126,6 +182,7 @@
       "template": {
         "itemCount": 4,
         "itemsMentioned": 4,
+        "missingItems": [],
         "moneyMentions": 8,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -133,7 +190,10 @@
       },
       "llm": {
         "itemCount": 4,
-        "itemsMentioned": 1,
+        "itemsMentioned": 3,
+        "missingItems": [
+          "當歸松阪豬肉湯"
+        ],
         "moneyMentions": 9,
         "unsupportedNumbers": [],
         "inventedDishes": [
@@ -141,6 +201,17 @@
           "松阪豬肉飯"
         ],
         "chars": 206
+      },
+      "guard": {
+        "missingItems": [
+          "當歸松阪豬肉湯"
+        ],
+        "unsupportedNumbers": [],
+        "ok": false,
+        "reasons": [
+          "missing_items",
+          "unrecommended_dishes"
+        ]
       },
       "llmError": null,
       "llmSeconds": 6.99
@@ -151,6 +222,7 @@
       "template": {
         "itemCount": 2,
         "itemsMentioned": 2,
+        "missingItems": [],
         "moneyMentions": 7,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -158,7 +230,8 @@
       },
       "llm": {
         "itemCount": 2,
-        "itemsMentioned": 1,
+        "itemsMentioned": 2,
+        "missingItems": [],
         "moneyMentions": 5,
         "unsupportedNumbers": [
           600.0,
@@ -169,6 +242,18 @@
         ],
         "chars": 98
       },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [
+          600.0,
+          310.0
+        ],
+        "ok": false,
+        "reasons": [
+          "unsupported_numbers",
+          "unrecommended_dishes"
+        ]
+      },
       "llmError": null,
       "llmSeconds": 4.55
     },
@@ -178,6 +263,7 @@
       "template": {
         "itemCount": 3,
         "itemsMentioned": 3,
+        "missingItems": [],
         "moneyMentions": 8,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -185,11 +271,18 @@
       },
       "llm": {
         "itemCount": 3,
-        "itemsMentioned": 0,
+        "itemsMentioned": 3,
+        "missingItems": [],
         "moneyMentions": 3,
         "unsupportedNumbers": [],
         "inventedDishes": [],
         "chars": 131
+      },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [],
+        "ok": true,
+        "reasons": []
       },
       "llmError": null,
       "llmSeconds": 2.49
@@ -200,6 +293,7 @@
       "template": {
         "itemCount": 2,
         "itemsMentioned": 2,
+        "missingItems": [],
         "moneyMentions": 7,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -207,11 +301,18 @@
       },
       "llm": {
         "itemCount": 2,
-        "itemsMentioned": 0,
+        "itemsMentioned": 2,
+        "missingItems": [],
         "moneyMentions": 6,
         "unsupportedNumbers": [],
         "inventedDishes": [],
         "chars": 191
+      },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [],
+        "ok": true,
+        "reasons": []
       },
       "llmError": null,
       "llmSeconds": 4.8
@@ -222,6 +323,7 @@
       "template": {
         "itemCount": 5,
         "itemsMentioned": 5,
+        "missingItems": [],
         "moneyMentions": 10,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -229,11 +331,24 @@
       },
       "llm": {
         "itemCount": 5,
-        "itemsMentioned": 0,
+        "itemsMentioned": 4,
+        "missingItems": [
+          "帶皮玉米筍 (Baby Corn)"
+        ],
         "moneyMentions": 7,
         "unsupportedNumbers": [],
         "inventedDishes": [],
         "chars": 183
+      },
+      "guard": {
+        "missingItems": [
+          "帶皮玉米筍 (Baby Corn)"
+        ],
+        "unsupportedNumbers": [],
+        "ok": false,
+        "reasons": [
+          "missing_items"
+        ]
       },
       "llmError": null,
       "llmSeconds": 3.19
@@ -244,6 +359,7 @@
       "template": {
         "itemCount": 4,
         "itemsMentioned": 4,
+        "missingItems": [],
         "moneyMentions": 9,
         "unsupportedNumbers": [],
         "inventedDishes": [],
@@ -251,11 +367,18 @@
       },
       "llm": {
         "itemCount": 4,
-        "itemsMentioned": 3,
+        "itemsMentioned": 4,
+        "missingItems": [],
         "moneyMentions": 7,
         "unsupportedNumbers": [],
         "inventedDishes": [],
         "chars": 181
+      },
+      "guard": {
+        "missingItems": [],
+        "unsupportedNumbers": [],
+        "ok": true,
+        "reasons": []
       },
       "llmError": null,
       "llmSeconds": 3.36

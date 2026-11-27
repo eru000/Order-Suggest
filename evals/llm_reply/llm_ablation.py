@@ -32,42 +32,8 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "evals" / "recommendation"))
 
 OUT = ROOT / "evals" / "results" / "step6"
-_MONEY = re.compile(r"(?:NT\$|\$|＄)\s*([\d,]+(?:\.\d+)?)|([\d,]+(?:\.\d+)?)(?!\s*(?:%|％|人|位|道|份|杯|瓶|盤|碗|分鐘|個))")
-_CN_DIGITS = {"零": 0, "〇": 0, "一": 1, "二": 2, "兩": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
-_CN_UNITS = {"十": 10, "百": 100, "千": 1000, "萬": 10000}
-_CN_RUN = re.compile(r"[零〇一二兩三四五六七八九十百千萬]+")
-
-
-def _cn_number(run: str) -> int | None:
-    """「八百一十」→810、「一千」→1000、「六九三」→693（逐位念法）。"""
-    if all(ch in _CN_DIGITS for ch in run):
-        return int("".join(str(_CN_DIGITS[ch]) for ch in run)) if len(run) >= 2 else None
-    total = section = digit = 0
-    last_unit = 1
-    for ch in run:
-        if ch in _CN_DIGITS:
-            digit = _CN_DIGITS[ch]
-        else:
-            unit = _CN_UNITS[ch]
-            if unit == 10000:
-                total += (section + digit) * unit
-                section = digit = 0
-            else:
-                section += (digit or 1) * unit
-                digit = 0
-            last_unit = unit
-    # 「八百一」＝810、「一千二」＝1200：尾數接在最後一個單位的下一位
-    if digit:
-        section += digit * (last_unit // 10 if last_unit >= 100 else 1)
-    return total + section or None
-
-
-def to_arabic(text: str) -> str:
-    """把中文數字金額轉成阿拉伯數字，LLM 常寫「三百」「八百一十」。"""
-    def repl(match: re.Match[str]) -> str:
-        value = _cn_number(match.group(0))
-        return str(value) if value is not None else match.group(0)
-    return _CN_RUN.sub(repl, text)
+# 金額與菜名的檢查與產品的輸出防護共用同一支（src/reply_guard.py），兩邊不會分岔。
+from reply_guard import _cn_number, check_reply, fact_check, to_arabic  # noqa: E402,F401
 
 
 def _cases() -> list[dict[str, Any]]:
@@ -96,60 +62,6 @@ def _menu_names(menu: dict[str, Any]) -> list[str]:
         {str(item["name"]) for item in items if str(item["name"]) not in categories},
         key=len, reverse=True,
     )
-
-
-def fact_check(text: str, rec: dict[str, Any], menu_names: list[str]) -> dict[str, Any]:
-    items = [item for item in rec.get("items") or [] if isinstance(item, dict)]
-    names = [str(item.get("name") or "") for item in items]
-    mentioned = [name for name in names if name and name in text]
-    meta = rec.get("meta") or {}
-    allowed: set[float] = set()
-    for item in items:
-        for key in ("price", "total", "lineTotal"):
-            value = item.get(key)
-            if isinstance(value, (int, float)):
-                allowed.add(round(float(value), 2))
-    meta = meta if isinstance(meta, dict) else {}
-
-    def number(key: str) -> float | None:
-        value = meta.get(key)
-        return float(value) if isinstance(value, (int, float)) else None
-
-    budget, subtotal, total = number("budget"), number("estimatedSubtotal"), number("estimatedTotal")
-    rate, people = number("serviceRate"), number("people")
-    derived = [budget, subtotal, total]
-    if subtotal is not None and rate is not None:
-        derived.append(subtotal * rate)  # 服務費
-    if budget is not None:
-        derived += [budget - v for v in (subtotal, total) if v is not None]  # 剩餘預算
-    if people:
-        derived += [v / people for v in (budget, subtotal, total) if v is not None]  # 每人
-    allowed.update(round(v, 2) for v in derived if v is not None)
-    numbers = []
-    for match in _MONEY.finditer(to_arabic(text)):
-        raw = (match.group(1) or match.group(2)).replace(",", "")
-        try:
-            value = round(float(raw), 2)
-        except ValueError:
-            continue
-        if value >= 10:  # 個位數多半是人數、杯數、道數
-            numbers.append(value)
-    # 四捨五入容許 1 元誤差
-    unsupported = [n for n in numbers if not any(abs(n - a) <= 1.0 for a in allowed)]
-    # 先移除推薦的菜名，再找其他菜名，避免「鴨肉飯」被「鴨肉」重複計算
-    remainder = text
-    for name in sorted(names + [str(i.get("category") or "") for i in items], key=len, reverse=True):
-        if name:
-            remainder = remainder.replace(name, "")
-    invented = [name for name in menu_names if len(name) >= 3 and name not in names and name in remainder]
-    return {
-        "itemCount": len(names),
-        "itemsMentioned": len(mentioned),
-        "moneyMentions": len(numbers),
-        "unsupportedNumbers": unsupported,
-        "inventedDishes": invented,
-        "chars": len(text),
-    }
 
 
 def live() -> int:
@@ -207,6 +119,13 @@ def score(path: Path) -> int:
             "restaurant": row["restaurant"], "text": row["text"],
             "template": fact_check(row["template"], row["recommendation"], names),
             "llm": fact_check(row["llm"], row["recommendation"], names) if row["llm"] else None,
+            # 產品的輸出防護（src/reply_guard.check_reply）對這則回覆的判定
+            "guard": (
+                {k: v for k, v in check_reply(
+                    row["llm"], row["recommendation"], menus[row["restaurant"]]
+                ).items() if k in ("ok", "reasons", "missingItems", "unsupportedNumbers")}
+                if row["llm"] else None
+            ),
             "llmError": row["llmError"], "llmSeconds": row["llmSeconds"],
         })
 
@@ -223,6 +142,8 @@ def score(path: Path) -> int:
                      ("itemCount", "itemsMentioned", "unsupportedNumbers", "inventedDishes", "chars")},
         "llm": {k: total("llm", k) for k in
                 ("itemCount", "itemsMentioned", "unsupportedNumbers", "inventedDishes", "chars")},
+        "guardPassed": sum(1 for r in results if r["guard"] and r["guard"]["ok"]),
+        "guardRejected": sum(1 for r in results if r["guard"] and not r["guard"]["ok"]),
     }
     open_rows = [row for row in data["rows"] if row["kind"] == "open"]
     csv_path = OUT / "open-questions-for-raters.csv"
