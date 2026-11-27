@@ -1,0 +1,91 @@
+{
+  "items": [
+    {
+      "name": "冠軍脆皮德國豬腳",
+      "price": 1680
+    },
+    {
+      "name": "鮑魚紅燒肉",
+      "price": 680,
+      "true_price": 680,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          2128.4,
+          697.1,
+          2182.0,
+          730.4
+        ]
+      }
+    },
+    {
+      "name": "無錫排骨",
+      "price": 560
+    },
+    {
+      "name": "鳳梨糖醋骨",
+      "price": 520,
+      "true_price": 520,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          2128.4,
+          885.3,
+          2182.0,
+          917.5
+        ]
+      }
+    },
+    {
+      "name": "燈籠尖椒松阪豬",
+      "price": 520,
+      "true_price": 520,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          2128.4,
+          979.5,
+          2182.0,
+          1012.8
+        ]
+      }
+    },
+    {
+      "name": "肥腸茄香煲",
+      "price": 520
+    },
+    {
+      "name": "黑棗嫩子排",
+      "price": 520
+    },
+    {
+      "name": "冰糖豬腳圈",
+      "price": 480,
+      "true_price": 480,
+      "occlusion": {
+        "type": "blur",
+        "level": "partial",
+        "box": [
+          2128.4,
+          1259.5,
+          2182.0,
+          1292.9
+        ]
+      }
+    },
+    {
+      "name": "四季肥腸",
+      "price": 480
+    },
+    {
+      "name": "干絲肉絲",
+      "price": 420
+    }
+  ],
+  "derivedFrom": "extra_caesar_jiayan",
+  "treatment": "blur_partial",
+  "seed": 20261127
+}

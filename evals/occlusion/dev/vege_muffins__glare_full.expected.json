@@ -1,0 +1,91 @@
+{
+  "items": [
+    {
+      "name": "日式咖哩朱滿福堡",
+      "price": null,
+      "true_price": 85,
+      "occlusion": {
+        "type": "glare",
+        "level": "full",
+        "box": [
+          798.0,
+          140.0,
+          843.0,
+          174.0
+        ]
+      }
+    },
+    {
+      "name": "椒麻堅果辣朱滿福堡",
+      "price": null,
+      "true_price": 85,
+      "occlusion": {
+        "type": "glare",
+        "level": "full",
+        "box": [
+          799.0,
+          214.0,
+          842.0,
+          247.0
+        ]
+      }
+    },
+    {
+      "name": "黑椒扭小排滿福堡",
+      "price": 85
+    },
+    {
+      "name": "鮪余滿福堡",
+      "price": 85
+    },
+    {
+      "name": "薯餅起士滿福堡",
+      "price": 85
+    },
+    {
+      "name": "經典植物朱肉滿福堡",
+      "price": 85
+    },
+    {
+      "name": "松露野菇扭排滿福堡",
+      "price": null,
+      "true_price": 120,
+      "occlusion": {
+        "type": "glare",
+        "level": "full",
+        "box": [
+          1614.0,
+          215.0,
+          1674.0,
+          247.0
+        ]
+      }
+    },
+    {
+      "name": "義式塔塔G滿福堡",
+      "price": 105
+    },
+    {
+      "name": "雙醬植物朱滿福堡",
+      "price": null,
+      "true_price": 100,
+      "occlusion": {
+        "type": "glare",
+        "level": "full",
+        "box": [
+          1614.0,
+          363.0,
+          1674.0,
+          395.0
+        ]
+      }
+    },
+    {
+      "name": "雙層起司扭滿福堡",
+      "price": 110
+    }
+  ],
+  "derivedFrom": "vege_muffins",
+  "treatment": "glare_full",
+  "seed": 20261127
+}

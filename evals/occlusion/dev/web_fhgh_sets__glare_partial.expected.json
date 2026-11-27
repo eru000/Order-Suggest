@@ -1,0 +1,71 @@
+{
+  "items": [
+    {
+      "name": "一號餐",
+      "price": 180,
+      "true_price": 180,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          761.5,
+          473.0,
+          811.0,
+          507.0
+        ]
+      }
+    },
+    {
+      "name": "二號餐",
+      "price": 220
+    },
+    {
+      "name": "三號餐",
+      "price": 230,
+      "true_price": 230,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          761.0,
+          1148.0,
+          810.0,
+          1183.0
+        ]
+      }
+    },
+    {
+      "name": "四號餐",
+      "price": 230,
+      "true_price": 230,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          1702.5,
+          475.0,
+          1751.0,
+          506.0
+        ]
+      }
+    },
+    {
+      "name": "五號餐",
+      "price": 350,
+      "true_price": 350,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          1702.5,
+          841.0,
+          1751.0,
+          872.0
+        ]
+      }
+    }
+  ],
+  "derivedFrom": "web_fhgh_sets",
+  "treatment": "glare_partial",
+  "seed": 20261127
+}

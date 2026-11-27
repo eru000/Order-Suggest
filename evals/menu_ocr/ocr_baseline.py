@@ -111,6 +111,21 @@ def _kind(text: str) -> str:
     return "name"
 
 
+def _sub_box(entry: dict[str, Any], start: int, end: int) -> tuple[float, float, float, float]:
+    """一行文字中第 start～end 個字的大致位置（依字數平均切分）。"""
+    x0, y0, x1, y1 = entry["box"]
+    width = (x1 - x0) / max(1, len(entry["text"]))
+    return (x0 + start * width, y0, x0 + end * width, y1)
+
+
+def _digits_box(entry: dict[str, Any]) -> tuple[float, float, float, float]:
+    """價格行裡數字本身的位置（去掉 NT$、$ 等前綴與「元」）。"""
+    match = re.search(r"\d+", entry["text"])
+    if not match:
+        return entry["box"]
+    return _sub_box(entry, match.start(), match.end())
+
+
 def _center_y(box: tuple[float, float, float, float]) -> float:
     return (box[1] + box[3]) / 2
 
@@ -159,7 +174,7 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
         )
 
     # 同一列右方的「規格＋價格」行（可能被 OCR 切成好幾段）全部接到品名後面。
-    size_variants: dict[int, list[tuple[str, str]]] = {}
+    size_variants: dict[int, list[tuple[str, str, Any]]] = {}
     for name_index, name in enumerate(names):
         nx0, _, nx1, _ = name["box"]
         row = sorted(
@@ -168,7 +183,10 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
              and not blocked(name, nx1 - 0.3 * (nx1 - nx0), line["box"][0])),
             key=lambda line: line["box"][0],
         )
-        pairs = [(label, value) for line in row for label, value in _SIZE_PAIR.findall(line["text"])]
+        pairs = [
+            (match.group(1), match.group(2), _sub_box(line, match.start(2), match.end(2)))
+            for line in row for match in _SIZE_PAIR.finditer(line["text"])
+        ]
         if pairs:
             size_variants[name_index] = pairs
 
@@ -189,6 +207,7 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
             candidates.append((px0 - nx1, name_index, price_index))
     candidates.sort()
     price_of: dict[int, str] = {}
+    price_box_of: dict[int, Any] = {}
     used: set[int] = set()
     def price_value(entry: dict[str, Any]) -> str | None:
         match = _PRICE_ONLY.match(entry["text"])
@@ -199,6 +218,7 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if name_index in paired or price_index in used:
             continue
         price_of[name_index] = price_value(prices[price_index])  # type: ignore[assignment]
+        price_box_of[name_index] = _digits_box(prices[price_index])
         paired.add(name_index)
         used.add(price_index)
 
@@ -223,6 +243,7 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if name_index in paired or price_index in used:
             continue
         price_of[name_index] = price_value(prices[price_index])  # type: ignore[assignment]
+        price_box_of[name_index] = _digits_box(prices[price_index])
         paired.add(name_index)
         used.add(price_index)
 
@@ -241,7 +262,7 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
             prefix_of[best[1]] = note["text"]
 
     # 一列有多個價格（小／中／大欄）：用價格欄正上方最近的短標題當規格名稱。
-    variants_of: dict[int, list[tuple[str, str | None]]] = {}
+    variants_of: dict[int, list[tuple[str, str | None, Any]]] = {}
     for name_index, chain in row_prices.items():
         if len(chain) < 2:
             continue
@@ -257,8 +278,10 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 labelled = []
                 break
             head = max(heads, key=lambda entry: entry["box"][3])
-            labelled.append((head["text"].strip("()（）"), price_value(prices[price_index])))
-        if labelled and len({label for label, _ in labelled}) == len(labelled):
+            labelled.append(
+                (head["text"].strip("()（）"), price_value(prices[price_index]), _digits_box(prices[price_index]))
+            )
+        if labelled and len({label for label, _, _ in labelled}) == len(labelled):
             variants_of[name_index] = labelled
             used.update(chain)
 
@@ -282,17 +305,27 @@ def pair_items(lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
         ):
             continue
         if name_index in variants_of:
-            for label, value in variants_of[name_index]:
-                items.append({"dish": f"{name['text']}（{label}）", "price": value, "category": ""})
+            for label, value, box in variants_of[name_index]:
+                items.append({
+                    "dish": f"{name['text']}（{label}）", "price": value, "category": "", "priceBox": box,
+                })
             continue
         category = ""
         for header in categories:
             if header["box"][1] <= name["box"][1]:
                 category = header["text"]
+        inline = name["inlinePrice"]
+        if inline is not None:
+            # 品名與價格同一行：價格是行尾那幾個字
+            raw = line_text = name["text"] + inline
+            box = _sub_box({"text": raw, "box": name["box"]}, len(line_text) - len(inline), len(line_text))
+        else:
+            box = price_box_of.get(name_index)
         items.append({
             "dish": prefix_of.get(name_index, "") + name["text"],
-            "price": name["inlinePrice"] if name["inlinePrice"] is not None else price_of.get(name_index),
+            "price": inline if inline is not None else price_of.get(name_index),
             "category": category,
+            "priceBox": box,
         })
     return items
 

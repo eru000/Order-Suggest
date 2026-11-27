@@ -1,0 +1,175 @@
+{
+  "items": [
+    {
+      "name": "切仔麵/米粉/粿條",
+      "price": 50
+    },
+    {
+      "name": "肉燥乾麵/米粉/粿條",
+      "price": 60
+    },
+    {
+      "name": "什錦麵/米粉/粿條",
+      "price": 130
+    },
+    {
+      "name": "排骨湯/乾麵",
+      "price": 130
+    },
+    {
+      "name": "豬腳湯/乾麵",
+      "price": 130
+    },
+    {
+      "name": "牛肉湯/河粉",
+      "price": 130
+    },
+    {
+      "name": "什錦粥",
+      "price": 130
+    },
+    {
+      "name": "虱目魚肚湯（小）",
+      "price": 90
+    },
+    {
+      "name": "虱目魚肚湯（中）",
+      "price": 180
+    },
+    {
+      "name": "虱目魚肚湯（大）",
+      "price": 270
+    },
+    {
+      "name": "蛤仔湯（小）",
+      "price": 90,
+      "true_price": 90,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          1613.2,
+          766.0,
+          1651.5,
+          793.0
+        ]
+      }
+    },
+    {
+      "name": "蛤仔湯（中）",
+      "price": 160
+    },
+    {
+      "name": "蛤仔湯（大）",
+      "price": 240
+    },
+    {
+      "name": "蚵仔湯（小）",
+      "price": 90,
+      "true_price": 90,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          618.0,
+          791.0,
+          658.0,
+          818.0
+        ]
+      }
+    },
+    {
+      "name": "蚵仔湯（中）",
+      "price": 160
+    },
+    {
+      "name": "蚵仔湯（大）",
+      "price": 240
+    },
+    {
+      "name": "魚片湯（小）",
+      "price": 90
+    },
+    {
+      "name": "魚片湯（中）",
+      "price": 160
+    },
+    {
+      "name": "魚片湯（大）",
+      "price": 240
+    },
+    {
+      "name": "菇蕈湯（小）",
+      "price": 90
+    },
+    {
+      "name": "菇蕈湯（中）",
+      "price": 160
+    },
+    {
+      "name": "菇蕈湯（大）",
+      "price": 240
+    },
+    {
+      "name": "魚丸湯（小）",
+      "price": 50
+    },
+    {
+      "name": "魚丸湯（中）",
+      "price": 100
+    },
+    {
+      "name": "魚丸湯（大）",
+      "price": 150,
+      "true_price": 150,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          771.2,
+          962.0,
+          823.0,
+          990.0
+        ]
+      }
+    },
+    {
+      "name": "青菜蛋花湯（小）",
+      "price": 50,
+      "true_price": 50,
+      "occlusion": {
+        "type": "glare",
+        "level": "partial",
+        "box": [
+          619.7,
+          1005.0,
+          659.1,
+          1032.0
+        ]
+      }
+    },
+    {
+      "name": "青菜蛋花湯（中）",
+      "price": 100
+    },
+    {
+      "name": "青菜蛋花湯（大）",
+      "price": 150
+    },
+    {
+      "name": "鮮海魚湯",
+      "price": null
+    },
+    {
+      "name": "何首烏養生湯(雞)",
+      "price": 180
+    },
+    {
+      "name": "原味麻油雞湯",
+      "price": 280
+    }
+  ],
+  "derivedFrom": "web_dalai_noodles_soups",
+  "treatment": "glare_partial",
+  "seed": 20261127
+}

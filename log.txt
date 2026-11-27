@@ -269,3 +269,19 @@ OCR 交叉複核（D 組）        65（34%）      3/4
 
 五、驗證
 單元測試 373 項全部通過，新增 7 項：版面配對規則與交叉複核標記，不需安裝 OCR 模型即可執行。結果檔為 evals/results/step5/ocr-dev.json、ocr-stress.json、cross-check-dev.json。
+
+2026-11-27｜節點 B（準備完成，待實測）　受控遮蔽實驗
+
+一、做法
+• evals/occlusion/make_variants.py：在開發原圖上，從「OCR 讀到的價格與真值相同」的品項中，以固定種子每張選 4 項，產生五種處理：mask_full（以周邊底色蓋住一位數字）、blur_partial、blur_full、glare_partial、glare_full（價格位置疊白色橢圓）。同一張原圖的五種處理作用於同一批品項。
+• 可用的原圖共 5 張（凱撒家宴、蔬醒、大來小館、名人堂、向宏），產生 25 張衍生圖，含 20 個價格位置。天成翠庭與六龜看板 OCR 無法提供可靠的價格位置，因此未納入。
+• 真值改寫：被處理的品項保留 true_price 與處理資訊；full 等級的期望價格改為 null（看不到就應回報未知），partial 等級保留原價。同樣輸入重跑兩次，25 張圖與真值的雜湊完全相同。
+• evals/occlusion/analyze.py：把每個被處理的價格分成四類：棄答、錯數字（full 等級即補值幻覺）、對數字、漏項；並以 OCR 交叉複核檢查錯數字有沒有被標記。
+
+二、人工檢查遮蔽效果（Claude 逐張看 3 倍放大預覽）
+• 第一版 mask 有錯：OCR 的價格框含「NT$」前綴，數字位置估錯，凱撒家宴的 $480、$520 根本沒被遮到，其他則一次遮兩位。改為只取數字本身的位置後重做，每個 mask_full 都至少完整蓋掉一位數字；少數留下細邊，例如「NT$ 18|」。部分遮蔽後仍像合法價格，例如「NT$68」（原價 680），正好是本實驗要測的情況。
+• 第一版 glare_full 為 96% 不透明，放大後仍隱約看得到數字，不符合「完全看不到」，改為中心完全不透明。blur_full 確認看不出數字。
+• 規劃要求的人工確認登錄尚待團隊執行；預覽圖在 evals/occlusion/dev/preview/。
+
+三、待執行
+在 Windows 執行 scripts/stepB_occlusion_dev.ps1，共 50 次 API 呼叫：B 組預設提示詞、C 組 VISION_PRICE_TEXT=1 各 25 張。完成後由 analyze.py 產出 B、C、D 三組的棄答率、補值率與交叉複核捕捉率。

@@ -1,0 +1,438 @@
+{
+  "seed": 20261127,
+  "itemsPerImage": 4,
+  "treatments": [
+    "mask_full",
+    "blur_partial",
+    "blur_full",
+    "glare_partial",
+    "glare_full"
+  ],
+  "split": "dev",
+  "cases": [
+    {
+      "case": "extra_caesar_jiayan",
+      "sourceSha256": "0ab06c09ab2242999a90271eb6e2b692946b1ce0733272984fdccf463cbce2d0",
+      "eligible": 9,
+      "targets": [
+        {
+          "name": "冰糖豬腳圈",
+          "truePrice": 480,
+          "priceText": "480",
+          "priceBox": [
+            2128.4,
+            1259.5,
+            2182.0,
+            1292.9
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "truePrice": 520,
+          "priceText": "520",
+          "priceBox": [
+            2128.4,
+            979.5,
+            2182.0,
+            1012.8
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "truePrice": 680,
+          "priceText": "680",
+          "priceBox": [
+            2128.4,
+            697.1,
+            2182.0,
+            730.4
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "truePrice": 520,
+          "priceText": "520",
+          "priceBox": [
+            2128.4,
+            885.3,
+            2182.0,
+            917.5
+          ],
+          "maskDigit": 1
+        }
+      ],
+      "variants": [
+        {
+          "name": "extra_caesar_jiayan__mask_full",
+          "imageSha256": "3b47b6ff8fec2851a7691743d18c972cce59bb8d4a18f7df3d36e033856e9ee3",
+          "truthSha256": "cd1e39d4f379e915a32e88830f7eef89b8c51644ad397fd7724d6bba0961c933"
+        },
+        {
+          "name": "extra_caesar_jiayan__blur_partial",
+          "imageSha256": "5faa0adb46cd15195868af13237f1503c6ac726d6d8971e62018a93c7268a773",
+          "truthSha256": "20efad7177565416d370650b20e69cfe45b6253f5f77db8304d6085908fe26e5"
+        },
+        {
+          "name": "extra_caesar_jiayan__blur_full",
+          "imageSha256": "95a221595b196dc73639897446a418fa99d12239a67cc53abfed1702a0fc5ab5",
+          "truthSha256": "b43c1139985328668a9acb242a918de543c9cb8b245358f761e6ba875f31449c"
+        },
+        {
+          "name": "extra_caesar_jiayan__glare_partial",
+          "imageSha256": "5869d183d61706db919449bd4e9f724146e40ac066897e67a572e42b2f06a236",
+          "truthSha256": "d130bb52580dcac6df9f30f68629d27b742b6d893d7260f2608198a60ee3f224"
+        },
+        {
+          "name": "extra_caesar_jiayan__glare_full",
+          "imageSha256": "07458f8f7c07d127ae5cbececec3cdf9cc377f1a1f9aa9e7bc5e2801befad377",
+          "truthSha256": "b1bf413ced5668265b648c9ffab1de3afad76b9e04532f58f49c1d107445247f"
+        }
+      ]
+    },
+    {
+      "case": "extra_cosmos_jade",
+      "sourceSha256": "8727af0f670a81c64038d76877964172254f9839f149ce917929faf26b10ec5e",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    },
+    {
+      "case": "liugui_board",
+      "sourceSha256": "83c20bdfc882537eaee012321de07f3b05d196511dafa9082ea107d87ad01afb",
+      "eligible": 0,
+      "targets": [],
+      "variants": []
+    },
+    {
+      "case": "vege_muffins",
+      "sourceSha256": "1ee9ba449dd1e942481c4b0d675e3c9e71f84c6491ce1b2b74822183ad6827b7",
+      "eligible": 9,
+      "targets": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "truePrice": 85,
+          "priceText": "85",
+          "priceBox": [
+            798.0,
+            140.0,
+            843.0,
+            174.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "truePrice": 120,
+          "priceText": "120",
+          "priceBox": [
+            1614.0,
+            215.0,
+            1674.0,
+            247.0
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "truePrice": 85,
+          "priceText": "85",
+          "priceBox": [
+            799.0,
+            214.0,
+            842.0,
+            247.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "truePrice": 100,
+          "priceText": "100",
+          "priceBox": [
+            1614.0,
+            363.0,
+            1674.0,
+            395.0
+          ],
+          "maskDigit": 1
+        }
+      ],
+      "variants": [
+        {
+          "name": "vege_muffins__mask_full",
+          "imageSha256": "f1bb7ce526abce520d8ead4f6c136c4c261916a19fa6b66c1286d1355c2d4f1a",
+          "truthSha256": "06b9e187597cc9c58c614d0a9550f329a59f06ef50ee573c92eef782213b5a66"
+        },
+        {
+          "name": "vege_muffins__blur_partial",
+          "imageSha256": "cccef5e2c90b53f21a5cff325d31000ff961a42574cf6b32c51c1519c5363617",
+          "truthSha256": "ea2978976e849b780db7320158813aa592dbd3389463cefee174b5a4f2897997"
+        },
+        {
+          "name": "vege_muffins__blur_full",
+          "imageSha256": "94fa5000e69b88250063f8bfc20a4b74e554727b8b6fdcd91949e8f624f6a116",
+          "truthSha256": "5ab6ed46dbde7634a5509b1ec7d54306764c8101b43ab6e40c61d0b0b94e00c6"
+        },
+        {
+          "name": "vege_muffins__glare_partial",
+          "imageSha256": "3afe7a7173fe7e4d8f6eda60e624f202d131b743b6dcc3315b7b9261c077610a",
+          "truthSha256": "7e93a5a360873911c1c651f4e3a7d0858e6b5463c0423f869b583f4f7f6a29d5"
+        },
+        {
+          "name": "vege_muffins__glare_full",
+          "imageSha256": "2a9f49ce9a68dbb1f063d14f35df6a033916ef4c718731c25673687c0f08b338",
+          "truthSha256": "e80c90450c143ee814fa50713275ad46f765629cf45b64bd4af951f371030160"
+        }
+      ]
+    },
+    {
+      "case": "web_dalai_noodles_soups",
+      "sourceSha256": "230bbd24749cfb43d296a7be6a12be774bb9738ba7c785eca2706dc2bc84facc",
+      "eligible": 30,
+      "targets": [
+        {
+          "name": "蚵仔湯（小）",
+          "truePrice": 90,
+          "priceText": "90",
+          "priceBox": [
+            618.0,
+            791.0,
+            658.0,
+            818.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "truePrice": 90,
+          "priceText": "90",
+          "priceBox": [
+            1613.2,
+            766.0,
+            1651.5,
+            793.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "truePrice": 50,
+          "priceText": "50",
+          "priceBox": [
+            619.7,
+            1005.0,
+            659.1,
+            1032.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "魚丸湯（大）",
+          "truePrice": 150,
+          "priceText": "150",
+          "priceBox": [
+            771.2,
+            962.0,
+            823.0,
+            990.0
+          ],
+          "maskDigit": 2
+        }
+      ],
+      "variants": [
+        {
+          "name": "web_dalai_noodles_soups__mask_full",
+          "imageSha256": "0a44974c90c98093978697b61a9b1cdb299f96eb8895a7c7a8abf15a553b8bb5",
+          "truthSha256": "11f56f9736e9ad703adb34e95979b8815365ee10bd2182470674bf4c3fac30c1"
+        },
+        {
+          "name": "web_dalai_noodles_soups__blur_partial",
+          "imageSha256": "f243d0b6aa7e4d6f0d8c794d37089b61ba8f31f67f00336639b038dc8cfd5579",
+          "truthSha256": "e48ca2d8ae2a57960031b1f9a5bcb144154eb01bfe9b37a9c244120fce1090cb"
+        },
+        {
+          "name": "web_dalai_noodles_soups__blur_full",
+          "imageSha256": "f8d2e6a81ba77c61f25da0a78c9553e5f1647f864caaebb495dcef7464f0563d",
+          "truthSha256": "7d3d15cce3c740b75056ae399bde70f58cbf2eda09b10d931bbcd27927e1438c"
+        },
+        {
+          "name": "web_dalai_noodles_soups__glare_partial",
+          "imageSha256": "4755ee22243fe8cddcf1c59e3be8ad3ecf9a587167acb8d9d9c4f270c73cfad7",
+          "truthSha256": "643785658c3198efe2bf2c9fc429591f11b908dae62ec745bb35c6da992ba6f2"
+        },
+        {
+          "name": "web_dalai_noodles_soups__glare_full",
+          "imageSha256": "ff903b71fabf2535aeb9deaa07c7fa565348756a776b812cf83db0e186e58208",
+          "truthSha256": "6b49856f4dd1ecde14a30d6d06f5df7840770bc2caeab460ed00cd059821494b"
+        }
+      ]
+    },
+    {
+      "case": "web_fhgh_sets",
+      "sourceSha256": "10ebde12b07a93c5145a606739118068d1f1e45a4c8e8b2bf7378f0ce7c9ec75",
+      "eligible": 4,
+      "targets": [
+        {
+          "name": "一號餐",
+          "truePrice": 180,
+          "priceText": "180",
+          "priceBox": [
+            761.5,
+            473.0,
+            811.0,
+            507.0
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "三號餐",
+          "truePrice": 230,
+          "priceText": "230",
+          "priceBox": [
+            761.0,
+            1148.0,
+            810.0,
+            1183.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "五號餐",
+          "truePrice": 350,
+          "priceText": "350",
+          "priceBox": [
+            1702.5,
+            841.0,
+            1751.0,
+            872.0
+          ],
+          "maskDigit": 2
+        },
+        {
+          "name": "四號餐",
+          "truePrice": 230,
+          "priceText": "230",
+          "priceBox": [
+            1702.5,
+            475.0,
+            1751.0,
+            506.0
+          ],
+          "maskDigit": 1
+        }
+      ],
+      "variants": [
+        {
+          "name": "web_fhgh_sets__mask_full",
+          "imageSha256": "32887d183fabd82ec05661a26d3e6a9909a22f6a3665f17cc7502de508909c75",
+          "truthSha256": "216dc5855edfba36585eac83ece4c0d220c3b8fa3db15741e70e548d06eef12c"
+        },
+        {
+          "name": "web_fhgh_sets__blur_partial",
+          "imageSha256": "6db1ab4e881bbb401acd1b1000c54408dda4a3943456fdf932f997eca80452e7",
+          "truthSha256": "dc4615f05cd74cbf209157fab3e70a7cbf2849b9fd69cc0e8f36cba98ce8f7be"
+        },
+        {
+          "name": "web_fhgh_sets__blur_full",
+          "imageSha256": "62213fe7cb4b7766ac1943d19ac6c5dfa34c13396f2a65e797eaf9a51ec5a35d",
+          "truthSha256": "bb6d9d0ee6f600363db965821de7432f1b8c4b3fb4e913ab2ff24bcc3c2e21f0"
+        },
+        {
+          "name": "web_fhgh_sets__glare_partial",
+          "imageSha256": "e5cb402384ae3c011d8997ce38087d034796a6e2825e5bb75ea2927da62240ab",
+          "truthSha256": "333aedbf538d3803107beef8ae57a95763a74e2895f0e09e43efaa665c018609"
+        },
+        {
+          "name": "web_fhgh_sets__glare_full",
+          "imageSha256": "01e5a3764b273fca604e8bdfd4053113ee8b868d493e4a1843c59d1e2979d834",
+          "truthSha256": "02cc72113e25cd0ccd6b0865a26b53b26d4c12bc659919ebfe89bac2c51193e4"
+        }
+      ]
+    },
+    {
+      "case": "xianghong",
+      "sourceSha256": "0bd248299bb475b2b3031f398c3507c8376606448e8cd007b324d0564aeafcbe",
+      "eligible": 20,
+      "targets": [
+        {
+          "name": "油豆腐/3塊",
+          "truePrice": 20,
+          "priceText": "20",
+          "priceBox": [
+            179.0,
+            714.0,
+            206.0,
+            737.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "肉羹飯",
+          "truePrice": 55,
+          "priceText": "55",
+          "priceBox": [
+            182.0,
+            489.0,
+            208.0,
+            515.0
+          ],
+          "maskDigit": 0
+        },
+        {
+          "name": "肉羹麵",
+          "truePrice": 55,
+          "priceText": "55",
+          "priceBox": [
+            369.0,
+            445.0,
+            397.0,
+            472.0
+          ],
+          "maskDigit": 1
+        },
+        {
+          "name": "魯蛋",
+          "truePrice": 15,
+          "priceText": "15",
+          "priceBox": [
+            178.0,
+            667.0,
+            209.0,
+            693.0
+          ],
+          "maskDigit": 0
+        }
+      ],
+      "variants": [
+        {
+          "name": "xianghong__mask_full",
+          "imageSha256": "c97bf17513c2b98785e9258a8da90befcab76d1fbb526d5dd5904ab576c5f2be",
+          "truthSha256": "7d02f104518ffa5bdec2578e839ddeec2518f2e0c2fd1d2d69bf269af31c27bb"
+        },
+        {
+          "name": "xianghong__blur_partial",
+          "imageSha256": "1c5b1280808de768659c91870b8d809c1e8d4fb8d190d3d97f6c4ea4f4598244",
+          "truthSha256": "90bea1e3c9470fdf3b652ad196693aa3f08139e50dfab664638b55f2082c63d5"
+        },
+        {
+          "name": "xianghong__blur_full",
+          "imageSha256": "cff8f90efd410d7aca61d8ac212bcffe3a1eb2f0cd45f48a08e48483689fbb36",
+          "truthSha256": "6d710b8e7cec9e057d6b2bd146fc3cc0143122df7f479accd31d9db7dba67c89"
+        },
+        {
+          "name": "xianghong__glare_partial",
+          "imageSha256": "b280f52f1e8e766d9ef6f9f87f021a514a673c0a9f62066801757c1c03da7ff8",
+          "truthSha256": "94bb82a8ceecb62961c22a2beeda476cf8c25ca98395b8cdcdfb3a0e5d46d1fb"
+        },
+        {
+          "name": "xianghong__glare_full",
+          "imageSha256": "1c1308f930d07d105fd5ce649017a2b9e08de16053de51a7c61c08bda3007a4d",
+          "truthSha256": "0f3e3eadaf643832382d3cb9b02ce56fd184d56d717596f123a9cc2566c36c5b"
+        }
+      ]
+    }
+  ]
+}
