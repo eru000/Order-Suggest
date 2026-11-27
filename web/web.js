@@ -1427,8 +1427,10 @@
         const info = item.priceInfo || {};
         const reviewPrice = ['unreadable', 'range', 'multi'].includes(info.status);
         // 看不清、範圍、一格多價不轉成單價；把原文秀出來讓人對照照片修正
+        // 價格遠低於同類品項：可能是一位數被遮住或反光（680 讀成 68），請對照照片
+        const outlier = ((item.review || {}).flags || []).includes('price_outlier');
         const priceText = hasPrice
-          ? `$${Math.round(item.price)}`
+          ? `$${Math.round(item.price)}${outlier ? '（偏低，請對照照片）' : ''}`
           : (reviewPrice ? `待確認：${escapeHtml(String(info.raw || ''))}` : '價格不明');
         // 依序浮現的延遲索引封頂在 6，長菜單不會讓最後幾項等太久
         const delayIndex = Math.min(counter - 1, 6);
@@ -1436,7 +1438,7 @@
           `<div class="vision-item" style="--i:${delayIndex}">` +
           `<span class="vision-item-no">${counter}</span>` +
           `<span class="vision-item-name">${escapeHtml(item.name)}${renderMenuSpice(item)}</span>` +
-          `<span class="vision-item-price${hasPrice ? '' : ' missing'}">${priceText}</span>` +
+          `<span class="vision-item-price${hasPrice && !outlier ? '' : ' missing'}">${priceText}</span>` +
           `</div>`
         );
       });

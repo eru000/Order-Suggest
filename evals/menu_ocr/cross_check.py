@@ -22,39 +22,16 @@ import ocr_baseline
 from run_eval import DEFAULT_MATCH_THRESHOLD, _flatten_result, _match_score
 
 
-# 低於參考中位數的這個比例就標記。2026-11-27 在開發資料掃描 0.15～0.5：0.15～0.25 對 192 個
-# 讀對的品項零誤報，0.3 起開始誤報（向宏白飯 $15）；取零誤報範圍內最寬鬆的 0.25。
-OUTLIER_RATIO = 0.25
-OUTLIER_MIN_PEERS = 3
+# 合理性檢查與產品共用同一份實作與門檻（src/menu_review.py）。門檻由
+# evals/review_policy/calibrate.py 以 Conformal Risk Control 校準（α＝0.10 → λ̂＝0.10）。
+# 2026-11-27 早先的遮蔽分析用的是 0.25（開發資料零誤報的最寬值），紀錄見 log.txt。
+from menu_review import REVIEW_OUTLIER_RATIO as OUTLIER_RATIO  # noqa: E402
+from menu_review import outlier_scores  # noqa: E402,F401
 
 
 def price_outliers(vlm_result: dict[str, Any], ratio: float = OUTLIER_RATIO) -> dict[int, float]:
-    """回傳 {id(item): 參考中位數}，列出價格明顯偏低的品項。
-
-    參考值優先用同分類「其他」品項的價格中位數（至少 3 個），不夠就用整份菜單。
-    """
-    import statistics
-
-    categories = [c for c in vlm_result.get("categories", []) if isinstance(c, dict)]
-    all_prices = [
-        (item, _number(item.get("price"))) for c in categories for item in c.get("items", [])
-    ]
-    flagged: dict[int, float] = {}
-    for category in categories:
-        items = category.get("items", [])
-        for item in items:
-            price = _number(item.get("price"))
-            if price is None or price < 0:
-                continue
-            peers = [p for other, p in ((o, _number(o.get("price"))) for o in items) if other is not item and p]
-            if len(peers) < OUTLIER_MIN_PEERS:
-                peers = [p for other, p in all_prices if other is not item and p]
-            if len(peers) < OUTLIER_MIN_PEERS:
-                continue
-            reference = statistics.median(peers)
-            if price < ratio * reference:
-                flagged[id(item)] = reference
-    return flagged
+    """回傳 {id(item): 參考中位數}，列出價格低於參考中位數 ratio 倍的品項。"""
+    return {key: ref for key, (score, ref) in outlier_scores(vlm_result).items() if score < ratio}
 
 
 def _number(value: Any) -> float | None:

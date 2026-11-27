@@ -24,6 +24,7 @@ except ImportError:
     pass
 
 from menu_price import parse_price
+from menu_review import apply_price_review
 from observability import emit
 from ollama_fuc import SPICE_OCR_RULE, vision_chat
 
@@ -436,20 +437,28 @@ def _price_rule() -> str:
 def review_counts(result: Dict[str, Any]) -> Dict[str, int]:
     """需要人看一眼的品項數（規劃 3.6）。
 
-    價格看不清、是範圍、或一格多價沒拆開的品項，加上未處理的同名不同價衝突。
+    價格看不清、是範圍、一格多價沒拆開，或價格明顯偏低（menu_review 的合理性檢查）的品項，
+    加上未處理的同名不同價衝突。
     沒有價格（missing）不算：確認畫面本來就會顯示「價格不明」。
     """
-    flagged = 0
+    flagged = outliers = 0
     for category in result.get("categories", []) or []:
         for item in category.get("items", []) if isinstance(category, dict) else []:
             info = item.get("priceInfo") if isinstance(item, dict) else None
-            if isinstance(info, dict) and info.get("status") in {"unreadable", "range", "multi"}:
+            review = item.get("review") if isinstance(item, dict) else None
+            is_outlier = isinstance(review, dict) and "price_outlier" in review.get("flags", [])
+            outliers += is_outlier
+            if (isinstance(info, dict) and info.get("status") in {"unreadable", "range", "multi"}) or is_outlier:
                 flagged += 1
     open_conflicts = sum(
         1 for conflict in result.get("conflicts", []) or []
         if isinstance(conflict, dict) and not conflict.get("resolved")
     )
-    return {"needsReviewCount": flagged + open_conflicts, "ambiguousPriceCount": flagged}
+    return {
+        "needsReviewCount": flagged + open_conflicts,
+        "ambiguousPriceCount": flagged - outliers,
+        "priceOutlierCount": outliers,
+    }
 
 
 def _tile_prompt(
@@ -673,6 +682,7 @@ def apply_manual_correction(result: Dict[str, Any], instruction: str) -> Dict[st
         quality["itemCount"] = len(refs)
         quality["priceCoverage"] = round(priced / len(refs), 3) if refs else 0.0
         quality["humanReviewed"] = True
+        apply_price_review(result)
         quality.update(review_counts(result))
         quality["manualCorrectionCount"] = len(corrections) if isinstance(corrections, list) else 1
     if operation in {"price", "rename"}:
@@ -780,6 +790,7 @@ def analyze_menu_image(
             "sourceBlocks": [{"id": "full", "box": [0, 0, 0, 0]}],
         })
         result["confidence"] = result["quality"]["score"]
+        apply_price_review(result)
         result["quality"].update(review_counts(result))
         return result
 
@@ -821,6 +832,8 @@ def analyze_menu_image(
             raise ValueError("模型回應無法解析成菜單資料，請再試一次")
         raise ValueError("照片中沒有辨識到可用的菜單或菜色")
 
+    # 價格合理性檢查：門檻以 Conformal Risk Control 在開發資料校準（見 menu_review）
+    apply_price_review(result)
     detected = str(result.get("detected_restaurant_name") or "").strip()
     item_count = sum(len(category["items"]) for category in categories)
     priced = sum(item.get("price") is not None for category in categories for item in category["items"])

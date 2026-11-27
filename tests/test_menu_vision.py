@@ -135,7 +135,7 @@ class MenuVisionTests(unittest.TestCase):
             {"dish": "乾麵", "price": 45},
             {"dish": "乾麵", "price": 55},
         ]}]})
-        self.assertEqual(menu_vision.review_counts(result), {"needsReviewCount": 4, "ambiguousPriceCount": 3})
+        self.assertEqual(menu_vision.review_counts(result), {"needsReviewCount": 4, "ambiguousPriceCount": 3, "priceOutlierCount": 0})
         result["conflicts"][0]["resolved"] = True
         self.assertEqual(menu_vision.review_counts(result)["needsReviewCount"], 3)
 

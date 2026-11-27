@@ -100,7 +100,7 @@ class PriceOutlierTest(unittest.TestCase):
     def test_truncated_price_is_flagged(self):
         from cross_check import price_outliers
         menu = self.menu(680, 520, 480, 68, 560)
-        flagged = price_outliers(menu)
+        flagged = price_outliers(menu, ratio=0.25)
         names = [i["name"] for i in menu["categories"][0]["items"] if id(i) in flagged]
         self.assertEqual(names, ["菜3"])
 
@@ -111,7 +111,7 @@ class PriceOutlierTest(unittest.TestCase):
 
     def test_normal_cheap_side_dish_is_not_flagged(self):
         from cross_check import price_outliers
-        self.assertEqual(price_outliers(self.menu(15, 50, 55, 45, 65)), {})
+        self.assertEqual(price_outliers(self.menu(15, 50, 55, 45, 65), ratio=0.25), {})
 
     def test_needs_enough_peers(self):
         from cross_check import price_outliers

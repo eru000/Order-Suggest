@@ -1,0 +1,264 @@
+{
+  "source": "evals/results/step6/llm-live-20261127-120947.json",
+  "summary": {
+    "cases": 10,
+    "llmFailures": 0,
+    "llmMedianSeconds": 4.55,
+    "template": {
+      "itemCount": 42,
+      "itemsMentioned": 42,
+      "unsupportedNumbers": 0,
+      "inventedDishes": 0,
+      "chars": 3464
+    },
+    "llm": {
+      "itemCount": 42,
+      "itemsMentioned": 22,
+      "unsupportedNumbers": 8,
+      "inventedDishes": 5,
+      "chars": 1579
+    }
+  },
+  "cases": [
+    {
+      "restaurant": "大肥鵝",
+      "text": "四個人 預算3000",
+      "template": {
+        "itemCount": 6,
+        "itemsMentioned": 6,
+        "moneyMentions": 11,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 396
+      },
+      "llm": {
+        "itemCount": 6,
+        "itemsMentioned": 4,
+        "moneyMentions": 1,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 124
+      },
+      "llmError": null,
+      "llmSeconds": 3.52
+    },
+    {
+      "restaurant": "大肥鵝",
+      "text": "兩個人 預算1000 要飲料",
+      "template": {
+        "itemCount": 4,
+        "itemsMentioned": 4,
+        "moneyMentions": 9,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 330
+      },
+      "llm": {
+        "itemCount": 4,
+        "itemsMentioned": 3,
+        "moneyMentions": 11,
+        "unsupportedNumbers": [
+          180.0,
+          250.0
+        ],
+        "inventedDishes": [
+          "鳳梨蘋果汁",
+          "凍檸茶"
+        ],
+        "chars": 155
+      },
+      "llmError": null,
+      "llmSeconds": 4.9
+    },
+    {
+      "restaurant": "大肥鵝",
+      "text": "六個人 預算5000 不吃牛",
+      "template": {
+        "itemCount": 9,
+        "itemsMentioned": 9,
+        "moneyMentions": 14,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 512
+      },
+      "llm": {
+        "itemCount": 9,
+        "itemsMentioned": 7,
+        "moneyMentions": 4,
+        "unsupportedNumbers": [
+          3000.0,
+          3600.0
+        ],
+        "inventedDishes": [],
+        "chars": 169
+      },
+      "llmError": null,
+      "llmSeconds": 5.64
+    },
+    {
+      "restaurant": "斗六當歸鴨",
+      "text": "一個人 預算100",
+      "template": {
+        "itemCount": 3,
+        "itemsMentioned": 3,
+        "moneyMentions": 6,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 263
+      },
+      "llm": {
+        "itemCount": 3,
+        "itemsMentioned": 3,
+        "moneyMentions": 7,
+        "unsupportedNumbers": [
+          60.0,
+          66.0
+        ],
+        "inventedDishes": [],
+        "chars": 141
+      },
+      "llmError": null,
+      "llmSeconds": 4.02
+    },
+    {
+      "restaurant": "斗六當歸鴨",
+      "text": "兩個人 預算300 不吃鴨",
+      "template": {
+        "itemCount": 4,
+        "itemsMentioned": 4,
+        "moneyMentions": 8,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 298
+      },
+      "llm": {
+        "itemCount": 4,
+        "itemsMentioned": 1,
+        "moneyMentions": 9,
+        "unsupportedNumbers": [],
+        "inventedDishes": [
+          "當歸高麗菜湯",
+          "松阪豬肉飯"
+        ],
+        "chars": 206
+      },
+      "llmError": null,
+      "llmSeconds": 6.99
+    },
+    {
+      "restaurant": "奔頂牛排 東海",
+      "text": "兩個人 預算1000",
+      "template": {
+        "itemCount": 2,
+        "itemsMentioned": 2,
+        "moneyMentions": 7,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 245
+      },
+      "llm": {
+        "itemCount": 2,
+        "itemsMentioned": 1,
+        "moneyMentions": 5,
+        "unsupportedNumbers": [
+          600.0,
+          310.0
+        ],
+        "inventedDishes": [
+          "香煎雞排"
+        ],
+        "chars": 98
+      },
+      "llmError": null,
+      "llmSeconds": 4.55
+    },
+    {
+      "restaurant": "森森燒肉 台中中科店",
+      "text": "兩個人 預算1500",
+      "template": {
+        "itemCount": 3,
+        "itemsMentioned": 3,
+        "moneyMentions": 8,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 345
+      },
+      "llm": {
+        "itemCount": 3,
+        "itemsMentioned": 0,
+        "moneyMentions": 3,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 131
+      },
+      "llmError": null,
+      "llmSeconds": 2.49
+    },
+    {
+      "restaurant": "森森燒肉 台中中科店",
+      "text": "一個人 預算300 不吃牛",
+      "template": {
+        "itemCount": 2,
+        "itemsMentioned": 2,
+        "moneyMentions": 7,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 288
+      },
+      "llm": {
+        "itemCount": 2,
+        "itemsMentioned": 0,
+        "moneyMentions": 6,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 191
+      },
+      "llmError": null,
+      "llmSeconds": 4.8
+    },
+    {
+      "restaurant": "森森燒肉 台中中科店",
+      "text": "四個人 預算2000",
+      "template": {
+        "itemCount": 5,
+        "itemsMentioned": 5,
+        "moneyMentions": 10,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 459
+      },
+      "llm": {
+        "itemCount": 5,
+        "itemsMentioned": 0,
+        "moneyMentions": 7,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 183
+      },
+      "llmError": null,
+      "llmSeconds": 3.19
+    },
+    {
+      "restaurant": "大肥鵝",
+      "text": "兩個人 預算1200",
+      "template": {
+        "itemCount": 4,
+        "itemsMentioned": 4,
+        "moneyMentions": 9,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 328
+      },
+      "llm": {
+        "itemCount": 4,
+        "itemsMentioned": 3,
+        "moneyMentions": 7,
+        "unsupportedNumbers": [],
+        "inventedDishes": [],
+        "chars": 181
+      },
+      "llmError": null,
+      "llmSeconds": 3.36
+    }
+  ]
+}

@@ -1,0 +1,5560 @@
+{
+  "n": 44,
+  "lambdas": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6
+  ],
+  "grid": [
+    {
+      "lambda": 0.0,
+      "useOcr": false,
+      "risk": 0.09090909090909091,
+      "flagRate": 0.0,
+      "flagged": 0,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 13
+    },
+    {
+      "lambda": 0.05,
+      "useOcr": false,
+      "risk": 0.08712121212121211,
+      "flagRate": 0.0016891891891891893,
+      "flagged": 1,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 12
+    },
+    {
+      "lambda": 0.1,
+      "useOcr": false,
+      "risk": 0.056818181818181816,
+      "flagRate": 0.010135135135135136,
+      "flagged": 6,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 7
+    },
+    {
+      "lambda": 0.15,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.016891891891891893,
+      "flagged": 10,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.2,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.016891891891891893,
+      "flagged": 10,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.25,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.016891891891891893,
+      "flagged": 10,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.3,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.02533783783783784,
+      "flagged": 15,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.35,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.04054054054054054,
+      "flagged": 24,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.4,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.05067567567567568,
+      "flagged": 30,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.45,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.05405405405405406,
+      "flagged": 32,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.5,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.06418918918918919,
+      "flagged": 38,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.55,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.06418918918918919,
+      "flagged": 38,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.6,
+      "useOcr": false,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.11148648648648649,
+      "flagged": 66,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.0,
+      "useOcr": true,
+      "risk": 0.041666666666666664,
+      "flagRate": 0.1891891891891892,
+      "flagged": 112,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 8
+    },
+    {
+      "lambda": 0.05,
+      "useOcr": true,
+      "risk": 0.03787878787878787,
+      "flagRate": 0.19087837837837837,
+      "flagged": 113,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 7
+    },
+    {
+      "lambda": 0.1,
+      "useOcr": true,
+      "risk": 0.01515151515151515,
+      "flagRate": 0.19763513513513514,
+      "flagged": 117,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 3
+    },
+    {
+      "lambda": 0.15,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.20270270270270271,
+      "flagged": 120,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.2,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.20270270270270271,
+      "flagged": 120,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.25,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.20270270270270271,
+      "flagged": 120,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.3,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.21114864864864866,
+      "flagged": 125,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.35,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.22635135135135134,
+      "flagged": 134,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.4,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.23648648648648649,
+      "flagged": 140,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.45,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.23986486486486486,
+      "flagged": 142,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.5,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.25,
+      "flagged": 148,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.55,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.25,
+      "flagged": 148,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    },
+    {
+      "lambda": 0.6,
+      "useOcr": true,
+      "risk": 0.0,
+      "flagRate": 0.2972972972972973,
+      "flagged": 176,
+      "items": 592,
+      "errors": 86,
+      "missedErrors": 0
+    }
+  ],
+  "decisions": {
+    "0.05": {
+      "riskBound": 0.0284,
+      "perPolicy": {
+        "plausibility": null,
+        "plausibility+ocr": {
+          "lambda": 0.1,
+          "useOcr": true,
+          "risk": 0.01515151515151515,
+          "flagRate": 0.19763513513513514,
+          "flagged": 117,
+          "items": 592,
+          "errors": 86,
+          "missedErrors": 3
+        }
+      },
+      "chosen": {
+        "lambda": 0.1,
+        "useOcr": true,
+        "risk": 0.01515151515151515,
+        "flagRate": 0.19763513513513514,
+        "flagged": 117,
+        "items": 592,
+        "errors": 86,
+        "missedErrors": 3
+      }
+    },
+    "0.1": {
+      "riskBound": 0.0795,
+      "perPolicy": {
+        "plausibility": {
+          "lambda": 0.1,
+          "useOcr": false,
+          "risk": 0.056818181818181816,
+          "flagRate": 0.010135135135135136,
+          "flagged": 6,
+          "items": 592,
+          "errors": 86,
+          "missedErrors": 7
+        },
+        "plausibility+ocr": {
+          "lambda": 0.0,
+          "useOcr": true,
+          "risk": 0.041666666666666664,
+          "flagRate": 0.1891891891891892,
+          "flagged": 112,
+          "items": 592,
+          "errors": 86,
+          "missedErrors": 8
+        }
+      },
+      "chosen": {
+        "lambda": 0.1,
+        "useOcr": false,
+        "risk": 0.056818181818181816,
+        "flagRate": 0.010135135135135136,
+        "flagged": 6,
+        "items": 592,
+        "errors": 86,
+        "missedErrors": 7
+      }
+    },
+    "0.2": {
+      "riskBound": 0.1818,
+      "perPolicy": {
+        "plausibility": {
+          "lambda": 0.0,
+          "useOcr": false,
+          "risk": 0.09090909090909091,
+          "flagRate": 0.0,
+          "flagged": 0,
+          "items": 592,
+          "errors": 86,
+          "missedErrors": 13
+        },
+        "plausibility+ocr": {
+          "lambda": 0.0,
+          "useOcr": true,
+          "risk": 0.041666666666666664,
+          "flagRate": 0.1891891891891892,
+          "flagged": 112,
+          "items": 592,
+          "errors": 86,
+          "missedErrors": 8
+        }
+      },
+      "chosen": {
+        "lambda": 0.0,
+        "useOcr": false,
+        "risk": 0.09090909090909091,
+        "flagRate": 0.0,
+        "flagged": 0,
+        "items": 592,
+        "errors": 86,
+        "missedErrors": 13
+      }
+    }
+  },
+  "images": [
+    {
+      "key": "dev__extra_caesar_jiayan",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3077,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "dev__extra_cosmos_jade",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.25,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "dev__liugui_board",
+      "items": [
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "dev__vege_muffins",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4118,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1765,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "dev__web_dalai_noodles_soups",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3846,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4615,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1613,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.7419,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1613,
+          "ocrFlags": []
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.8065,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "dev__web_fhgh_sets",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7826,
+          "ocrFlags": []
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9565,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "三號餐",
+          "price": 230.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0222,
+          "ocrFlags": []
+        },
+        {
+          "name": "四號餐",
+          "price": 230.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0222,
+          "ocrFlags": []
+        },
+        {
+          "name": "五號餐",
+          "price": 350.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5556,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "dev__xianghong",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉飯（外帶）",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "小魯肉飯（外帶）",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉飯（內用）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9091,
+          "ocrFlags": []
+        },
+        {
+          "name": "小魯肉飯（內用）",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7273,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹飯",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.2727,
+          "ocrFlags": []
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1818,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯蛋",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4286,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": 20.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5714,
+          "ocrFlags": []
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": []
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.75,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3333,
+          "ocrFlags": []
+        },
+        {
+          "name": "75套餐（限內用）",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 2.5,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "85套餐（限內用）",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 2.8333,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stress__extra_caesar_jiayan_glare",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3077,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__extra_caesar_jiayan_lowres",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3077,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗燉子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stress__extra_caesar_jiayan_tilt",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3077,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 480.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "四季肥腸",
+          "price": 420.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "干絲肉絲",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__extra_cosmos_jade_glare",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.25,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__extra_cosmos_jade_lowres",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.25,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__extra_cosmos_jade_tilt",
+      "items": [
+        {
+          "name": "香蘋雪蓮子",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.25,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "芋香西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "椰果西米露",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "杏仁凍豆腐",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "菊花茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "烏龍茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "香片茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "鐵觀音茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菊花普洱茶",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__liugui_board_glare",
+      "items": [
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stress__liugui_board_lowres",
+      "items": [
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stress__liugui_board_tilt",
+      "items": [
+        {
+          "name": "鍋燒麵",
+          "price": 70.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "什錦麵",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "炒板條",
+          "price": 80.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "stress__vege_muffins_glare",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4118,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1765,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__vege_muffins_lowres",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鰹魚滿福堡",
+          "price": 85.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4118,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1765,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "stress__vege_muffins_tilt",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4118,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1765,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "occl__extra_caesar_jiayan__blur_full",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__extra_caesar_jiayan__blur_partial",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__extra_caesar_jiayan__glare_full",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__extra_caesar_jiayan__glare_partial",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.2308,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3077,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0769,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__extra_caesar_jiayan__mask_full",
+      "items": [
+        {
+          "name": "冠軍脆皮德國豬腳",
+          "price": 1680.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 3.36,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "鮑魚紅燒肉",
+          "price": 68.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.1308,
+          "ocrFlags": []
+        },
+        {
+          "name": "無錫排骨",
+          "price": 560.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.12,
+          "ocrFlags": []
+        },
+        {
+          "name": "鳳梨糖醋骨",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "燈籠尖椒松阪豬",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "肥腸茄香煲",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.04,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑棗嫩子排",
+          "price": 520.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.04,
+          "ocrFlags": []
+        },
+        {
+          "name": "冰糖豬腳圈",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四季肥腸",
+          "price": 480.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9231,
+          "ocrFlags": []
+        },
+        {
+          "name": "干絲肉絲",
+          "price": 420.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8077,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__vege_muffins__blur_full",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__vege_muffins__blur_partial",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__vege_muffins__glare_full",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__vege_muffins__glare_partial",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 120.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4118,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1765,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__vege_muffins__mask_full",
+      "items": [
+        {
+          "name": "日式咖哩朱滿福堡",
+          "price": 8.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.0941,
+          "ocrFlags": []
+        },
+        {
+          "name": "椒麻堅果辣朱滿福堡",
+          "price": 8.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.0941,
+          "ocrFlags": []
+        },
+        {
+          "name": "黑椒扭小排滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮪余滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "薯餅起士滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "經典植物朱肉滿福堡",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "松露野菇扭排滿福堡",
+          "price": 12.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.1412,
+          "ocrFlags": []
+        },
+        {
+          "name": "義式塔塔G滿福堡",
+          "price": 105.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2353,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙醬植物朱滿福堡",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "雙層起司扭滿福堡",
+          "price": 110.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2941,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_dalai_noodles_soups__blur_full",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3846,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4615,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6875,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_dalai_noodles_soups__blur_partial",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3846,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4615,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6875,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_dalai_noodles_soups__glare_full",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3846,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4615,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6875,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_dalai_noodles_soups__glare_partial",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3846,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4615,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1613,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.7419,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0323,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5484,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": []
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1613,
+          "ocrFlags": []
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.8065,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_dalai_noodles_soups__mask_full",
+      "items": [
+        {
+          "name": "切仔麵/米粉/粿條",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3846,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉燥乾麵/米粉/粿條",
+          "price": 60.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4615,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦麵/米粉/粿條",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "排骨湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "豬腳湯/乾麵",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "牛肉湯/河粉",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "什錦粥",
+          "price": 130.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（中）",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "虱目魚肚湯（大）",
+          "price": 270.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6875,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蛤仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（小）",
+          "price": 9.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.0563,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "蚵仔湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "蚵仔湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚片湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "鮮海魚湯",
+          "price": null,
+          "error": false,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（小）",
+          "price": 90.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5625,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（中）",
+          "price": 160.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "菇蕈湯（大）",
+          "price": 240.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（小）",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3125,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "魚丸湯（大）",
+          "price": 15.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.0938,
+          "ocrFlags": []
+        },
+        {
+          "name": "青菜蛋花湯（小）",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "青菜蛋花湯（中）",
+          "price": 100.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "青菜蛋花湯（大）",
+          "price": 150.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9375,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "何首烏養生湯(雞)",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.125,
+          "ocrFlags": []
+        },
+        {
+          "name": "原味麻油雞湯",
+          "price": 280.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_fhgh_sets__blur_full",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "三號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "五號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_fhgh_sets__blur_partial",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "三號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "五號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_fhgh_sets__glare_full",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "三號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "五號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_fhgh_sets__glare_partial",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": 180.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7826,
+          "ocrFlags": []
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9565,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "三號餐",
+          "price": 230.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0222,
+          "ocrFlags": []
+        },
+        {
+          "name": "四號餐",
+          "price": 230.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0222,
+          "ocrFlags": []
+        },
+        {
+          "name": "五號餐",
+          "price": 350.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5556,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__web_fhgh_sets__mask_full",
+      "items": [
+        {
+          "name": "一號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "二號餐",
+          "price": 220.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": null,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "三號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "四號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "五號餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__xianghong__blur_full",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5789,
+          "ocrFlags": []
+        },
+        {
+          "name": "(外帶)大魯肉飯",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1579,
+          "ocrFlags": []
+        },
+        {
+          "name": "(外帶)小魯肉飯",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8571,
+          "ocrFlags": []
+        },
+        {
+          "name": "(內用)大魯肉飯",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "(內用)小魯肉飯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7619,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹飯",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3684,
+          "ocrFlags": []
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.2857,
+          "ocrFlags": []
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹麵",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "魯蛋",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": []
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8333,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8333,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6,
+          "ocrFlags": []
+        },
+        {
+          "name": "(限內用)75套餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "(限內用)85套餐",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "occl__xianghong__blur_partial",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5789,
+          "ocrFlags": []
+        },
+        {
+          "name": "(外帶) 大魯肉飯",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1579,
+          "ocrFlags": []
+        },
+        {
+          "name": "(外帶) 小魯肉飯",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8571,
+          "ocrFlags": []
+        },
+        {
+          "name": "(內用) 大魯肉飯",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "(內用) 小魯肉飯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7619,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹飯",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3684,
+          "ocrFlags": []
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.2857,
+          "ocrFlags": []
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹麵",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.75,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3333,
+          "ocrFlags": []
+        },
+        {
+          "name": "(限內用) 75套餐",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 2.5,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "(限內用) 85套餐",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 2.8333,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "魯蛋",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__xianghong__glare_full",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5789,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉飯(外帶)",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1579,
+          "ocrFlags": []
+        },
+        {
+          "name": "小魯肉飯(外帶)",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8571,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉飯(內用)",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "小魯肉飯(內用)",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7619,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹飯",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3684,
+          "ocrFlags": []
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.2857,
+          "ocrFlags": []
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹麵",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3,
+          "ocrFlags": []
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8333,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8333,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6,
+          "ocrFlags": []
+        },
+        {
+          "name": "75套餐(限內用)",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "85套餐(限內用)",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "魯蛋",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7778,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__xianghong__glare_partial",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.5,
+          "ocrFlags": []
+        },
+        {
+          "name": "(外帶) 大魯肉飯",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "(外帶) 小魯肉飯",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "(內用) 大魯肉飯",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9091,
+          "ocrFlags": []
+        },
+        {
+          "name": "(內用) 小魯肉飯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.7273,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹飯",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.2727,
+          "ocrFlags": []
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1818,
+          "ocrFlags": []
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.625,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.75,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.3333,
+          "ocrFlags": []
+        },
+        {
+          "name": "(限內用) 75套餐",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 2.5,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "(限內用) 85套餐",
+          "price": 85.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 2.8333,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "魯蛋",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.4286,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": 20.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.5714,
+          "ocrFlags": []
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.75,
+          "ocrFlags": []
+        }
+      ]
+    },
+    {
+      "key": "occl__xianghong__mask_full",
+      "items": [
+        {
+          "name": "魯肉便當",
+          "price": 75.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6667,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉飯(外帶)",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2222,
+          "ocrFlags": []
+        },
+        {
+          "name": "小魯肉飯(外帶)",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.9,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉飯(內用)",
+          "price": 50.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.1111,
+          "ocrFlags": []
+        },
+        {
+          "name": "小魯肉飯(內用)",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹飯",
+          "price": 5.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.1,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹飯",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4444,
+          "ocrFlags": [
+            "ocr_price_mismatch"
+          ]
+        },
+        {
+          "name": "白飯",
+          "price": 15.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.3,
+          "ocrFlags": []
+        },
+        {
+          "name": "乾麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大乾麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2222,
+          "ocrFlags": []
+        },
+        {
+          "name": "魯肉湯麵",
+          "price": 45.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8182,
+          "ocrFlags": []
+        },
+        {
+          "name": "大魯肉湯麵",
+          "price": 55.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2222,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹麵",
+          "price": 5.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.0909,
+          "ocrFlags": []
+        },
+        {
+          "name": "大肉羹麵",
+          "price": 65.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.4444,
+          "ocrFlags": []
+        },
+        {
+          "name": "味噌湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8333,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "淡水魚丸湯",
+          "price": 25.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8333,
+          "ocrFlags": []
+        },
+        {
+          "name": "油豆腐湯",
+          "price": 30.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.2,
+          "ocrFlags": []
+        },
+        {
+          "name": "肉羹湯",
+          "price": 40.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 1.6,
+          "ocrFlags": []
+        },
+        {
+          "name": "75套餐(限內用)",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": []
+        },
+        {
+          "name": "85套餐(限內用)",
+          "price": null,
+          "error": true,
+          "priceNull": true,
+          "outlierScore": null,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "魯蛋",
+          "price": 5.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.1176,
+          "ocrFlags": [
+            "price_unverified"
+          ]
+        },
+        {
+          "name": "油豆腐/3塊",
+          "price": 0.0,
+          "error": true,
+          "priceNull": false,
+          "outlierScore": 0.0,
+          "ocrFlags": []
+        },
+        {
+          "name": "筍乾",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8235,
+          "ocrFlags": [
+            "name_not_in_ocr"
+          ]
+        },
+        {
+          "name": "燙高麗菜",
+          "price": 35.0,
+          "error": false,
+          "priceNull": false,
+          "outlierScore": 0.8235,
+          "ocrFlags": []
+        }
+      ]
+    }
+  ]
+}
