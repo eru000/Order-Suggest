@@ -141,5 +141,38 @@ class CombinedTest(unittest.TestCase):
         self.assertEqual(result.get("excludes"), ["花生"])
 
 
+
+class CancelConditionTest(unittest.TestCase):
+    """第二項開發情境 dev_cancel 抓到的兩個錯誤（2026-11-27 重現後修正）。"""
+
+    def parse(self, text):
+        from preference_engine import parse_preferences
+        return parse_preferences(text)
+
+    def test_allowing_food_again_strips_sentence_particle(self):
+        ops = self.parse("可以吃鍋燒了，預算仍然90元")["_operations"]
+        self.assertIn({"action": "remove", "field": "dislikes", "value": "鍋燒"}, ops)
+
+    def test_cancelling_budget_clears_it_instead_of_setting_one_dollar(self):
+        parsed = self.parse("取消這一餐的預算上限")
+        self.assertNotIn("budget", parsed)
+        ops = [(op["action"], op["field"]) for op in parsed["_operations"]]
+        self.assertIn(("clear", "budget"), ops)
+        self.assertNotIn("dislikes", [field for _, field in ops])
+
+    def test_chinese_numeral_needs_budget_word_or_currency(self):
+        self.assertNotIn("budget", self.parse("這一餐想吃麵"))
+        self.assertEqual(self.parse("預算三百元")["budget"], 300.0)
+        self.assertEqual(self.parse("預算一百五")["budget"], 150.0)
+        self.assertEqual(self.parse("兩百塊以內")["budget"], 200.0)
+
+    def test_merge_removes_budget_and_exclusion(self):
+        from preference_engine import merge_preference_delta
+        prefs = {"budget": 90.0, "excludes": ["鍋燒"]}
+        merge_preference_delta(prefs, self.parse("可以吃鍋燒了"))
+        merge_preference_delta(prefs, self.parse("取消這一餐的預算上限"))
+        self.assertNotIn("budget", prefs)
+        self.assertEqual(prefs.get("excludes", []), [])
+
 if __name__ == "__main__":
     unittest.main()

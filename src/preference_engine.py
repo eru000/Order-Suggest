@@ -140,23 +140,39 @@ def _cn_to_int(value: str) -> int | None:
     return total or None
 
 
+# 「取消這一餐的預算上限」「預算不限」：清除預算，不是設定金額。
+_BUDGET_CLEAR = re.compile(
+    r"(?:取消|不用|拿掉|移除|不設|不限|沒有|不要)[^，。；;！!？?\d]{0,8}(?:預算|價格上限|上限)"
+    r"|預算[^，。；;！!？?\d]{0,4}(?:不限|取消|拿掉|移除|隨意|都可以|沒差)"
+)
+
+
+def is_budget_clear(text: str) -> bool:
+    return bool(_BUDGET_CLEAR.search(str(text or "")))
+
+
 def _budget(text: str) -> tuple[float | None, str]:
     patterns = (
         re.compile(
             r"(?:預算|不超過|最多|上限)?\s*(\d{2,6})\s*(?:元|塊|圓|NT\$?|NTD)?\s*(?:以內|以下|左右|上下)?",
             re.I,
         ),
+        # 中文數字一定要緊鄰預算詞或幣值單位才算金額。以前兩邊都是選填，
+        # 「取消這一餐的預算上限」裡「這一餐」的「一」被當成 1 元的預算。
         re.compile(
-            r"(?:預算|不超過|最多|上限)?\s*([一二兩三四五六七八九十百千]+)\s*(?:元|塊|圓)?\s*(?:以內|以下|左右|上下)?"
+            r"(?:預算|不超過|最多|上限)\s*([一二兩三四五六七八九十百千]+)"
+            r"|([一二兩三四五六七八九十百千]+)\s*(?:元|塊|圓|以內|以下|左右|上下)"
         ),
     )
+    if is_budget_clear(text):
+        return None, "total"
     if not re.search(r"預算|不超過|最多|上限|元|塊|圓|NT|以內|以下", text, re.I):
         return None, "total"
     match = patterns[0].search(text)
     amount = float(match.group(1)) if match else None
     if amount is None:
         match = patterns[1].search(text)
-        parsed = _cn_to_int(match.group(1)) if match else None
+        parsed = _cn_to_int(match.group(1) or match.group(2)) if match else None
         amount = float(parsed) if parsed else None
     return amount, "per_person" if re.search(r"每人|一人|人均", text) else "total"
 
@@ -214,6 +230,8 @@ def parse_preferences(
             break
 
     budget, basis = _budget(source)
+    if is_budget_clear(source):
+        parsed.operations.append(PreferenceOperation(action="clear", field="budget"))
     if budget is not None:
         parsed.budget_amount = budget
         parsed.budget_basis = basis
@@ -315,14 +333,20 @@ def parse_preferences(
             PreferenceOperation(action="remove", field="likes", value=term)
         )
 
+    # 句尾語助詞要排除在食材名稱外：以前「可以吃鍋燒了」移除的是「鍋燒了」，
+    # 原本的「鍋燒」忌口因此一直留著（第二項開發情境 dev_cancel 實測）。
+    particles = r"(?:了|啦|囉|喔|吧|呢|耶)?(?=[，。；;！!？?\s]|$)"
     removal_patterns = (
-        re.compile(r"(?:可以吃|可以接受)([^，。；;！!？?\s]+)了?"),
+        re.compile(r"(?:可以吃|可以接受)([^，。；;！!？?\s]+?)" + particles),
         re.compile(r"([^，。；;！!？?\s]+)(?:可以吃|可以了)"),
-        re.compile(r"(?:取消|不用)(?:避開|排除|忌口)?([^，。；;！!？?\s]+)"),
+        re.compile(r"(?:取消|不用)(?:避開|排除|忌口)?([^，。；;！!？?\s]+?)" + particles),
     )
     for pattern in removal_patterns:
         for match in pattern.finditer(source):
             term = match.group(1).strip()
+            # 「取消這一餐的預算上限」是清除預算，不是解除某個食材的忌口
+            if term and re.search(r"預算|上限|價格|限制", term):
+                continue
             if term:
                 parsed.operations.append(
                     PreferenceOperation(action="remove", field="dislikes", value=term)

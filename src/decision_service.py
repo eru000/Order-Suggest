@@ -21,6 +21,7 @@ from observability import emit
 from preference_engine import (
     ALLERGEN_ALIASES,
     DIETARY_TERMS,
+    is_budget_clear,
     merge_preference_delta,
     parse_preferences,
 )
@@ -831,7 +832,7 @@ class DecisionService:
             and "budget" in delta
         ):
             prefs["budget"] /= prefs["people"]
-        if re.search(r"預算不限|不限預算|不設上限|取消預算", text):
+        if re.search(r"預算不限|不限預算|不設上限|取消預算", text) or is_budget_clear(text):
             prefs.pop("budget", None)
             prefs.pop("cheaperThan", None)
             d["skipped"] = list(dict.fromkeys([*d.get("skipped", []), "budget"]))
