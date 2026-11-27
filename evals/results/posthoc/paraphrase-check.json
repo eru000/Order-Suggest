@@ -1,0 +1,322 @@
+{
+  "passed": 19,
+  "total": 20,
+  "rows": [
+    {
+      "text": "不要放洋蔥",
+      "expected": {
+        "excludes": [
+          "洋蔥"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "洋蔥"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "別放香菜",
+      "expected": {
+        "excludes": [
+          "香菜"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "香菜"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "幫我排除海鮮類",
+      "expected": {
+        "excludes": [
+          "海鮮"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "海鮮"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "內臟類不要",
+      "expected": {
+        "excludes": [
+          "內臟"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "內臟"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "蔥這次先不要",
+      "expected": {
+        "excludes": [
+          "蔥"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "蔥"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "辣椒也不要了",
+      "expected": {
+        "excludes": [
+          "辣椒"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "辣椒"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "不加蛋",
+      "expected": {
+        "excludes": [
+          "蛋"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "蛋"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "排除豬肉，其他照舊",
+      "expected": {
+        "excludes": [
+          "豬肉"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [
+          "豬肉"
+        ],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "再換一個，別重複剛才那道",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "同樣條件再換一道",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "今天先不要",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "沒標價的不要",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "只挑有標價的",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "價格要清楚",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "時價的就算了，只要確定有標價的",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": true,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "這道有標價嗎",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "晚餐想吃飯類",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": true
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": true
+      },
+      "ok": true
+    },
+    {
+      "text": "要飯不要麵",
+      "expected": {
+        "excludes": [
+          "麵"
+        ],
+        "requireKnownPrice": false,
+        "rice": true
+      },
+      "got": {
+        "excludes": [
+          "麵"
+        ],
+        "requireKnownPrice": false,
+        "rice": true
+      },
+      "ok": true
+    },
+    {
+      "text": "飯店附近有什麼",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": true
+    },
+    {
+      "text": "我要炒飯",
+      "expected": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": true
+      },
+      "got": {
+        "excludes": [],
+        "requireKnownPrice": false,
+        "rice": false
+      },
+      "ok": false
+    }
+  ]
+}

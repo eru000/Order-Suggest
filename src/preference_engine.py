@@ -56,6 +56,7 @@ class ParsedPreferences(BaseModel):
     budget_basis: str = "total"
     people: int | None = Field(default=None, ge=1, le=50)
     need_drink: bool | None = None
+    require_known_price: bool | None = None
     operations: list[PreferenceOperation] = Field(default_factory=list)
     unparsed_text: str = ""
 
@@ -196,7 +197,24 @@ LIKE_CUES = re.compile(r"(?<![不別沒])(?:想吃|愛吃|要吃|想喝|想點|�
 
 # 只削掉動詞開頭與語尾助詞。不碰數量詞是刻意的：「三杯雞」削掉「三杯」會變成
 # 「雞」，比漏抓還糟——漏抓只是少加分，錯抓會推薦到完全不相干的品項。
-_DISLIKE_CUES = r"不要(?!避開)|不(?:敢|想|愛)?吃|不喜歡|忌口|(?<!不用|不必|取消|不要)避開"
+# 「排除」「別放」「不放」「不加」也是排除（封存組「別放白菜類」「先排除咖哩」實測漏抓）。
+_DISLIKE_CUES = (
+    r"不要(?!避開)|不(?:敢|想|愛)?吃|不喜歡|忌口|(?<!不用|不必|取消|不要)避開"
+    r"|(?<!取消)(?<!不用)排除|別放|不放|別加|不加"
+)
+# 「菇菇這次也先不要」：食材在前、否定在句尾（封存組實測漏抓）
+_TRAILING_DISLIKE = re.compile(
+    r"(?:^|[，,。；;！!？?\s把])([^，,。；;！!？?\s把]{1,8}?)(?:這次|這餐|這一餐|今天)?"
+    r"(?:也|就|都)?(?:先|暫時)?(?:不要|不吃|免了)(?:了|啦|喔)?(?=[，,。；;！!？?\s]|$)"
+)
+# 說的是對話本身，不是食材：「不要重複剛拒絕的」「其他一樣」
+_META_TERMS = re.compile(
+    r"重複|拒絕|剛剛|剛才|其他|一樣|同樣|這個|那個|第[一二三四五1-5]|條件|限制|設定|預算"
+)
+_NOT_FOOD = {
+    "我", "你", "他", "她", "也", "就", "先", "這次", "這餐", "這一餐", "今天", "現在",
+    "全部", "都", "飲料",
+}
 _DISLIKE_LEADING = re.compile(rf"^(?:{_DISLIKE_CUES}|別吃|別)+")
 _DISLIKE_JOIN = re.compile(rf"(?:而且|也|還|且)\s*(?={_DISLIKE_CUES})")
 _LIKE_LEADING = re.compile(r"^[吃喝點來]+")
@@ -212,6 +230,23 @@ def _canonical_allergen(term: str) -> str | None:
         if any(alias in term for alias in aliases):
             return canonical
     return None
+
+
+def _add_dislike(parsed: ParsedPreferences, raw: str, noise: set[str]) -> None:
+    term = raw.strip()
+    # 「白菜類」「海鮮類」：類是量詞，比對品名時要拿掉，否則「砂鍋白菜豆腐雞湯」對不到
+    term = re.sub(r"(?<=.)類$", "", term)
+    # 「不要放洋蔥」「不要加蛋」：觸發詞後面的放／加是動詞
+    term = re.sub(r"^(?:放|加)(?=.)", "", term)
+    term = re.sub(r"[的了啦喔吧呢]+$", "", term).strip()
+    if (
+        not term or term in noise or term in _NOT_FOOD or "過敏" in term
+        or _META_TERMS.search(term) or re.search(r"預算|上限|價格|標價|價錢", term)
+        or term in parsed.dislikes
+    ):
+        return
+    parsed.dislikes.append(term)
+    parsed.operations.append(PreferenceOperation(action="add", field="dislikes", value=term))
 
 
 def parse_preferences(
@@ -262,6 +297,20 @@ def parse_preferences(
             PreferenceOperation(action="set", field="needDrink", value=parsed.need_drink)
         )
 
+    # 「只選明確標價的」「確定有標價」「價錢必須看得到」「能核實價格」：沒標價的不推薦
+    # （封存組鮮芋仙：清掉預算後，沒標價的冰品被推薦出來）。
+    if re.search(
+        # 「有標價嗎」是問句不是條件，所以「有標價」要接「的」或前面有「確定／只選」
+        r"(?:明確|確定|清楚)有?標價|只(?:選|要|挑|點)有?標價|有標價的|標價清楚"
+        r"|(?:價錢|價格)(?:必須|要|一定要)?(?:看得到|明確|清楚)|(?:能|可以)?核實(?:的)?價格"
+        r"|沒(?:有)?標價的(?:不要|就算了|免了)|不要沒(?:有)?標價",
+        source,
+    ):
+        parsed.require_known_price = True
+        parsed.operations.append(
+            PreferenceOperation(action="set", field="requireKnownPrice", value=True)
+        )
+
     for cuisine in CUISINES:
         if cuisine in source:
             parsed.cuisines.append(cuisine)
@@ -303,13 +352,9 @@ def parse_preferences(
         segment = _DISLIKE_JOIN.split(source[match.end() :], maxsplit=1)[0]
         for raw in _split_terms(segment):
             # 「我不吃麵、不吃粥」的第二段還帶著觸發詞，去掉後才是食材。
-            term = _DISLIKE_LEADING.sub("", raw).strip()
-            if not term or term in spice_noise or "過敏" in term or term in parsed.dislikes:
-                continue
-            parsed.dislikes.append(term)
-            parsed.operations.append(
-                PreferenceOperation(action="add", field="dislikes", value=term)
-            )
+            _add_dislike(parsed, _DISLIKE_LEADING.sub("", raw), spice_noise)
+    for match in _TRAILING_DISLIKE.finditer(source):
+        _add_dislike(parsed, match.group(1), spice_noise)
 
     # recommendation.py 一直有讀 prefs["likes"] 並加分，但兩邊都沒有人產生它，
     # 所以「我要當歸的」跟「有什麼推薦？」以前會給出一模一樣的結果。
@@ -399,6 +444,8 @@ def _to_legacy_dict(parsed: ParsedPreferences) -> dict[str, Any]:
         value["people"] = parsed.people
     if parsed.need_drink is not None:
         value["needDrink"] = parsed.need_drink
+    if parsed.require_known_price:
+        value["requireKnownPrice"] = True
     if parsed.cuisines:
         value["cuisine"] = parsed.cuisines[0]
     if parsed.dish_types:

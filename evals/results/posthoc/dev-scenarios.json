@@ -1,0 +1,1681 @@
+{
+  "generatedAt": "2026-11-27T07:32:38.069991+00:00",
+  "validation": {
+    "frozenFilesVerified": true,
+    "truthHashesVerified": true,
+    "developmentCases": 5,
+    "holdoutCases": 10,
+    "developmentGroups": [
+      "kaohsiung-liugui-tvbs-2538522",
+      "vege-burger"
+    ],
+    "holdoutGroups": [
+      "amei_tainan",
+      "cama",
+      "comebuy",
+      "hotel_royal_tainan",
+      "jiyuan_gwoo",
+      "meetfresh",
+      "milksha",
+      "newpalace",
+      "regent_taipei",
+      "splendor_taichung"
+    ],
+    "groupOverlap": []
+  },
+  "runnerSha256": "6e72d1536b9bae7e6421a48e1b0724a7baf2096eca22a0d5bace81e888c80c5c",
+  "scenarioHashes": {
+    "development.json": "94e2870262a70712b0dd285984405dbdbe958e70875be9fb65ec284ea82841ce",
+    "holdout.json": "1fc09679f342ec7464e18870f7d9ee8a460b38a10a22741b35716041e3ea9025"
+  },
+  "productSourceHashes": {
+    "decision_service.py": "598898ea0e50cf3415ee10953b7e10247f7db55f5958453e54d8232a2edbd42e",
+    "decision_catalog.py": "cd161fc9f7b8aa62f7f908589c8c3cea6c749b5b0c44018227f07d85c480d1e9",
+    "decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+    "preference_engine.py": "950b0f99638716e27f3035efea7d0a24a4ebd6167492ba81fffd4fa28cbe168e",
+    "recommendation.py": "da0c5ef42bd366ce936b111bfe8f09ada52f45c14bb3b4dca0d079e838988650",
+    "table_menu.py": "54f84a499eba952e2ef03cbf1615633622835d3ea0f03e3363fc496374d1d68d",
+    "menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+    "menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b"
+  },
+  "limitations": [
+    "Developer-authored objective scenarios, not user satisfaction or external validation.",
+    "Printed single-item base prices; service fees, portion sufficiency and unprinted ingredients are outside this benchmark.",
+    "Development has only two source menus; scripted turns are not independent users.",
+    "Holdout static feasibility validates the dataset, not product generalization.",
+    "If asked a question, press recommend without relaxing constraints."
+  ],
+  "developmentStatic": {
+    "mode": "independent_static_truth_feasibility",
+    "productExecuted": false,
+    "caseCount": 5,
+    "passedCases": 5,
+    "turnCount": 15,
+    "passedTurns": 15,
+    "cases": [
+      {
+        "id": "dev_compound",
+        "category": "compound",
+        "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "text": "午餐幫我挑，預算90元，不吃鍋燒，想吃麵",
+            "action": "start",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 90,
+              "excludeTokens": [
+                "鍋燒"
+              ],
+              "nameAny": [
+                "麵",
+                "板條"
+              ]
+            },
+            "expectedSolution": true,
+            "eligibleCount": 2,
+            "distinctEligibleNames": 2,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 2,
+            "text": "預算改成85元，其他忌口保留",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 85,
+              "excludeTokens": [
+                "鍋燒"
+              ],
+              "nameAny": [
+                "麵",
+                "板條"
+              ]
+            },
+            "expectedSolution": true,
+            "eligibleCount": 1,
+            "distinctEligibleNames": 1,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 3,
+            "text": "預算回到90元，直接推薦",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 90,
+              "excludeTokens": [
+                "鍋燒"
+              ],
+              "nameAny": [
+                "麵",
+                "板條"
+              ]
+            },
+            "expectedSolution": true,
+            "eligibleCount": 2,
+            "distinctEligibleNames": 2,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_budget",
+        "category": "budget_change",
+        "menu": "evals/step2/menus/dev/vege_muffins/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "text": "這一人餐預算120元，幫我直接推薦",
+            "action": "start",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 120
+            },
+            "expectedSolution": true,
+            "eligibleCount": 10,
+            "distinctEligibleNames": 10,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 2,
+            "text": "預算降到90元，其他維持",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 90
+            },
+            "expectedSolution": true,
+            "eligibleCount": 6,
+            "distinctEligibleNames": 6,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 3,
+            "text": "改成預算80元",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 80
+            },
+            "expectedSolution": false,
+            "eligibleCount": 0,
+            "distinctEligibleNames": 0,
+            "feasible": false,
+            "passed": true,
+            "replacementHasAlternative": null
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_cancel",
+        "category": "cancel_condition",
+        "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "text": "幫我選，預算90元，不吃鍋燒",
+            "action": "start",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 90,
+              "excludeTokens": [
+                "鍋燒"
+              ]
+            },
+            "expectedSolution": true,
+            "eligibleCount": 2,
+            "distinctEligibleNames": 2,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 2,
+            "text": "可以吃鍋燒了，預算仍然90元",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 90
+            },
+            "expectedSolution": true,
+            "eligibleCount": 3,
+            "distinctEligibleNames": 3,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 3,
+            "text": "取消這一餐的預算上限",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true
+            },
+            "expectedSolution": true,
+            "eligibleCount": 3,
+            "distinctEligibleNames": 3,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_replace",
+        "category": "replace",
+        "menu": "evals/step2/menus/dev/vege_muffins/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "text": "滿福堡幫我挑一份，預算120元",
+            "action": "start",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 120
+            },
+            "expectedSolution": true,
+            "eligibleCount": 10,
+            "distinctEligibleNames": 10,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 2,
+            "text": "",
+            "action": "replace",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 120
+            },
+            "expectedSolution": true,
+            "eligibleCount": 10,
+            "distinctEligibleNames": 10,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": true
+          },
+          {
+            "turn": 3,
+            "text": "",
+            "action": "replace",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 120
+            },
+            "expectedSolution": true,
+            "eligibleCount": 10,
+            "distinctEligibleNames": 10,
+            "feasible": true,
+            "passed": true,
+            "replacementHasAlternative": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_no_solution",
+        "category": "no_solution",
+        "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "text": "只有50元的午餐預算，請幫我挑",
+            "action": "start",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 50
+            },
+            "expectedSolution": false,
+            "eligibleCount": 0,
+            "distinctEligibleNames": 0,
+            "feasible": false,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 2,
+            "text": "那預算改成60元",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 60
+            },
+            "expectedSolution": false,
+            "eligibleCount": 0,
+            "distinctEligibleNames": 0,
+            "feasible": false,
+            "passed": true,
+            "replacementHasAlternative": null
+          },
+          {
+            "turn": 3,
+            "text": "預算到65元為止",
+            "action": "message",
+            "constraints": {
+              "requireKnownPrice": true,
+              "budget": 65
+            },
+            "expectedSolution": false,
+            "eligibleCount": 0,
+            "distinctEligibleNames": 0,
+            "feasible": false,
+            "passed": true,
+            "replacementHasAlternative": null
+          }
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "development": {
+    "mode": "production_DecisionService_dev",
+    "productExecuted": true,
+    "sessionAdapter": "in-memory SessionStore protocol; no persistence or UI routing",
+    "caseCount": 5,
+    "passedCases": 5,
+    "turnCount": 15,
+    "passedTurns": 15,
+    "serviceCallCount": 15,
+    "cases": [
+      {
+        "id": "dev_compound",
+        "category": "compound",
+        "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "expected": {
+              "action": "start",
+              "text": "午餐幫我挑，預算90元，不吃鍋燒，想吃麵",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 90,
+                "excludeTokens": [
+                  "鍋燒"
+                ],
+                "nameAny": [
+                  "麵",
+                  "板條"
+                ]
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 90,
+                "excludesContains": [
+                  "鍋燒"
+                ]
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "start",
+                  "text": "午餐幫我挑，預算90元，不吃鍋燒，想吃麵",
+                  "revision": null
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 90 內",
+                    "避開鍋燒"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "2925811c0bef63188bcf",
+                      "name": "什錦麵",
+                      "price": 90.0,
+                      "total": 90.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內；品名符合你提到的喜好",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "16dbc48764cf41ecf8e4",
+                      "name": "炒板條",
+                      "price": 80.0,
+                      "total": 80.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "0957f7dcb2ca4b06a87a90afd9632204"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "likes": [
+                "麵"
+              ],
+              "excludes": [
+                "鍋燒"
+              ],
+              "budget": 90.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 2,
+            "expected": {
+              "action": "message",
+              "text": "預算改成85元，其他忌口保留",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 85,
+                "excludeTokens": [
+                  "鍋燒"
+                ],
+                "nameAny": [
+                  "麵",
+                  "板條"
+                ]
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 85,
+                "excludesContains": [
+                  "鍋燒"
+                ]
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "預算改成85元，其他忌口保留",
+                  "revision": "0957f7dcb2ca4b06a87a90afd9632204"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "目前有這一道符合已知條件，可以先看看。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 85 內",
+                    "避開鍋燒",
+                    "避開保留"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "16dbc48764cf41ecf8e4",
+                      "name": "炒板條",
+                      "price": 80.0,
+                      "total": 80.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "debc6ca866d64fac92c4d85dfb8290e1"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "likes": [
+                "麵"
+              ],
+              "excludes": [
+                "鍋燒",
+                "保留"
+              ],
+              "budget": 85.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 3,
+            "expected": {
+              "action": "message",
+              "text": "預算回到90元，直接推薦",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 90,
+                "excludeTokens": [
+                  "鍋燒"
+                ],
+                "nameAny": [
+                  "麵",
+                  "板條"
+                ]
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 90,
+                "excludesContains": [
+                  "鍋燒"
+                ]
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "預算回到90元，直接推薦",
+                  "revision": "debc6ca866d64fac92c4d85dfb8290e1"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 90 內",
+                    "避開鍋燒",
+                    "避開保留"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "2925811c0bef63188bcf",
+                      "name": "什錦麵",
+                      "price": 90.0,
+                      "total": 90.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內；品名符合你提到的喜好",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "16dbc48764cf41ecf8e4",
+                      "name": "炒板條",
+                      "price": 80.0,
+                      "total": 80.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "08b357a71771426091fb7db822953584"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "likes": [
+                "麵"
+              ],
+              "excludes": [
+                "鍋燒",
+                "保留"
+              ],
+              "budget": 90.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_budget",
+        "category": "budget_change",
+        "menu": "evals/step2/menus/dev/vege_muffins/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "expected": {
+              "action": "start",
+              "text": "這一人餐預算120元，幫我直接推薦",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 120
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 120
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "start",
+                  "text": "這一人餐預算120元，幫我直接推薦",
+                  "revision": null
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "vege_muffins",
+                  "constraints": [
+                    "整桌 $ 120 內",
+                    "1 個人"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "d41caede89b7b7224528",
+                      "name": "日式咖哩朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "038d61ecfe14e2e5817a",
+                      "name": "椒麻堅果辣朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "e27aaabee7950a6b2ca2",
+                      "name": "經典植物朱肉滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "33965d6befc04fcbabb8445fc6b51274"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 120.0,
+              "budgetBasis": "per_person",
+              "people": 1
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 2,
+            "expected": {
+              "action": "message",
+              "text": "預算降到90元，其他維持",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 90
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 90
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "預算降到90元，其他維持",
+                  "revision": "33965d6befc04fcbabb8445fc6b51274"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "vege_muffins",
+                  "constraints": [
+                    "整桌 $ 90 內",
+                    "1 個人"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "d41caede89b7b7224528",
+                      "name": "日式咖哩朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "038d61ecfe14e2e5817a",
+                      "name": "椒麻堅果辣朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "e27aaabee7950a6b2ca2",
+                      "name": "經典植物朱肉滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "930f3c2fe36b4023b788ad585072d049"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 90.0,
+              "budgetBasis": "total",
+              "people": 1
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 3,
+            "expected": {
+              "action": "message",
+              "text": "改成預算80元",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 80
+              },
+              "expectSolution": false,
+              "expectPrefs": {
+                "budget": 80
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "改成預算80元",
+                  "revision": "930f3c2fe36b4023b788ad585072d049"
+                },
+                "output": {
+                  "type": "no_match",
+                  "message": "目前沒有符合這些條件的餐點。你可以調整條件，或換一家餐廳。",
+                  "restaurant": "vege_muffins",
+                  "constraints": [
+                    "整桌 $ 80 內",
+                    "1 個人"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "exhausted": false,
+                  "canRelaxBudget": true,
+                  "relaxBudgetLabel": "移除價格上限",
+                  "canRelaxType": false,
+                  "revision": "a2cd4991611f47639ba60b70201bdfa4"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 80.0,
+              "budgetBasis": "total",
+              "people": 1
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_cancel",
+        "category": "cancel_condition",
+        "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "expected": {
+              "action": "start",
+              "text": "幫我選，預算90元，不吃鍋燒",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 90,
+                "excludeTokens": [
+                  "鍋燒"
+                ]
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 90,
+                "excludesContains": [
+                  "鍋燒"
+                ]
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "start",
+                  "text": "幫我選，預算90元，不吃鍋燒",
+                  "revision": null
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 90 內",
+                    "避開鍋燒"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "16dbc48764cf41ecf8e4",
+                      "name": "炒板條",
+                      "price": 80.0,
+                      "total": 80.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "2925811c0bef63188bcf",
+                      "name": "什錦麵",
+                      "price": 90.0,
+                      "total": 90.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "cfffcafaf0b0414f8dfce18de4917c22"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "likes": [],
+              "excludes": [
+                "鍋燒"
+              ],
+              "budget": 90.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 2,
+            "expected": {
+              "action": "message",
+              "text": "可以吃鍋燒了，預算仍然90元",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 90
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 90,
+                "excludesAbsent": [
+                  "鍋燒"
+                ]
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "可以吃鍋燒了，預算仍然90元",
+                  "revision": "cfffcafaf0b0414f8dfce18de4917c22"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 90 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "775811d6595126d646c0",
+                      "name": "鍋燒麵",
+                      "price": 70.0,
+                      "total": 70.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "16dbc48764cf41ecf8e4",
+                      "name": "炒板條",
+                      "price": 80.0,
+                      "total": 80.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "2925811c0bef63188bcf",
+                      "name": "什錦麵",
+                      "price": 90.0,
+                      "total": 90.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "fc4da05616d24818ade76264aecab142"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "likes": [],
+              "excludes": [],
+              "budget": 90.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 3,
+            "expected": {
+              "action": "message",
+              "text": "取消這一餐的預算上限",
+              "constraints": {
+                "requireKnownPrice": true
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "absent": [
+                  "budget"
+                ],
+                "excludesAbsent": [
+                  "鍋燒"
+                ]
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "取消這一餐的預算上限",
+                  "revision": "fc4da05616d24818ade76264aecab142"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "liugui_board",
+                  "constraints": [],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "775811d6595126d646c0",
+                      "name": "鍋燒麵",
+                      "price": 70.0,
+                      "total": 70.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "從菜單的「麵」裡挑的",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "16dbc48764cf41ecf8e4",
+                      "name": "炒板條",
+                      "price": 80.0,
+                      "total": 80.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "從菜單的「麵」裡挑的",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "2925811c0bef63188bcf",
+                      "name": "什錦麵",
+                      "price": 90.0,
+                      "total": 90.0,
+                      "dishType": "麵",
+                      "warnings": [],
+                      "reason": "從菜單的「麵」裡挑的",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "ff8174036b034a13b3b54a9c830c16f2"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "likes": [],
+              "excludes": [],
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_replace",
+        "category": "replace",
+        "menu": "evals/step2/menus/dev/vege_muffins/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "expected": {
+              "action": "start",
+              "text": "滿福堡幫我挑一份，預算120元",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 120
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 120
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "start",
+                  "text": "滿福堡幫我挑一份，預算120元",
+                  "revision": null
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "挑了幾個不同的選項，選一道你現在想吃的。",
+                  "restaurant": "vege_muffins",
+                  "constraints": [
+                    "每份 $ 120 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "d41caede89b7b7224528",
+                      "name": "日式咖哩朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "038d61ecfe14e2e5817a",
+                      "name": "椒麻堅果辣朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "e27aaabee7950a6b2ca2",
+                      "name": "經典植物朱肉滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "881bd50178ca43bcb95320a486f4d0a4"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 120.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 2,
+            "expected": {
+              "action": "replace",
+              "text": "",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 120
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 120
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "replace",
+                  "text": "",
+                  "revision": "881bd50178ca43bcb95320a486f4d0a4",
+                  "item_id": "d41caede89b7b7224528"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "先略過這一道，其他需求保留。",
+                  "restaurant": "vege_muffins",
+                  "constraints": [
+                    "每份 $ 120 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "038d61ecfe14e2e5817a",
+                      "name": "椒麻堅果辣朱滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "e27aaabee7950a6b2ca2",
+                      "name": "經典植物朱肉滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "a933da9263a98019017e",
+                      "name": "薯餅起士滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "c6179792c4b340a0a7265530cf47bc1d"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 120.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 3,
+            "expected": {
+              "action": "replace",
+              "text": "",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 120
+              },
+              "expectSolution": true,
+              "expectPrefs": {
+                "budget": 120
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "replace",
+                  "text": "",
+                  "revision": "c6179792c4b340a0a7265530cf47bc1d",
+                  "item_id": "038d61ecfe14e2e5817a"
+                },
+                "output": {
+                  "type": "recommendation",
+                  "message": "先略過這一道，其他需求保留。",
+                  "restaurant": "vege_muffins",
+                  "constraints": [
+                    "每份 $ 120 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "items": [
+                    {
+                      "id": "e27aaabee7950a6b2ca2",
+                      "name": "經典植物朱肉滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "a933da9263a98019017e",
+                      "name": "薯餅起士滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    },
+                    {
+                      "id": "5d0a7881b1d38adc6d08",
+                      "name": "鮪余滿福堡",
+                      "price": 85.0,
+                      "total": 85.0,
+                      "dishType": null,
+                      "warnings": [],
+                      "reason": "含服務費在預算內",
+                      "spice": {
+                        "min": null,
+                        "max": null,
+                        "adjustable": false,
+                        "known": false
+                      },
+                      "serviceRate": 0.0,
+                      "priceNote": "含 0% 服務費"
+                    }
+                  ],
+                  "sharedTable": false,
+                  "unmet": [],
+                  "revision": "701d5804bdef4c128c8a4806a26a8c29"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 120.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      {
+        "id": "dev_no_solution",
+        "category": "no_solution",
+        "menu": "evals/step2/menus/dev/liugui_board/truth.json",
+        "turns": [
+          {
+            "turn": 1,
+            "expected": {
+              "action": "start",
+              "text": "只有50元的午餐預算，請幫我挑",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 50
+              },
+              "expectSolution": false,
+              "expectPrefs": {
+                "budget": 50
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "start",
+                  "text": "只有50元的午餐預算，請幫我挑",
+                  "revision": null
+                },
+                "output": {
+                  "type": "no_match",
+                  "message": "目前沒有符合這些條件的餐點。你可以調整條件，或換一家餐廳。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 50 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "exhausted": false,
+                  "canRelaxBudget": true,
+                  "relaxBudgetLabel": "移除價格上限",
+                  "canRelaxType": false,
+                  "revision": "3cb719fdec0c4ba194a71bb9f7edbd21"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 50.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 2,
+            "expected": {
+              "action": "message",
+              "text": "那預算改成60元",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 60
+              },
+              "expectSolution": false,
+              "expectPrefs": {
+                "budget": 60
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "那預算改成60元",
+                  "revision": "3cb719fdec0c4ba194a71bb9f7edbd21"
+                },
+                "output": {
+                  "type": "no_match",
+                  "message": "目前沒有符合這些條件的餐點。你可以調整條件，或換一家餐廳。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 60 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "exhausted": false,
+                  "canRelaxBudget": true,
+                  "relaxBudgetLabel": "移除價格上限",
+                  "canRelaxType": false,
+                  "revision": "fd5dda30f61a4979b614883c86378fe5"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 60.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          },
+          {
+            "turn": 3,
+            "expected": {
+              "action": "message",
+              "text": "預算到65元為止",
+              "constraints": {
+                "requireKnownPrice": true,
+                "budget": 65
+              },
+              "expectSolution": false,
+              "expectPrefs": {
+                "budget": 65
+              }
+            },
+            "calls": [
+              {
+                "input": {
+                  "action": "message",
+                  "text": "預算到65元為止",
+                  "revision": "fd5dda30f61a4979b614883c86378fe5"
+                },
+                "output": {
+                  "type": "no_match",
+                  "message": "目前沒有符合這些條件的餐點。你可以調整條件，或換一家餐廳。",
+                  "restaurant": "liugui_board",
+                  "constraints": [
+                    "每份 $ 65 內"
+                  ],
+                  "questionCount": 0,
+                  "maxQuestions": 2,
+                  "focused": false,
+                  "dataNote": "",
+                  "exhausted": false,
+                  "canRelaxBudget": true,
+                  "relaxBudgetLabel": "移除價格上限",
+                  "canRelaxType": false,
+                  "revision": "a88896c431b74707885a86af781ee715"
+                }
+              }
+            ],
+            "observedPreferences": {
+              "budget": 65.0,
+              "budgetBasis": "total"
+            },
+            "errors": [],
+            "technicalErrors": [],
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    ]
+  },
+  "blockedAttempts": {
+    "network": 0,
+    "env": 0
+  },
+  "holdoutProductExecuted": false
+}

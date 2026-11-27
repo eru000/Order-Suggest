@@ -75,7 +75,11 @@ def shared_table_menu(menu: dict[str, Any]) -> bool:
     )
 
 
-def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
+def menu_choices(
+    menu: dict[str, Any], include_sides: bool = False,
+) -> tuple[list[dict[str, Any]], str]:
+    """可選的餐點。include_sides＝True 時連小菜、沙拉等配菜也列入，且不只留主餐；
+    給「主餐都換過了」時補位用（封存組新天地：兩道生魚片都換掉後，菜單上還有三道沙拉）。"""
     rows: dict[str, dict[str, Any]] = {}
     flattened = [annotate_item(raw, raw["category"]) for raw in _flatten_menu(menu)]
     shared = is_shared_table(
@@ -87,7 +91,8 @@ def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
         name = item["name"]
         kind = dish_type(name, item["category"])
         role = semantic.get("role", "other")
-        if role in {"drink", "dessert", "side"} or re.search(
+        skipped_roles = {"drink", "dessert"} if include_sides else {"drink", "dessert", "side"}
+        if role in skipped_roles or re.search(
             r"加料|加點|單點配料", item["category"]
         ):
             continue
@@ -121,7 +126,7 @@ def menu_choices(menu: dict[str, Any]) -> tuple[list[dict[str, Any]], str]:
     # 合菜／燒肉店只留「主餐」會把整份菜單砍光（大肥鵝 135 道只剩 1 道），
     # 那些店本來就沒有一人一道的主餐概念，整桌的菜都是候選。
     # 判斷基準是整份菜單，跟 recommendation 那邊一致，不能用篩選後的清單。
-    if not shared:
+    if not shared and not include_sides:
         if any(row["main"] for row in items):
             items = [row for row in items if row["main"]]
     fingerprint = hashlib.sha256(
@@ -182,6 +187,9 @@ def eligible(
         total = round(price * (1 + (rate or 0)), 2) if price is not None else None
         budget = prefs.get("budget")
         if budget is not None and (total is None or total > budget):
+            continue
+        # 使用者明說只要有標價的（「只選明確標價的」），沒有預算時也一樣排除時價／未標價
+        if prefs.get("requireKnownPrice") and total is None:
             continue
         if prefs.get("cheaperThan") is not None and (
             total is None or total >= prefs["cheaperThan"]

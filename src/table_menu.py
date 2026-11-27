@@ -38,6 +38,17 @@ from menu_vocabulary import (
     pattern_of,
 )
 
+# 合菜分類補充的食材字（只用在 table_menu，不動 menu_vocabulary，所以不影響 menu_semantics
+# 的標註與 SEMANTIC_SCHEMA_VERSION）。來源：derive_policy.py 以 106 道公開套餐菜名檢查分類器，
+# 字表沒收的常見食材（四季豆、野蓮、茄、扁鱈、霸王骨、肺片等）。同一批菜名也拿來計算
+# 修改後的正確率，所以那個數字不是獨立驗證。
+TABLE_VEGETABLE_TERMS = (
+    "四季豆", "野蓮", "茄", "白菜", "美人腿", "茭白筍", "秋葵", "山蘇", "龍鬚菜",
+    "娃娃菜", "青江菜", "菠菜",
+)
+TABLE_SEAFOOD_TERMS = ("鱈", "鯛", "鱸", "鮭", "鯖", "鰻", "透抽")
+TABLE_MEAT_TERMS = ("骨", "肋排", "肺片", "牛肚", "豬肚")
+
 # 桶的順序就是判斷順序：先判鍋湯，否則「酸白菜肉鍋」會被青菜的「白菜」搶走；
 # 主食要排在肉類前面，否則「鴨肉飯」會被判成肉類。
 BUCKET_RULES: tuple[tuple[str, str], ...] = (
@@ -49,8 +60,8 @@ BUCKET_RULES: tuple[tuple[str, str], ...] = (
     # 「蝦扯蛋」「滑蛋蝦仁」也放在這欄，所以排在海鮮、肉類前面。鹹蛋是調味，
     # 蛋糕、蛋塔、杏仁豆腐是甜點。
     ("蛋豆腐", r"(?<!杏仁)豆腐|(?<!鹹)蛋(?!糕|塔|撻|捲|餅|黃酥)"),
-    ("海鮮", pattern_of(SEAFOOD_TERMS)),
-    ("肉類", pattern_of(MEAT_TERMS) + r"|燒臘"),
+    ("海鮮", pattern_of((*SEAFOOD_TERMS, *TABLE_SEAFOOD_TERMS))),
+    ("肉類", pattern_of((*MEAT_TERMS, *TABLE_MEAT_TERMS)) + r"|燒臘"),
     ("點心", pattern_of(DESSERT_TERMS) + r"|水果|果盤|西瓜|鳳梨"),
 )
 
@@ -62,8 +73,9 @@ _SIZE_SUFFIX = re.compile(r"\s*[（(][^（）()]*[）)]\s*$")
 def _is_vegetable(value: str) -> bool:
     if any_term(VEGETABLE_TERMS, value):
         return True
-    return any_term(AMBIGUOUS_VEGETABLE_TERMS, value) and not any_term(
-        (*MEAT_TERMS, *SEAFOOD_TERMS), value
+    # 補充的蔬菜字也當成葷素同名處理：「絲瓜蛤蠣」「蒼蠅頭」有葷料就不算青菜
+    return any_term((*AMBIGUOUS_VEGETABLE_TERMS, *TABLE_VEGETABLE_TERMS), value) and not any_term(
+        (*MEAT_TERMS, *SEAFOOD_TERMS, *TABLE_MEAT_TERMS, *TABLE_SEAFOOD_TERMS), value
     )
 
 

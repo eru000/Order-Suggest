@@ -946,6 +946,307 @@
           ]
         }
       ]
+    },
+    {
+      "archive": "holdout_blind_20261127T073016164552Z_repeat1.zip",
+      "sha256": "626ad7220e6de276f685b5672f33c9a9ca8c34fae89cf703c4000b93a550ee26",
+      "generatedAt": "2026-11-27T07:30:15.879357+00:00",
+      "productSourceHashes": {
+        "decision_service.py": "35c4e4d76e6a290261ef61ab3b34d26d70de06d6cdcdaa3a87ee953351bf0183",
+        "decision_catalog.py": "cd161fc9f7b8aa62f7f908589c8c3cea6c749b5b0c44018227f07d85c480d1e9",
+        "decision_preferences.py": "1a56ea5fe40a6f40935dbba684873cfe4fd88a2b7afaeb7fcc3a774a813ceecb",
+        "preference_engine.py": "c5cd604e12bdd5dc3e6f70a0e2537cf73e7584789b34e02b3ac65e10ee558d16",
+        "recommendation.py": "da0c5ef42bd366ce936b111bfe8f09ada52f45c14bb3b4dca0d079e838988650",
+        "table_menu.py": "84a4a9281b217738eae15559b91c60f4c7da2bd435d4614c55ac9f317d3ac158",
+        "menu_semantics.py": "4749f5a3bba7ee6f0c56845635589facee217d56c2d122fe9c57cde1d5321ff0",
+        "menu_vocabulary.py": "deb8f2cd9dd84a090ec5ab7305f3dac17046fb4db0914f2467889da073ddca9b"
+      },
+      "passedCases": 10,
+      "caseCount": 10,
+      "passedTurns": 30,
+      "turnCount": 30,
+      "cases": [
+        {
+          "id": "hold_compound_royal",
+          "category": "compound",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "午餐要飯類，250元內，不吃雞也不要牛，請幫我決定",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "現在只留180元，仍然想吃飯",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "先排除咖哩，其他一樣",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_compound_gwoo",
+          "category": "compound",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "我要小份雞湯，800元以內，別放白菜類",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "小份就好，650元封頂",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "菇菇這次也先不要",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_budget_splendor",
+          "category": "budget_change",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "一份開胃菜先抓450元",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "剛算過只能花330元",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "可以提高到400元，請重新找",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_budget_cama",
+          "category": "budget_change",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "挑一杯黑咖啡，140元內",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "這杯只剩70元額度",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "改抓100元上限，不用奶蓋",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_cancel_regent",
+          "category": "cancel_condition",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "一道菜600元內，先避開豆腐",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "豆腐也能接受了，600元內即可",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "價格條件再收成480元內",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_cancel_amei",
+          "category": "cancel_condition",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "700元內找一道，暫時不想香腸",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "把香腸那條限制刪掉",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "現在最多300元",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_replace_newpalace",
+          "category": "replace",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "先給我500元以下且確定有標價的一道",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "第一個換掉，別改其他選項",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "第一道再換一個，不要重複剛拒絕的",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_replace_milksha",
+          "category": "replace",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "飲料挑100元以下，不要QQ",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "換掉第一杯，其他留下",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "再換第一杯，同樣預算和排除條件",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_no_solution_meetfresh",
+          "category": "no_solution",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "我要能核實價格的冰品，300元內",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "增加到1000元，但價錢必須看得到",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "不設金額上限，可是仍然只選明確標價的",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        },
+        {
+          "id": "hold_no_solution_comebuy",
+          "category": "no_solution",
+          "passed": true,
+          "turns": [
+            {
+              "turn": 1,
+              "text": "只買這張原葉茶區35元以下的",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 2,
+              "text": "提高到39元，仍不要超支",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            },
+            {
+              "turn": 3,
+              "text": "最後能到40元",
+              "passed": true,
+              "errors": [],
+              "technicalErrors": []
+            }
+          ]
+        }
+      ]
     }
   ]
 }

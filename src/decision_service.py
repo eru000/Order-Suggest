@@ -374,6 +374,26 @@ class DecisionService:
             }
             available = [row for row in candidates if row["family"] not in rejected_families
                          and row["id"] not in d["rejected"]]
+            # 換到沒有不同的菜時，先給同一道菜的其他份量，再給菜單上的配菜（小菜、沙拉），
+            # 都沒有才說「都看過了」。封存組迷客夏：兩杯都換掉後還有同款大杯；新天地：
+            # 兩道生魚片都換掉後還有三道沙拉，以前都直接回「都看過了」。
+            if not available and candidates and not shared and d["rejected"]:
+                same_dish = [row for row in candidates if row["id"] not in d["rejected"]]
+                if same_dish:
+                    available = same_dish
+                    notice = "不同的菜都換過了，這些是同一道菜的其他份量。"
+                else:
+                    side_rows, _ = menu_choices(menu, include_sides=True)
+                    known = {row["id"] for row in rows}
+                    sides = [
+                        row for row in eligible(
+                            [r for r in side_rows if r["id"] not in known], d["prefs"], rate
+                        )
+                        if row["id"] not in d["rejected"]
+                    ]
+                    if sides:
+                        available = sides
+                        notice = "主餐都換過了，這些是菜單上其他符合條件的品項。"
             gaps = [field for field in SOFT_LABELS if d["prefs"].get(field)
                     and available and not any(row.get(field) == d["prefs"][field]
                                               for row in available)]
@@ -462,7 +482,10 @@ class DecisionService:
                     if (
                         rows
                         and not exhausted
-                        and any(k in d["prefs"] for k in ("budget", "cheaperThan"))
+                        and any(
+                            k in d["prefs"]
+                            for k in ("budget", "cheaperThan", "requireKnownPrice")
+                        )
                         and not any(row["price"] is not None for row in rows)
                     ):
                         message = (
@@ -873,8 +896,12 @@ class DecisionService:
         if "budget" in delta:
             prefs.pop("cheaperThan", None)
         for pattern, field, value in (
-            (r"^(?:飯|飯類)$|(?:想吃|要吃|改吃|改成|換成|換吃|我要)(?:飯|飯類)", "dishType", "飯"),
-            (r"^(?:麵|麵類)$|(?:想吃|要吃|改吃|改成|換成|換吃|我要)(?:麵|麵類)", "dishType", "麵"),
+            # 「午餐要飯類」：單一個「要」也算（封存組老爺行旅實測第一輪漏抓）；
+            # 「飯類」「麵類」本身就是類別詞，出現就算。
+            (r"^(?:飯|飯類)$|(?:想吃|要吃|改吃|改成|換成|換吃|我要|要)(?:飯類|飯)(?![店桶局])|飯類",
+             "dishType", "飯"),
+            (r"^(?:麵|麵類)$|(?:想吃|要吃|改吃|改成|換成|換吃|我要|要)(?:麵類|麵)(?![店包])|麵類",
+             "dishType", "麵"),
             (r"想吃湯|湯的|喝湯", "texture", "湯的"),
             (r"乾的|乾麵|乾拌|不要湯|不想喝湯", "texture", "乾的"),
         ):

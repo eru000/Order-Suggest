@@ -247,9 +247,13 @@ def _recommend_impl(
         if semantic_enabled
         else set()
     )
+    require_known_price = bool(prefs.get("requireKnownPrice"))
     candidates = []
     for item in all_items:
         if any(word in str(item["name"]).casefold() for word in excludes):
+            continue
+        # 「只選明確標價的」：沒有預算時，時價／未標價的品項也不推薦
+        if require_known_price and item.get("price") is None:
             continue
         raw_semantic = item.get("semantic")
         semantic: dict[str, Any] = dict(raw_semantic) if isinstance(raw_semantic, dict) else {}

@@ -271,8 +271,8 @@
  },
  "classifier": {
   "dishes": 106,
-  "correct": 81,
-  "accuracy": 0.7641509433962265,
+  "correct": 96,
+  "accuracy": 0.9056603773584906,
   "wrong": [
    {
     "name": "三個臭皮匠",
@@ -285,34 +285,9 @@
     "predicted": "湯鍋"
    },
    {
-    "name": "乾煸四季豆",
-    "label": "青菜",
-    "predicted": "其他"
-   },
-   {
-    "name": "古早味蒸扁鱈(經典蒜蓉醬)",
-    "label": "海鮮",
-    "predicted": "其他"
-   },
-   {
-    "name": "古早味蒸扁鱈(蔭冬瓜樹子)",
-    "label": "海鮮",
-    "predicted": "其他"
-   },
-   {
     "name": "塔香茄腸煲",
     "label": "肉類",
     "predicted": "湯鍋"
-   },
-   {
-    "name": "大口霸王骨(6支)",
-    "label": "肉類",
-    "predicted": "其他"
-   },
-   {
-    "name": "夫妻肺片",
-    "label": "肉類",
-    "predicted": "其他"
    },
    {
     "name": "扒飯打拋豬",
@@ -325,37 +300,7 @@
     "predicted": "其他"
    },
    {
-    "name": "檸香蒸扁鱈",
-    "label": "海鮮",
-    "predicted": "其他"
-   },
-   {
-    "name": "泰北鄉村茄",
-    "label": "青菜",
-    "predicted": "其他"
-   },
-   {
-    "name": "泰香炒野蓮",
-    "label": "青菜",
-    "predicted": "其他"
-   },
-   {
-    "name": "泰香炒野蓮（大）",
-    "label": "青菜",
-    "predicted": "其他"
-   },
-   {
     "name": "真珠小炒",
-    "label": "肉類",
-    "predicted": "其他"
-   },
-   {
-    "name": "秘醬炙烤肋排（10塊）",
-    "label": "肉類",
-    "predicted": "其他"
-   },
-   {
-    "name": "秘醬炙烤肋排（12塊）",
     "label": "肉類",
     "predicted": "其他"
    },
@@ -365,19 +310,9 @@
     "predicted": "其他"
    },
    {
-    "name": "蛋酥白菜魯",
-    "label": "青菜",
-    "predicted": "蛋豆腐"
-   },
-   {
     "name": "蟹黃鮮蝦豆腐煲",
     "label": "蛋豆腐",
     "predicted": "湯鍋"
-   },
-   {
-    "name": "金沙鮮炒四季豆",
-    "label": "青菜",
-    "predicted": "其他"
    },
    {
     "name": "金湯海鮮豆腐煲",
@@ -385,18 +320,8 @@
     "predicted": "湯鍋"
    },
    {
-    "name": "金牌蒜香骨",
-    "label": "肉類",
-    "predicted": "其他"
-   },
-   {
     "name": "鐵漢柔情",
     "label": "蛋豆腐",
-    "predicted": "其他"
-   },
-   {
-    "name": "黃金美人腿",
-    "label": "青菜",
     "predicted": "其他"
    }
   ]

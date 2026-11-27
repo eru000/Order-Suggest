@@ -1,0 +1,91 @@
+{
+  "summary": {
+    "A": {
+      "count": 50,
+      "point": 0.3472222222222222,
+      "low": 0.17721518987341772,
+      "high": 0.52
+    },
+    "C": {
+      "count": 125,
+      "point": 0.8680555555555556,
+      "low": 0.7109375,
+      "high": 0.9757575757575757
+    },
+    "truthItems": 144
+  },
+  "cases": [
+    {
+      "case": "cafe_cama",
+      "expected": 27,
+      "A": 3,
+      "C": 27
+    },
+    {
+      "case": "cafe_comebuy",
+      "expected": 8,
+      "A": 6,
+      "C": 8
+    },
+    {
+      "case": "cafe_meetfresh",
+      "expected": 8,
+      "A": 4,
+      "C": 7
+    },
+    {
+      "case": "cafe_milksha",
+      "expected": 17,
+      "A": 12,
+      "C": 12
+    },
+    {
+      "case": "hotel_regent_lanting",
+      "expected": 8,
+      "A": 5,
+      "C": 7
+    },
+    {
+      "case": "hotel_royal_huigan",
+      "expected": 9,
+      "A": 3,
+      "C": 9
+    },
+    {
+      "case": "hotel_sheraton_pizzapub",
+      "expected": 4,
+      "A": 0,
+      "C": 4
+    },
+    {
+      "case": "hotel_splendor_lobby",
+      "expected": 9,
+      "A": 0,
+      "C": 8
+    },
+    {
+      "case": "tw_amei",
+      "expected": 14,
+      "A": 0,
+      "C": 4
+    },
+    {
+      "case": "tw_extra9",
+      "expected": 12,
+      "A": 5,
+      "C": 11
+    },
+    {
+      "case": "tw_gwoo",
+      "expected": 21,
+      "A": 12,
+      "C": 21
+    },
+    {
+      "case": "tw_newpalace_wuqi",
+      "expected": 7,
+      "A": 0,
+      "C": 7
+    }
+  ]
+}
